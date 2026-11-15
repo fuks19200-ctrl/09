@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MULTUM.AI — школа AI</title>
+<meta name="description" content="MULTUM.AI — школа, где искусственный интеллект превращается в ваш рабочий ресурс.">
+<link rel="icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+<style>
+:root{--lav:#e7defb;--lav2:#dcd0f7;--blue:#dcecff;--white:#fff;--ink:#443b59;--muted:#766c8c;--line:rgba(91,74,120,.16);--shadow:0 24px 70px rgba(91,74,120,.16)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Fredoka",sans-serif;color:var(--ink);background:#e9e2fa;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-10;background:#e9e2fa}
+.fixed-bg{position:fixed;inset:0;z-index:-5;overflow:hidden;background:#e9e2fa}
+.bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease;pointer-events:none}
+.bg-video.active{opacity:1}
+.bg-vignette{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.26));pointer-events:none}
+.page{position:relative}
+header{position:fixed;top:18px;left:clamp(18px,4vw,60px);right:clamp(18px,4vw,60px);z-index:20;display:flex;justify-content:space-between;align-items:center;transition:.35s}
+.brand{font-size:28px;color:#fff;text-decoration:none;text-shadow:0 2px 14px rgba(55,45,80,.45)}
+header:not(.hero-active){opacity:0;pointer-events:none}
+.nav{display:flex;gap:5px;padding:5px;border:1px solid rgba(255,255,255,.5);border-radius:999px;background:rgba(255,255,255,.38);backdrop-filter:blur(16px)}
+.nav a{color:#514565;text-decoration:none;padding:9px 14px;border-radius:999px;font-size:13px;transition:.25s}
+.nav a:hover{background:#fff;transform:translateY(-2px)}
+.section{min-height:100svh;padding:110px clamp(22px,7vw,110px);display:flex;align-items:center;position:relative}
+.inner{width:100%;max-width:1260px;margin:auto}
+.hero{padding-top:120px}.hero h1{font-size:clamp(60px,9vw,128px);line-height:.86;letter-spacing:-.045em;margin:0 0 25px;color:#fff;text-shadow:0 5px 30px rgba(50,40,70,.5)}
+.hero p{max-width:650px;font-size:clamp(18px,2vw,25px);line-height:1.45;color:#fff;text-shadow:0 3px 18px rgba(50,40,70,.5)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:14px 23px;text-decoration:none;font-family:inherit;font-size:14px;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.btn:after{content:"";position:absolute;inset:0;transform:translateX(-120%);background:linear-gradient(110deg,transparent,rgba(255,255,255,.65),transparent);transition:.6s}
+.btn:hover:after{transform:translateX(120%)}.btn:hover{transform:translateY(-3px);box-shadow:0 15px 35px rgba(80,65,110,.2)}
+.primary{background:#fff;color:#574a6e}.secondary{background:rgba(255,255,255,.32);color:#fff;border:1px solid rgba(255,255,255,.55)}
+.hero-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+h2{font-size:clamp(46px,7vw,88px);line-height:.9;letter-spacing:-.04em;margin:0 0 25px}
+.lead{font-size:17px;line-height:1.75;color:#665b78;max-width:760px}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8d77b7;margin-bottom:18px}
+.glass{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);box-shadow:var(--shadow);backdrop-filter:blur(14px);border-radius:28px}
+.why{display:grid;grid-template-columns:1.15fr .85fr;gap:80px;align-items:center}
+.vertical{height:560px;position:relative;overflow:hidden}
+.why-card{position:absolute;width:290px;height:180px;left:50%;transform:translateX(-50%);border-radius:26px;overflow:hidden;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.8);box-shadow:0 20px 60px rgba(75,58,105,.15);transition:transform .3s,opacity .3s}
+.why-card:hover{transform:translateX(-50%) scale(1.035)}.why-card img{width:100%;height:140px;object-fit:contain;display:block}.why-card b{display:block;padding:8px 16px;font-size:14px;letter-spacing:.06em}
+.school-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:center}
+.school-title{font-size:clamp(55px,7vw,92px);line-height:.86}.school-copy{font-size:17px;line-height:1.8}.school-copy p{margin:0 0 18px}
+.courses-top{display:grid;grid-template-columns:1fr 1fr;gap:24px}.course{padding:34px;min-height:390px;display:flex;flex-direction:column;justify-content:space-between}
+.course h3{font-size:52px;margin:0 0 10px}.course .price{font-size:32px}.course ul{line-height:1.8;color:#6d627d;padding-left:20px}
+.course.maxi{background:linear-gradient(145deg,rgba(221,207,249,.8),rgba(223,238,255,.72))}
+.direction-wrap{margin-top:45px;overflow:hidden;cursor:grab}.direction-wrap.dragging{cursor:grabbing}
+.direction-track{display:flex;gap:18px;width:max-content;user-select:none;touch-action:pan-y;will-change:transform}
+.direction{width:285px;min-height:250px;padding:25px;flex:0 0 auto}.direction h3{font-size:28px;margin:0 0 12px}.direction p{color:#716780;line-height:1.55}.price{margin-top:auto;text-align:right;font-size:22px}
+.about{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:center}.about-copy{font-size:17px;line-height:1.8}.about-mark{font-size:clamp(80px,13vw,170px);line-height:.75;color:rgba(255,255,255,.55)}
+.form-wrap{max-width:820px}.form{display:grid;grid-template-columns:1fr 1fr;gap:24px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;letter-spacing:.1em}.field input,.field textarea{font:inherit;border:0;border-bottom:1px solid var(--line);background:transparent;padding:13px 0;outline:0;color:var(--ink)}.field textarea{min-height:100px;resize:vertical}.form .btn{margin-top:10px;background:#fff;color:#574a6e}
+.faq-list{max-width:900px}.faq{border-top:1px solid var(--line)}details{border-bottom:1px solid var(--line);padding:20px 0}summary{cursor:pointer;font-size:19px;list-style:none;display:flex;justify-content:space-between;gap:20px}summary::-webkit-details-marker{display:none}summary:after{content:"+";flex:none}details[open] summary:after{content:"−"}details p{color:#716780;line-height:1.7;max-width:760px}
+.ref{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.ref h2{font-size:clamp(55px,7vw,92px)}
+.ref-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.ref-card{padding:18px;border-radius:22px;background:rgba(255,255,255,.48);border:1px solid rgba(255,255,255,.65)}.ref-card b{display:block;font-size:12px;letter-spacing:.12em;margin-bottom:8px}.ref-card span{font-size:14px;color:#6f647d}
+.social{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.social .btn{background:#fff;color:#574a6e}
+footer{padding:60px clamp(22px,7vw,110px);display:flex;justify-content:space-between;gap:20px;color:#6f647d;background:rgba(255,255,255,.4)}footer a{color:inherit}
+@media(max-width:850px){.nav{display:none}.section{padding:100px 22px}.why,.school-grid,.about,.ref,.courses-top{grid-template-columns:1fr;gap:35px}.vertical{height:430px}.form{grid-template-columns:1fr}.field.full{grid-column:auto}.hero h1{font-size:clamp(58px,16vw,95px)}.course{min-height:340px}.ref-cards{grid-template-columns:1fr}.about-mark{font-size:90px}}
+</style>
+</head>
+<body>
+<div class="fixed-bg" aria-hidden="true">
+  <video id="bg1" class="bg-video active" muted playsinline preload="metadata" src="bloom-bg-1.mp4"></video>
+  <video id="bg2" class="bg-video" muted playsinline preload="metadata" src="bloom-bg-2.mp4"></video>
+  <video id="bg3" class="bg-video" muted playsinline preload="metadata" src="bloom-bg-3.mp4"></video>
+  <div class="bg-vignette"></div>
+</div>
+
+<div class="page">
+<header class="hero-active">
+  <a class="brand" href="#top">MULTUM.AI</a>
+  <nav class="nav">
+    <a href="#top">Главная</a><a href="#why">Зачем тебе AI?</a><a href="#courses">Курсы</a><a href="#about">О нас</a><a href="#faq">Вопросы</a>
+  </nav>
+</header>
+
+<section class="section hero" id="top"><div class="inner">
+  <div class="eyebrow">THE CREATIVE INTELLIGENCE COMPANY</div>
+  <h1>MULTUM.AI</h1>
+  <p>Школа, где искусственный интеллект превращается из набора инструментов в твой личный рабочий ресурс.</p>
+  <div class="hero-actions"><a class="btn primary" href="#courses">Выбрать обучение</a><a class="btn secondary" href="#signup">Оставить заявку</a></div>
+</div></section>
+
+<section class="section" id="why"><div class="inner why">
+  <div class="vertical" id="whyCarousel">
+    <div class="why-card" data-i="0"><img src="01-ai-character.png" alt="AI Character"><b>AI CHARACTER</b></div>
+    <div class="why-card" data-i="1"><img src="02-ai-product.png" alt="AI Product"><b>AI PRODUCT</b></div>
+    <div class="why-card" data-i="2"><img src="03-ai-3d.png" alt="AI 3D"><b>AI 3D</b></div>
+    <div class="why-card" data-i="3"><img src="04-ai-visual.png" alt="AI Visual"><b>AI VISUAL</b></div>
+    <div class="why-card" data-i="4"><img src="05-ai-automation.png" alt="AI Automation"><b>AI AUTOMATION</b></div>
+  </div>
+  <div><div class="eyebrow">ЗАЧЕМ ТЕБЕ AI?</div><h2>AI помогает превращать идеи в результат.</h2><p class="lead">Создавать быстрее, автоматизировать рутину, находить решения и делать то, для чего раньше нужны были время, навыки и целая команда.</p></div>
+</div></section>
+
+<section class="section" id="school"><div class="inner school-grid">
+  <div><div class="eyebrow">MULTUM.AI SCHOOL</div><div class="school-title">AI превращается<br>в твой рабочий ресурс.</div></div>
+  <div class="school-copy">
+    <p>MULTUM.AI — школа, где искусственный интеллект превращается из набора инструментов в ваш личный рабочий ресурс.</p>
+    <p>Мы учим не запоминать десятки сервисов, а понимать, как заставлять AI работать на вашу цель: быстрее создавать, решать сложные задачи, автоматизировать рутину и превращать идеи в реальные проекты.</p>
+    <p>Вместо бесконечной теории — практика. Вместо разрозненных инструментов — система. Вместо наблюдения за технологиями — способность создавать с их помощью.</p>
+    <p>Вы уходите не просто со знаниями. Вы уходите с новым уровнем возможностей: умением самостоятельно осваивать новые AI-технологии, собирать из них рабочие решения и применять их там, где раньше требовались время, деньги и целая команда.</p>
+  </div>
+</div></section>
+
+<section class="section" id="courses"><div class="inner">
+  <div class="eyebrow">КУРСЫ</div><h2>Выбери свой путь.</h2>
+  <div class="courses-top">
+    <article class="course glass maxi"><div><div class="eyebrow">MAXI</div><h3>MAXI</h3><p class="lead">Создавай. Автоматизируй. Запускай.</p><ul><li>MINI + расширенная программа</li><li>сайты, игры, AI-агенты</li><li>автоматизация и контент</li><li>100 промптов + 100 AI-кодов</li></ul></div><div class="price">99 900 ₽</div></article>
+    <article class="course glass"><div><div class="eyebrow">MINI</div><h3>MINI</h3><p class="lead">От первого запроса до уверенной работы с AI.</p><ul><li>основы AI и промптинг</li><li>генерация изображений</li><li>AI-дизайн</li><li>практический проект</li></ul></div><div class="price">7 900 ₽</div></article>
+  </div>
+  <div class="direction-wrap" id="directionWrap"><div class="direction-track" id="directionTrack">
+    <article class="direction glass"><h3>AI AGENTS + AI AUTOMATION</h3><p>Агенты, сценарии и автоматизация процессов.</p><div class="price">59 900 ₽</div></article>
+    <article class="direction glass"><h3>AI WEBSITES</h3><p>Сайты и интерфейсы с помощью AI.</p><div class="price">49 900 ₽</div></article>
+    <article class="direction glass"><h3>AI GAMES</h3><p>Игры и интерактивные проекты.</p><div class="price">45 900 ₽</div></article>
+    <article class="direction glass"><h3>AI 3D</h3><p>3D-визуалы, объекты и сцены.</p><div class="price">25 900 ₽</div></article>
+    <article class="direction glass"><h3>AI VIDEO</h3><p>Видео, ролики и визуальные истории.</p><div class="price">20 900 ₽</div></article>
+    <article class="direction glass"><h3>AI CREATOR</h3><p>Контент и creative workflow.</p><div class="price">14 900 ₽</div></article>
+    <article class="direction glass"><h3>AI DESIGN</h3><p>Визуальные концепции и дизайн.</p><div class="price">14 900 ₽</div></article>
+    <article class="direction glass"><h3>AI PRODUCT ADD-ON</h3><p>Дополнительное продуктовое направление.</p><div class="price">+10 900 ₽</div></article>
+    <article class="direction glass"><h3>AI MARKETING ADD-ON</h3><p>Дополнительное направление по AI-маркетингу.</p><div class="price">+5 900 ₽</div></article>
+  </div></div>
+</div></section>
+
+<section class="section" id="about"><div class="inner about">
+  <div class="about-mark">A<br>×<br>D</div>
+  <div><div class="eyebrow">О НАС</div><h2>Алина и Даша</h2><div class="about-copy">
+    <p>Мы — Алина и Даша, основатели MULTUM.AI. Мы познакомились в сфере инфобизнеса и со временем пришли к главной для нас мысли: искусственный интеллект способен не просто упрощать задачи, а менять то, как человек работает, создаёт и развивает свои идеи.</p>
+    <p>Мы сами прошли путь от первых экспериментов с AI до системного использования технологий и поняли: проблема сегодня не в нехватке инструментов, а в том, что люди часто не знают, как объединить их в понятную рабочую систему.</p>
+    <p>Так появилась MULTUM.AI — школа, которую мы создаём для новой реальности. Здесь мы учим не отдельным сервисам, а умению работать с AI, создавать решения и превращать идеи в реальный результат.</p>
+  </div></div>
+</div></section>
+
+<section class="section" id="signup"><div class="inner form-wrap">
+  <div class="eyebrow">ЗАЯВКА</div><h2>Начнём с твоей идеи.</h2><p class="lead">Расскажи немного о себе и о том, чему хочешь обучиться. Мы поможем выбрать подходящую программу.</p>
+  <form class="form" onsubmit="event.preventDefault();alert('Заявка сохранена. Мы свяжемся с вами.');">
+    <div class="field"><label>ИМЯ</label><input required placeholder="Как к вам обращаться?"></div>
+    <div class="field"><label>ЮЗ ДЛЯ ТГ</label><input required placeholder="@username"></div>
+    <div class="field"><label>НОМЕР ТЕЛЕФОНА</label><input required placeholder="+7 ..."></div>
+    <div class="field"><label>ЧЕМУ ХОЧЕШЬ ОБУЧИТЬСЯ?</label><input placeholder="Например, AI-сайты"></div>
+    <div class="field full"><button class="btn" type="submit">ОСТАВИТЬ ЗАЯВКУ</button></div>
+  </form>
+</div></section>
+
+<section class="section" id="faq"><div class="inner faq-list">
+  <div class="eyebrow">FAQ</div><h2>Вопросы.</h2><div class="faq">
+    <details><summary>Кому подходит MULTUM.AI?</summary><p>Тем, кто хочет использовать AI для работы, бизнеса, творчества или собственных проектов.</p></details>
+    <details><summary>Нужно ли уметь работать с нейросетями заранее?</summary><p>Нет. Обучение начинается с базы и постепенно переходит к практическим задачам.</p></details>
+    <details><summary>Подойдёт ли обучение, если я вообще никогда не работал с AI?</summary><p>Да. Стартуем с понятной базы, поэтому предварительный опыт не нужен.</p></details>
+    <details><summary>Чем MINI отличается от MAXI?</summary><p>MINI даёт базу и практику. MAXI включает MINI и расширенную работу с сайтами, играми, агентами, автоматизацией и контентом.</p></details>
+    <details><summary>Что я смогу создавать после обучения?</summary><p>Визуалы, контент, сайты, 3D, видео, игровые проекты, AI-агентов и автоматизации в зависимости от выбранной программы.</p></details>
+    <details><summary>Можно ли использовать AI для работы и бизнеса?</summary><p>Да. Программы построены вокруг реальных рабочих задач и создания результата.</p></details>
+    <details><summary>Можно ли создавать сайты и приложения с помощью AI?</summary><p>Да. Это отдельное направление и часть расширенной программы MAXI.</p></details>
+    <details><summary>Можно ли создавать AI-агентов и автоматизации?</summary><p>Да. В программе есть AI Agents и AI Automation.</p></details>
+    <details><summary>Как проходит обучение?</summary><p>Практически, с преподавателем и обратной связью. Цель каждого блока не знания ради знаний, а готовый результат.</p></details>
+    <details><summary>Что входит в MAXI?</summary><p>MINI, сайты, игры, AI-агенты, автоматизация, презентации, 100 промптов, 100 AI-кодов и расширенные проекты.</p></details>
+    <details><summary>Можно ли купить отдельное направление?</summary><p>Да. Отдельные направления можно выбирать из каталога ниже основных программ.</p></details>
+    <details><summary>Как происходит оплата и обучение?</summary><p>После заявки мы помогаем выбрать программу и объясняем дальнейшие шаги по оплате и старту обучения.</p></details>
+  </div>
+</div></section>
+
+<section class="section" id="ref"><div class="inner ref">
+  <div><div class="eyebrow">РЕФЕРАЛЬНАЯ СИСТЕМА</div><h2>ПРИВОДИ.<br><span style="display:block;margin-top:18px">ПОЛУЧАЙ.<br>РАСТИ.</span></h2></div>
+  <div class="glass" style="padding:34px">
+    <div class="ref-cards">
+      <div class="ref-card"><b>01</b><span>ПРИГЛАСИ</span></div>
+      <div class="ref-card"><b>02</b><span>ПОЛУЧИ</span></div>
+      <div class="ref-card"><b>03</b><span>РАСТИ</span></div>
+    </div>
+    <input id="refCode" placeholder="Введи реферальный код" style="width:100%;padding:15px;border:1px solid var(--line);border-radius:999px;background:#fff;font:inherit">
+    <div style="display:flex;gap:10px;margin-top:12px"><button class="btn" style="background:#fff;color:#574a6e" id="applyRef">ПРИМЕНИТЬ</button><button class="btn" style="background:var(--lav2);color:#574a6e" id="copyRef">СКОПИРОВАТЬ</button></div>
+    <div class="social"><a class="btn" href="https://www.instagram.com/multumai?xtok=dnV0dnRmaml2N3dl" target="_blank" rel="noopener">Instagram</a><a class="btn" href="https://t.me/multumai" target="_blank" rel="noopener">Telegram</a></div>
+  </div>
+</div></section>
+
+<footer>
+  <span>MULTUM.AI</span>
+  <span><a href="#">Пользовательское соглашение</a> · <a href="#">Политика конфиденциальности</a> · <a href="#">Публичная оферта ОУ</a> · <a href="#">Публичная оферта ИКУ</a></span>
+</footer>
+</div>
+
+<script>
+(function(){
+  const videos=[document.getElementById('bg1'),document.getElementById('bg2'),document.getElementById('bg3')];
+  let active=0, lastProgress=-1;
+  videos.forEach(v=>{
+    v.muted=true;
+    v.playsInline=true;
+    v.addEventListener('loadedmetadata',()=>{try{v.currentTime=0}catch(e){}});
+  });
+
+  function setActive(index){
+    if(index===active) return;
+    videos.forEach((v,i)=>v.classList.toggle('active',i===index));
+    active=index;
+  }
+
+  function scrubBackground(){
+    const max=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+    const progress=Math.min(0.999999,Math.max(0,window.scrollY/max));
+    if(Math.abs(progress-lastProgress)<0.001) return;
+    lastProgress=progress;
+
+    const scaled=progress*3;
+    const index=Math.min(2,Math.floor(scaled));
+    const local=scaled-index;
+    setActive(index);
+
+    const v=videos[index];
+    if(v.readyState>=1 && Number.isFinite(v.duration) && v.duration>0){
+      const t=Math.min(v.duration-.05,Math.max(0,local*v.duration));
+      try{v.currentTime=t}catch(e){}
+    }
+  }
+  addEventListener('scroll',scrubBackground,{passive:true});
+  addEventListener('resize',scrubBackground,{passive:true});
+  scrubBackground();
+
+  const header=document.querySelector('header');
+  addEventListener('scroll',()=>header.classList.toggle('hero-active',window.scrollY<window.innerHeight*.72),{passive:true});
+
+  const cards=[...document.querySelectorAll('.why-card')], box=document.getElementById('whyCarousel');
+  let cardOffset=0, lastScroll=window.scrollY;
+  function positionCards(){
+    if(!box)return;
+    const h=box.clientHeight;
+    const delta=window.scrollY-lastScroll;
+    lastScroll=window.scrollY;
+    cardOffset+=delta*.22;
+    const step=150, cycle=cards.length*step;
+    cards.forEach((c,i)=>{
+      let y=((i*step+cardOffset)%cycle);
+      if(y<0)y+=cycle;
+      y-=cycle/2;
+      const distance=Math.abs(y);
+      c.style.top=(h/2+y-90)+'px';
+      c.style.opacity=distance<cycle*.48?'1':'0';
+    });
+  }
+  addEventListener('scroll',positionCards,{passive:true});
+  positionCards();
+
+  const wrap=document.getElementById('directionWrap');
+  const track=document.getElementById('directionTrack');
+  let dragging=false,startX=0,startOffset=0,currentOffset=0;
+  function applyOffset(){track.style.transform='translate3d('+currentOffset+'px,0,0)'}
+  wrap.addEventListener('pointerdown',e=>{
+    dragging=true;wrap.classList.add('dragging');startX=e.clientX;startOffset=currentOffset;track.setPointerCapture?.(e.pointerId);
+  });
+  wrap.addEventListener('pointermove',e=>{
+    if(!dragging)return;
+    currentOffset=startOffset+(e.clientX-startX);
+    applyOffset();
+  });
+  function stop(){dragging=false;wrap.classList.remove('dragging')}
+  wrap.addEventListener('pointerup',stop);wrap.addEventListener('pointercancel',stop);wrap.addEventListener('pointerleave',e=>{if(dragging&&e.buttons===0)stop()});
+
+  document.querySelectorAll('details').forEach(d=>{
+    d.addEventListener('toggle',()=>{
+      if(!d.open)return;
+      document.querySelectorAll('details[open]').forEach(other=>{if(other!==d)other.open=false});
+    });
+  });
+
+  document.getElementById('applyRef').addEventListener('click',()=>alert('Код применён'));
+  document.getElementById('copyRef').addEventListener('click',async()=>{
+    const value=document.getElementById('refCode').value;
+    try{await navigator.clipboard.writeText(value);alert('Код скопирован')}catch(e){alert('Скопируй код вручную')}
+  });
+})();
+</script>
+</body>
+</html>
