@@ -2,349 +2,475 @@
 <html lang="ru">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>MULTUM.AI — Школа нейросетей</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>
+    MULTUM.AI — Школа нейросетей
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
 
   <link
     href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
+
   <style>
 
-    /* =========================================================
+    /* =====================================================
        ROOT
-       ========================================================= */
+       ===================================================== */
 
     :root {
-      --content-width: 1180px;
-      --side-space: 48px;
 
       --white: #fff;
 
-      --text-main: rgba(255,255,255,.96);
-      --text-soft: rgba(255,255,255,.86);
+      --glass:
+        rgba(20,25,31,.32);
 
-      --glass: rgba(20,25,31,.28);
-      --glass-strong: rgba(15,20,27,.48);
-
-      --border: rgba(255,255,255,.46);
+      --border:
+        rgba(255,255,255,.48);
 
       --shadow:
-        0 24px 70px rgba(10,15,20,.18);
+        0 24px 70px
+        rgba(10,15,20,.20);
 
-      --heading-size:
-        clamp(40px,4vw,56px);
+      --about-bg:
+        rgba(20,25,31,.28);
 
-      --body-size: 18px;
+      --soft-white:
+        rgba(255,255,255,.94);
 
-      --body-line: 1.6;
+      --content-width:
+        1180px;
 
-      --radius: 30px;
     }
 
 
-    /* =========================================================
+    /* =====================================================
        RESET
-       ========================================================= */
+       ===================================================== */
 
     * {
+
       box-sizing: border-box;
+
       margin: 0;
+
       padding: 0;
+
     }
+
 
     html {
-      background: #171a1d;
+
       scroll-behavior: smooth;
+
+      background:
+        #aeb6c1;
+
     }
+
 
     body {
-      min-height: 100vh;
 
-      font-family: "Fredoka", sans-serif;
+      font-family:
+        "Fredoka",
+        sans-serif;
 
-      color: var(--white);
+      color:
+        var(--white);
 
-      background: transparent;
+      background:
+        transparent !important;
 
-      overflow-x: hidden;
+      overflow-x:
+        hidden;
+
     }
 
+
+    html,
     body,
     main,
     section,
     footer {
-      background: transparent;
+
+      background:
+        transparent !important;
+
     }
 
+
     a {
-      color: inherit;
-      text-decoration: none;
+
+      color:
+        inherit;
+
+      text-decoration:
+        none;
+
     }
+
 
     button,
     input,
     textarea {
-      font: inherit;
+
+      font:
+        inherit;
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        BACKGROUND
-       НИКАКОГО BLUR
-       ========================================================= */
+       ===================================================== */
 
     .background {
-      position: fixed;
-      inset: 0;
 
-      width: 100%;
-      height: 100%;
+      position:
+        fixed;
 
-      overflow: hidden;
+      inset:
+        0;
 
-      z-index: 0;
+      z-index:
+        0;
 
-      pointer-events: none;
+      overflow:
+        hidden;
 
-      background: #171a1d;
+      pointer-events:
+        none;
+
+      background:
+        #aeb6c1;
+
     }
+
 
     .bg-video {
-      position: absolute;
-      inset: 0;
 
-      width: 100%;
-      height: 100%;
+      position:
+        absolute;
 
-      object-fit: cover;
+      inset:
+        0;
 
-      opacity: 0;
+      width:
+        100%;
 
-      pointer-events: none;
+      height:
+        100%;
 
-      filter: none;
+      object-fit:
+        cover;
 
-      transform: translateZ(0);
+      opacity:
+        0;
 
-      will-change: opacity;
+      pointer-events:
+        none;
 
-      transition: opacity .05s linear;
+      filter:
+        none;
+
+      transform:
+        translateZ(0);
+
+      will-change:
+        opacity;
+
     }
+
 
     .bg-video.active {
-      opacity: 1;
+
+      opacity:
+        1;
+
     }
 
-    /*
-      Только затемнение.
-      Качество видео не портируем.
-    */
 
     .background::after {
-      content: "";
 
-      position: absolute;
-      inset: 0;
+      content:
+        "";
+
+      position:
+        absolute;
+
+      inset:
+        0;
 
       background:
         rgba(0,0,0,.20);
 
-      pointer-events: none;
+      pointer-events:
+        none;
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        HEADER
-       ========================================================= */
+       ===================================================== */
 
     header {
-      position: fixed;
 
-      top: 0;
-      left: 0;
-      right: 0;
+      position:
+        fixed;
 
-      z-index: 100;
+      inset:
+        0 0 auto;
 
-      width: 100%;
+      width:
+        100%;
 
       padding:
         22px
         clamp(22px,3vw,48px);
 
-      display: flex;
-      align-items: center;
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        30px;
+
+      z-index:
+        100;
 
       transition:
-        opacity .35s ease,
-        transform .35s ease;
+        opacity .45s ease,
+        transform .45s ease;
+
     }
 
+
     header.hidden {
-      opacity: 0;
+
+      opacity:
+        0;
 
       transform:
         translateY(-20px);
 
-      pointer-events: none;
+      pointer-events:
+        none;
+
     }
+
 
     .logo {
-      font-size: 20px;
 
-      font-weight: 600;
+      flex:
+        0 0 auto;
 
-      letter-spacing: .07em;
+      font-size:
+        20px;
+
+      font-weight:
+        600;
+
+      letter-spacing:
+        .07em;
 
       text-shadow:
-        0 3px 18px rgba(0,0,0,.32);
+        0 3px 18px
+        rgba(0,0,0,.32);
+
     }
 
-    nav {
-      margin-left: auto;
 
-      display: flex;
-      align-items: center;
+    nav {
+
+      margin-left:
+        auto;
+
+      display:
+        flex;
+
+      align-items:
+        center;
 
       gap:
         clamp(13px,1.55vw,25px);
 
-      white-space: nowrap;
+      white-space:
+        nowrap;
+
     }
 
-    nav a {
-      font-size: 14px;
 
-      font-weight: 500;
+    nav a {
+
+      font-size:
+        clamp(12px,1vw,14px);
+
+      font-weight:
+        500;
 
       text-shadow:
-        0 2px 15px rgba(0,0,0,.38);
+        0 2px 15px
+        rgba(0,0,0,.38);
 
       transition:
         transform .25s ease,
         opacity .25s ease;
+
     }
+
 
     nav a:hover {
+
       transform:
         translateY(-2px);
+
     }
 
 
-    /* =========================================================
-       GLOBAL GRID
-       ========================================================= */
+    /* =====================================================
+       COMMON
+       ===================================================== */
 
     section {
-      position: relative;
+
+      position:
+        relative;
 
       width:
         min(
-          var(--content-width),
-          calc(100% - var(--side-space))
+          1180px,
+          calc(100% - 48px)
         );
 
       margin:
         0 auto;
+
     }
+
 
     .section {
+
       padding:
-        100px 0;
+        110px 0;
+
     }
 
-    .section-title,
-    .faq-title,
-    .about-heading,
-    .signup-heading,
-    .referral-copy h2,
-    .school-heading {
-      font-size: var(--heading-size);
-
-      line-height: 1;
-
-      font-weight: 600;
-
-      letter-spacing: -.025em;
-
-      text-shadow:
-        0 4px 26px rgba(0,0,0,.42);
-    }
 
     .section-title {
-      margin-bottom: 30px;
-    }
 
-    .body-text,
-    .why-copy p,
-    .school-text p,
-    .about-text p,
-    .signup-copy {
-      font-size: var(--body-size);
+      margin-bottom:
+        30px;
 
-      line-height: var(--body-line);
+      font-size:
+        clamp(36px,4vw,58px);
 
-      color: var(--text-main);
+      line-height:
+        .98;
+
+      font-weight:
+        600;
+
+      letter-spacing:
+        -.025em;
 
       text-shadow:
-        0 3px 20px rgba(0,0,0,.38);
+        0 4px 26px
+        rgba(0,0,0,.42);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        HERO
-       ========================================================= */
+       ===================================================== */
 
     .hero {
-      width: 100%;
 
-      min-height: 100vh;
+      width:
+        100%;
 
-      display: flex;
-      align-items: center;
+      min-height:
+        100vh;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        flex-start;
 
       padding:
         110px
-        max(
-          24px,
-          calc(
-            (100vw - var(--content-width)) / 2
-          )
-        )
+        7vw
         70px;
+
     }
+
 
     .hero-inner {
-      width: 100%;
-      max-width: var(--content-width);
 
-      margin: 0 auto;
+      width:
+        min(
+          1160px,
+          100%
+        );
+
     }
 
+
     .hero-title {
-      display: block;
 
-      width: 100%;
+      display:
+        block;
 
-      white-space: nowrap;
+      width:
+        100%;
+
+      white-space:
+        nowrap;
 
       font-size:
-        clamp(54px,9.3vw,142px);
+        clamp(
+          54px,
+          9.3vw,
+          142px
+        );
 
-      line-height: .98;
+      line-height:
+        .98;
 
-      font-weight: 600;
+      font-weight:
+        600;
 
-      letter-spacing: -.035em;
+      letter-spacing:
+        -.035em;
 
-      color: transparent;
+      color:
+        transparent;
 
       background:
         linear-gradient(
@@ -359,121 +485,209 @@
           #fff 100%
         );
 
-      background-size: 300% 100%;
+      background-size:
+        300% 100%;
 
-      -webkit-background-clip: text;
-      background-clip: text;
+      -webkit-background-clip:
+        text;
+
+      background-clip:
+        text;
 
       animation:
-        whiteShimmer 5s ease-in-out infinite;
+        whiteShimmer
+        5s ease-in-out
+        infinite;
 
       text-shadow:
-        0 10px 45px rgba(0,0,0,.25);
+        0 10px 45px
+        rgba(0,0,0,.25);
+
     }
+
 
     @keyframes whiteShimmer {
 
       0%,
       100% {
-        background-position: 0 50%;
+
+        background-position:
+          0 50%;
+
       }
 
       50% {
-        background-position: 100% 50%;
+
+        background-position:
+          100% 50%;
+
       }
 
     }
 
+
     .hero-subtitle {
-      max-width: 650px;
 
-      margin-top: 30px;
+      margin-top:
+        30px;
 
-      font-size: 19px;
+      max-width:
+        650px;
 
-      line-height: 1.5;
+      font-size:
+        19px;
+
+      line-height:
+        1.5;
 
       color:
         rgba(255,255,255,.96);
 
       text-shadow:
-        0 3px 22px rgba(0,0,0,.42);
+        0 3px 22px
+        rgba(0,0,0,.42);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        WHY AI
-       ========================================================= */
+       ===================================================== */
 
     .why-section {
-      padding-top: 80px;
+
+      padding-top:
+        80px;
+
     }
+
 
     .why-layout {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        minmax(0,.9fr)
-        minmax(0,1.1fr);
+        .75fr
+        1.25fr;
 
-      gap: 72px;
+      gap:
+        70px;
 
-      align-items: center;
+      align-items:
+        center;
+
     }
+
 
     .why-copy {
-      position: sticky;
 
-      top: 120px;
+      position:
+        sticky;
+
+      top:
+        120px;
+
     }
+
 
     .why-copy p {
-      max-width: 620px;
+
+      max-width:
+        640px;
+
+      font-size:
+        19px;
+
+      line-height:
+        1.6;
+
+      color:
+        rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px
+        rgba(0,0,0,.4);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        AI CAROUSEL
-       Только картинка.
-       Никаких задних карточек.
-       ========================================================= */
+       НОВАЯ ВЕРТИКАЛЬНАЯ КАРУСЕЛЬ
+       ===================================================== */
 
     .why-carousel {
-      position: relative;
 
-      width: 100%;
+      position:
+        relative;
 
-      height: 520px;
+      width:
+        100%;
 
-      display: flex;
+      height:
+        560px;
 
-      align-items: center;
-      justify-content: center;
+      display:
+        flex;
 
-      overflow: hidden;
+      align-items:
+        center;
 
-      perspective: none;
+      justify-content:
+        center;
+
+      overflow:
+        hidden;
+
     }
+
 
     .why-track {
-      position: relative;
 
-      width: 100%;
-      height: 100%;
+      position:
+        relative;
 
-      display: flex;
+      width:
+        100%;
 
-      align-items: center;
-      justify-content: center;
+      height:
+        100%;
 
-      overflow: hidden;
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      overflow:
+        hidden;
+
     }
 
-    .ai-card {
-      position: absolute;
 
-      top: 50%;
-      left: 50%;
+    /*
+      Сама карточка теперь КВАДРАТНАЯ.
+
+      Размер карточки = размер картинки.
+
+      Никаких огромных вертикальных карточек.
+      Никакого пустого пространства сверху/снизу.
+    */
+
+    .ai-card {
+
+      position:
+        absolute;
+
+      top:
+        50%;
+
+      left:
+        50%;
 
       width:
         min(
@@ -481,168 +695,408 @@
           76%
         );
 
-      aspect-ratio: 1 / 1;
+      aspect-ratio:
+        1 / 1;
 
-      border-radius: 30px;
+      padding:
+        0;
 
-      overflow: hidden;
+      margin:
+        0;
 
-      background: transparent;
+      overflow:
+        hidden;
+
+      border-radius:
+        30px;
+
+      background:
+        transparent;
 
       border:
         1px solid
-        rgba(255,255,255,.60);
+        rgba(255,255,255,.68);
 
       box-shadow:
-        0 24px 65px
-        rgba(0,0,0,.22);
+        0 24px 60px
+        rgba(0,0,0,.24);
 
       transform:
-        translate(-50%,-50%);
+        translate(
+          -50%,
+          -50%
+        )
+        translateY(
+          var(--carousel-y,0px)
+        )
+        scale(
+          var(--carousel-scale,1)
+        );
 
-      opacity: 0;
+      opacity:
+        var(--carousel-opacity,0);
 
-      pointer-events: none;
+      z-index:
+        var(--carousel-z,1);
+
+      filter:
+        brightness(
+          var(--carousel-brightness,1)
+        );
+
+      pointer-events:
+        none;
 
       transition:
-        opacity .35s ease;
+        transform .55s
+        cubic-bezier(
+          .22,
+          .75,
+          .2,
+          1
+        ),
+        opacity .45s ease,
+        filter .45s ease;
+
     }
 
-    .ai-card.active {
-      opacity: 1;
-
-      pointer-events: auto;
-
-      z-index: 10;
-    }
-
-    .ai-card img {
-      display: block;
-
-      width: 100%;
-      height: 100%;
-
-      object-fit: contain;
-
-      background: transparent;
-    }
 
     /*
-      Убрано:
-      - AI CHARACTER label
-      - задние картинки
-      - 3D stack
-      - лишние рамки
-      - dots
+      Картинка занимает ВСЮ квадратную карточку.
     */
 
-    .carousel-controls {
-      position: absolute;
+    .ai-card img {
 
-      left: 50%;
-      bottom: 12px;
+      width:
+        100%;
+
+      height:
+        100%;
+
+      display:
+        block;
+
+      object-fit:
+        contain;
+
+      object-position:
+        center;
+
+      background:
+        transparent;
+
+    }
+
+
+    /*
+      Подписи AI CHARACTER / AI PRODUCT
+      больше НЕ нужны.
+    */
+
+    .ai-card-label {
+
+      display:
+        none !important;
+
+    }
+
+
+    /* =====================================================
+       CAROUSEL CONTROLS
+       ===================================================== */
+
+    .carousel-controls {
+
+      position:
+        absolute;
+
+      left:
+        50%;
+
+      bottom:
+        18px;
 
       transform:
         translateX(-50%);
 
-      z-index: 30;
+      z-index:
+        50;
 
-      display: flex;
+      display:
+        flex;
 
-      gap: 12px;
+      flex-direction:
+        column;
+
+      gap:
+        10px;
+
+      pointer-events:
+        none;
+
     }
 
+
     .carousel-btn {
-      width: 46px;
-      height: 46px;
+
+      width:
+        48px;
+
+      height:
+        48px;
 
       border:
         1px solid
-        rgba(255,255,255,.70);
+        rgba(255,255,255,.78);
 
-      border-radius: 50%;
+      border-radius:
+        50%;
 
-      color: #fff;
+      color:
+        #fff;
 
       background:
-        rgba(15,20,27,.48);
+        rgba(25,30,36,.52);
 
-      cursor: pointer;
+      backdrop-filter:
+        blur(12px);
+
+      -webkit-backdrop-filter:
+        blur(12px);
+
+      box-shadow:
+        0 10px 28px
+        rgba(0,0,0,.20);
+
+      cursor:
+        pointer;
+
+      pointer-events:
+        auto;
 
       transition:
         transform .2s ease,
         background .2s ease;
+
     }
+
 
     .carousel-btn:hover {
+
       transform:
-        scale(1.07);
+        scale(1.08);
 
       background:
-        rgba(15,20,27,.72);
+        rgba(25,30,36,.76);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
+       CAROUSEL DOTS
+       ===================================================== */
+
+    .carousel-dots {
+
+      position:
+        absolute;
+
+      right:
+        4px;
+
+      top:
+        50%;
+
+      transform:
+        translateY(-50%);
+
+      z-index:
+        50;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        8px;
+
+    }
+
+
+    .carousel-dot {
+
+      width:
+        7px;
+
+      height:
+        7px;
+
+      padding:
+        0;
+
+      border:
+        0;
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(255,255,255,.45);
+
+      cursor:
+        pointer;
+
+      transition:
+        width .25s ease,
+        height .25s ease,
+        background .25s ease;
+
+    }
+
+
+    .carousel-dot.active {
+
+      width:
+        7px;
+
+      height:
+        24px;
+
+      border-radius:
+        10px;
+
+      background:
+        #fff;
+
+    }
+
+
+    /* =====================================================
        SCHOOL
-       ========================================================= */
+       ===================================================== */
 
     .school-section {
-      padding-top: 80px;
+
+      padding-top:
+        80px;
+
     }
+
 
     .school-grid {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        minmax(0,.9fr)
-        minmax(0,1.1fr);
+        .85fr
+        1.15fr;
 
-      gap: 72px;
+      gap:
+        90px;
 
-      align-items: start;
+      align-items:
+        start;
+
     }
+
 
     .school-heading {
-      max-width: 500px;
+
+      max-width:
+        500px;
+
+      font-size:
+        clamp(
+          30px,
+          3.4vw,
+          46px
+        );
+
+      line-height:
+        1.04;
+
+      font-weight:
+        600;
+
+      letter-spacing:
+        -.025em;
+
+      text-shadow:
+        0 4px 25px
+        rgba(0,0,0,.42);
+
     }
+
 
     .school-text {
-      max-width: 640px;
+
+      max-width:
+        640px;
+
     }
+
 
     .school-text p {
-      margin-bottom: 24px;
+
+      margin-bottom:
+        25px;
+
+      font-size:
+        19px;
+
+      line-height:
+        1.6;
+
+      color:
+        rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px
+        rgba(0,0,0,.4);
+
     }
 
-    .school-text p:last-child {
-      margin-bottom: 0;
-    }
 
-
-    /* =========================================================
+    /* =====================================================
        COURSES
-       ========================================================= */
+       ===================================================== */
 
     .courses-section {
-      padding-top: 80px;
+
+      padding-top:
+        80px;
+
     }
+
 
     .courses-wrap {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        repeat(2,minmax(0,1fr));
+        1fr
+        1fr;
 
-      gap: 18px;
+      gap:
+        18px;
+
     }
 
+
     .course-card {
-      min-height: 235px;
 
-      padding: 32px;
+      min-height:
+        235px;
 
-      border-radius: var(--radius);
+      padding:
+        30px;
+
+      border-radius:
+        30px;
 
       background:
         rgba(20,25,31,.28);
@@ -652,130 +1106,181 @@
         rgba(255,255,255,.48);
 
       backdrop-filter:
-        blur(16px);
+        blur(18px);
 
       -webkit-backdrop-filter:
-        blur(16px);
+        blur(18px);
 
       box-shadow:
         var(--shadow);
 
-      display: flex;
+      display:
+        flex;
 
-      flex-direction: column;
+      flex-direction:
+        column;
 
-      justify-content: center;
+      justify-content:
+        center;
+
     }
+
 
     .course-card h3 {
+
       font-size:
-        clamp(36px,4vw,54px);
+        clamp(
+          36px,
+          4vw,
+          54px
+        );
 
-      line-height: 1;
+      line-height:
+        1;
 
-      font-weight: 600;
+      font-weight:
+        600;
 
       text-shadow:
-        0 4px 22px rgba(0,0,0,.38);
+        0 4px 22px
+        rgba(0,0,0,.38);
+
     }
+
 
     .course-price {
-      margin-top: 12px;
 
-      font-size: 24px;
+      margin-top:
+        12px;
 
-      font-weight: 600;
+      font-size:
+        24px;
+
+      font-weight:
+        600;
 
       text-shadow:
-        0 3px 18px rgba(0,0,0,.36);
+        0 3px 18px
+        rgba(0,0,0,.36);
+
     }
 
+
     .course-description {
-      margin-top: 12px;
 
-      font-size: var(--body-size);
+      margin-top:
+        12px;
 
-      line-height: 1.45;
+      font-size:
+        17px;
+
+      line-height:
+        1.45;
 
       color:
         rgba(255,255,255,.94);
 
       text-shadow:
-        0 3px 18px rgba(0,0,0,.35);
+        0 3px 18px
+        rgba(0,0,0,.35);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        DIRECTIONS
-       ========================================================= */
+       ===================================================== */
 
     .directions-title {
+
       margin:
         34px 0 16px;
 
-      font-size: 15px;
+      font-size:
+        15px;
 
-      font-weight: 500;
+      font-weight:
+        500;
 
-      letter-spacing: .08em;
+      letter-spacing:
+        .08em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
 
       text-shadow:
-        0 3px 18px rgba(0,0,0,.38);
+        0 3px 18px
+        rgba(0,0,0,.38);
+
     }
 
+
     .directions-wrap {
-      position: relative;
+
+      position:
+        relative;
 
       padding:
         0 56px;
+
     }
+
 
     .directions-window {
-      width: 100%;
 
-      overflow: hidden;
+      overflow:
+        hidden;
 
-      cursor: grab;
+      width:
+        100%;
 
-      touch-action: pan-y;
+      cursor:
+        grab;
+
+      touch-action:
+        pan-y;
+
     }
+
 
     .directions-window:active {
-      cursor: grabbing;
+
+      cursor:
+        grabbing;
+
     }
 
+
     .directions-track {
-      display: flex;
 
-      gap: 14px;
+      display:
+        flex;
 
-      width: max-content;
+      gap:
+        14px;
 
-      user-select: none;
+      width:
+        max-content;
+
+      user-select:
+        none;
 
       transition:
         transform .35s ease;
+
     }
 
+
     .direction {
-      width: 230px;
 
-      min-width: 230px;
-
-      min-height: 118px;
+      min-width:
+        210px;
 
       padding:
-        22px;
+        20px 22px;
 
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: center;
-
-      border-radius: 24px;
+      border-radius:
+        24px;
 
       background:
         rgba(20,25,31,.28);
@@ -787,136 +1292,119 @@
       backdrop-filter:
         blur(14px);
 
-      -webkit-backdrop-filter:
-        blur(14px);
-
       box-shadow:
         0 12px 35px
-        rgba(0,0,0,.10);
+        rgba(0,0,0,.1);
+
     }
+
 
     .direction-name {
-      font-size: 15px;
 
-      line-height: 1.25;
+      font-size:
+        15px;
 
-      font-weight: 600;
+      font-weight:
+        600;
 
       text-shadow:
-        0 2px 15px rgba(0,0,0,.35);
+        0 2px 15px
+        rgba(0,0,0,.35);
+
     }
 
-    .direction-price {
-      margin-top: 8px;
 
-      font-size: 15px;
+    .direction-price {
+
+      margin-top:
+        8px;
+
+      font-size:
+        15px;
 
       color:
         rgba(255,255,255,.88);
+
     }
 
-    .direction-control {
-      position: absolute;
 
-      top: 50%;
+    .direction-control {
+
+      position:
+        absolute;
+
+      top:
+        50%;
 
       transform:
         translateY(-50%);
 
-      width: 46px;
-      height: 46px;
+      width:
+        46px;
 
-      border-radius: 50%;
+      height:
+        46px;
+
+      border-radius:
+        50%;
 
       border:
         1px solid
         rgba(255,255,255,.72);
 
       background:
-        rgba(20,25,31,.40);
+        rgba(20,25,31,.4);
 
-      color: #fff;
+      backdrop-filter:
+        blur(14px);
 
-      cursor: pointer;
+      color:
+        #fff;
 
-      z-index: 5;
+      cursor:
+        pointer;
+
+      z-index:
+        5;
+
     }
+
 
     .direction-control.prev {
-      left: 0;
+
+      left:
+        0;
+
     }
+
 
     .direction-control.next {
-      right: 0;
+
+      right:
+        0;
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        ABOUT
-       Без карточки.
-       Без фона.
-       Только сетка + текст.
-       ========================================================= */
+       ===================================================== */
 
     .about-section {
-      padding-top: 110px;
+
+      padding-top:
+        110px;
+
     }
+
 
     .about-card {
-      background: transparent;
 
-      border: 0;
+      padding:
+        42px;
 
-      box-shadow: none;
-
-      backdrop-filter: none;
-
-      -webkit-backdrop-filter: none;
-
-      padding: 0;
-    }
-
-    .about-grid {
-      display: grid;
-
-      grid-template-columns:
-        minmax(0,.9fr)
-        minmax(0,1.1fr);
-
-      gap: 72px;
-
-      align-items: start;
-    }
-
-    .about-heading {
-      max-width: 520px;
-    }
-
-    .about-text {
-      max-width: 640px;
-    }
-
-    .about-text p {
-      margin-bottom: 24px;
-    }
-
-    .about-text p:last-child {
-      margin-bottom: 0;
-    }
-
-
-    /* =========================================================
-       SIGNUP
-       ========================================================= */
-
-    .signup-section {
-      padding-top: 80px;
-    }
-
-    .signup-card {
-      padding: 42px;
-
-      border-radius: var(--radius);
+      border-radius:
+        30px;
 
       background:
         rgba(20,25,31,.28);
@@ -926,74 +1414,257 @@
         rgba(255,255,255,.48);
 
       backdrop-filter:
-        blur(16px);
+        blur(18px);
 
       -webkit-backdrop-filter:
-        blur(16px);
+        blur(18px);
 
       box-shadow:
         var(--shadow);
+
     }
+
+
+    .about-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        .85fr
+        1.15fr;
+
+      gap:
+        70px;
+
+      align-items:
+        start;
+
+    }
+
+
+    .about-heading {
+
+      max-width:
+        500px;
+
+      font-size:
+        clamp(
+          30px,
+          3.4vw,
+          46px
+        );
+
+      line-height:
+        1.04;
+
+      font-weight:
+        600;
+
+      letter-spacing:
+        -.025em;
+
+      text-shadow:
+        0 4px 25px
+        rgba(0,0,0,.42);
+
+    }
+
+
+    .about-text {
+
+      max-width:
+        640px;
+
+    }
+
+
+    .about-text p {
+
+      margin-bottom:
+        25px;
+
+      font-size:
+        19px;
+
+      line-height:
+        1.62;
+
+      color:
+        rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px
+        rgba(0,0,0,.38);
+
+    }
+
+
+    /* =====================================================
+       SIGNUP
+       ===================================================== */
+
+    .signup-section {
+
+      padding-top:
+        80px;
+
+    }
+
+
+    .signup-card {
+
+      padding:
+        42px;
+
+      border-radius:
+        30px;
+
+      background:
+        rgba(20,25,31,.28);
+
+      border:
+        1px solid
+        rgba(255,255,255,.48);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        var(--shadow);
+
+    }
+
 
     .signup-grid {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        minmax(0,1fr)
-        minmax(0,1fr);
+        1fr
+        1fr;
 
-      gap: 72px;
+      gap:
+        70px;
 
-      align-items: center;
+      align-items:
+        center;
+
     }
+
 
     .signup-heading {
-      max-width: 500px;
+
+      max-width:
+        500px;
+
+      font-size:
+        clamp(
+          34px,
+          4vw,
+          58px
+        );
+
+      line-height:
+        1;
+
+      font-weight:
+        600;
+
+      text-shadow:
+        0 4px 25px
+        rgba(0,0,0,.42);
+
     }
+
 
     .signup-copy {
-      max-width: 560px;
 
-      margin-top: 22px;
+      margin-top:
+        22px;
+
+      max-width:
+        560px;
+
+      font-size:
+        18px;
+
+      line-height:
+        1.55;
+
+      color:
+        rgba(255,255,255,.92);
+
     }
+
 
     .signup-form {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        repeat(2,minmax(0,1fr));
+        1fr
+        1fr;
 
-      gap: 18px;
+      gap:
+        18px;
+
     }
+
 
     .signup-field {
-      display: flex;
 
-      flex-direction: column;
+      display:
+        flex;
 
-      gap: 7px;
+      flex-direction:
+        column;
+
+      gap:
+        7px;
+
     }
+
 
     .signup-field.full {
-      grid-column: 1 / -1;
+
+      grid-column:
+        1 / -1;
+
     }
+
 
     .signup-field label {
-      font-size: 12px;
 
-      letter-spacing: .08em;
+      font-size:
+        12px;
 
-      font-weight: 500;
+      letter-spacing:
+        .08em;
+
+      font-weight:
+        500;
+
     }
 
-    .signup-field input {
-      width: 100%;
+
+    .signup-field input,
+    .signup-field textarea {
+
+      width:
+        100%;
 
       border:
         1px solid
         rgba(255,255,255,.25);
 
-      border-radius: 14px;
+      border-radius:
+        14px;
 
       padding:
         14px 15px;
@@ -1001,96 +1672,169 @@
       background:
         rgba(255,255,255,.10);
 
-      color: #fff;
+      color:
+        #fff;
 
-      outline: none;
+      outline:
+        none;
 
       transition:
         border-color .25s ease,
         background .25s ease;
+
     }
 
-    .signup-field input::placeholder {
+
+    .signup-field input::placeholder,
+    .signup-field textarea::placeholder {
+
       color:
         rgba(255,255,255,.58);
+
     }
 
-    .signup-field input:focus {
+
+    .signup-field input:focus,
+    .signup-field textarea:focus {
+
       border-color:
         rgba(255,255,255,.65);
 
       background:
         rgba(255,255,255,.14);
+
     }
 
+
+    .signup-field textarea {
+
+      min-height:
+        100px;
+
+      resize:
+        vertical;
+
+    }
+
+
     .signup-submit {
-      width: 100%;
 
-      border: 0;
+      border:
+        0;
 
-      border-radius: 15px;
+      border-radius:
+        15px;
 
       padding:
         15px 20px;
 
-      color: #30363d;
+      color:
+        #30363d;
 
-      background: #fff;
+      background:
+        #fff;
 
-      cursor: pointer;
+      cursor:
+        pointer;
 
-      font-weight: 600;
+      font-weight:
+        600;
 
       transition:
         transform .25s ease,
         box-shadow .25s ease;
+
     }
 
+
     .signup-submit:hover {
+
       transform:
         translateY(-3px);
 
       box-shadow:
         0 14px 30px
         rgba(0,0,0,.22);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        FAQ
-       ========================================================= */
+       ===================================================== */
 
     .faq-section {
-      padding-top: 110px;
+
+      padding-top:
+        110px;
+
     }
+
 
     .faq-title {
-      margin-bottom: 34px;
+
+      margin-bottom:
+        34px;
+
+      font-size:
+        clamp(
+          36px,
+          4vw,
+          58px
+        );
+
+      line-height:
+        .98;
+
+      font-weight:
+        600;
+
+      text-shadow:
+        0 4px 26px
+        rgba(0,0,0,.42);
+
     }
+
 
     .faq-grid {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        repeat(2,minmax(0,1fr));
+        1fr
+        1fr;
 
-      gap: 14px;
+      gap:
+        14px;
 
-      align-items: start;
+      align-items:
+        start;
+
     }
+
 
     .faq-column {
-      display: flex;
 
-      flex-direction: column;
+      display:
+        flex;
 
-      gap: 12px;
+      flex-direction:
+        column;
+
+      gap:
+        12px;
+
     }
 
-    .faq-item {
-      overflow: hidden;
 
-      border-radius: 22px;
+    .faq-item {
+
+      overflow:
+        hidden;
+
+      border-radius:
+        22px;
 
       background:
         rgba(20,25,31,.38);
@@ -1108,99 +1852,148 @@
       box-shadow:
         0 12px 30px
         rgba(0,0,0,.10);
+
     }
 
+
     .faq-question {
-      width: 100%;
 
-      border: 0;
+      width:
+        100%;
 
-      background: transparent;
+      border:
+        0;
+
+      background:
+        transparent;
 
       padding:
         20px 22px;
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      justify-content: space-between;
+      justify-content:
+        space-between;
 
-      gap: 20px;
+      gap:
+        20px;
 
-      color: #fff;
+      color:
+        #fff;
 
-      text-align: left;
+      text-align:
+        left;
 
-      cursor: pointer;
+      cursor:
+        pointer;
 
-      font-size: 16px;
+      font-size:
+        16px;
 
-      font-weight: 500;
+      font-weight:
+        500;
+
     }
 
+
     .faq-icon {
-      flex: 0 0 auto;
 
-      font-size: 23px;
+      flex:
+        0 0 auto;
 
-      font-weight: 300;
+      font-size:
+        23px;
+
+      font-weight:
+        300;
 
       transition:
         transform .3s ease;
+
     }
 
-    .faq-answer {
-      max-height: 0;
 
-      overflow: hidden;
+    .faq-answer {
+
+      max-height:
+        0;
+
+      overflow:
+        hidden;
 
       transition:
         max-height .4s ease;
+
     }
 
+
     .faq-answer-inner {
+
       padding:
         0 22px 20px;
 
-      font-size: 15px;
+      font-size:
+        15px;
 
-      line-height: 1.55;
+      line-height:
+        1.55;
 
       color:
         rgba(255,255,255,.88);
+
     }
 
-    .faq-item.open .faq-icon {
+
+    .faq-item.open
+    .faq-icon {
+
       transform:
         rotate(45deg);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        REFERRAL
-       ========================================================= */
+       ===================================================== */
 
     .referral-section {
-      padding-top: 100px;
+
+      padding-top:
+        100px;
+
     }
+
 
     .referral-grid {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        minmax(0,.9fr)
-        minmax(0,1.1fr);
+        .9fr
+        1.1fr;
 
-      gap: 72px;
+      gap:
+        72px;
 
-      align-items: center;
+      align-items:
+        center;
+
     }
 
-    .referral-card {
-      padding: 42px;
 
-      border-radius: 34px;
+    .referral-card {
+
+      padding:
+        42px;
+
+      border-radius:
+        34px;
 
       background:
         rgba(15,20,27,.48);
@@ -1218,21 +2011,31 @@
       box-shadow:
         0 22px 55px
         rgba(0,0,0,.20);
+
     }
+
 
     .referral-card h3 {
-      margin-bottom: 22px;
 
-      font-size: 30px;
+      margin-bottom:
+        22px;
+
+      font-size:
+        30px;
+
     }
 
+
     .referral-input {
-      width: 100%;
+
+      width:
+        100%;
 
       padding:
         15px 16px;
 
-      border-radius: 15px;
+      border-radius:
+        15px;
 
       border:
         1px solid
@@ -1241,99 +2044,172 @@
       background:
         rgba(255,255,255,.90);
 
-      outline: none;
+      outline:
+        none;
 
-      color: #30363d;
+      color:
+        #30363d;
 
-      margin-bottom: 12px;
+      margin-bottom:
+        12px;
+
     }
 
+
     .referral-submit {
-      width: 100%;
 
-      border: 0;
+      width:
+        100%;
 
-      border-radius: 15px;
+      border:
+        0;
 
-      padding: 15px;
+      border-radius:
+        15px;
 
-      color: #fff;
+      padding:
+        15px;
+
+      color:
+        #fff;
 
       background:
         #282e35;
 
-      cursor: pointer;
+      cursor:
+        pointer;
 
-      font-size: 24px;
+      font-size:
+        24px;
+
     }
+
 
     .referral-copy h2 {
-      margin-bottom: 30px;
+
+      margin-bottom:
+        30px;
+
+      font-size:
+        clamp(
+          36px,
+          4vw,
+          58px
+        );
+
+      line-height:
+        .98;
+
+      font-weight:
+        600;
+
+      text-shadow:
+        0 4px 26px
+        rgba(0,0,0,.42);
+
     }
+
 
     .referral-steps {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
-        repeat(3,minmax(0,1fr));
+        repeat(
+          3,
+          minmax(0,1fr)
+        );
 
-      gap: 18px;
+      gap:
+        18px;
+
     }
+
 
     .referral-step {
-      display: flex;
 
-      flex-direction: column;
+      display:
+        flex;
 
-      gap: 8px;
+      flex-direction:
+        column;
 
-      min-width: 0;
+      gap:
+        8px;
+
     }
 
-    .referral-number {
-      font-size: 13px;
 
-      letter-spacing: .08em;
+    .referral-number {
+
+      font-size:
+        13px;
+
+      letter-spacing:
+        .08em;
 
       color:
         rgba(255,255,255,.70);
+
     }
+
 
     .referral-step strong {
-      font-size: 18px;
+
+      font-size:
+        18px;
+
     }
 
-    .referral-step span {
-      font-size: 14px;
 
-      line-height: 1.45;
+    .referral-step span {
+
+      font-size:
+        14px;
+
+      line-height:
+        1.45;
 
       color:
         rgba(255,255,255,.90);
+
     }
 
+
     .socials {
-      display: flex;
 
-      justify-content: center;
+      display:
+        flex;
 
-      align-items: center;
+      justify-content:
+        center;
 
-      gap: 16px;
+      align-items:
+        center;
+
+      gap:
+        16px;
 
       margin:
         38px auto 0;
 
-      flex-wrap: wrap;
+      flex-wrap:
+        wrap;
+
     }
 
+
     .social-btn {
-      min-width: 142px;
+
+      min-width:
+        142px;
 
       padding:
         13px 22px;
 
-      border-radius: 999px;
+      border-radius:
+        999px;
 
       border:
         1px solid
@@ -1342,13 +2218,17 @@
       background:
         rgba(20,25,31,.42);
 
-      text-align: center;
+      text-align:
+        center;
 
-      font-size: 13px;
+      font-size:
+        13px;
 
-      font-weight: 600;
+      font-weight:
+        600;
 
-      letter-spacing: .06em;
+      letter-spacing:
+        .06em;
 
       box-shadow:
         0 9px 24px
@@ -1358,9 +2238,12 @@
         transform .35s ease,
         box-shadow .35s ease,
         border-color .35s ease;
+
     }
 
+
     .social-btn:hover {
+
       transform:
         translateY(-5px);
 
@@ -1370,18 +2253,20 @@
       box-shadow:
         0 16px 34px
         rgba(0,0,0,.30);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        FOOTER
-       ========================================================= */
+       ===================================================== */
 
     footer {
+
       width:
         min(
-          var(--content-width),
-          calc(100% - var(--side-space))
+          1180px,
+          calc(100% - 48px)
         );
 
       margin:
@@ -1389,33 +2274,44 @@
 
       padding:
         70px 0 35px;
+
     }
 
+
     .footer-line {
-      display: flex;
 
-      justify-content: center;
+      display:
+        flex;
 
-      align-items: center;
+      justify-content:
+        center;
 
-      gap: 18px;
+      align-items:
+        center;
 
-      flex-wrap: nowrap;
+      gap:
+        18px;
 
-      white-space: nowrap;
+      flex-wrap:
+        nowrap;
 
-      font-size: 11px;
+      white-space:
+        nowrap;
+
+      font-size:
+        11px;
 
       color:
         rgba(255,255,255,.78);
+
     }
 
 
-    /* =========================================================
+    /* =====================================================
        TABLET
-       ========================================================= */
+       ===================================================== */
 
-    @media (max-width: 1000px) {
+    @media(max-width:1000px) {
 
       .why-layout,
       .school-grid,
@@ -1423,183 +2319,279 @@
       .faq-grid,
       .referral-grid,
       .signup-grid {
-        grid-template-columns: 1fr;
 
-        gap: 45px;
+        grid-template-columns:
+          1fr;
+
+        gap:
+          45px;
+
       }
+
 
       .why-copy {
-        position: static;
+
+        position:
+          static;
+
       }
 
+
       .why-carousel {
-        height: 520px;
+
+        height:
+          580px;
+
       }
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        MOBILE
-       ========================================================= */
+       ===================================================== */
 
-    @media (max-width: 760px) {
-
-      :root {
-        --side-space: 32px;
-
-        --heading-size:
-          clamp(34px,9vw,48px);
-
-        --body-size: 17px;
-      }
-
-      header {
-        padding:
-          18px 20px;
-      }
-
-      nav {
-        display: none;
-      }
+    @media(max-width:760px) {
 
       section {
+
         width:
           calc(100% - 32px);
+
       }
 
-      .hero {
-        min-height: 92vh;
+
+      header {
 
         padding:
-          100px 20px 60px;
+          18px 20px;
+
       }
 
+
+      nav {
+
+        display:
+          none;
+
+      }
+
+
+      .hero {
+
+        min-height:
+          92vh;
+
+        padding:
+          100px
+          20px
+          60px;
+
+      }
+
+
       .hero-title {
+
         font-size:
-          clamp(43px,10.4vw,78px);
+          clamp(
+            43px,
+            10.4vw,
+            78px
+          );
 
         letter-spacing:
           -.045em;
+
       }
+
 
       .section {
+
         padding:
           80px 0;
+
       }
 
+
+      /*
+        Квадратная мобильная карусель.
+      */
+
       .why-carousel {
-        height: 470px;
+
+        height:
+          500px;
 
         margin:
           0 -4px;
+
       }
+
 
       .ai-card {
+
         width:
           min(
-            340px,
-            82vw
+            330px,
+            76vw
           );
 
-        border-radius: 26px;
+        aspect-ratio:
+          1 / 1;
+
+        border-radius:
+          26px;
+
       }
+
 
       .carousel-controls {
-        bottom: 4px;
+
+        bottom:
+          4px;
+
       }
+
+
+      .carousel-dots {
+
+        right:
+          1px;
+
+      }
+
 
       .courses-wrap {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
+
 
       .directions-wrap {
+
         padding:
           0 42px;
+
       }
+
 
       .direction {
-        width: 200px;
 
-        min-width: 200px;
+        min-width:
+          190px;
+
       }
+
 
       .about-card,
-      .signup-card,
-      .referral-card {
-        padding: 26px;
-      }
+      .signup-card {
 
-      /*
-        ABOUT на мобильном всё равно остаётся
-        без фона и без карточки.
-      */
-
-      .about-card {
         padding:
-          0 2px;
+          26px;
+
       }
+
 
       .signup-form {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
+
 
       .signup-field.full {
-        grid-column: auto;
+
+        grid-column:
+          auto;
+
       }
+
+
+      .referral-card {
+
+        padding:
+          26px;
+
+      }
+
 
       .referral-steps {
-        grid-template-columns: 1fr;
 
-        gap: 22px;
+        grid-template-columns:
+          1fr;
+
+        gap:
+          22px;
+
       }
+
 
       .socials {
-        margin-top: 32px;
+
+        margin-top:
+          32px;
+
       }
 
-      .footer-line {
-        white-space: normal;
 
-        flex-wrap: wrap;
+      .footer-line {
+
+        white-space:
+          normal;
+
+        flex-wrap:
+          wrap;
 
         gap:
           8px 14px;
+
       }
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        REDUCED MOTION
-       ========================================================= */
+       ===================================================== */
 
-    @media (prefers-reduced-motion: reduce) {
+    @media(prefers-reduced-motion:reduce) {
 
       html {
-        scroll-behavior: auto;
+
+        scroll-behavior:
+          auto;
+
       }
+
 
       *,
       *::before,
       *::after {
-        animation-duration: .01ms !important;
 
-        transition-duration: .01ms !important;
+        animation-duration:
+          .01ms !important;
+
+        transition-duration:
+          .01ms !important;
+
       }
 
     }
 
   </style>
+
 </head>
 
 
 <body>
 
 
-  <!-- =======================================================
+  <!-- =====================================================
        BACKGROUND
-       ======================================================= -->
+       ===================================================== -->
 
   <div
     class="background"
@@ -1615,6 +2607,7 @@
       preload="auto"
     ></video>
 
+
     <video
       class="bg-video"
       id="bg2"
@@ -1623,6 +2616,7 @@
       playsinline
       preload="metadata"
     ></video>
+
 
     <video
       class="bg-video"
@@ -1636,9 +2630,9 @@
   </div>
 
 
-  <!-- =======================================================
+  <!-- =====================================================
        HEADER
-       ======================================================= -->
+       ===================================================== -->
 
   <header id="header">
 
@@ -1648,6 +2642,7 @@
     >
       MULTUM.AI
     </a>
+
 
     <nav>
 
@@ -1694,6 +2689,7 @@
           MULTUM.AI
         </h1>
 
+
         <p class="hero-subtitle">
           Школа нейросетей для людей, которые хотят не просто пользоваться AI, а строить вокруг него реальный результат.
         </p>
@@ -1721,6 +2717,7 @@
             Зачем тебе AI?
           </h2>
 
+
           <p>
             AI уже изменил работу, продукцию и скорость принятия решений. Наша задача — научить тебя использовать это осознанно, эффективно и без хаоса.
           </p>
@@ -1728,11 +2725,15 @@
         </div>
 
 
+        <!-- =================================================
+             VERTICAL AI CAROUSEL
+             ================================================= -->
+
         <div
           class="why-carousel"
-          id="whyCarousel"
           aria-label="Примеры направлений AI"
         >
+
 
           <div
             class="why-track"
@@ -1741,7 +2742,7 @@
 
 
             <article
-              class="ai-card active"
+              class="ai-card"
               data-index="0"
             >
 
@@ -1808,7 +2809,12 @@
           </div>
 
 
+          <!-- ===============================================
+               UP / DOWN
+               =============================================== -->
+
           <div class="carousel-controls">
+
 
             <button
               class="carousel-btn"
@@ -1819,6 +2825,7 @@
               ↑
             </button>
 
+
             <button
               class="carousel-btn"
               id="aiNext"
@@ -1828,7 +2835,20 @@
               ↓
             </button>
 
+
           </div>
+
+
+          <!-- ===============================================
+               DOTS
+               =============================================== -->
+
+          <div
+            class="carousel-dots"
+            id="carouselDots"
+            aria-label="Выбрать картинку"
+          ></div>
+
 
         </div>
 
@@ -1864,9 +2884,11 @@
             MULTUM.AI — пространство, где нейросети превращаются в понятные инструменты для работы, творчества и собственного дела.
           </p>
 
+
           <p>
             Мы соединяем обучение, практику и реальные задачи, чтобы знания не оставались теорией, а помогали создавать проекты и находить новые возможности.
           </p>
+
 
           <p>
             Учимся применять AI на практике — от первых запросов до готовых продуктов и автоматизированных процессов.
@@ -1889,6 +2911,7 @@
       id="courses"
     >
 
+
       <h2 class="section-title">
         Курсы
       </h2>
@@ -1903,9 +2926,11 @@
             MAXI
           </h3>
 
+
           <div class="course-price">
             99 900 ₽
           </div>
+
 
           <p class="course-description">
             Полный курс по работе с AI в жизни, бизнесе и продукте.
@@ -1920,9 +2945,11 @@
             MINI
           </h3>
 
+
           <div class="course-price">
             7 900 ₽
           </div>
+
 
           <p class="course-description">
             Практический курс по основам нейросетей и полезным AI-инструментам.
@@ -1956,6 +2983,7 @@
           class="directions-window"
           id="directionsWindow"
         >
+
 
           <div
             class="directions-track"
@@ -2109,7 +3137,9 @@
       id="about"
     >
 
+
       <div class="about-card">
+
 
         <div class="about-grid">
 
@@ -2122,29 +3152,24 @@
           <div class="about-text">
 
             <p>
-              Привет! Нас зовут Алина и Даша.
+              Мы с Дашей создали MULTUM.AI, потому что сами верим: нейросети должны быть не сложной игрушкой, а понятным инструментом, который помогает воплощать идеи и менять привычный подход к работе.
             </p>
 
-            <p>
-              Мы создали MULTUM.AI для людей, которые понимают, что искусственный интеллект уже меняет правила игры, но не хотят просто наблюдать за этим со стороны.
-            </p>
 
             <p>
-              Мы сами прошли путь от первых экспериментов с нейросетями до системной работы с AI и увидели главное: сегодня ценность не в том, чтобы знать сотни сервисов. Ценность в том, чтобы понимать, как соединять технологии между собой и превращать их в реальные решения.
+              В этом проекте мы объединили свой опыт, любопытство и желание делиться практическими знаниями. Нам важно, чтобы каждый ученик мог не просто узнать о возможностях AI, а применить их в собственных задачах.
             </p>
 
-            <p>
-              Поэтому MULTUM.AI — это не школа про бесконечные списки инструментов. Мы учим создавать, автоматизировать, запускать и решать задачи с помощью AI так, чтобы технологии действительно работали на тебя.
-            </p>
 
             <p>
-              Здесь можно прийти с идеей и постепенно превратить её в визуал, продукт, сайт, автоматизацию или целый проект. Мы хотим, чтобы после обучения у тебя оставалось не просто знание о нейросетях, а ощущение: «Я теперь действительно умею это делать».
+              Это наша общая история и школа, которую мы строим вместе с сообществом.
             </p>
 
           </div>
 
 
         </div>
+
 
       </div>
 
@@ -2160,7 +3185,9 @@
       id="signup"
     >
 
+
       <div class="signup-card">
+
 
         <div class="signup-grid">
 
@@ -2170,6 +3197,7 @@
             <h2 class="signup-heading">
               Оставь заявку
             </h2>
+
 
             <p class="signup-copy">
               Расскажи немного о себе и о том, чему хочешь обучиться. Мы поможем выбрать подходящую программу.
@@ -2267,6 +3295,7 @@
 
         </div>
 
+
       </div>
 
     </section>
@@ -2280,6 +3309,7 @@
       class="section faq-section"
       id="faq"
     >
+
 
       <h2 class="faq-title">
         FAQ
@@ -2310,6 +3340,7 @@
 
             </button>
 
+
             <div class="faq-answer">
 
               <div class="faq-answer-inner">
@@ -2338,6 +3369,7 @@
               </span>
 
             </button>
+
 
             <div class="faq-answer">
 
@@ -2368,6 +3400,7 @@
 
             </button>
 
+
             <div class="faq-answer">
 
               <div class="faq-answer-inner">
@@ -2396,6 +3429,7 @@
               </span>
 
             </button>
+
 
             <div class="faq-answer">
 
@@ -2432,6 +3466,7 @@
 
             </button>
 
+
             <div class="faq-answer">
 
               <div class="faq-answer-inner">
@@ -2460,6 +3495,7 @@
               </span>
 
             </button>
+
 
             <div class="faq-answer">
 
@@ -2490,6 +3526,7 @@
 
             </button>
 
+
             <div class="faq-answer">
 
               <div class="faq-answer-inner">
@@ -2519,6 +3556,7 @@
 
             </button>
 
+
             <div class="faq-answer">
 
               <div class="faq-answer-inner">
@@ -2547,6 +3585,7 @@
       id="referral"
     >
 
+
       <div class="referral-grid">
 
 
@@ -2556,12 +3595,14 @@
             ПРИГЛАСИ СВОИХ
           </h3>
 
+
           <input
             class="referral-input"
             id="referralInput"
             type="text"
             placeholder="Введи реферальный код"
           >
+
 
           <button
             class="referral-submit"
@@ -2640,6 +3681,7 @@
 
           <div class="socials">
 
+
             <a
               class="social-btn"
               href="https://www.instagram.com/multumai?xtok=dnV0dnRmaml2N3dl"
@@ -2649,6 +3691,7 @@
               INSTAGRAM
             </a>
 
+
             <a
               class="social-btn"
               href="https://t.me/multumai"
@@ -2657,6 +3700,7 @@
             >
               TELEGRAM
             </a>
+
 
           </div>
 
@@ -2672,68 +3716,79 @@
   </main>
 
 
-  <!-- =======================================================
+  <!-- =====================================================
        FOOTER
-       ======================================================= -->
+       ===================================================== -->
 
   <footer>
 
     <div class="footer-line">
 
+
       <a href="#">
         Пользовательское соглашение
       </a>
 
-      <span>•</span>
+
+      <span>
+        •
+      </span>
+
 
       <a href="#">
         Политика конфиденциальности
       </a>
 
-      <span>•</span>
+
+      <span>
+        •
+      </span>
+
 
       <a href="#">
         Публичная оферта ОУ
       </a>
 
-      <span>•</span>
+
+      <span>
+        •
+      </span>
+
 
       <a href="#">
         Публичная оферта ИКУ
       </a>
+
 
     </div>
 
   </footer>
 
 
-  <!-- =======================================================
-       JAVASCRIPT
-       ======================================================= -->
-
   <script>
 
-    /* =========================================================
+
+    /* =====================================================
        HELPERS
-       ========================================================= */
+       ===================================================== */
 
     const clamp = (
       value,
       min,
       max
-    ) => {
-
-      return Math.min(
+    ) =>
+      Math.min(
         max,
-        Math.max(min,value)
+        Math.max(
+          min,
+          value
+        )
       );
 
-    };
 
-
-    /* =========================================================
+    /* =====================================================
        BACKGROUND VIDEOS
-       ========================================================= */
+       ===================================================== */
 
     const videos =
       [
@@ -2756,11 +3811,6 @@
     let lastSeekTime = 0;
 
 
-    /*
-      Ограничиваем количество seek.
-      Это особенно важно для Safari.
-    */
-
     const SEEK_INTERVAL =
       1000 / 30;
 
@@ -2770,15 +3820,19 @@
 
         video.pause();
 
-        video.muted = true;
+        video.muted =
+          true;
 
-        video.playsInline = true;
+        video.playsInline =
+          true;
 
-        video.loop = false;
+        video.loop =
+          false;
 
         video.removeAttribute(
           "autoplay"
         );
+
 
         video.addEventListener(
           "play",
@@ -2801,8 +3855,12 @@
         window.innerHeight;
 
 
-      if (max <= 0) {
+      if (
+        max <= 0
+      ) {
+
         return 0;
+
       }
 
 
@@ -2822,7 +3880,9 @@
       if (
         index === activeVideo
       ) {
+
         return;
+
       }
 
 
@@ -2840,6 +3900,7 @@
             "active",
             active
           );
+
 
           video.style.opacity =
             active
@@ -2865,7 +3926,8 @@
 
         try {
 
-          next.currentTime = 0;
+          next.currentTime =
+            0;
 
         } catch (_) {}
 
@@ -2882,7 +3944,9 @@
       if (
         !videos.length
       ) {
+
         return;
+
       }
 
 
@@ -2894,7 +3958,7 @@
         clamp(
           progress * count,
           0,
-          count - .000001
+          count - 0.000001
         );
 
 
@@ -2925,7 +3989,9 @@
         ) ||
         video.duration <= 0
       ) {
+
         return;
+
       }
 
 
@@ -2960,7 +4026,7 @@
       const duration =
         Math.max(
           0,
-          video.duration - .05
+          video.duration - 0.05
         );
 
 
@@ -2969,14 +4035,16 @@
           local,
           0,
           1
-        ) * duration;
+        ) *
+        duration;
 
 
       if (
         Math.abs(
           video.currentTime -
           wanted
-        ) < .035
+        ) <
+        0.035
       ) {
 
         return;
@@ -3001,8 +4069,10 @@
       const dt =
         lastFrameTime
           ? Math.min(
-              (now - lastFrameTime) /
-                1000,
+              (
+                now -
+                lastFrameTime
+              ) / 1000,
               .05
             )
           : 1 / 60;
@@ -3023,14 +4093,16 @@
         (
           targetProgress -
           renderedProgress
-        ) * factor;
+        ) *
+        factor;
 
 
       if (
         Math.abs(
           targetProgress -
           renderedProgress
-        ) < .00005
+        ) <
+        .00005
       ) {
 
         renderedProgress =
@@ -3048,7 +4120,8 @@
         Math.abs(
           targetProgress -
           renderedProgress
-        ) > .00005
+        ) >
+        .00005
       ) {
 
         backgroundFrame =
@@ -3058,9 +4131,11 @@
 
       } else {
 
-        backgroundFrame = 0;
+        backgroundFrame =
+          0;
 
-        lastFrameTime = 0;
+        lastFrameTime =
+          0;
 
       }
 
@@ -3091,7 +4166,8 @@
       "scroll",
       onScroll,
       {
-        passive: true
+        passive:
+          true
       }
     );
 
@@ -3117,13 +4193,15 @@
 
       },
       {
-        passive: true
+        passive:
+          true
       }
     );
 
 
     targetProgress =
       pageProgress();
+
 
     renderedProgress =
       targetProgress;
@@ -3135,9 +4213,9 @@
     );
 
 
-    /* =========================================================
+    /* =====================================================
        HEADER
-       ========================================================= */
+       ===================================================== */
 
     const header =
       document.getElementById(
@@ -3152,22 +4230,23 @@
         header.classList.toggle(
           "hidden",
           window.scrollY >
-          window.innerHeight * .55
+          window.innerHeight *
+          .55
         );
 
       },
       {
-        passive: true
+        passive:
+          true
       }
     );
 
 
-    /* =========================================================
-       AI CAROUSEL
-       Теперь показывается только одна картинка.
-       ========================================================= */
+    /* =====================================================
+       AI VERTICAL CAROUSEL
+       ===================================================== */
 
-    const aiCards =
+    const cards =
       [
         ...document.querySelectorAll(
           ".ai-card"
@@ -3175,18 +4254,271 @@
       ];
 
 
-    let activeCard = 0;
+    const dots =
+      document.getElementById(
+        "carouselDots"
+      );
 
 
-    function renderAICard() {
+    let activeCard =
+      0;
 
-      aiCards.forEach(
+
+    /*
+      Создаём точки.
+    */
+
+    cards.forEach(
+      (
+        _,
+        index
+      ) => {
+
+        const dot =
+          document.createElement(
+            "button"
+          );
+
+
+        dot.type =
+          "button";
+
+
+        dot.className =
+          "carousel-dot";
+
+
+        dot.setAttribute(
+          "aria-label",
+          `Показать изображение ${index + 1}`
+        );
+
+
+        dot.addEventListener(
+          "click",
+          () => {
+
+            activeCard =
+              index;
+
+            renderCards();
+
+          }
+        );
+
+
+        dots.append(
+          dot
+        );
+
+      }
+    );
+
+
+    /*
+      ВАЖНО:
+
+      Теперь движение ТОЛЬКО по Y.
+
+      Никакого rotateX.
+      Никакого rotateY.
+      Никакого огромного Z.
+      Никакой перспективной пирамиды.
+
+      Каждая картинка остаётся квадратной.
+    */
+
+    function renderCards() {
+
+      cards.forEach(
         (
           card,
           index
         ) => {
 
-          card.classList.toggle(
+          let relative =
+            index -
+            activeCard;
+
+
+          /*
+            Зацикливаем вертикальную карусель.
+          */
+
+          if (
+            relative >
+            cards.length / 2
+          ) {
+
+            relative -=
+              cards.length;
+
+          }
+
+
+          if (
+            relative <
+            -cards.length / 2
+          ) {
+
+            relative +=
+              cards.length;
+
+          }
+
+
+          const distance =
+            Math.abs(
+              relative
+            );
+
+
+          /*
+            Центральная картинка.
+          */
+
+          if (
+            distance === 0
+          ) {
+
+            card.style.setProperty(
+              "--carousel-y",
+              "0px"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-scale",
+              "1"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-opacity",
+              "1"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-brightness",
+              "1"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-z",
+              "20"
+            );
+
+
+            card.style.pointerEvents =
+              "auto";
+
+          }
+
+
+          /*
+            Картинка сверху.
+          */
+
+          else if (
+            relative < 0
+          ) {
+
+            card.style.setProperty(
+              "--carousel-y",
+              "-250px"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-scale",
+              ".78"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-opacity",
+              distance === 1
+                ? ".45"
+                : "0"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-brightness",
+              ".72"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-z",
+              "10"
+            );
+
+
+            card.style.pointerEvents =
+              "none";
+
+          }
+
+
+          /*
+            Картинка снизу.
+          */
+
+          else {
+
+            card.style.setProperty(
+              "--carousel-y",
+              "250px"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-scale",
+              ".78"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-opacity",
+              distance === 1
+                ? ".45"
+                : "0"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-brightness",
+              ".72"
+            );
+
+
+            card.style.setProperty(
+              "--carousel-z",
+              "10"
+            );
+
+
+            card.style.pointerEvents =
+              "none";
+
+          }
+
+        }
+      );
+
+
+      [
+        ...dots.children
+      ].forEach(
+        (
+          dot,
+          index
+        ) => {
+
+          dot.classList.toggle(
             "active",
             index === activeCard
           );
@@ -3197,8 +4529,14 @@
     }
 
 
+    /*
+      UP
+    */
+
     document
-      .getElementById("aiPrev")
+      .getElementById(
+        "aiPrev"
+      )
       .addEventListener(
         "click",
         () => {
@@ -3207,19 +4545,25 @@
             (
               activeCard -
               1 +
-              aiCards.length
+              cards.length
             ) %
-            aiCards.length;
+            cards.length;
 
 
-          renderAICard();
+          renderCards();
 
         }
       );
 
 
+    /*
+      DOWN
+    */
+
     document
-      .getElementById("aiNext")
+      .getElementById(
+        "aiNext"
+      )
       .addEventListener(
         "click",
         () => {
@@ -3229,22 +4573,22 @@
               activeCard +
               1
             ) %
-            aiCards.length;
+            cards.length;
 
 
-          renderAICard();
+          renderCards();
 
         }
       );
 
 
     /*
-      Колесо мыши над AI-каруселью.
+      Колесо мыши над каруселью.
     */
 
     const whyCarousel =
-      document.getElementById(
-        "whyCarousel"
+      document.querySelector(
+        ".why-carousel"
       );
 
 
@@ -3258,9 +4602,12 @@
         if (
           Math.abs(
             event.deltaY
-          ) < 5
+          ) <
+          5
         ) {
+
           return;
+
         }
 
 
@@ -3270,9 +4617,10 @@
 
           activeCard =
             (
-              activeCard + 1
+              activeCard +
+              1
             ) %
-            aiCards.length;
+            cards.length;
 
         } else {
 
@@ -3280,34 +4628,36 @@
             (
               activeCard -
               1 +
-              aiCards.length
+              cards.length
             ) %
-            aiCards.length;
+            cards.length;
 
         }
 
 
-        renderAICard();
+        renderCards();
 
       },
       {
-        passive: false
+        passive:
+          false
       }
     );
 
 
     /*
-      Свайп / drag.
+      Свайп пальцем / drag мышью.
     */
 
-    let aiPointerStart = null;
+    let carouselStartY =
+      null;
 
 
     whyCarousel.addEventListener(
       "pointerdown",
       event => {
 
-        aiPointerStart =
+        carouselStartY =
           event.clientY;
 
       }
@@ -3319,19 +4669,24 @@
       event => {
 
         if (
-          aiPointerStart === null
+          carouselStartY ===
+          null
         ) {
+
           return;
+
         }
 
 
         const distance =
           event.clientY -
-          aiPointerStart;
+          carouselStartY;
 
 
         if (
-          Math.abs(distance) >
+          Math.abs(
+            distance
+          ) >
           35
         ) {
 
@@ -3341,9 +4696,10 @@
 
             activeCard =
               (
-                activeCard + 1
+                activeCard +
+                1
               ) %
-              aiCards.length;
+              cards.length;
 
           } else {
 
@@ -3351,31 +4707,31 @@
               (
                 activeCard -
                 1 +
-                aiCards.length
+                cards.length
               ) %
-              aiCards.length;
+              cards.length;
 
           }
 
 
-          renderAICard();
+          renderCards();
 
         }
 
 
-        aiPointerStart =
+        carouselStartY =
           null;
 
       }
     );
 
 
-    renderAICard();
+    renderCards();
 
 
-    /* =========================================================
+    /* =====================================================
        DIRECTIONS CAROUSEL
-       ========================================================= */
+       ===================================================== */
 
     const directionsWindow =
       document.getElementById(
@@ -3389,7 +4745,8 @@
       );
 
 
-    let directionX = 0;
+    let directionX =
+      0;
 
 
     function setDirections(
@@ -3427,7 +4784,8 @@
         () => {
 
           setDirections(
-            directionX + 300
+            directionX +
+            300
           );
 
         }
@@ -3443,28 +4801,37 @@
         () => {
 
           setDirections(
-            directionX - 300
+            directionX -
+            300
           );
 
         }
       );
 
 
-    let dragging = false;
+    let dragging =
+      false;
 
-    let dragX = 0;
 
-    let dragStart = 0;
+    let dragX =
+      0;
+
+
+    let dragStart =
+      0;
 
 
     directionsWindow.addEventListener(
       "pointerdown",
       event => {
 
-        dragging = true;
+        dragging =
+          true;
+
 
         dragX =
           event.clientX;
+
 
         dragStart =
           directionX;
@@ -3482,8 +4849,12 @@
       "pointermove",
       event => {
 
-        if (!dragging) {
+        if (
+          !dragging
+        ) {
+
           return;
+
         }
 
 
@@ -3501,7 +4872,8 @@
       "pointerup",
       () => {
 
-        dragging = false;
+        dragging =
+          false;
 
       }
     );
@@ -3511,7 +4883,8 @@
       "pointercancel",
       () => {
 
-        dragging = false;
+        dragging =
+          false;
 
       }
     );
@@ -3529,9 +4902,9 @@
     );
 
 
-    /* =========================================================
+    /* =====================================================
        FAQ
-       ========================================================= */
+       ===================================================== */
 
     const faqItems =
       [
@@ -3595,7 +4968,9 @@
             );
 
 
-            if (open) {
+            if (
+              open
+            ) {
 
               item.classList.add(
                 "open"
@@ -3620,9 +4995,9 @@
     );
 
 
-    /* =========================================================
+    /* =====================================================
        REFERRAL
-       ========================================================= */
+       ===================================================== */
 
     document
       .getElementById(
@@ -3657,9 +5032,9 @@
       );
 
 
-    /* =========================================================
+    /* =====================================================
        SIGNUP
-       ========================================================= */
+       ===================================================== */
 
     document
       .getElementById(
@@ -3679,7 +5054,10 @@
         }
       );
 
+
   </script>
 
+
 </body>
+
 </html>
