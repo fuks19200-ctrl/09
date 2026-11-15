@@ -3,276 +3,3544 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>MULTUM.AI — Школа нейросетей</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
   <style>
-    :root { --white:#fff; --glass:rgba(20,25,31,.32); --border:rgba(255,255,255,.48); --shadow:0 24px 70px rgba(10,15,20,.2); }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    html { scroll-behavior:smooth; background:#aeb6c1; }
-    body { font-family:"Fredoka",sans-serif; color:var(--white); background:transparent!important; overflow-x:hidden; }
-    html,body,main,section,footer { background:transparent!important; }
-    a { color:inherit; text-decoration:none; }
-    button,input,textarea { font:inherit; }
-
-    /* Fixed background follows one page-wide timeline. Only one video is visible at a time. */
-    .background { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; background:#aeb6c1; }
-    .bg-video { position:absolute; inset:-3%; width:106%; height:106%; object-fit:cover; opacity:0; pointer-events:none; filter:saturate(.96) brightness(.84) contrast(1.02); will-change:opacity; }
-    header,main,footer { position:relative; z-index:2; }
-    header { position:fixed; inset:0 0 auto; width:100%; padding:22px clamp(22px,3vw,48px); display:flex; align-items:center; gap:30px; z-index:100; transition:opacity .45s ease,transform .45s ease; }
-    header.hidden { opacity:0; transform:translateY(-20px); pointer-events:none; }
-    .logo { flex:0 0 auto; font-size:20px; font-weight:600; letter-spacing:.07em; text-shadow:0 3px 18px rgba(0,0,0,.32); }
-    nav { margin-left:auto; display:flex; align-items:center; gap:clamp(13px,1.55vw,25px); white-space:nowrap; }
-    nav a { font-size:clamp(12px,1vw,14px); font-weight:500; text-shadow:0 2px 15px rgba(0,0,0,.38); transition:transform .25s ease,opacity .25s ease; }
-    nav a:hover { transform:translateY(-2px); }
-    section { position:relative; width:min(1180px,calc(100% - 48px)); margin:0 auto; }
-    .section { padding:110px 0; }
-    .section-title { margin-bottom:30px; font-size:clamp(36px,4vw,58px); line-height:.98; font-weight:600; letter-spacing:-.025em; text-shadow:0 4px 26px rgba(0,0,0,.42); }
-
-    /* Scroll text: visual lines enter in sequence and leave before the next section takes focus. */
-    .scroll-word { display:inline; opacity:0; transform:translateY(16px); transition:opacity .45s ease,transform .55s cubic-bezier(.2,.7,.2,1); transition-delay:calc(var(--line,0)*75ms); }
-    .text-current .scroll-word { opacity:1; transform:translateY(0); }
-    .hero { width:100%; min-height:100vh; display:flex; align-items:center; justify-content:flex-start; padding:110px 7vw 70px; }
-    .hero-inner { width:min(1160px,100%); }
-    .hero-title { display:block; width:100%; white-space:nowrap; font-size:clamp(54px,9.3vw,142px); line-height:.98; font-weight:600; letter-spacing:-.035em; color:transparent; background:linear-gradient(105deg,#fff 0%,#fff 18%,#dfe9f4 31%,#fff 44%,#f8fbff 56%,#d9e4ef 70%,#fff 84%,#fff 100%); background-size:300% 100%; -webkit-background-clip:text; background-clip:text; animation:whiteShimmer 5s ease-in-out infinite; text-shadow:0 10px 45px rgba(0,0,0,.25); }
-    @keyframes whiteShimmer { 0%,100% { background-position:0 50%; } 50% { background-position:100% 50%; } }
-    .hero-subtitle { margin-top:30px; max-width:650px; font-size:19px; line-height:1.5; color:rgba(255,255,255,.96); text-shadow:0 3px 22px rgba(0,0,0,.42); }
-
-    .why-section { padding-top:80px; }
-    .why-layout { display:grid; grid-template-columns:.75fr 1.25fr; gap:70px; align-items:center; }
-    .why-copy { position:sticky; top:120px; }
-    .why-copy p,.school-text p { max-width:640px; font-size:19px; line-height:1.6; color:rgba(255,255,255,.95); text-shadow:0 3px 20px rgba(0,0,0,.4); }
-    /* Tall stage creates a genuine vertical 3D card reel. Overflow stays visible to avoid clipping. */
-    .why-carousel { position:relative; height:720px; display:flex; align-items:center; justify-content:center; perspective:1400px; overflow:visible; }
-    .why-track { position:relative; width:100%; height:100%; transform-style:preserve-3d; overflow:visible; }
-    .ai-card { position:absolute; top:50%; left:50%; width:min(430px,82%); aspect-ratio:1/1; border-radius:34px; overflow:hidden; background:rgba(255,255,255,.86); border:1px solid rgba(255,255,255,.95); box-shadow:0 28px 75px rgba(0,0,0,.28); transform:translate(-50%,-50%) translate3d(var(--x,0px),var(--y,0px),var(--z,0px)) rotateX(var(--rotateX,0deg)) rotateY(var(--rotateY,0deg)) scale(var(--scale,1)); transform-origin:center; backface-visibility:hidden; transition:transform .7s cubic-bezier(.22,.75,.2,1),opacity .55s ease,filter .55s ease; }
-    .ai-card img { width:100%; height:100%; display:block; object-fit:contain; background:transparent; }
-    .ai-card-label { position:absolute; left:22px; bottom:18px; padding:10px 18px; border-radius:999px; background:rgba(255,255,255,.9); backdrop-filter:blur(12px); color:#30363d; font-size:14px; letter-spacing:.08em; font-weight:600; }
-    .carousel-controls { position:absolute; inset:auto 0 6px; z-index:30; display:flex; justify-content:center; gap:12px; pointer-events:none; }
-    .carousel-btn { width:50px; height:50px; border:1px solid rgba(255,255,255,.82); border-radius:50%; color:#fff; background:rgba(25,30,36,.58); backdrop-filter:blur(14px); box-shadow:0 10px 30px rgba(0,0,0,.2); cursor:pointer; pointer-events:auto; transition:transform .2s ease,background .2s ease; }
-    .carousel-btn:hover { transform:scale(1.08); background:rgba(25,30,36,.78); }
-    .carousel-dots { position:absolute; right:0; bottom:22px; z-index:30; display:flex; gap:7px; }
-    .carousel-dot { width:7px; height:7px; border:0; border-radius:50%; background:rgba(255,255,255,.45); cursor:pointer; }
-    .carousel-dot.active { width:22px; border-radius:10px; background:#fff; }
-
-    .school-section { padding-top:80px; }
-    .school-grid,.about-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:90px; align-items:start; }
-    .school-heading,.about-heading { max-width:500px; font-size:clamp(30px,3.4vw,46px); line-height:1.04; font-weight:600; letter-spacing:-.025em; text-shadow:0 4px 25px rgba(0,0,0,.42); }
-    .school-text { max-width:640px; }
-    .school-text p,.about-text p { margin-bottom:25px; }
-    .about-section { padding-top:110px; }
-    .about-text p { font-size:19px; line-height:1.62; color:rgba(255,255,255,.95); text-shadow:0 3px 20px rgba(0,0,0,.38); }
-
-    .courses-section { padding-top:80px; }
-    .courses-wrap { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-    .course-card { min-height:235px; padding:30px; border-radius:30px; background:rgba(20,25,31,.28); border:1px solid rgba(255,255,255,.48); backdrop-filter:blur(18px); box-shadow:var(--shadow); display:flex; flex-direction:column; justify-content:center; }
-    .course-card h3 { font-size:clamp(36px,4vw,54px); line-height:1; font-weight:600; text-shadow:0 4px 22px rgba(0,0,0,.38); }
-    .course-price { margin-top:12px; font-size:24px; font-weight:600; text-shadow:0 3px 18px rgba(0,0,0,.36); }
-    .course-description { margin-top:12px; font-size:17px; line-height:1.45; color:rgba(255,255,255,.94); text-shadow:0 3px 18px rgba(0,0,0,.35); }
-    .directions-title { margin:34px 0 16px; font-size:15px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; text-shadow:0 3px 18px rgba(0,0,0,.38); }
-    .directions-wrap { position:relative; padding:0 56px; }
-    .directions-window { overflow:hidden; width:100%; cursor:grab; touch-action:pan-y; }
-    .directions-window:active { cursor:grabbing; }
-    .directions-track { display:flex; gap:14px; width:max-content; user-select:none; transition:transform .35s ease; }
-    .direction { min-width:210px; padding:20px 22px; border-radius:24px; background:rgba(20,25,31,.28); border:1px solid rgba(255,255,255,.46); backdrop-filter:blur(14px); box-shadow:0 12px 35px rgba(0,0,0,.1); }
-    .direction-name { font-size:15px; font-weight:600; text-shadow:0 2px 15px rgba(0,0,0,.35); }
-    .direction-price { margin-top:8px; font-size:15px; color:rgba(255,255,255,.88); }
-    .direction-control { position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.72); background:rgba(20,25,31,.4); backdrop-filter:blur(14px); color:#fff; cursor:pointer; z-index:5; }
-    .direction-control.prev { left:0; } .direction-control.next { right:0; }
-
-    .faq-section { padding-top:110px; }
-    .faq-title { font-size:clamp(44px,5vw,66px); margin-bottom:34px; font-weight:600; text-shadow:0 4px 26px rgba(0,0,0,.42); }
-    .faq-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start; }
-    .faq-column { display:flex; flex-direction:column; gap:12px; }
-    .faq-item { overflow:hidden; border-radius:22px; background:rgba(20,25,31,.38); border:1px solid rgba(255,255,255,.48); backdrop-filter:blur(16px); box-shadow:0 12px 30px rgba(0,0,0,.1); }
-    .faq-question { width:100%; border:0; background:transparent; padding:20px 22px; display:flex; align-items:center; justify-content:space-between; gap:20px; color:#fff; text-align:left; cursor:pointer; font-size:16px; font-weight:500; }
-    .faq-icon { flex:0 0 auto; font-size:23px; font-weight:300; transition:transform .3s ease; }
-    .faq-answer { max-height:0; overflow:hidden; transition:max-height .4s ease; }
-    .faq-answer-inner { padding:0 22px 20px; font-size:15px; line-height:1.55; color:rgba(255,255,255,.88); }
-    .faq-item.open .faq-icon { transform:rotate(45deg); }
-
-    /* Keep referral area translucent/dark; social links sit centered and animate on hover. */
-    .referral-section { padding-top:100px; }
-    .referral-grid { display:grid; grid-template-columns:.9fr 1.1fr; gap:70px; align-items:center; }
-    .referral-card { padding:42px; border-radius:34px; background:rgba(15,20,27,.56); border:1px solid rgba(255,255,255,.38); backdrop-filter:blur(18px); box-shadow:0 22px 55px rgba(0,0,0,.2); }
-    .referral-card h3 { margin-bottom:22px; font-size:30px; }
-    .referral-input { width:100%; padding:15px 16px; border-radius:15px; border:1px solid rgba(40,45,50,.14); background:rgba(255,255,255,.9); outline:none; color:#30363d; margin-bottom:12px; }
-    .referral-submit { width:100%; border:0; border-radius:15px; padding:15px; color:#fff; background:#282e35; cursor:pointer; font-size:24px; }
-    .referral-copy h2 { margin-bottom:30px; font-size:clamp(38px,4vw,60px); line-height:1; font-weight:600; text-shadow:0 4px 26px rgba(0,0,0,.42); }
-    .referral-step { display:grid; grid-template-columns:70px 1fr; gap:18px; align-items:start; margin-bottom:24px; }
-    .referral-number { padding-top:4px; font-size:13px; letter-spacing:.08em; color:rgba(255,255,255,.7); }
-    .referral-step strong { display:block; margin-bottom:5px; font-size:20px; }
-    .referral-step span { display:block; font-size:16px; line-height:1.45; color:rgba(255,255,255,.9); }
-    .socials { display:flex; justify-content:center; align-items:center; gap:16px; margin:38px auto 0; flex-wrap:wrap; }
-    .social-btn { position:relative; isolation:isolate; overflow:hidden; min-width:142px; padding:13px 22px; border-radius:999px; border:1px solid rgba(255,255,255,.5); background:rgba(20,25,31,.42); text-align:center; font-size:13px; font-weight:600; letter-spacing:.06em; box-shadow:0 9px 24px rgba(0,0,0,.16); transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .35s ease; }
-    .social-btn::before { content:""; position:absolute; z-index:-1; inset:-40% -70%; background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%); transform:translateX(-70%) rotate(8deg); transition:transform .65s ease; }
-    .social-btn:hover { transform:translateY(-7px) scale(1.045); border-color:rgba(255,255,255,.9); box-shadow:0 16px 34px rgba(0,0,0,.3),0 0 22px rgba(255,255,255,.16); }
-    .social-btn:hover::before { transform:translateX(70%) rotate(8deg); }
-    footer { width:min(1180px,calc(100% - 48px)); margin:0 auto; padding:70px 0 35px; }
-    .footer-line { display:flex; justify-content:center; align-items:center; gap:18px; flex-wrap:nowrap; white-space:nowrap; font-size:11px; color:rgba(255,255,255,.78); }
-
-    @media(max-width:1000px) { .why-layout,.school-grid,.about-grid,.faq-grid,.referral-grid { grid-template-columns:1fr; gap:45px; } .why-copy { position:static; } .why-carousel { height:660px; } }
-    @media(max-width:760px) {
-      header { padding:18px 20px; } nav { display:none; } section { width:calc(100% - 32px); }
-      .hero { min-height:92vh; padding:100px 20px 60px; } .hero-title { font-size:clamp(43px,10.4vw,78px); letter-spacing:-.045em; }
-      .section { padding:80px 0; } .why-carousel { height:590px; margin:0 -4px; } .ai-card { width:min(330px,76vw); border-radius:27px; }
-      .carousel-controls { bottom:0; } .carousel-dots { bottom:17px; right:2px; }
-      .courses-wrap { grid-template-columns:1fr; } .directions-wrap { padding:0 42px; } .direction { min-width:190px; }
-      .referral-card { padding:26px; } .referral-step { grid-template-columns:48px 1fr; } .socials { margin-top:32px; }
-      .footer-line { white-space:normal; flex-wrap:wrap; gap:8px 14px; }
+    :root {
+      --white:#fff;
+      --glass:rgba(20,25,31,.32);
+      --border:rgba(255,255,255,.48);
+      --shadow:0 24px 70px rgba(10,15,20,.2);
     }
-    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .scroll-word { transition:none; opacity:1; transform:none; } *,*::before,*::after { animation-duration:.01ms!important; } }
+
+    * {
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html {
+      scroll-behavior:smooth;
+      background:#aeb6c1;
+    }
+
+    body {
+      font-family:"Fredoka",sans-serif;
+      color:var(--white);
+      background:transparent!important;
+      overflow-x:hidden;
+    }
+
+    html,
+    body,
+    main,
+    section,
+    footer {
+      background:transparent!important;
+    }
+
+    a {
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input,
+    textarea {
+      font:inherit;
+    }
+
+    /* =========================================================
+       BACKGROUND
+       ========================================================= */
+
+    .background {
+      position:fixed;
+      inset:0;
+      z-index:0;
+      overflow:hidden;
+      pointer-events:none;
+      background:#aeb6c1;
+    }
+
+    .bg-video {
+      position:absolute;
+      inset:-3%;
+      width:106%;
+      height:106%;
+      object-fit:cover;
+
+      opacity:0;
+      visibility:hidden;
+
+      pointer-events:none;
+
+      filter:
+        saturate(.96)
+        brightness(.84)
+        contrast(1.02);
+
+      will-change:opacity;
+      transition:none;
+    }
+
+    header,
+    main,
+    footer {
+      position:relative;
+      z-index:2;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    header {
+      position:fixed;
+      inset:0 0 auto;
+      width:100%;
+
+      padding:22px clamp(22px,3vw,48px);
+
+      display:flex;
+      align-items:center;
+      gap:30px;
+
+      z-index:100;
+
+      transition:
+        opacity .45s ease,
+        transform .45s ease;
+    }
+
+    header.hidden {
+      opacity:0;
+      transform:translateY(-20px);
+      pointer-events:none;
+    }
+
+    .logo {
+      flex:0 0 auto;
+
+      font-size:20px;
+      font-weight:600;
+      letter-spacing:.07em;
+
+      text-shadow:
+        0 3px 18px rgba(0,0,0,.32);
+    }
+
+    nav {
+      margin-left:auto;
+
+      display:flex;
+      align-items:center;
+      gap:clamp(13px,1.55vw,25px);
+
+      white-space:nowrap;
+    }
+
+    nav a {
+      font-size:clamp(12px,1vw,14px);
+      font-weight:500;
+
+      text-shadow:
+        0 2px 15px rgba(0,0,0,.38);
+
+      transition:
+        transform .25s ease,
+        opacity .25s ease;
+    }
+
+    nav a:hover {
+      transform:translateY(-2px);
+    }
+
+    /* =========================================================
+       GENERAL
+       ========================================================= */
+
+    section {
+      position:relative;
+      width:min(1180px,calc(100% - 48px));
+      margin:0 auto;
+    }
+
+    .section {
+      padding:110px 0;
+    }
+
+    .section-title {
+      margin-bottom:30px;
+
+      font-size:clamp(36px,4vw,58px);
+      line-height:.98;
+      font-weight:600;
+      letter-spacing:-.025em;
+
+      text-shadow:
+        0 4px 26px rgba(0,0,0,.42);
+    }
+
+    /* =========================================================
+       TEXT REVEAL
+       ========================================================= */
+
+    .scroll-word {
+      display:inline;
+
+      opacity:0;
+      transform:translateY(16px);
+
+      transition:
+        opacity .45s ease,
+        transform .55s cubic-bezier(.2,.7,.2,1);
+
+      transition-delay:
+        calc(var(--line,0) * 75ms);
+    }
+
+    .text-current .scroll-word {
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /*
+      Карусели и курсы появляются вместе с открытием своего
+      блока, а не выскакивают отдельно.
+    */
+
+    .why-carousel,
+    .courses-wrap,
+    .directions-wrap,
+    .referral-steps,
+    .socials {
+      opacity:0;
+      transform:translateY(24px);
+
+      transition:
+        opacity .75s ease,
+        transform .75s cubic-bezier(.22,.75,.2,1);
+    }
+
+    .text-current .why-carousel,
+    .text-current .courses-wrap,
+    .text-current .directions-wrap,
+    .text-current .referral-steps,
+    .text-current .socials {
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .hero {
+      width:100%;
+      min-height:100vh;
+
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+
+      padding:110px 7vw 70px;
+    }
+
+    .hero-inner {
+      width:min(1160px,100%);
+    }
+
+    .hero-title {
+      display:block;
+      width:100%;
+
+      white-space:nowrap;
+
+      font-size:clamp(54px,9.3vw,142px);
+      line-height:.98;
+      font-weight:600;
+      letter-spacing:-.035em;
+
+      color:transparent;
+
+      background:
+        linear-gradient(
+          105deg,
+          #fff 0%,
+          #fff 18%,
+          #dfe9f4 31%,
+          #fff 44%,
+          #f8fbff 56%,
+          #d9e4ef 70%,
+          #fff 84%,
+          #fff 100%
+        );
+
+      background-size:300% 100%;
+
+      -webkit-background-clip:text;
+      background-clip:text;
+
+      animation:
+        whiteShimmer 5s ease-in-out infinite;
+
+      text-shadow:
+        0 10px 45px rgba(0,0,0,.25);
+    }
+
+    @keyframes whiteShimmer {
+      0%,
+      100% {
+        background-position:0 50%;
+      }
+
+      50% {
+        background-position:100% 50%;
+      }
+    }
+
+    .hero-subtitle {
+      margin-top:30px;
+      max-width:650px;
+
+      font-size:19px;
+      line-height:1.5;
+
+      color:rgba(255,255,255,.96);
+
+      text-shadow:
+        0 3px 22px rgba(0,0,0,.42);
+    }
+
+    /* =========================================================
+       WHY AI
+       ========================================================= */
+
+    .why-section {
+      padding-top:80px;
+    }
+
+    .why-layout {
+      display:grid;
+      grid-template-columns:.75fr 1.25fr;
+      gap:70px;
+      align-items:center;
+    }
+
+    .why-copy {
+      position:sticky;
+      top:120px;
+    }
+
+    .why-copy p,
+    .school-text p {
+      max-width:640px;
+
+      font-size:19px;
+      line-height:1.6;
+
+      color:rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px rgba(0,0,0,.4);
+    }
+
+    /*
+      ВАЖНО:
+      Карусель имеет собственное окно.
+      Никакая карточка не может выйти наружу.
+    */
+
+    .why-carousel {
+      position:relative;
+
+      height:720px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      perspective:1400px;
+
+      overflow:hidden;
+
+      border-radius:42px;
+    }
+
+    .why-track {
+      position:relative;
+
+      width:100%;
+      height:100%;
+
+      transform-style:preserve-3d;
+
+      overflow:hidden;
+
+      border-radius:42px;
+    }
+
+    /*
+      Карточки находятся внутри why-track.
+      Активная карточка впереди.
+      Остальные физически уходят назад по Z.
+    */
+
+    .ai-card {
+      position:absolute;
+
+      top:50%;
+      left:50%;
+
+      width:min(430px,82%);
+      aspect-ratio:1 / 1;
+
+      border-radius:34px;
+
+      overflow:hidden;
+
+      background:rgba(255,255,255,.86);
+
+      border:
+        1px solid rgba(255,255,255,.95);
+
+      box-shadow:
+        0 28px 75px rgba(0,0,0,.28);
+
+      transform:
+        translate(-50%,-50%)
+        translate3d(
+          var(--x,0px),
+          var(--y,0px),
+          var(--z,0px)
+        )
+        rotateX(var(--rotateX,0deg))
+        rotateY(var(--rotateY,0deg))
+        scale(var(--scale,1));
+
+      transform-origin:center;
+
+      backface-visibility:hidden;
+
+      transition:
+        transform .65s cubic-bezier(.22,.75,.2,1),
+        opacity .5s ease,
+        filter .5s ease;
+
+      will-change:
+        transform,
+        opacity;
+    }
+
+    .ai-card img {
+      width:100%;
+      height:100%;
+
+      display:block;
+
+      object-fit:contain;
+
+      background:transparent;
+    }
+
+    .ai-card-label {
+      position:absolute;
+
+      left:22px;
+      bottom:18px;
+
+      padding:10px 18px;
+
+      border-radius:999px;
+
+      background:rgba(255,255,255,.9);
+
+      backdrop-filter:blur(12px);
+
+      color:#30363d;
+
+      font-size:14px;
+      letter-spacing:.08em;
+      font-weight:600;
+    }
+
+    .carousel-controls {
+      position:absolute;
+
+      inset:auto 0 6px;
+
+      z-index:30;
+
+      display:flex;
+      justify-content:center;
+      gap:12px;
+
+      pointer-events:none;
+    }
+
+    .carousel-btn {
+      width:50px;
+      height:50px;
+
+      border:
+        1px solid rgba(255,255,255,.82);
+
+      border-radius:50%;
+
+      color:#fff;
+
+      background:rgba(25,30,36,.58);
+
+      backdrop-filter:blur(14px);
+
+      box-shadow:
+        0 10px 30px rgba(0,0,0,.2);
+
+      cursor:pointer;
+
+      pointer-events:auto;
+
+      transition:
+        transform .2s ease,
+        background .2s ease;
+    }
+
+    .carousel-btn:hover {
+      transform:scale(1.08);
+      background:rgba(25,30,36,.78);
+    }
+
+    .carousel-dots {
+      position:absolute;
+
+      right:0;
+      bottom:22px;
+
+      z-index:30;
+
+      display:flex;
+      gap:7px;
+    }
+
+    .carousel-dot {
+      width:7px;
+      height:7px;
+
+      border:0;
+      border-radius:50%;
+
+      background:rgba(255,255,255,.45);
+
+      cursor:pointer;
+    }
+
+    .carousel-dot.active {
+      width:22px;
+
+      border-radius:10px;
+
+      background:#fff;
+    }
+
+    /* =========================================================
+       SCHOOL
+       ========================================================= */
+
+    .school-section {
+      padding-top:80px;
+    }
+
+    .school-grid,
+    .about-grid {
+      display:grid;
+
+      grid-template-columns:.85fr 1.15fr;
+
+      gap:90px;
+
+      align-items:start;
+    }
+
+    .school-heading,
+    .about-heading {
+      max-width:500px;
+
+      font-size:clamp(30px,3.4vw,46px);
+      line-height:1.04;
+
+      font-weight:600;
+      letter-spacing:-.025em;
+
+      text-shadow:
+        0 4px 25px rgba(0,0,0,.42);
+    }
+
+    .school-text {
+      max-width:640px;
+    }
+
+    .school-text p,
+    .about-text p {
+      margin-bottom:25px;
+    }
+
+    .about-section {
+      padding-top:110px;
+    }
+
+    .about-text p {
+      font-size:19px;
+      line-height:1.62;
+
+      color:rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px rgba(0,0,0,.38);
+    }
+
+    /* =========================================================
+       COURSES
+       ========================================================= */
+
+    .courses-section {
+      padding-top:80px;
+    }
+
+    .courses-wrap {
+      display:grid;
+
+      grid-template-columns:1fr 1fr;
+
+      gap:18px;
+    }
+
+    .course-card {
+      min-height:235px;
+
+      padding:30px;
+
+      border-radius:30px;
+
+      background:rgba(20,25,31,.28);
+
+      border:
+        1px solid rgba(255,255,255,.48);
+
+      backdrop-filter:blur(18px);
+
+      box-shadow:var(--shadow);
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+
+      opacity:0;
+      transform:translateY(28px);
+
+      transition:
+        opacity .7s ease,
+        transform .7s cubic-bezier(.22,.75,.2,1);
+    }
+
+    .text-current .courses-wrap .course-card {
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .text-current .courses-wrap .course-card:nth-child(2) {
+      transition-delay:.08s;
+    }
+
+    .course-card h3 {
+      font-size:clamp(36px,4vw,54px);
+      line-height:1;
+
+      font-weight:600;
+
+      text-shadow:
+        0 4px 22px rgba(0,0,0,.38);
+    }
+
+    .course-price {
+      margin-top:12px;
+
+      font-size:24px;
+      font-weight:600;
+
+      text-shadow:
+        0 3px 18px rgba(0,0,0,.36);
+    }
+
+    .course-description {
+      margin-top:12px;
+
+      font-size:17px;
+      line-height:1.45;
+
+      color:rgba(255,255,255,.94);
+
+      text-shadow:
+        0 3px 18px rgba(0,0,0,.35);
+    }
+
+    .directions-title {
+      margin:34px 0 16px;
+
+      font-size:15px;
+      font-weight:500;
+
+      letter-spacing:.08em;
+      text-transform:uppercase;
+
+      text-shadow:
+        0 3px 18px rgba(0,0,0,.38);
+    }
+
+    .directions-wrap {
+      position:relative;
+
+      padding:0 56px;
+    }
+
+    .directions-window {
+      overflow:hidden;
+
+      width:100%;
+
+      cursor:grab;
+
+      touch-action:pan-y;
+    }
+
+    .directions-window:active {
+      cursor:grabbing;
+    }
+
+    .directions-track {
+      display:flex;
+
+      gap:14px;
+
+      width:max-content;
+
+      user-select:none;
+
+      transition:
+        transform .35s ease;
+    }
+
+    .direction {
+      min-width:210px;
+
+      padding:20px 22px;
+
+      border-radius:24px;
+
+      background:rgba(20,25,31,.28);
+
+      border:
+        1px solid rgba(255,255,255,.46);
+
+      backdrop-filter:blur(14px);
+
+      box-shadow:
+        0 12px 35px rgba(0,0,0,.1);
+    }
+
+    .direction-name {
+      font-size:15px;
+      font-weight:600;
+
+      text-shadow:
+        0 2px 15px rgba(0,0,0,.35);
+    }
+
+    .direction-price {
+      margin-top:8px;
+
+      font-size:15px;
+
+      color:rgba(255,255,255,.88);
+    }
+
+    .direction-control {
+      position:absolute;
+
+      top:50%;
+
+      transform:translateY(-50%);
+
+      width:46px;
+      height:46px;
+
+      border-radius:50%;
+
+      border:
+        1px solid rgba(255,255,255,.72);
+
+      background:rgba(20,25,31,.4);
+
+      backdrop-filter:blur(14px);
+
+      color:#fff;
+
+      cursor:pointer;
+
+      z-index:5;
+    }
+
+    .direction-control.prev {
+      left:0;
+    }
+
+    .direction-control.next {
+      right:0;
+    }
+
+    /* =========================================================
+       FAQ
+       ========================================================= */
+
+    .faq-section {
+      padding-top:110px;
+    }
+
+    .faq-title {
+      font-size:clamp(44px,5vw,66px);
+
+      margin-bottom:34px;
+
+      font-weight:600;
+
+      text-shadow:
+        0 4px 26px rgba(0,0,0,.42);
+    }
+
+    .faq-grid {
+      display:grid;
+
+      grid-template-columns:1fr 1fr;
+
+      gap:14px;
+
+      align-items:start;
+    }
+
+    .faq-column {
+      display:flex;
+      flex-direction:column;
+
+      gap:12px;
+    }
+
+    .faq-item {
+      overflow:hidden;
+
+      border-radius:22px;
+
+      background:rgba(20,25,31,.38);
+
+      border:
+        1px solid rgba(255,255,255,.48);
+
+      backdrop-filter:blur(16px);
+
+      box-shadow:
+        0 12px 30px rgba(0,0,0,.1);
+    }
+
+    .faq-question {
+      width:100%;
+
+      border:0;
+
+      background:transparent;
+
+      padding:20px 22px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      gap:20px;
+
+      color:#fff;
+
+      text-align:left;
+
+      cursor:pointer;
+
+      font-size:16px;
+      font-weight:500;
+    }
+
+    .faq-icon {
+      flex:0 0 auto;
+
+      font-size:23px;
+      font-weight:300;
+
+      transition:
+        transform .3s ease;
+    }
+
+    .faq-answer {
+      max-height:0;
+
+      overflow:hidden;
+
+      transition:
+        max-height .4s ease;
+    }
+
+    .faq-answer-inner {
+      padding:0 22px 20px;
+
+      font-size:15px;
+      line-height:1.55;
+
+      color:rgba(255,255,255,.88);
+    }
+
+    .faq-item.open .faq-icon {
+      transform:rotate(45deg);
+    }
+
+    /* =========================================================
+       REFERRAL
+       ========================================================= */
+
+    .referral-section {
+      padding-top:100px;
+    }
+
+    .referral-grid {
+      display:grid;
+
+      grid-template-columns:.9fr 1.1fr;
+
+      gap:70px;
+
+      align-items:center;
+    }
+
+    .referral-card {
+      padding:42px;
+
+      border-radius:34px;
+
+      background:rgba(15,20,27,.56);
+
+      border:
+        1px solid rgba(255,255,255,.38);
+
+      backdrop-filter:blur(18px);
+
+      box-shadow:
+        0 22px 55px rgba(0,0,0,.2);
+    }
+
+    .referral-card h3 {
+      margin-bottom:22px;
+
+      font-size:30px;
+    }
+
+    .referral-input {
+      width:100%;
+
+      padding:15px 16px;
+
+      border-radius:15px;
+
+      border:
+        1px solid rgba(40,45,50,.14);
+
+      background:rgba(255,255,255,.9);
+
+      outline:none;
+
+      color:#30363d;
+
+      margin-bottom:12px;
+    }
+
+    .referral-submit {
+      width:100%;
+
+      border:0;
+
+      border-radius:15px;
+
+      padding:15px;
+
+      color:#fff;
+
+      background:#282e35;
+
+      cursor:pointer;
+
+      font-size:24px;
+    }
+
+    .referral-copy h2 {
+      margin-bottom:30px;
+
+      font-size:clamp(38px,4vw,60px);
+
+      line-height:1;
+
+      font-weight:600;
+
+      text-shadow:
+        0 4px 26px rgba(0,0,0,.42);
+    }
+
+    /*
+      01 / 02 / 03 теперь горизонтально.
+    */
+
+    .referral-steps {
+      width:100%;
+
+      display:flex;
+
+      align-items:flex-start;
+
+      justify-content:space-between;
+
+      gap:28px;
+    }
+
+    .referral-step {
+      flex:1;
+
+      display:flex;
+
+      flex-direction:column;
+
+      gap:7px;
+
+      margin:0;
+    }
+
+    .referral-number {
+      padding-top:0;
+
+      font-size:13px;
+
+      letter-spacing:.08em;
+
+      color:rgba(255,255,255,.7);
+    }
+
+    .referral-step strong {
+      display:block;
+
+      margin-bottom:5px;
+
+      font-size:20px;
+    }
+
+    .referral-step span {
+      display:block;
+
+      font-size:16px;
+      line-height:1.45;
+
+      color:rgba(255,255,255,.9);
+    }
+
+    /*
+      Социальные кнопки строго по центру снизу.
+    */
+
+    .socials {
+      display:flex;
+
+      justify-content:center;
+      align-items:center;
+
+      gap:16px;
+
+      width:100%;
+
+      margin:38px auto 0;
+
+      flex-wrap:wrap;
+    }
+
+    .social-btn {
+      position:relative;
+
+      isolation:isolate;
+
+      overflow:hidden;
+
+      min-width:142px;
+
+      padding:13px 22px;
+
+      border-radius:999px;
+
+      border:
+        1px solid rgba(255,255,255,.5);
+
+      background:rgba(20,25,31,.42);
+
+      text-align:center;
+
+      font-size:13px;
+      font-weight:600;
+
+      letter-spacing:.06em;
+
+      box-shadow:
+        0 9px 24px rgba(0,0,0,.16);
+
+      transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        box-shadow .35s ease,
+        border-color .35s ease;
+    }
+
+    .social-btn::before {
+      content:"";
+
+      position:absolute;
+
+      z-index:-1;
+
+      inset:-40% -70%;
+
+      background:
+        linear-gradient(
+          110deg,
+          transparent 35%,
+          rgba(255,255,255,.45) 50%,
+          transparent 65%
+        );
+
+      transform:
+        translateX(-70%)
+        rotate(8deg);
+
+      transition:
+        transform .65s ease;
+    }
+
+    .social-btn:hover {
+      transform:
+        translateY(-7px)
+        scale(1.045);
+
+      border-color:
+        rgba(255,255,255,.9);
+
+      box-shadow:
+        0 16px 34px rgba(0,0,0,.3),
+        0 0 22px rgba(255,255,255,.16);
+    }
+
+    .social-btn:hover::before {
+      transform:
+        translateX(70%)
+        rotate(8deg);
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    footer {
+      width:min(1180px,calc(100% - 48px));
+
+      margin:0 auto;
+
+      padding:70px 0 35px;
+    }
+
+    .footer-line {
+      display:flex;
+
+      justify-content:center;
+      align-items:center;
+
+      gap:18px;
+
+      flex-wrap:nowrap;
+
+      white-space:nowrap;
+
+      font-size:11px;
+
+      color:rgba(255,255,255,.78);
+    }
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media(max-width:1000px) {
+
+      .why-layout,
+      .school-grid,
+      .about-grid,
+      .faq-grid,
+      .referral-grid {
+        grid-template-columns:1fr;
+
+        gap:45px;
+      }
+
+      .why-copy {
+        position:static;
+      }
+
+      .why-carousel {
+        height:660px;
+      }
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media(max-width:760px) {
+
+      header {
+        padding:18px 20px;
+      }
+
+      nav {
+        display:none;
+      }
+
+      section {
+        width:calc(100% - 32px);
+      }
+
+      .hero {
+        min-height:92vh;
+
+        padding:
+          100px
+          20px
+          60px;
+      }
+
+      .hero-title {
+        font-size:
+          clamp(
+            43px,
+            10.4vw,
+            78px
+          );
+
+        letter-spacing:-.045em;
+      }
+
+      .section {
+        padding:80px 0;
+      }
+
+      /*
+        На мобильном карусель также остаётся внутри окна.
+      */
+
+      .why-carousel {
+        height:590px;
+
+        margin:0 -4px;
+
+        border-radius:30px;
+      }
+
+      .why-track {
+        border-radius:30px;
+      }
+
+      .ai-card {
+        width:min(330px,76vw);
+
+        border-radius:27px;
+      }
+
+      .carousel-controls {
+        bottom:0;
+      }
+
+      .carousel-dots {
+        bottom:17px;
+        right:2px;
+      }
+
+      .courses-wrap {
+        grid-template-columns:1fr;
+      }
+
+      .directions-wrap {
+        padding:0 42px;
+      }
+
+      .direction {
+        min-width:190px;
+      }
+
+      /*
+        На мобильном 01 / 02 / 03 остаются горизонтальными.
+        Если экран очень узкий, они аккуратно уменьшаются.
+      */
+
+      .referral-steps {
+        gap:14px;
+      }
+
+      .referral-step strong {
+        font-size:16px;
+      }
+
+      .referral-step span {
+        font-size:13px;
+      }
+
+      .referral-card {
+        padding:26px;
+      }
+
+      .socials {
+        margin-top:32px;
+      }
+
+      .footer-line {
+        white-space:normal;
+
+        flex-wrap:wrap;
+
+        gap:8px 14px;
+      }
+    }
+
+    @media(max-width:480px) {
+
+      .referral-steps {
+        gap:10px;
+      }
+
+      .referral-step strong {
+        font-size:14px;
+      }
+
+      .referral-step span {
+        font-size:12px;
+        line-height:1.35;
+      }
+
+      .referral-number {
+        font-size:11px;
+      }
+    }
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media(prefers-reduced-motion:reduce) {
+
+      html {
+        scroll-behavior:auto;
+      }
+
+      .scroll-word {
+        transition:none;
+
+        opacity:1;
+
+        transform:none;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration:.01ms!important;
+      }
+    }
   </style>
 </head>
+
 <body>
+
+  <!-- =========================================================
+       BACKGROUND VIDEOS
+       ========================================================= -->
+
   <div class="background" aria-hidden="true">
-    <video class="bg-video" id="bg1" src="bloom-bg-1.mp4" muted playsinline preload="auto"></video>
-    <video class="bg-video" id="bg2" src="bloom-bg-2.mp4" muted playsinline preload="auto"></video>
-    <video class="bg-video" id="bg3" src="bloom-bg-3.mp4" muted playsinline preload="auto"></video>
+
+    <video
+      class="bg-video"
+      id="bg1"
+      src="bloom-bg-1.mp4"
+      muted
+      playsinline
+      preload="auto">
+    </video>
+
+    <video
+      class="bg-video"
+      id="bg2"
+      src="bloom-bg-2.mp4"
+      muted
+      playsinline
+      preload="auto">
+    </video>
+
+    <video
+      class="bg-video"
+      id="bg3"
+      src="bloom-bg-3.mp4"
+      muted
+      playsinline
+      preload="auto">
+    </video>
+
   </div>
+
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
+
   <header id="header">
-    <a href="#hero" class="logo">MULTUM.AI</a>
-    <nav><a href="#hero">Главная</a><a href="#why">Зачем тебе AI?</a><a href="#courses">Курсы</a><a href="#about">О нас</a><a href="#faq">FAQ</a></nav>
+
+    <a href="#hero" class="logo">
+      MULTUM.AI
+    </a>
+
+    <nav>
+      <a href="#hero">Главная</a>
+      <a href="#why">Зачем тебе AI?</a>
+      <a href="#courses">Курсы</a>
+      <a href="#about">О нас</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
   </header>
+
   <main>
-    <section class="hero" id="hero"><div class="hero-inner"><h1 class="hero-title">MULTUM.AI</h1><p class="hero-subtitle">Школа нейросетей для людей, которые хотят не просто пользоваться AI, а строить вокруг него реальный результат.</p></div></section>
 
-    <section class="section why-section" id="why">
+    <!-- =======================================================
+         HERO
+         ======================================================= -->
+
+    <section
+      class="hero"
+      id="hero">
+
+      <div class="hero-inner">
+
+        <h1 class="hero-title">
+          MULTUM.AI
+        </h1>
+
+        <p class="hero-subtitle">
+          Школа нейросетей для людей, которые хотят не просто пользоваться AI, а строить вокруг него реальный результат.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         WHY AI
+         ======================================================= -->
+
+    <section
+      class="section why-section"
+      id="why">
+
       <div class="why-layout">
-        <div class="why-copy"><h2 class="section-title">Зачем тебе AI?</h2><p>AI уже изменил работу, продукцию и скорость принятия решений. Наша задача — научить тебя использовать это осознанно, эффективно и без хаоса.</p></div>
-        <div class="why-carousel" aria-label="Примеры направлений AI">
-          <div class="why-track" id="whyTrack">
-            <article class="ai-card" data-index="0"><img src="01-ai-character.png" alt="Пример AI-персонажа"><div class="ai-card-label">AI CHARACTER</div></article>
-            <article class="ai-card" data-index="1"><img src="02-ai-product.png" alt="Пример AI-продукта"><div class="ai-card-label">AI PRODUCT</div></article>
-            <article class="ai-card" data-index="2"><img src="03-ai-3d.png" alt="Пример AI 3D"><div class="ai-card-label">AI 3D</div></article>
-            <article class="ai-card" data-index="3"><img src="04-ai-visual.png" alt="Пример AI-визуала"><div class="ai-card-label">AI VISUAL</div></article>
-            <article class="ai-card" data-index="4"><img src="05-ai-automation.png" alt="Пример AI-автоматизации"><div class="ai-card-label">AI AUTOMATION</div></article>
+
+        <div class="why-copy">
+
+          <h2 class="section-title">
+            Зачем тебе AI?
+          </h2>
+
+          <p>
+            AI уже изменил работу, продукцию и скорость принятия решений. Наша задача — научить тебя использовать это осознанно, эффективно и без хаоса.
+          </p>
+
+        </div>
+
+
+        <div
+          class="why-carousel"
+          aria-label="Примеры направлений AI">
+
+          <div
+            class="why-track"
+            id="whyTrack">
+
+            <article
+              class="ai-card"
+              data-index="0">
+
+              <img
+                src="01-ai-character.png"
+                alt="Пример AI-персонажа">
+
+              <div class="ai-card-label">
+                AI CHARACTER
+              </div>
+
+            </article>
+
+
+            <article
+              class="ai-card"
+              data-index="1">
+
+              <img
+                src="02-ai-product.png"
+                alt="Пример AI-продукта">
+
+              <div class="ai-card-label">
+                AI PRODUCT
+              </div>
+
+            </article>
+
+
+            <article
+              class="ai-card"
+              data-index="2">
+
+              <img
+                src="03-ai-3d.png"
+                alt="Пример AI 3D">
+
+              <div class="ai-card-label">
+                AI 3D
+              </div>
+
+            </article>
+
+
+            <article
+              class="ai-card"
+              data-index="3">
+
+              <img
+                src="04-ai-visual.png"
+                alt="Пример AI-визуала">
+
+              <div class="ai-card-label">
+                AI VISUAL
+              </div>
+
+            </article>
+
+
+            <article
+              class="ai-card"
+              data-index="4">
+
+              <img
+                src="05-ai-automation.png"
+                alt="Пример AI-автоматизации">
+
+              <div class="ai-card-label">
+                AI AUTOMATION
+              </div>
+
+            </article>
+
           </div>
-          <div class="carousel-controls"><button class="carousel-btn" id="aiPrev" type="button" aria-label="Предыдущая карточка">↑</button><button class="carousel-btn" id="aiNext" type="button" aria-label="Следующая карточка">↓</button></div>
-          <div class="carousel-dots" id="carouselDots" aria-label="В��брать карточку"></div>
+
+
+          <div class="carousel-controls">
+
+            <button
+              class="carousel-btn"
+              id="aiPrev"
+              type="button"
+              aria-label="Предыдущая карточка">
+              ↑
+            </button>
+
+            <button
+              class="carousel-btn"
+              id="aiNext"
+              type="button"
+              aria-label="Следующая карточка">
+              ↓
+            </button>
+
+          </div>
+
+
+          <div
+            class="carousel-dots"
+            id="carouselDots"
+            aria-label="Выбрать карточку">
+          </div>
+
         </div>
+
       </div>
+
     </section>
 
-    <section class="section school-section" id="school"><div class="school-grid"><div><h2 class="school-heading">Школа нейросетей и практического AI</h2></div><div class="school-text"><p>MULTUM.AI — пространство, где нейросети превращаются в понятные инструменты для работы, творчества и собственного дела.</p><p>Мы соединяем обучение, практику и реальные задачи, чтобы знания не оставались теорией, а помогали создавать проекты и находить новые возможности.</p><p>Учимся применять AI на практике — от первых запросов до готовых продуктов и автоматизированных процессов.</p></div></div></section>
 
-    <section class="section courses-section" id="courses">
-      <h2 class="section-title">Курсы</h2>
+    <!-- =======================================================
+         SCHOOL
+         ======================================================= -->
+
+    <section
+      class="section school-section"
+      id="school">
+
+      <div class="school-grid">
+
+        <div>
+
+          <h2 class="school-heading">
+            Школа нейросетей и практического AI
+          </h2>
+
+        </div>
+
+
+        <div class="school-text">
+
+          <p>
+            MULTUM.AI — пространство, где нейросети превращаются в понятные инструменты для работы, творчества и собственного дела.
+          </p>
+
+          <p>
+            Мы соединяем обучение, практику и реальные задачи, чтобы знания не оставались теорией, а помогали создавать проекты и находить новые возможности.
+          </p>
+
+          <p>
+            Учимся применять AI на практике — от первых запросов до готовых продуктов и автоматизированных процессов.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         COURSES
+         ======================================================= -->
+
+    <section
+      class="section courses-section"
+      id="courses">
+
+      <h2 class="section-title">
+        Курсы
+      </h2>
+
+
       <div class="courses-wrap">
-        <article class="course-card"><h3>MAXI</h3><div class="course-price">99 900 ₽</div><p class="course-description">Полный курс по работе с AI в жизни, бизнесе и продукте.</p></article>
-        <article class="course-card"><h3>MINI</h3><div class="course-price">7 900 ₽</div><p class="course-description">Практический курс по основам нейросетей и полезным AI-инструментам.</p></article>
+
+        <article class="course-card">
+
+          <h3>
+            MAXI
+          </h3>
+
+          <div class="course-price">
+            99 900 ₽
+          </div>
+
+          <p class="course-description">
+            Полный курс по работе с AI в жизни, бизнесе и продукте.
+          </p>
+
+        </article>
+
+
+        <article class="course-card">
+
+          <h3>
+            MINI
+          </h3>
+
+          <div class="course-price">
+            7 900 ₽
+          </div>
+
+          <p class="course-description">
+            Практический курс по основам нейросетей и полезным AI-инструментам.
+          </p>
+
+        </article>
+
       </div>
-      <div class="directions-title">Направления</div>
+
+
+      <div class="directions-title">
+        Направления
+      </div>
+
+
       <div class="directions-wrap">
-        <button class="direction-control prev" id="directionsPrev" type="button" aria-label="Назад">‹</button>
-        <div class="directions-window" id="directionsWindow"><div class="directions-track" id="directionsTrack">
-          <div class="direction"><div class="direction-name">AI AGENTS + AI AUTOMATION</div><div class="direction-price">59 900 ₽</div></div><div class="direction"><div class="direction-name">AI WEBSITES</div><div class="direction-price">49 900 ₽</div></div><div class="direction"><div class="direction-name">AI GAMES</div><div class="direction-price">45 900 ₽</div></div><div class="direction"><div class="direction-name">AI 3D</div><div class="direction-price">25 900 ₽</div></div><div class="direction"><div class="direction-name">AI VIDEO</div><div class="direction-price">20 900 ₽</div></div><div class="direction"><div class="direction-name">AI CREATOR</div><div class="direction-price">14 900 ₽</div></div><div class="direction"><div class="direction-name">AI DESIGN</div><div class="direction-price">14 900 ₽</div></div><div class="direction"><div class="direction-name">AI PRODUCT ADD-ON</div><div class="direction-price">+10 900 ₽</div></div><div class="direction"><div class="direction-name">AI MARKETING ADD-ON</div><div class="direction-price">+5 900 ₽</div></div>
-        </div></div>
-        <button class="direction-control next" id="directionsNext" type="button" aria-label="Вперёд">›</button>
+
+        <button
+          class="direction-control prev"
+          id="directionsPrev"
+          type="button"
+          aria-label="Назад">
+          ‹
+        </button>
+
+
+        <div
+          class="directions-window"
+          id="directionsWindow">
+
+          <div
+            class="directions-track"
+            id="directionsTrack">
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI AGENTS + AI AUTOMATION
+              </div>
+
+              <div class="direction-price">
+                59 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI WEBSITES
+              </div>
+
+              <div class="direction-price">
+                49 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI GAMES
+              </div>
+
+              <div class="direction-price">
+                45 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI 3D
+              </div>
+
+              <div class="direction-price">
+                25 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI VIDEO
+              </div>
+
+              <div class="direction-price">
+                20 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI CREATOR
+              </div>
+
+              <div class="direction-price">
+                14 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI DESIGN
+              </div>
+
+              <div class="direction-price">
+                14 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI PRODUCT ADD-ON
+              </div>
+
+              <div class="direction-price">
+                +10 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI MARKETING ADD-ON
+              </div>
+
+              <div class="direction-price">
+                +5 900 ₽
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="direction-control next"
+          id="directionsNext"
+          type="button"
+          aria-label="Вперёд">
+          ›
+        </button>
+
       </div>
+
     </section>
 
-    <section class="section about-section" id="about"><div class="about-grid"><h2 class="about-heading">О нас — и почему мы создали MULTUM.AI</h2><div class="about-text"><p>Мы с Дашей создали MULTUM.AI, потому что сами верим: нейросети должны быть не сложной игрушкой, а понятным инструментом, который помогает воплощать идеи и менять привычный подход к работе.</p><p>В этом проекте мы объединили сво�� опыт, любопытство и желание делиться практическими знаниями. Нам важно, чтобы каждый ученик мог не просто узнать о возможностях AI, а применить их в собственных задачах.</p><p>Это наша общая история и школа, которую мы строим вместе с сообществом.</p></div></div></section>
 
-    <section class="section faq-section" id="faq">
-      <h2 class="faq-title">FAQ</h2>
+    <!-- =======================================================
+         ABOUT
+         ======================================================= -->
+
+    <section
+      class="section about-section"
+      id="about">
+
+      <div class="about-grid">
+
+        <h2 class="about-heading">
+          О нас — и почему мы создали MULTUM.AI
+        </h2>
+
+
+        <div class="about-text">
+
+          <p>
+            Мы с Дашей создали MULTUM.AI, потому что сами верим: нейросети должны быть не сложной игрушкой, а понятным инструментом, который помогает воплощать идеи и менять привычный подход к работе.
+          </p>
+
+          <p>
+            В этом проекте мы объединили свой опыт, любопытство и желание делиться практическими знаниями.
+            Нам важно, чтобы каждый ученик мог не просто узнать о возможностях AI, а применить их в собственных задачах.
+          </p>
+
+          <p>
+            Это наша общая история и школа, которую мы строим вместе с сообществом.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         FAQ
+         ======================================================= -->
+
+    <section
+      class="section faq-section"
+      id="faq">
+
+      <h2 class="faq-title">
+        FAQ
+      </h2>
+
+
       <div class="faq-grid">
+
+
         <div class="faq-column">
-          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Что именно учат в школе?</span><span class="faq-icon">+</span></button><div class="faq-answer"><div class="faq-answer-inner">Мы учим использовать AI в работе, создании продуктов, автоматизации, дизайне, маркетинге и генерации контента.</div></div></div>
-          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Подойдёт ли обучение новичку?</span><span class="faq-icon">+</span></button><div class="faq-answer"><div class="faq-answer-inner">Да. Начинаем с основ и постепенно переходим к практике, поэтому техническая база не обязательна.</div></div></div>
-          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Нужен ли опыт программирования?</span><span class="faq-icon">+</span></button><div class="faq-answer"><div class="faq-answer-inner">Для большинства направлений программирование не требуется. Там, где код нужен, разбираем всё на понятных примерах.</div></div></div>
-          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Как проходят занятия?</span><span class="faq-icon">+</span></button><div class="faq-answer"><div class="faq-answer-inner">Пошагово: теория, примеры, кейсы и практика в рабочих задачах с применением AI.</div></div></div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+              aria-expanded="false">
+
+              <span>
+                Что именно учат в школе?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
+            </button>
+
+
+            <div class="faq-answer">
+
+              <div class="faq-answer-inner">
+                Мы учим использовать AI в работе, создании продуктов, автоматизации, дизайне, маркетинге и генерации контента.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+              aria-expanded="false">
+
+              <span>
+                Подойдёт ли обучение новичку?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
+            </button>
+
+
+            <div class="faq-answer">
+
+              <div class="faq-answer-inner">
+                Да. Начинаем с основ и постепенно переходим к практике, поэтому техническая база не обязательна.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+              aria-expanded="false">
+
+              <span>
+                Нужен ли опыт программирования?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
+            </button>
+
+
+            <div class="faq-answer">
+
+              <div class="faq-answer-inner">
+                Для большинства направлений программирование не требуется. Там, где код нужен, разбираем всё на понятных примерах.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+              aria-expanded="false">
+
+              <span>
+                Как проходят занятия?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
+            </button>
+
+
+            <div class="faq-answer">
+
+              <div class="faq-answer-inner">
+                Пошагово: теория, примеры, кейсы и практика в рабочих задачах с применением AI.
+              </div>
+
+            </div>
+
+          </div>
+
+
         </div>
+
+
         <div class="faq-column">
-          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Чем отличаются MINI и MAXI?</span><span class="faq-icon">+</span></button><div class="faq-answer"><div class="faq-answer-inner">MINI — компактный практический маршрут, MAXI — расширенная программа с более широким набором тем и задач.</div></div></div>
-          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Какие инструменты будем изучать?</span><span class="faq-icon">+</span></button><div class="faq-answer"><div class="faq-answer-inner">Инструменты подбираются под направления: генерация текста и визуала, видео, 3D, сайты, агенты и автоматизация.</div></div></div>
-          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Можно ли сразу применять знания в работе?</span><span class="faq-icon">+</span></button><div class="faq-answer"><div class="faq-answer-inner">Да, обучение построено вокруг практических задач и примеров, которые можно адаптировать к своей работе или проекту.</div></div></div>
-          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Как записаться или задать вопрос?</span><span class="faq-icon">+</span></button><div class="faq-answer"><div class="faq-answer-inner">Оставь заявку в форме на сайте или напиши нам в Telegram — поможем выбрать подходящий формат.</div></div></div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+              aria-expanded="false">
+
+              <span>
+                Чем отличаются MINI и MAXI?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
+            </button>
+
+
+            <div class="faq-answer">
+
+              <div class="faq-answer-inner">
+                MINI — компактный практический маршрут, MAXI — расширенная программа с более широким набором тем и задач.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+              aria-expanded="false">
+
+              <span>
+                Какие инструменты будем изучать?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
+            </button>
+
+
+            <div class="faq-answer">
+
+              <div class="faq-answer-inner">
+                Инструменты подбираются под направления: генерация текста и визуала, видео, 3D, сайты, агенты и автоматизация.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+              aria-expanded="false">
+
+              <span>
+                Можно ли сразу применять знания в работе?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
+            </button>
+
+
+            <div class="faq-answer">
+
+              <div class="faq-answer-inner">
+                Да, обучение построено вокруг практических задач и примеров, которые можно адаптировать к своей работе или проекту.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+              aria-expanded="false">
+
+              <span>
+                Как записаться или задать вопрос?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
+            </button>
+
+
+            <div class="faq-answer">
+
+              <div class="faq-answer-inner">
+                Оставь заявку в форме на сайте или напиши нам в Telegram — поможем выбрать подходящий формат.
+              </div>
+
+            </div>
+
+          </div>
+
+
         </div>
+
       </div>
+
     </section>
 
-    <section class="section referral-section" id="referral">
+
+    <!-- =======================================================
+         REFERRAL
+         ======================================================= -->
+
+    <section
+      class="section referral-section"
+      id="referral">
+
       <div class="referral-grid">
-        <div class="referral-card"><h3>ПРИГЛАСИ СВОИХ</h3><input class="referral-input" id="referralInput" type="text" placeholder="Введи реферальный код"><button class="referral-submit" id="referralSubmit" type="button">→</button></div>
-        <div class="referral-copy"><h2>ПРИГЛАСИ СВОИХ</h2>
-          <div class="referral-step"><div class="referral-number">01</div><div><strong>ПРИГЛАСИ</strong><span>Поделись MULTUM.AI с теми, кому это действительно пригодится.</span></div></div>
-          <div class="referral-step"><div class="referral-number">02</div><div><strong>ПОЛУЧИ</strong><span>Используй свой реферальный код и получай бонусы.</span></div></div>
-          <div class="referral-step"><div class="referral-number">03</div><div><strong>РАСТИ</strong><span>Расти вместе с MULTUM.AI и сообществом.</span></div></div>
-          <div class="socials"><a class="social-btn" href="https://www.instagram.com/multumai" target="_blank" rel="noopener noreferrer">INSTAGRAM</a><a class="social-btn" href="https://t.me/multumai" target="_blank" rel="noopener noreferrer">TELEGRAM</a></div>
+
+
+        <div class="referral-card">
+
+          <h3>
+            ПРИГЛАСИ СВОИХ
+          </h3>
+
+          <input
+            class="referral-input"
+            id="referralInput"
+            type="text"
+            placeholder="Введи реферальный код">
+
+          <button
+            class="referral-submit"
+            id="referralSubmit"
+            type="button">
+            →
+          </button>
+
         </div>
+
+
+        <div class="referral-copy">
+
+          <h2>
+            ПРИГЛАСИ СВОИХ
+          </h2>
+
+
+          <div class="referral-steps">
+
+
+            <div class="referral-step">
+
+              <div class="referral-number">
+                01
+              </div>
+
+              <div>
+
+                <strong>
+                  ПРИГЛАСИ
+                </strong>
+
+                <span>
+                  Поделись MULTUM.AI с теми, кому это действительно пригодится.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="referral-step">
+
+              <div class="referral-number">
+                02
+              </div>
+
+              <div>
+
+                <strong>
+                  ПОЛУЧИ
+                </strong>
+
+                <span>
+                  Используй свой реферальный код и получай бонусы.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="referral-step">
+
+              <div class="referral-number">
+                03
+              </div>
+
+              <div>
+
+                <strong>
+                  РАСТИ
+                </strong>
+
+                <span>
+                  Расти вместе с MULTUM.AI и сообществом.
+                </span>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="socials">
+
+            <a
+              class="social-btn"
+              href="https://www.instagram.com/multumai"
+              target="_blank"
+              rel="noopener noreferrer">
+              INSTAGRAM
+            </a>
+
+            <a
+              class="social-btn"
+              href="https://t.me/multumai"
+              target="_blank"
+              rel="noopener noreferrer">
+              TELEGRAM
+            </a>
+
+          </div>
+
+
+        </div>
+
       </div>
+
     </section>
+
   </main>
-  <footer><div class="footer-line"><a href="#">Политика конфиденциальности</a><span>•</span><a href="#">Публичная оферта ОУ</a><span>•</span><a href="#">Публичная оферта ИКУ</a></div></footer>
+
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+
+  <footer>
+
+    <div class="footer-line">
+
+      <a href="#">
+        Политика конфиденциальности
+      </a>
+
+      <span>
+        •
+      </span>
+
+      <a href="#">
+        Публичная оферта ОУ
+      </a>
+
+      <span>
+        •
+      </span>
+
+      <a href="#">
+        Публичная оферта ИКУ
+      </a>
+
+    </div>
+
+  </footer>
+
 
   <script>
-    const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
-    const videos=[...document.querySelectorAll('.bg-video')];
-    let targetProgress=0, renderedProgress=0, backgroundFrame=0, lastFrameTime=0;
-    videos.forEach(video=>{ video.pause(); video.muted=true; video.playsInline=true; video.loop=false; video.removeAttribute('autoplay'); video.addEventListener('play',()=>video.pause()); video.addEventListener('loadedmetadata',()=>renderBackground(renderedProgress)); });
-    function pageProgress(){const max=document.documentElement.scrollHeight-window.innerHeight;return max>0?clamp(window.scrollY/max,0,1):0;}
-    function ease(t){t=clamp(t,0,1);return t*t*(3-2*t);}
-    function renderBackground(progress){
-      if(!videos.length)return;
-      const count=videos.length,scaled=clamp(progress*count,0,count-1e-7),active=Math.floor(scaled),local=scaled-active;
-      const fade=.065;
-      videos.forEach((video,index)=>{
-        let opacity=0,frame=0;
-        if(index===active){
-          // Fade the outgoing scene near its end. Fade the next scene only after it becomes active: no two-video overlay.
-          const fadeIn=ease(local/fade);
-          const fadeOut=1-ease((local-(1-fade))/fade);
-          opacity=Math.min(fadeIn,fadeOut);
-          frame=local;
-        }else if(index<active){frame=1;}
-        if(progress===0&&index===0){opacity=1;frame=0;}
-        if(progress>=1&&index===count-1){opacity=1;frame=1;}
-        video.style.opacity=String(opacity);
-        if(video.readyState>=1&&Number.isFinite(video.duration)&&video.duration>0){
-          const wanted=Math.max(0,video.duration-.08)*clamp(frame,0,1);
-          // Avoid issuing seeks while decoder is still seeking; this prevents the browser from freezing on stale frames.
-          if(!video.seeking&&Math.abs(video.currentTime-wanted)>.04){try{video.currentTime=wanted;}catch(_){}}
+
+    /* =========================================================
+       HELPERS
+       ========================================================= */
+
+    const clamp = (v,min,max) =>
+      Math.min(max,Math.max(min,v));
+
+
+    /* =========================================================
+       BACKGROUND VIDEO
+       
+       ТРИ РОЛИКА ИДУТ СТРОГО:
+       
+       VIDEO 1 → VIDEO 2 → VIDEO 3
+       
+       НИКАКОГО CROSSFADE.
+       НИКАКОГО НАЛОЖЕНИЯ.
+       В КАЖДЫЙ МОМЕНТ ВИДИМО ТОЛЬКО ОДНО ВИДЕО.
+       ========================================================= */
+
+    const videos = [
+      ...document.querySelectorAll('.bg-video')
+    ];
+
+
+    let targetProgress = 0;
+    let renderedProgress = 0;
+
+    let backgroundFrame = 0;
+
+    let lastFrameTime = 0;
+
+    let activeVideoIndex = -1;
+
+
+    videos.forEach(video => {
+
+      video.pause();
+
+      video.muted = true;
+
+      video.playsInline = true;
+
+      video.loop = false;
+
+      video.removeAttribute('autoplay');
+
+
+      video.addEventListener('play',() => {
+        video.pause();
+      });
+
+
+      video.addEventListener(
+        'loadedmetadata',
+        () => {
+
+          try {
+            video.currentTime = 0;
+          } catch (_) {}
+
+          renderBackground(
+            renderedProgress
+          );
+
         }
-      });
+      );
+
+    });
+
+
+    function pageProgress(){
+
+      const max =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+
+      if(max <= 0){
+        return 0;
+      }
+
+
+      return clamp(
+        window.scrollY / max,
+        0,
+        1
+      );
+
     }
-    function animateBackground(now){const dt=lastFrameTime?Math.min((now-lastFrameTime)/1000,.05):1/60;lastFrameTime=now;renderedProgress+=(targetProgress-renderedProgress)*(1-Math.exp(-dt*8));if(Math.abs(targetProgress-renderedProgress)<.00008)renderedProgress=targetProgress;renderBackground(renderedProgress);if(Math.abs(targetProgress-renderedProgress)>.00008)backgroundFrame=requestAnimationFrame(animateBackground);else{backgroundFrame=0;lastFrameTime=0;}}
-    function onScroll(){targetProgress=pageProgress();if(!backgroundFrame)backgroundFrame=requestAnimationFrame(animateBackground);}
-    window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',()=>{targetProgress=pageProgress();if(!backgroundFrame)backgroundFrame=requestAnimationFrame(animateBackground);});targetProgress=renderedProgress=pageProgress();renderBackground(renderedProgress);
-    const header=document.getElementById('header');window.addEventListener('scroll',()=>header.classList.toggle('hidden',window.scrollY>window.innerHeight*.55),{passive:true});
 
-    // Vertical 3D image reel with working arrows/dots.
-    const cards=[...document.querySelectorAll('.ai-card')],dots=document.getElementById('carouselDots');let activeCard=0;
-    cards.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.className='carousel-dot';dot.setAttribute('aria-label',`Показать карточку ${i+1}`);dot.addEventListener('click',()=>{activeCard=i;renderCards();});dots.append(dot);});
-    function renderCards(){cards.forEach((card,i)=>{let r=i-activeCard;if(r>cards.length/2)r-=cards.length;if(r<-cards.length/2)r+=cards.length;const d=Math.abs(r);card.style.setProperty('--x',`${Math.sin(r*.12)*14}px`);card.style.setProperty('--y',`${r*190}px`);card.style.setProperty('--z',`${d===0?0:-95*d}px`);card.style.setProperty('--rotateX',`${-r*13}deg`);card.style.setProperty('--rotateY',`${r*5}deg`);card.style.setProperty('--scale',d===0?'1':d===1?'.8':'.64');card.style.opacity=d>2?'0':d===0?'1':'.58';card.style.filter=d?'brightness(.78)':'brightness(1)';card.style.zIndex=String(10-d);card.style.pointerEvents=d?'none':'auto';});[...dots.children].forEach((dot,i)=>dot.classList.toggle('active',i===activeCard));}
-    document.getElementById('aiPrev').addEventListener('click',()=>{activeCard=(activeCard-1+cards.length)%cards.length;renderCards();});document.getElementById('aiNext').addEventListener('click',()=>{activeCard=(activeCard+1)%cards.length;renderCards();});renderCards();
 
-    // Reveal text as lines only for the section nearest the viewport center.
-    const textTargets='h1,h2,h3,.why-copy p,.school-text p,.course-price,.course-description,.about-text p,.faq-question,.referral-step strong,.referral-step span';
+    function renderBackground(progress){
+
+      if(!videos.length){
+        return;
+      }
+
+
+      /*
+        Делим страницу ровно на три части.
+
+        0.000 → 0.333 = VIDEO 1
+        0.333 → 0.666 = VIDEO 2
+        0.666 → 1.000 = VIDEO 3
+      */
+
+      const count = videos.length;
+
+
+      const scaled =
+        clamp(
+          progress,
+          0,
+          0.999999
+        ) * count;
+
+
+      const nextIndex =
+        Math.min(
+          count - 1,
+          Math.floor(scaled)
+        );
+
+
+      const localProgress =
+        scaled - nextIndex;
+
+
+      /*
+        Сначала вычисляем время нужного видео.
+      */
+
+      const activeVideo =
+        videos[nextIndex];
+
+
+      if(
+        activeVideo &&
+        activeVideo.readyState >= 1 &&
+        Number.isFinite(activeVideo.duration) &&
+        activeVideo.duration > 0
+      ){
+
+        const safeDuration =
+          Math.max(
+            0,
+            activeVideo.duration - .05
+          );
+
+
+        const wantedTime =
+          safeDuration *
+          clamp(
+            localProgress,
+            0,
+            1
+          );
+
+
+        /*
+          Плавный scroll scrub.
+          Видео не запускается.
+          Мы только перемещаем currentTime.
+        */
+
+        if(
+          !activeVideo.seeking &&
+          Math.abs(
+            activeVideo.currentTime -
+            wantedTime
+          ) > .025
+        ){
+
+          try {
+
+            activeVideo.currentTime =
+              wantedTime;
+
+          } catch (_) {}
+
+        }
+
+      }
+
+
+      /*
+        Сначала прячем ВСЕ ролики.
+        Только после этого показываем один.
+        
+        Это важно:
+        здесь нет промежуточного состояния,
+        где два видео одновременно видимы.
+      */
+
+      videos.forEach((video,index) => {
+
+        if(index === nextIndex){
+
+          /*
+            Если мы только что переключились
+            на новый ролик, сначала ставим его
+            в начало таймлайна.
+          */
+
+          if(
+            activeVideoIndex !== nextIndex &&
+            video.readyState >= 1
+          ){
+
+            try {
+              video.currentTime = 0;
+            } catch (_) {}
+
+          }
+
+          video.style.visibility =
+            'visible';
+
+          video.style.opacity =
+            '1';
+
+        } else {
+
+          video.style.opacity =
+            '0';
+
+          video.style.visibility =
+            'hidden';
+
+        }
+
+      });
+
+
+      /*
+        Запоминаем активное видео.
+      */
+
+      activeVideoIndex =
+        nextIndex;
+
+    }
+
+
+    function animateBackground(now){
+
+      const dt =
+        lastFrameTime
+          ? Math.min(
+              (now-lastFrameTime)/1000,
+              .05
+            )
+          : 1/60;
+
+
+      lastFrameTime = now;
+
+
+      /*
+        Плавно догоняем позицию скролла.
+      */
+
+      renderedProgress +=
+        (
+          targetProgress -
+          renderedProgress
+        ) *
+        (
+          1 -
+          Math.exp(-dt * 10)
+        );
+
+
+      if(
+        Math.abs(
+          targetProgress -
+          renderedProgress
+        ) < .00005
+      ){
+
+        renderedProgress =
+          targetProgress;
+
+      }
+
+
+      renderBackground(
+        renderedProgress
+      );
+
+
+      if(
+        Math.abs(
+          targetProgress -
+          renderedProgress
+        ) > .00005
+      ){
+
+        backgroundFrame =
+          requestAnimationFrame(
+            animateBackground
+          );
+
+      } else {
+
+        backgroundFrame = 0;
+
+        lastFrameTime = 0;
+
+      }
+
+    }
+
+
+    function onBackgroundScroll(){
+
+      targetProgress =
+        pageProgress();
+
+
+      if(!backgroundFrame){
+
+        backgroundFrame =
+          requestAnimationFrame(
+            animateBackground
+          );
+
+      }
+
+    }
+
+
+    window.addEventListener(
+      'scroll',
+      onBackgroundScroll,
+      {
+        passive:true
+      }
+    );
+
+
+    window.addEventListener(
+      'resize',
+      () => {
+
+        targetProgress =
+          pageProgress();
+
+
+        if(!backgroundFrame){
+
+          backgroundFrame =
+            requestAnimationFrame(
+              animateBackground
+            );
+
+        }
+
+      }
+    );
+
+
+    /*
+      Первый кадр:
+      сразу показываем только VIDEO 1.
+    */
+
+    targetProgress =
+      0;
+
+    renderedProgress =
+      0;
+
+    activeVideoIndex = -1;
+
+
+    renderBackground(0);
+
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    const header =
+      document.getElementById('header');
+
+
+    window.addEventListener(
+      'scroll',
+      () => {
+
+        header.classList.toggle(
+          'hidden',
+          window.scrollY >
+          window.innerHeight * .55
+        );
+
+      },
+      {
+        passive:true
+      }
+    );
+
+
+    /* =========================================================
+       VERTICAL AI CAROUSEL
+       ========================================================= */
+
+    const cards = [
+      ...document.querySelectorAll('.ai-card')
+    ];
+
+
+    const dots =
+      document.getElementById(
+        'carouselDots'
+      );
+
+
+    let activeCard = 0;
+
+
+    /*
+      Создаём точки.
+    */
+
+    cards.forEach((_,i) => {
+
+      const dot =
+        document.createElement('button');
+
+
+      dot.type =
+        'button';
+
+
+      dot.className =
+        'carousel-dot';
+
+
+      dot.setAttribute(
+        'aria-label',
+        `Показать карточку ${i+1}`
+      );
+
+
+      dot.addEventListener(
+        'click',
+        () => {
+
+          activeCard = i;
+
+          renderCards();
+
+        }
+      );
+
+
+      dots.append(dot);
+
+    });
+
+
+    function renderCards(){
+
+      cards.forEach((card,i) => {
+
+        let r =
+          i - activeCard;
+
+
+        /*
+          Зацикливание.
+        */
+
+        if(
+          r > cards.length / 2
+        ){
+          r -= cards.length;
+        }
+
+
+        if(
+          r < -cards.length / 2
+        ){
+          r += cards.length;
+        }
+
+
+        const distance =
+          Math.abs(r);
+
+
+        /*
+          Вертикальное расположение.
+        */
+
+        const y =
+          r * 185;
+
+
+        /*
+          Чем дальше карточка,
+          тем глубже она находится.
+        */
+
+        const z =
+          distance === 0
+            ? 0
+            : -110 * distance;
+
+
+        const x =
+          Math.sin(r * .16) * 10;
+
+
+        /*
+          Масштаб.
+        */
+
+        const scale =
+          distance === 0
+            ? 1
+            : distance === 1
+              ? .82
+              : distance === 2
+                ? .68
+                : .56;
+
+
+        /*
+          Прозрачность.
+        */
+
+        const opacity =
+          distance === 0
+            ? 1
+            : distance === 1
+              ? .58
+              : distance === 2
+                ? .28
+                : 0;
+
+
+        card.style.setProperty(
+          '--x',
+          `${x}px`
+        );
+
+
+        card.style.setProperty(
+          '--y',
+          `${y}px`
+        );
+
+
+        card.style.setProperty(
+          '--z',
+          `${z}px`
+        );
+
+
+        card.style.setProperty(
+          '--rotateX',
+          `${-r * 7}deg`
+        );
+
+
+        card.style.setProperty(
+          '--rotateY',
+          `${r * 3}deg`
+        );
+
+
+        card.style.setProperty(
+          '--scale',
+          scale
+        );
+
+
+        card.style.opacity =
+          opacity;
+
+
+        card.style.filter =
+          distance === 0
+            ? 'brightness(1)'
+            : 'brightness(.78)';
+
+
+        /*
+          Самая близкая карточка
+          всегда имеет максимальный z-index.
+        */
+
+        card.style.zIndex =
+          String(
+            100 - distance
+          );
+
+
+        card.style.pointerEvents =
+          distance === 0
+            ? 'auto'
+            : 'none';
+
+      });
+
+
+      [
+        ...dots.children
+      ].forEach((dot,i) => {
+
+        dot.classList.toggle(
+          'active',
+          i === activeCard
+        );
+
+      });
+
+    }
+
+
+    document
+      .getElementById('aiPrev')
+      .addEventListener(
+        'click',
+        () => {
+
+          activeCard =
+            (
+              activeCard -
+              1 +
+              cards.length
+            ) %
+            cards.length;
+
+
+          renderCards();
+
+        }
+      );
+
+
+    document
+      .getElementById('aiNext')
+      .addEventListener(
+        'click',
+        () => {
+
+          activeCard =
+            (
+              activeCard +
+              1
+            ) %
+            cards.length;
+
+
+          renderCards();
+
+        }
+      );
+
+
+    renderCards();
+
+
+    /* =========================================================
+       TEXT LINE REVEAL
+       ========================================================= */
+
+    const textTargets =
+      'h1,h2,h3,.why-copy p,.school-text p,.course-price,.course-description,.about-text p,.faq-question,.referral-step strong,.referral-step span';
+
+
     function wrapVisualLines(root){
-      root.querySelectorAll(textTargets).forEach(el=>{
-        if(el.dataset.linesReady||el.querySelector('.faq-icon'))return;
-        const text=el.textContent.trim();if(!text)return;
-        const words=text.split(/\s+/);el.textContent='';
-        words.forEach((word,index)=>{const span=document.createElement('span');span.className='scroll-word';span.textContent=word;el.append(span);if(index<words.length-1)el.append(document.createTextNode(' '));});
-        const spans=[...el.querySelectorAll('.scroll-word')];let previousTop=null,line=0;
-        spans.forEach(span=>{const top=Math.round(span.getBoundingClientRect().top);if(previousTop!==null&&top>previousTop+2)line++;span.style.setProperty('--line',line);previousTop=top;});
-        el.dataset.linesReady='true';
-      });
+
+      root
+        .querySelectorAll(textTargets)
+        .forEach(el => {
+
+          if(
+            el.dataset.linesReady ||
+            el.querySelector('.faq-icon')
+          ){
+            return;
+          }
+
+
+          const text =
+            el.textContent.trim();
+
+
+          if(!text){
+            return;
+          }
+
+
+          const words =
+            text.split(/\s+/);
+
+
+          el.textContent =
+            '';
+
+
+          words.forEach(
+            (word,index) => {
+
+              const span =
+                document.createElement(
+                  'span'
+                );
+
+
+              span.className =
+                'scroll-word';
+
+
+              span.textContent =
+                word;
+
+
+              el.append(span);
+
+
+              if(
+                index <
+                words.length - 1
+              ){
+
+                el.append(
+                  document.createTextNode(' ')
+                );
+
+              }
+
+            }
+          );
+
+
+          const spans =
+            [
+              ...el.querySelectorAll(
+                '.scroll-word'
+              )
+            ];
+
+
+          let previousTop = null;
+
+          let line = 0;
+
+
+          spans.forEach(span => {
+
+            const top =
+              Math.round(
+                span.getBoundingClientRect().top
+              );
+
+
+            if(
+              previousTop !== null &&
+              top > previousTop + 2
+            ){
+
+              line++;
+
+            }
+
+
+            span.style.setProperty(
+              '--line',
+              line
+            );
+
+
+            previousTop =
+              top;
+
+          });
+
+
+          el.dataset.linesReady =
+            'true';
+
+        });
+
     }
-    const pageSections=[...document.querySelectorAll('main > section')];
-    pageSections.forEach(wrapVisualLines);
-    function setCurrentTextSection(){const middle=window.innerHeight*.48;let selected=pageSections[0],distance=Infinity;pageSections.forEach(section=>{const rect=section.getBoundingClientRect();const d=middle<rect.top?rect.top-middle:middle>rect.bottom?middle-rect.bottom:0;if(d<distance){distance=d;selected=section;}});pageSections.forEach(section=>section.classList.toggle('text-current',section===selected));}
-    let textTick=0;window.addEventListener('scroll',()=>{if(!textTick)textTick=requestAnimationFrame(()=>{setCurrentTextSection();textTick=0;});},{passive:true});window.addEventListener('resize',()=>{pageSections.forEach(section=>{section.querySelectorAll('[data-lines-ready]').forEach(el=>{el.removeAttribute('data-lines-ready');el.textContent=[...el.querySelectorAll('.scroll-word')].map(w=>w.textContent).join(' ');});wrapVisualLines(section);});setCurrentTextSection();});setCurrentTextSection();
 
-    const directionsWindow=document.getElementById('directionsWindow'),directionsTrack=document.getElementById('directionsTrack');let directionX=0,dragX=0,dragStart=0,dragging=false;
-    function setDirections(value){const min=Math.min(0,directionsWindow.clientWidth-directionsTrack.scrollWidth);directionX=clamp(value,min,0);directionsTrack.style.transform=`translateX(${directionX}px)`;}
-    document.getElementById('directionsPrev').addEventListener('click',()=>setDirections(directionX+300));document.getElementById('directionsNext').addEventListener('click',()=>setDirections(directionX-300));
-    directionsWindow.addEventListener('pointerdown',e=>{dragging=true;dragX=e.clientX;dragStart=directionX;directionsWindow.setPointerCapture(e.pointerId);});directionsWindow.addEventListener('pointermove',e=>{if(dragging)setDirections(dragStart+e.clientX-dragX);});directionsWindow.addEventListener('pointerup',()=>dragging=false);directionsWindow.addEventListener('pointercancel',()=>dragging=false);window.addEventListener('resize',()=>setDirections(directionX));
 
-    const faqItems=[...document.querySelectorAll('.faq-item')];faqItems.forEach(item=>{const button=item.querySelector('.faq-question'),answer=item.querySelector('.faq-answer');button.addEventListener('click',()=>{const open=!item.classList.contains('open');faqItems.forEach(other=>{other.classList.remove('open');other.querySelector('.faq-question').setAttribute('aria-expanded','false');other.querySelector('.faq-answer').style.maxHeight='0px';});if(open){item.classList.add('open');button.setAttribute('aria-expanded','true');answer.style.maxHeight=`${answer.scrollHeight}px`;}});});
-    document.getElementById('referralSubmit').addEventListener('click',()=>{const input=document.getElementById('referralInput');if(!input.value.trim()){input.focus();return;}alert('Спасибо! Ваш реферальный код принят.');});
+    const pageSections =
+      [
+        ...document.querySelectorAll(
+          'main > section'
+        )
+      ];
+
+
+    pageSections.forEach(
+      wrapVisualLines
+    );
+
+
+    function setCurrentTextSection(){
+
+      const middle =
+        window.innerHeight * .48;
+
+
+      let selected =
+        pageSections[0];
+
+
+      let distance =
+        Infinity;
+
+
+      pageSections.forEach(
+        section => {
+
+          const rect =
+            section.getBoundingClientRect();
+
+
+          const d =
+            middle < rect.top
+              ? rect.top - middle
+              : middle > rect.bottom
+                ? middle - rect.bottom
+                : 0;
+
+
+          if(d < distance){
+
+            distance = d;
+
+            selected = section;
+
+          }
+
+        }
+      );
+
+
+      pageSections.forEach(
+        section => {
+
+          section.classList.toggle(
+            'text-current',
+            section === selected
+          );
+
+        }
+      );
+
+    }
+
+
+    let textTick = 0;
+
+
+    window.addEventListener(
+      'scroll',
+      () => {
+
+        if(!textTick){
+
+          textTick =
+            requestAnimationFrame(
+              () => {
+
+                setCurrentTextSection();
+
+                textTick = 0;
+
+              }
+            );
+
+        }
+
+      },
+      {
+        passive:true
+      }
+    );
+
+
+    window.addEventListener(
+      'resize',
+      () => {
+
+        pageSections.forEach(
+          section => {
+
+            section
+              .querySelectorAll(
+                '[data-lines-ready]'
+              )
+              .forEach(el => {
+
+                el.removeAttribute(
+                  'data-lines-ready'
+                );
+
+
+                el.textContent =
+                  [
+                    ...el.querySelectorAll(
+                      '.scroll-word'
+                    )
+                  ]
+                    .map(
+                      w => w.textContent
+                    )
+                    .join(' ');
+
+              });
+
+
+            wrapVisualLines(
+              section
+            );
+
+          }
+        );
+
+
+        setCurrentTextSection();
+
+      }
+    );
+
+
+    setCurrentTextSection();
+
+
+    /* =========================================================
+       DIRECTIONS CAROUSEL
+       ========================================================= */
+
+    const directionsWindow =
+      document.getElementById(
+        'directionsWindow'
+      );
+
+
+    const directionsTrack =
+      document.getElementById(
+        'directionsTrack'
+      );
+
+
+    let directionX = 0;
+
+    let dragX = 0;
+
+    let dragStart = 0;
+
+    let dragging = false;
+
+
+    function setDirections(value){
+
+      const min =
+        Math.min(
+          0,
+          directionsWindow.clientWidth -
+          directionsTrack.scrollWidth
+        );
+
+
+      directionX =
+        clamp(
+          value,
+          min,
+          0
+        );
+
+
+      directionsTrack.style.transform =
+        `translateX(${directionX}px)`;
+
+    }
+
+
+    document
+      .getElementById('directionsPrev')
+      .addEventListener(
+        'click',
+        () => {
+
+          setDirections(
+            directionX + 300
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById('directionsNext')
+      .addEventListener(
+        'click',
+        () => {
+
+          setDirections(
+            directionX - 300
+          );
+
+        }
+      );
+
+
+    directionsWindow.addEventListener(
+      'pointerdown',
+      e => {
+
+        dragging = true;
+
+        dragX =
+          e.clientX;
+
+        dragStart =
+          directionX;
+
+
+        directionsWindow.setPointerCapture(
+          e.pointerId
+        );
+
+      }
+    );
+
+
+    directionsWindow.addEventListener(
+      'pointermove',
+      e => {
+
+        if(!dragging){
+          return;
+        }
+
+
+        setDirections(
+          dragStart +
+          e.clientX -
+          dragX
+        );
+
+      }
+    );
+
+
+    directionsWindow.addEventListener(
+      'pointerup',
+      () => {
+
+        dragging = false;
+
+      }
+    );
+
+
+    directionsWindow.addEventListener(
+      'pointercancel',
+      () => {
+
+        dragging = false;
+
+      }
+    );
+
+
+    window.addEventListener(
+      'resize',
+      () => {
+
+        setDirections(
+          directionX
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       FAQ
+       ========================================================= */
+
+    const faqItems =
+      [
+        ...document.querySelectorAll(
+          '.faq-item'
+        )
+      ];
+
+
+    faqItems.forEach(item => {
+
+      const button =
+        item.querySelector(
+          '.faq-question'
+        );
+
+
+      const answer =
+        item.querySelector(
+          '.faq-answer'
+        );
+
+
+      button.addEventListener(
+        'click',
+        () => {
+
+          const open =
+            !item.classList.contains(
+              'open'
+            );
+
+
+          faqItems.forEach(
+            other => {
+
+              other.classList.remove(
+                'open'
+              );
+
+
+              other
+                .querySelector(
+                  '.faq-question'
+                )
+                .setAttribute(
+                  'aria-expanded',
+                  'false'
+                );
+
+
+              other
+                .querySelector(
+                  '.faq-answer'
+                )
+                .style.maxHeight =
+                '0px';
+
+            }
+          );
+
+
+          if(open){
+
+            item.classList.add(
+              'open'
+            );
+
+
+            button.setAttribute(
+              'aria-expanded',
+              'true'
+            );
+
+
+            answer.style.maxHeight =
+              `${answer.scrollHeight}px`;
+
+          }
+
+        }
+      );
+
+    });
+
+
+    /* =========================================================
+       REFERRAL
+       ========================================================= */
+
+    document
+      .getElementById(
+        'referralSubmit'
+      )
+      .addEventListener(
+        'click',
+        () => {
+
+          const input =
+            document.getElementById(
+              'referralInput'
+            );
+
+
+          if(
+            !input.value.trim()
+          ){
+
+            input.focus();
+
+            return;
+
+          }
+
+
+          alert(
+            'Спасибо! Ваш реферальный код принят.'
+          );
+
+        }
+      );
+
   </script>
+
 </body>
 </html>
