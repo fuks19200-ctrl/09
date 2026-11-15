@@ -1,28 +1,54 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>MULTUM.AI — Школа нейросетей</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
+
+    /* =====================================================
+       ROOT
+    ===================================================== */
+
     :root {
-      --lavender: #e8e0ff;
-      --lavender-soft: #f1edff;
-      --blue: #dfefff;
-      --blue-soft: #edf6ff;
-      --text: #34265c;
-      --text-soft: #685d82;
-      --white: rgba(255,255,255,.72);
-      --glass: rgba(255,255,255,.42);
-      --glass-strong: rgba(255,255,255,.72);
-      --border: rgba(255,255,255,.75);
-      --shadow: 0 18px 50px rgba(91,72,140,.10);
+      --white: #ffffff;
+      --white-soft: rgba(255,255,255,.92);
+      --white-muted: rgba(255,255,255,.78);
+
+      --dark: #252a31;
+      --dark-soft: #3b424b;
+
+      --glass: rgba(20,25,31,.26);
+      --glass-strong: rgba(20,25,31,.40);
+
+      --border: rgba(255,255,255,.48);
+
+      --shadow:
+        0 24px 70px rgba(10,15,20,.16);
     }
+
+
+    /* =====================================================
+       RESET
+    ===================================================== */
 
     * {
       box-sizing: border-box;
@@ -32,13 +58,25 @@
 
     html {
       scroll-behavior: smooth;
+      background: #aeb6c1;
     }
 
     body {
       font-family: "Fredoka", sans-serif;
-      color: var(--text);
-      background: #f4f1ff;
+
+      color: var(--white);
+
+      background: transparent !important;
+
       overflow-x: hidden;
+    }
+
+    html,
+    body,
+    main,
+    section,
+    footer {
+      background: transparent !important;
     }
 
     a {
@@ -49,141 +87,245 @@
     button,
     input,
     textarea {
-      font: inherit;
+      font-family: inherit;
     }
 
-    /* =========================
+
+    /* =====================================================
        BACKGROUND
-    ========================= */
+       ВИДЕО ПОЛНОСТЬЮ КОНТРОЛИРУЕТСЯ СКРОЛЛОМ
+    ===================================================== */
 
     .background {
       position: fixed;
+
       inset: 0;
-      z-index: -10;
+
+      width: 100%;
+      height: 100%;
+
+      z-index: 0;
+
       overflow: hidden;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(222,211,255,.65), transparent 32%),
-        radial-gradient(circle at 80% 70%, rgba(210,235,255,.58), transparent 35%),
-        #f5f2ff;
+
+      pointer-events: none;
+
+      background: #aeb6c1;
     }
 
     .bg-video {
       position: absolute;
+
       inset: -3%;
+
       width: 106%;
       height: 106%;
+
       object-fit: cover;
+
       opacity: 0;
+
       pointer-events: none;
-      filter: saturate(.82) brightness(1.12);
-      transition: opacity .7s ease;
-      will-change: opacity, transform;
+
+      filter:
+        saturate(.96)
+        brightness(.84)
+        contrast(1.02);
+
+      will-change: opacity;
+
+      transition:
+        opacity .28s linear;
     }
 
-    .bg-video.active {
-      opacity: .30;
-    }
+    /*
+      НИКАКОГО БЕЛОГО СЛОЯ ПОВЕРХ ВИДЕО
+    */
 
     .bg-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(248,246,255,.52),
-          rgba(244,242,255,.38) 45%,
-          rgba(239,246,255,.46)
-        );
-      pointer-events: none;
+      display: none !important;
     }
 
-    /* =========================
+
+    /* =====================================================
+       CONTENT LAYER
+    ===================================================== */
+
+    header,
+    main,
+    footer {
+      position: relative;
+      z-index: 2;
+    }
+
+
+    /* =====================================================
        HEADER
-    ========================= */
+    ===================================================== */
 
     header {
       position: fixed;
+
       top: 0;
       left: 0;
+
       width: 100%;
-      padding: 24px 42px;
+
+      padding:
+        22px
+        clamp(22px, 3vw, 48px);
+
       display: flex;
-      justify-content: space-between;
+
       align-items: center;
+
+      gap: 30px;
+
       z-index: 100;
-      transition: opacity .45s ease, transform .45s ease;
+
+      transition:
+        opacity .45s ease,
+        transform .45s ease;
     }
 
     header.hidden {
       opacity: 0;
-      transform: translateY(-20px);
+
+      transform:
+        translateY(-20px);
+
       pointer-events: none;
     }
 
     .logo {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: .08em;
+      flex:
+        0 0 auto;
+
       color: #fff;
-      text-shadow: 0 2px 18px rgba(76,60,115,.3);
+
+      font-size: 20px;
+
+      font-weight: 600;
+
+      letter-spacing: .07em;
+
+      text-shadow:
+        0 3px 18px rgba(0,0,0,.32);
     }
 
     nav {
+      margin-left: auto;
+
       display: flex;
-      gap: 28px;
+
       align-items: center;
+
+      justify-content: flex-end;
+
+      gap:
+        clamp(13px, 1.55vw, 25px);
+
+      min-width: 0;
+
+      white-space: nowrap;
     }
 
     nav a {
-      color: rgba(61,48,94,.82);
-      font-size: 14px;
+      flex:
+        0 0 auto;
+
+      color:
+        rgba(255,255,255,.96);
+
+      font-size:
+        clamp(12px, 1vw, 14px);
+
       font-weight: 500;
-      transition: color .25s ease, transform .25s ease;
+
+      text-shadow:
+        0 2px 15px rgba(0,0,0,.38);
+
+      transition:
+        transform .25s ease,
+        opacity .25s ease;
     }
 
     nav a:hover {
-      color: #604b91;
-      transform: translateY(-1px);
+      opacity: 1;
+
+      transform:
+        translateY(-2px);
     }
 
-    /* =========================
+
+    /* =====================================================
        GLOBAL
-    ========================= */
+    ===================================================== */
 
     main {
       position: relative;
     }
 
     section {
-      width: min(1180px, calc(100% - 48px));
-      margin: 0 auto;
+      width:
+        min(
+          1180px,
+          calc(100% - 48px)
+        );
+
+      margin:
+        0 auto;
+
       position: relative;
     }
 
     .section {
-      padding: 110px 0;
+      padding:
+        110px 0;
     }
 
     .section-title {
-      font-size: clamp(34px, 4vw, 58px);
+      font-size:
+        clamp(
+          36px,
+          4vw,
+          58px
+        );
+
       line-height: .98;
+
       font-weight: 600;
+
       letter-spacing: -.025em;
-      color: #34245e;
+
+      color: #fff;
+
+      text-shadow:
+        0 4px 26px rgba(0,0,0,.42);
+
       margin-bottom: 30px;
     }
 
     .section-lead {
       max-width: 760px;
+
       font-size: 20px;
+
       line-height: 1.55;
-      color: #51456d;
-      font-weight: 400;
+
+      color:
+        rgba(255,255,255,.94);
+
+      text-shadow:
+        0 3px 20px rgba(0,0,0,.35);
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(24px);
+
+      transform:
+        translateY(24px);
+
       transition:
         opacity .75s ease,
         transform .75s ease;
@@ -191,74 +333,134 @@
 
     .reveal.visible {
       opacity: 1;
-      transform: translateY(0);
+
+      transform:
+        translateY(0);
     }
 
-    /* =========================
+
+    /* =====================================================
        HERO
-    ========================= */
+    ===================================================== */
 
     .hero {
       min-height: 100vh;
+
       width: 100%;
+
       display: flex;
+
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 100px 24px 60px;
+
+      justify-content: flex-start;
+
+      text-align: left;
+
+      padding:
+        110px
+        7vw
+        70px;
     }
 
     .hero-inner {
-      width: min(950px, 100%);
+      width:
+        min(
+          1100px,
+          100%
+        );
     }
+
+    /*
+      ТОЛЬКО MULTUM.AI ПЕРЕЛИВАЕТСЯ.
+      ФОН НЕ ПЕРЕЛИВАЕТСЯ.
+    */
 
     .hero-title {
-      font-size: clamp(70px, 13vw, 170px);
+      display: inline-block;
+
+      font-size:
+        clamp(
+          78px,
+          12vw,
+          180px
+        );
+
       line-height: .82;
+
       font-weight: 600;
-      letter-spacing: -.045em;
+
+      letter-spacing: -.06em;
+
       color: transparent;
+
       background:
         linear-gradient(
-          110deg,
-          #51407c 0%,
-          #a18be2 20%,
-          #79bfe9 40%,
-          #c3a9ff 58%,
-          #6fa9db 76%,
-          #51407c 100%
+          105deg,
+          #ffffff 0%,
+          #ffffff 18%,
+          #dfe9f4 31%,
+          #ffffff 44%,
+          #f8fbff 56%,
+          #d9e4ef 70%,
+          #ffffff 84%,
+          #ffffff 100%
         );
-      background-size: 300% 100%;
+
+      background-size:
+        300% 100%;
+
       -webkit-background-clip: text;
       background-clip: text;
-      animation: heroShimmer 5s ease-in-out infinite;
-      text-shadow: 0 15px 45px rgba(118,96,167,.12);
+
+      animation:
+        whiteShimmer
+        5s
+        ease-in-out
+        infinite;
+
+      text-shadow:
+        0 10px 45px rgba(0,0,0,.25);
     }
 
-    @keyframes heroShimmer {
+    @keyframes whiteShimmer {
+
       0% {
-        background-position: 0% 50%;
+        background-position:
+          0% 50%;
       }
+
       50% {
-        background-position: 100% 50%;
+        background-position:
+          100% 50%;
       }
+
       100% {
-        background-position: 0% 50%;
+        background-position:
+          0% 50%;
       }
+
     }
 
     .hero-subtitle {
-      margin: 28px auto 0;
-      max-width: 600px;
-      font-size: 18px;
-      line-height: 1.45;
-      color: #5e5375;
-      font-weight: 400;
+      margin-top: 30px;
+
+      max-width: 650px;
+
+      font-size: 19px;
+
+      line-height: 1.5;
+
+      color:
+        rgba(255,255,255,.96);
+
+      text-shadow:
+        0 3px 22px rgba(0,0,0,.42);
     }
 
-    /* =========================
+
+    /* =====================================================
        WHY AI
-    ========================= */
+    ===================================================== */
 
     .why-section {
       padding-top: 80px;
@@ -266,13 +468,19 @@
 
     .why-layout {
       display: grid;
-      grid-template-columns: .75fr 1.25fr;
+
+      grid-template-columns:
+        .75fr
+        1.25fr;
+
       gap: 70px;
+
       align-items: center;
     }
 
     .why-copy {
       position: sticky;
+
       top: 120px;
     }
 
@@ -282,105 +490,172 @@
 
     .why-copy p {
       max-width: 440px;
+
       font-size: 19px;
+
       line-height: 1.55;
-      color: #51456d;
+
+      color:
+        rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px rgba(0,0,0,.40);
     }
 
     .why-carousel {
       position: relative;
+
       height: 690px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
     }
 
     .why-track {
       width: 100%;
       height: 100%;
+
       position: relative;
+
       overflow: hidden;
+
       border-radius: 42px;
     }
 
-    /*
-      ВАЖНО:
-      Карточки этого блока одинаковые.
-      Они достаточно плотные, чтобы картинки были видны,
-      но всё ещё остаются стеклянными.
-    */
-
     .ai-card {
       position: absolute;
+
       left: 50%;
-      width: min(430px, 90%);
+
+      width:
+        min(
+          430px,
+          90%
+        );
+
       aspect-ratio: 1 / 1;
-      transform: translate(-50%, var(--offset));
+
+      transform:
+        translate(
+          -50%,
+          var(--offset)
+        );
+
       border-radius: 34px;
+
       overflow: hidden;
 
-      background: rgba(255,255,255,.91);
-      border: 1px solid rgba(255,255,255,.98);
+      background:
+        rgba(255,255,255,.86);
+
+      border:
+        1px solid
+        rgba(255,255,255,.95);
+
       box-shadow:
-        0 25px 65px rgba(86,67,130,.15),
-        inset 0 1px 0 rgba(255,255,255,.95);
+        0 25px 65px
+        rgba(0,0,0,.15);
 
       transition:
         transform .65s cubic-bezier(.22,.75,.2,1),
-        opacity .5s ease,
-        filter .5s ease;
+        opacity .5s ease;
     }
 
     .ai-card img {
       width: 100%;
       height: 100%;
+
       display: block;
+
       object-fit: contain;
+
       background: transparent;
     }
 
     .ai-card-label {
       position: absolute;
+
       left: 22px;
       bottom: 18px;
-      padding: 9px 15px;
+
+      padding:
+        9px 15px;
+
       border-radius: 999px;
-      background: rgba(255,255,255,.88);
-      backdrop-filter: blur(12px);
-      color: #433267;
+
+      background:
+        rgba(255,255,255,.88);
+
+      backdrop-filter:
+        blur(12px);
+
+      color:
+        #30363d;
+
       font-size: 13px;
+
       letter-spacing: .08em;
+
       font-weight: 600;
     }
 
     .carousel-controls {
       position: absolute;
+
       right: 0;
       bottom: 12px;
+
       display: flex;
+
       gap: 10px;
+
+      z-index: 20;
     }
 
     .carousel-btn {
       width: 48px;
       height: 48px;
-      border: 1px solid rgba(255,255,255,.9);
-      background: rgba(255,255,255,.62);
-      backdrop-filter: blur(14px);
+
+      border:
+        1px solid
+        rgba(255,255,255,.82);
+
+      background:
+        rgba(25,30,36,.38);
+
+      backdrop-filter:
+        blur(14px);
+
       border-radius: 50%;
-      color: #4b3970;
+
+      color: #fff;
+
       cursor: pointer;
-      transition: .25s ease;
+
+      box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.12);
+
+      transition:
+        transform .25s ease,
+        background .25s ease;
     }
 
     .carousel-btn:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.88);
+      transform:
+        translateY(-2px);
+
+      background:
+        rgba(25,30,36,.58);
     }
 
-    /* =========================
+
+    /* =====================================================
        SCHOOL
-    ========================= */
+    ===================================================== */
 
     .school-section {
       padding-top: 80px;
@@ -388,18 +663,36 @@
 
     .school-grid {
       display: grid;
-      grid-template-columns: .85fr 1.15fr;
+
+      grid-template-columns:
+        .85fr
+        1.15fr;
+
       gap: 90px;
+
       align-items: start;
     }
 
     .school-heading {
-      font-size: clamp(36px, 4vw, 54px);
-      line-height: 1.02;
+      font-size:
+        clamp(
+          30px,
+          3.4vw,
+          46px
+        );
+
+      line-height: 1.04;
+
       font-weight: 600;
+
       letter-spacing: -.025em;
-      color: #3a285f;
+
+      color: #fff;
+
       max-width: 500px;
+
+      text-shadow:
+        0 4px 25px rgba(0,0,0,.42);
     }
 
     .school-text {
@@ -408,76 +701,156 @@
 
     .school-text p {
       font-size: 19px;
+
       line-height: 1.62;
-      color: #504469;
+
+      color:
+        rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px rgba(0,0,0,.38);
+
       margin-bottom: 25px;
     }
 
-    /* =========================
+
+    /* =====================================================
        COURSES
-    ========================= */
+    ===================================================== */
 
     .courses-section {
       padding-top: 80px;
     }
 
     .courses-wrap {
-      max-height: 80vh;
-      min-height: 620px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-      align-items: stretch;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
+      gap: 18px;
+
+      min-height: 0;
+
+      max-height: 80vh;
     }
 
     .course-card {
-      min-height: 0;
-      height: 100%;
-      padding: 42px;
-      border-radius: 34px;
-      background: rgba(255,255,255,.42);
-      border: 1px solid rgba(255,255,255,.70);
-      backdrop-filter: blur(18px);
-      box-shadow: var(--shadow);
+      min-height: 235px;
+
+      height: 235px;
+
+      padding:
+        30px;
+
+      border-radius: 30px;
+
+      background:
+        rgba(20,25,31,.28);
+
+      border:
+        1px solid
+        rgba(255,255,255,.48);
+
+      backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        var(--shadow);
+
       display: flex;
+
       flex-direction: column;
-      justify-content: space-between;
+
+      justify-content: center;
     }
 
     .course-card h3 {
-      font-size: clamp(34px, 4vw, 56px);
+      font-size:
+        clamp(
+          36px,
+          4vw,
+          54px
+        );
+
+      line-height: 1;
+
       font-weight: 600;
-      color: #3b2a61;
+
+      color: #fff;
+
+      text-shadow:
+        0 4px 22px rgba(0,0,0,.38);
     }
 
     .course-price {
-      font-size: 28px;
+      margin-top: 12px;
+
+      font-size: 24px;
+
       font-weight: 600;
-      color: #58457f;
-      margin-top: 14px;
+
+      color: #fff;
+
+      text-shadow:
+        0 3px 18px rgba(0,0,0,.36);
     }
 
     .course-description {
-      margin-top: 20px;
-      font-size: 19px;
-      color: #5c5074;
-      line-height: 1.4;
+      margin-top: 12px;
+
+      font-size: 17px;
+
+      line-height: 1.45;
+
+      color:
+        rgba(255,255,255,.94);
+
+      text-shadow:
+        0 3px 18px rgba(0,0,0,.35);
     }
 
+
+    /* =====================================================
+       DIRECTIONS CAROUSEL
+    ===================================================== */
+
     .directions-title {
-      margin-top: 50px;
-      margin-bottom: 20px;
-      font-size: 17px;
+      margin-top: 34px;
+
+      margin-bottom: 16px;
+
+      font-size: 15px;
+
       font-weight: 500;
-      color: #65597c;
-      letter-spacing: .04em;
+
+      color:
+        rgba(255,255,255,.94);
+
+      letter-spacing: .08em;
+
       text-transform: uppercase;
+
+      text-shadow:
+        0 3px 18px rgba(0,0,0,.38);
+    }
+
+    .directions-wrap {
+      position: relative;
+
+      padding:
+        0 56px;
     }
 
     .directions-window {
       overflow: hidden;
+
       width: 100%;
+
       cursor: grab;
+
+      touch-action: pan-y;
     }
 
     .directions-window:active {
@@ -486,36 +859,122 @@
 
     .directions-track {
       display: flex;
+
       gap: 14px;
+
       width: max-content;
+
       user-select: none;
+
+      transition:
+        transform .35s ease;
     }
 
     .direction {
       min-width: 210px;
-      padding: 20px 22px;
+
+      padding:
+        20px 22px;
+
       border-radius: 24px;
-      background: rgba(255,255,255,.40);
-      border: 1px solid rgba(255,255,255,.68);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 12px 35px rgba(90,70,130,.08);
+
+      background:
+        rgba(20,25,31,.28);
+
+      border:
+        1px solid
+        rgba(255,255,255,.46);
+
+      backdrop-filter:
+        blur(14px);
+
+      box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.10);
     }
 
     .direction-name {
       font-size: 15px;
+
       font-weight: 600;
-      color: #4b3970;
+
+      color: #fff;
+
+      text-shadow:
+        0 2px 15px rgba(0,0,0,.35);
     }
 
     .direction-price {
       margin-top: 8px;
+
       font-size: 15px;
-      color: #75688e;
+
+      color:
+        rgba(255,255,255,.88);
+
+      text-shadow:
+        0 2px 14px rgba(0,0,0,.30);
     }
 
-    /* =========================
+    .direction-control {
+      position: absolute;
+
+      top: 50%;
+
+      transform:
+        translateY(-50%);
+
+      width: 46px;
+      height: 46px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(255,255,255,.72);
+
+      background:
+        rgba(20,25,31,.40);
+
+      backdrop-filter:
+        blur(14px);
+
+      color: #fff;
+
+      cursor: pointer;
+
+      z-index: 5;
+
+      box-shadow:
+        0 10px 25px
+        rgba(0,0,0,.12);
+
+      transition:
+        transform .25s ease,
+        background .25s ease;
+    }
+
+    .direction-control:hover {
+      transform:
+        translateY(-50%)
+        scale(1.06);
+
+      background:
+        rgba(20,25,31,.58);
+    }
+
+    .direction-control.prev {
+      left: 0;
+    }
+
+    .direction-control.next {
+      right: 0;
+    }
+
+
+    /* =====================================================
        ABOUT
-    ========================= */
+    ===================================================== */
 
     .about-section {
       padding-top: 110px;
@@ -523,17 +982,34 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: .85fr 1.15fr;
+
+      grid-template-columns:
+        .85fr
+        1.15fr;
+
       gap: 80px;
+
       align-items: start;
     }
 
     .about-heading {
-      font-size: clamp(36px, 4vw, 54px);
-      line-height: 1.03;
+      font-size:
+        clamp(
+          30px,
+          3.4vw,
+          46px
+        );
+
+      line-height: 1.04;
+
       font-weight: 600;
-      color: #3a285f;
+
+      color: #fff;
+
       max-width: 480px;
+
+      text-shadow:
+        0 4px 25px rgba(0,0,0,.42);
     }
 
     .about-text {
@@ -542,14 +1018,22 @@
 
     .about-text p {
       font-size: 19px;
+
       line-height: 1.62;
-      color: #504469;
+
+      color:
+        rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px rgba(0,0,0,.38);
+
       margin-bottom: 25px;
     }
 
-    /* =========================
+
+    /* =====================================================
        SIGNUP
-    ========================= */
+    ===================================================== */
 
     .signup-section {
       padding-top: 100px;
@@ -557,33 +1041,68 @@
 
     .signup-grid {
       display: grid;
-      grid-template-columns: 1fr 440px;
+
+      grid-template-columns:
+        1fr
+        440px;
+
       gap: 80px;
+
       align-items: center;
     }
 
     .signup-copy h2 {
-      font-size: clamp(38px, 4vw, 58px);
+      font-size:
+        clamp(
+          38px,
+          4vw,
+          58px
+        );
+
       line-height: 1;
-      color: #392760;
+
+      color: #fff;
+
       font-weight: 600;
+
       margin-bottom: 22px;
+
+      text-shadow:
+        0 4px 26px rgba(0,0,0,.42);
     }
 
     .signup-copy p {
       max-width: 540px;
+
       font-size: 20px;
+
       line-height: 1.5;
-      color: #5a4e72;
+
+      color:
+        rgba(255,255,255,.95);
+
+      text-shadow:
+        0 3px 20px rgba(0,0,0,.38);
     }
 
     .signup-card {
       padding: 30px;
+
       border-radius: 30px;
-      background: rgba(255,255,255,.60);
-      border: 1px solid rgba(255,255,255,.82);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 22px 55px rgba(86,68,125,.12);
+
+      background:
+        rgba(255,255,255,.72);
+
+      border:
+        1px solid
+        rgba(255,255,255,.88);
+
+      backdrop-filter:
+        blur(20px);
+
+      box-shadow:
+        0 22px 55px
+        rgba(0,0,0,.13);
     }
 
     .form-group {
@@ -593,14 +1112,28 @@
     .form-group input,
     .form-group textarea {
       width: 100%;
-      border: 1px solid rgba(108,91,148,.16);
-      background: rgba(255,255,255,.78);
+
+      border:
+        1px solid
+        rgba(40,45,50,.15);
+
+      background:
+        rgba(255,255,255,.90);
+
       border-radius: 16px;
-      padding: 15px 16px;
-      color: #3d2c60;
+
+      padding:
+        15px 16px;
+
+      color:
+        #30363d;
+
       outline: none;
+
       resize: none;
-      transition: .25s ease;
+
+      transition:
+        .25s ease;
     }
 
     .form-group textarea {
@@ -609,116 +1142,200 @@
 
     .form-group input:focus,
     .form-group textarea:focus {
-      border-color: rgba(119,95,173,.45);
+      border-color:
+        rgba(40,45,50,.35);
+
       background: #fff;
-      box-shadow: 0 0 0 4px rgba(165,143,218,.12);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(40,45,50,.06);
     }
 
     .form-group input::placeholder,
     .form-group textarea::placeholder {
-      color: #8b819d;
+      color:
+        #727981;
     }
 
     .submit-btn {
       width: 100%;
+
       border: 0;
+
       border-radius: 16px;
+
       padding: 16px;
+
       cursor: pointer;
+
       color: #fff;
-      background: linear-gradient(110deg, #7660a7, #88b9df);
-      box-shadow: 0 12px 28px rgba(110,91,154,.20);
-      transition: .25s ease;
+
+      background:
+        #282e35;
+
+      box-shadow:
+        0 12px 28px
+        rgba(0,0,0,.20);
+
+      transition:
+        .25s ease;
     }
 
     .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 32px rgba(110,91,154,.26);
+      transform:
+        translateY(-2px);
+
+      background:
+        #1f252b;
     }
 
-    /* =========================
+
+    /* =====================================================
        FAQ
-    ========================= */
+    ===================================================== */
 
     .faq-section {
       padding-top: 110px;
     }
 
     .faq-title {
-      font-size: clamp(44px, 5vw, 66px);
-      color: #392760;
+      font-size:
+        clamp(
+          44px,
+          5vw,
+          66px
+        );
+
+      color: #fff;
+
       margin-bottom: 34px;
+
       font-weight: 600;
+
+      text-shadow:
+        0 4px 26px rgba(0,0,0,.42);
     }
 
     .faq-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
       gap: 14px;
+
       align-items: start;
     }
 
     .faq-column {
       display: flex;
+
       flex-direction: column;
+
       gap: 12px;
     }
 
     .faq-item {
       border-radius: 22px;
+
       overflow: hidden;
 
-      /* ФОН ВОЗВРАЩЁН */
-      background: rgba(255,255,255,.67);
-      border: 1px solid rgba(255,255,255,.86);
-      box-shadow: 0 12px 30px rgba(87,69,125,.08);
-      backdrop-filter: blur(16px);
+      background:
+        rgba(20,25,31,.38);
+
+      border:
+        1px solid
+        rgba(255,255,255,.48);
+
+      box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.10);
+
+      backdrop-filter:
+        blur(16px);
     }
 
     .faq-question {
       width: 100%;
+
       border: 0;
+
       background: transparent;
-      padding: 20px 22px;
+
+      padding:
+        20px 22px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
       gap: 20px;
-      color: #453365;
+
+      color: #fff;
+
       text-align: left;
+
       cursor: pointer;
+
       font-size: 16px;
+
       font-weight: 500;
+
+      text-shadow:
+        0 2px 14px rgba(0,0,0,.30);
     }
 
     .faq-icon {
-      flex: 0 0 auto;
+      flex:
+        0 0 auto;
+
       font-size: 23px;
+
       font-weight: 300;
-      color: #7764a2;
-      transition: transform .3s ease;
+
+      color: #fff;
+
+      transition:
+        transform .3s ease;
     }
 
     .faq-answer {
       max-height: 0;
+
       overflow: hidden;
-      transition: max-height .4s ease;
+
+      transition:
+        max-height .4s ease;
     }
 
     .faq-answer-inner {
-      padding: 0 22px 20px;
+      padding:
+        0 22px 20px;
+
       font-size: 15px;
+
       line-height: 1.55;
-      color: #645a76;
+
+      color:
+        rgba(255,255,255,.86);
+
+      text-shadow:
+        0 2px 14px rgba(0,0,0,.28);
     }
 
     .faq-item.open .faq-icon {
-      transform: rotate(45deg);
+      transform:
+        rotate(45deg);
     }
 
-    /* =========================
+
+    /* =====================================================
        REFERRAL
-    ========================= */
+    ===================================================== */
 
     .referral-section {
       padding-top: 100px;
@@ -726,106 +1343,196 @@
 
     .referral-grid {
       display: grid;
-      grid-template-columns: .9fr 1.1fr;
+
+      grid-template-columns:
+        .9fr
+        1.1fr;
+
       gap: 70px;
+
       align-items: center;
     }
 
     .referral-card {
       padding: 42px;
+
       border-radius: 34px;
 
-      /* меньше плотность, но текст хорошо читается */
-      background: rgba(255,255,255,.55);
-      border: 1px solid rgba(255,255,255,.82);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 22px 55px rgba(84,66,126,.10);
+      background:
+        rgba(20,25,31,.32);
+
+      border:
+        1px solid
+        rgba(255,255,255,.50);
+
+      backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        0 22px 55px
+        rgba(0,0,0,.12);
     }
 
     .referral-card h3 {
       font-size: 30px;
-      color: #3d2c61;
+
+      color: #fff;
+
       margin-bottom: 22px;
+
+      text-shadow:
+        0 3px 20px rgba(0,0,0,.40);
     }
 
     .referral-input {
       width: 100%;
-      padding: 15px 16px;
+
+      padding:
+        15px 16px;
+
       border-radius: 15px;
-      border: 1px solid rgba(104,87,143,.16);
-      background: rgba(255,255,255,.82);
+
+      border:
+        1px solid
+        rgba(40,45,50,.14);
+
+      background:
+        rgba(255,255,255,.90);
+
       outline: none;
-      color: #3d2c61;
+
+      color:
+        #30363d;
+
       margin-bottom: 12px;
     }
 
     .referral-submit {
       width: 100%;
+
       border: 0;
+
       border-radius: 15px;
+
       padding: 15px;
+
       color: #fff;
-      background: linear-gradient(110deg, #7660a7, #87b9dd);
+
+      background:
+        #282e35;
+
       cursor: pointer;
-      transition: .25s ease;
+
+      transition:
+        .25s ease;
     }
 
     .referral-submit:hover {
-      transform: translateY(-2px);
+      transform:
+        translateY(-2px);
     }
 
     .referral-copy h2 {
-      font-size: clamp(38px, 4vw, 60px);
+      font-size:
+        clamp(
+          38px,
+          4vw,
+          60px
+        );
+
       line-height: 1;
-      color: #392760;
+
+      color: #fff;
+
       margin-bottom: 30px;
+
       font-weight: 600;
+
+      text-shadow:
+        0 4px 26px rgba(0,0,0,.42);
     }
 
     .referral-step {
       display: grid;
-      grid-template-columns: 70px 1fr;
+
+      grid-template-columns:
+        70px
+        1fr;
+
       gap: 18px;
+
       align-items: start;
+
       margin-bottom: 24px;
     }
 
     .referral-number {
       font-size: 13px;
+
       letter-spacing: .08em;
-      color: #806ba8;
+
+      color:
+        rgba(255,255,255,.70);
+
       padding-top: 4px;
     }
 
     .referral-step strong {
       display: block;
+
       font-size: 20px;
-      color: #433267;
+
+      color: #fff;
+
       margin-bottom: 5px;
+
+      text-shadow:
+        0 2px 16px rgba(0,0,0,.34);
     }
 
     .referral-step span {
-      color: #675b78;
+      color:
+        rgba(255,255,255,.90);
+
       font-size: 16px;
+
       line-height: 1.45;
+
+      text-shadow:
+        0 2px 16px rgba(0,0,0,.30);
     }
 
     .socials {
       display: flex;
+
       gap: 12px;
+
       margin-top: 28px;
     }
 
     .social-btn {
       position: relative;
+
       overflow: hidden;
-      padding: 11px 18px;
+
+      padding:
+        11px 18px;
+
       border-radius: 999px;
-      background: rgba(255,255,255,.50);
-      border: 1px solid rgba(255,255,255,.78);
-      color: #554374;
+
+      background:
+        rgba(20,25,31,.34);
+
+      border:
+        1px solid
+        rgba(255,255,255,.48);
+
+      color: #fff;
+
       font-size: 13px;
+
       font-weight: 500;
+
       transition:
         transform .3s ease,
         background .3s ease,
@@ -834,72 +1541,111 @@
 
     .social-btn::after {
       content: "";
+
       position: absolute;
+
       inset: 0;
-      transform: translateX(-120%);
-      background: linear-gradient(
-        100deg,
-        transparent,
-        rgba(255,255,255,.72),
-        transparent
-      );
-      transition: transform .55s ease;
+
+      transform:
+        translateX(-120%);
+
+      background:
+        linear-gradient(
+          100deg,
+          transparent,
+          rgba(255,255,255,.50),
+          transparent
+        );
+
+      transition:
+        transform .55s ease;
     }
 
     .social-btn:hover {
-      transform: translateY(-3px);
-      background: rgba(255,255,255,.78);
-      box-shadow: 0 10px 24px rgba(86,67,126,.12);
+      transform:
+        translateY(-3px);
+
+      background:
+        rgba(255,255,255,.16);
+
+      box-shadow:
+        0 10px 24px
+        rgba(0,0,0,.12);
     }
 
     .social-btn:hover::after {
-      transform: translateX(120%);
+      transform:
+        translateX(120%);
     }
 
-    /* =========================
+
+    /* =====================================================
        FOOTER
-    ========================= */
+    ===================================================== */
 
     footer {
-      width: min(1180px, calc(100% - 48px));
-      margin: 0 auto;
-      padding: 70px 0 35px;
+      width:
+        min(
+          1180px,
+          calc(100% - 48px)
+        );
+
+      margin:
+        0 auto;
+
+      padding:
+        70px 0 35px;
     }
 
     .footer-line {
       display: flex;
+
       justify-content: center;
+
       align-items: center;
+
       gap: 18px;
+
       flex-wrap: nowrap;
+
       white-space: nowrap;
+
       font-size: 11px;
-      color: rgba(91,79,112,.72);
+
+      color:
+        rgba(255,255,255,.78);
+
+      text-shadow:
+        0 2px 14px rgba(0,0,0,.30);
     }
 
     .footer-line a {
-      transition: color .2s ease;
+      transition:
+        opacity .2s ease;
     }
 
     .footer-line a:hover {
-      color: #49366d;
+      opacity: .72;
     }
 
-    /* =========================
-       RESPONSIVE
-    ========================= */
 
-    @media (max-width: 900px) {
+    /* =====================================================
+       TABLET
+    ===================================================== */
+
+    @media (max-width: 1000px) {
+
       header {
-        padding: 20px 22px;
+        padding:
+          20px 24px;
       }
 
       nav {
-        display: none;
+        gap: 13px;
       }
 
-      section {
-        width: min(100% - 32px, 680px);
+      nav a {
+        font-size: 12px;
       }
 
       .why-layout,
@@ -908,7 +1654,8 @@
       .signup-grid,
       .referral-grid {
         grid-template-columns: 1fr;
-        gap: 45px;
+
+        gap: 50px;
       }
 
       .why-copy {
@@ -916,17 +1663,86 @@
       }
 
       .why-carousel {
-        height: 560px;
+        height: 600px;
+      }
+
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 760px) {
+
+      header {
+        padding:
+          18px 20px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      section {
+        width:
+          calc(100% - 32px);
+      }
+
+      .hero {
+        min-height: 92vh;
+
+        padding:
+          100px 20px 60px;
+      }
+
+      .hero-title {
+        font-size:
+          clamp(
+            58px,
+            18vw,
+            105px
+          );
+      }
+
+      .hero-subtitle {
+        max-width: 350px;
+
+        font-size: 16px;
+      }
+
+      .section {
+        padding:
+          80px 0;
+      }
+
+      .why-carousel {
+        height: 500px;
+      }
+
+      .ai-card {
+        width:
+          min(
+            360px,
+            92%
+          );
       }
 
       .courses-wrap {
-        max-height: none;
-        min-height: auto;
         grid-template-columns: 1fr;
+
+        max-height: none;
       }
 
       .course-card {
-        min-height: 340px;
+        height: 220px;
+
+        min-height: 220px;
+      }
+
+      .directions-wrap {
+        padding:
+          0 48px;
       }
 
       .faq-grid {
@@ -939,59 +1755,70 @@
 
       .footer-line {
         white-space: normal;
+
         flex-wrap: wrap;
+
+        gap: 8px 14px;
       }
+
     }
 
-    @media (max-width: 600px) {
+
+    @media (max-width: 480px) {
+
       .hero-title {
-        font-size: clamp(58px, 18vw, 100px);
-      }
-
-      .hero-subtitle {
-        font-size: 16px;
-        max-width: 340px;
-      }
-
-      .section {
-        padding: 80px 0;
+        font-size:
+          18vw;
       }
 
       .why-carousel {
-        height: 470px;
+        height: 430px;
       }
 
       .ai-card {
-        width: min(360px, 92%);
+        width:
+          min(
+            330px,
+            94%
+          );
+
         border-radius: 27px;
       }
 
       .course-card,
       .referral-card {
-        padding: 28px;
+        padding: 26px;
       }
 
       .referral-step {
-        grid-template-columns: 52px 1fr;
+        grid-template-columns:
+          48px 1fr;
       }
 
       .socials {
         flex-wrap: wrap;
       }
+
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- =========================
+
+  <!-- =====================================================
        BACKGROUND
-  ========================= -->
+       ТРИ ВИДЕО.
+       ОНИ НЕ PLAY.
+       ИХ CURRENTTIME УПРАВЛЯЕТСЯ СКРОЛЛОМ.
+  ====================================================== -->
 
   <div class="background">
 
     <video
-      class="bg-video active"
+      class="bg-video"
       id="bg1"
       src="bloom-bg-1.mp4"
       muted
@@ -1017,51 +1844,91 @@
       preload="auto"
     ></video>
 
-    <div class="bg-overlay"></div>
   </div>
 
-  <!-- =========================
+
+  <!-- =====================================================
        HEADER
-  ========================= -->
+  ====================================================== -->
 
   <header id="header">
-    <a href="#hero" class="logo">MULTUM.AI</a>
+
+    <a
+      href="#hero"
+      class="logo"
+    >
+      MULTUM.AI
+    </a>
 
     <nav>
-      <a href="#hero">Главная</a>
-      <a href="#why">Зачем тебе AI?</a>
-      <a href="#courses">Курсы</a>
-      <a href="#about">О нас</a>
-      <a href="#faq">FAQ</a>
+
+      <a href="#hero">
+        Главная
+      </a>
+
+      <a href="#why">
+        Зачем тебе AI?
+      </a>
+
+      <a href="#courses">
+        Курсы
+      </a>
+
+      <a href="#about">
+        О нас
+      </a>
+
+      <a href="#faq">
+        FAQ
+      </a>
+
     </nav>
+
   </header>
+
 
   <main>
 
-    <!-- =========================
-         HERO
-    ========================= -->
 
-    <section class="hero" id="hero">
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section
+      class="hero"
+      id="hero"
+    >
+
       <div class="hero-inner">
-        <h1 class="hero-title">MULTUM.AI</h1>
+
+        <h1 class="hero-title">
+          MULTUM.AI
+        </h1>
 
         <p class="hero-subtitle">
           Школа, где искусственный интеллект превращается из набора инструментов
           в твой личный рабочий ресурс.
         </p>
+
       </div>
+
     </section>
 
-    <!-- =========================
-         WHY AI
-    ========================= -->
 
-    <section class="section why-section" id="why">
+    <!-- =====================================================
+         WHY AI
+    ====================================================== -->
+
+    <section
+      class="section why-section"
+      id="why"
+    >
 
       <div class="why-layout">
 
+
         <div class="why-copy reveal">
+
           <h2 class="section-title">
             ЗАЧЕМ ТЕБЕ AI?
           </h2>
@@ -1071,62 +1938,154 @@
             автоматизировать рутину, находить решения и делать то, для чего
             раньше нужны были время, навыки и целая команда.
           </p>
+
         </div>
+
 
         <div class="why-carousel reveal">
 
-          <div class="why-track" id="whyTrack">
+          <div
+            class="why-track"
+            id="whyTrack"
+          >
 
-            <article class="ai-card" data-index="0">
-              <img src="01-ai-character.png" alt="AI CHARACTER">
-              <div class="ai-card-label">AI CHARACTER</div>
+
+            <article
+              class="ai-card"
+              data-index="0"
+            >
+
+              <img
+                src="01-ai-character.png"
+                alt="AI CHARACTER"
+              >
+
+              <div class="ai-card-label">
+                AI CHARACTER
+              </div>
+
             </article>
 
-            <article class="ai-card" data-index="1">
-              <img src="02-ai-product.png" alt="AI PRODUCT">
-              <div class="ai-card-label">AI PRODUCT</div>
+
+            <article
+              class="ai-card"
+              data-index="1"
+            >
+
+              <img
+                src="02-ai-product.png"
+                alt="AI PRODUCT"
+              >
+
+              <div class="ai-card-label">
+                AI PRODUCT
+              </div>
+
             </article>
 
-            <article class="ai-card" data-index="2">
-              <img src="03-ai-3d.png" alt="AI 3D">
-              <div class="ai-card-label">AI 3D</div>
+
+            <article
+              class="ai-card"
+              data-index="2"
+            >
+
+              <img
+                src="03-ai-3d.png"
+                alt="AI 3D"
+              >
+
+              <div class="ai-card-label">
+                AI 3D
+              </div>
+
             </article>
 
-            <article class="ai-card" data-index="3">
-              <img src="04-ai-visual.png" alt="AI VISUAL">
-              <div class="ai-card-label">AI VISUAL</div>
+
+            <article
+              class="ai-card"
+              data-index="3"
+            >
+
+              <img
+                src="04-ai-visual.png"
+                alt="AI VISUAL"
+              >
+
+              <div class="ai-card-label">
+                AI VISUAL
+              </div>
+
             </article>
 
-            <article class="ai-card" data-index="4">
-              <img src="05-ai-automation.png" alt="AI AUTOMATION">
-              <div class="ai-card-label">AI AUTOMATION</div>
+
+            <article
+              class="ai-card"
+              data-index="4"
+            >
+
+              <img
+                src="05-ai-automation.png"
+                alt="AI AUTOMATION"
+              >
+
+              <div class="ai-card-label">
+                AI AUTOMATION
+              </div>
+
             </article>
+
 
           </div>
 
+
           <div class="carousel-controls">
-            <button class="carousel-btn" id="aiPrev" type="button">↑</button>
-            <button class="carousel-btn" id="aiNext" type="button">↓</button>
+
+            <button
+              class="carousel-btn"
+              id="aiPrev"
+              type="button"
+              aria-label="Предыдущая карточка"
+            >
+              ↑
+            </button>
+
+            <button
+              class="carousel-btn"
+              id="aiNext"
+              type="button"
+              aria-label="Следующая карточка"
+            >
+              ↓
+            </button>
+
           </div>
 
         </div>
 
       </div>
+
     </section>
 
-    <!-- =========================
-         SCHOOL
-    ========================= -->
 
-    <section class="section school-section">
+    <!-- =====================================================
+         SCHOOL
+    ====================================================== -->
+
+    <section
+      class="section school-section"
+    >
 
       <div class="school-grid">
 
+
         <div class="reveal">
+
           <h2 class="school-heading">
             ШКОЛА НЕЙРОСЕТЕЙ MULTUM.AI
           </h2>
+
         </div>
+
 
         <div class="school-text reveal">
 
@@ -1157,24 +2116,34 @@
         </div>
 
       </div>
+
     </section>
 
-    <!-- =========================
-         COURSES
-    ========================= -->
 
-    <section class="section courses-section" id="courses">
+    <!-- =====================================================
+         COURSES
+    ====================================================== -->
+
+    <section
+      class="section courses-section"
+      id="courses"
+    >
 
       <h2 class="section-title reveal">
         КУРСЫ
       </h2>
 
+
       <div class="courses-wrap reveal">
+
 
         <article class="course-card">
 
           <div>
-            <h3>MAXI</h3>
+
+            <h3>
+              MAXI
+            </h3>
 
             <div class="course-price">
               99 900 ₽
@@ -1183,14 +2152,19 @@
             <p class="course-description">
               Создавай. Автоматизируй. Запускай.
             </p>
+
           </div>
 
         </article>
 
+
         <article class="course-card">
 
           <div>
-            <h3>MINI</h3>
+
+            <h3>
+              MINI
+            </h3>
 
             <div class="course-price">
               7 900 ₽
@@ -1199,84 +2173,201 @@
             <p class="course-description">
               От первого запроса до уверенной работы с AI.
             </p>
+
           </div>
 
         </article>
 
+
       </div>
+
 
       <div class="directions-title reveal">
         Отдельные направления
       </div>
 
-      <div class="directions-window reveal" id="directionsWindow">
 
-        <div class="directions-track" id="directionsTrack">
+      <div class="directions-wrap reveal">
 
-          <div class="direction">
-            <div class="direction-name">AI AGENTS + AI AUTOMATION</div>
-            <div class="direction-price">59 900 ₽</div>
-          </div>
 
-          <div class="direction">
-            <div class="direction-name">AI WEBSITES</div>
-            <div class="direction-price">49 900 ₽</div>
-          </div>
+        <button
+          class="direction-control prev"
+          id="directionsPrev"
+          type="button"
+          aria-label="Предыдущие направления"
+        >
+          ←
+        </button>
 
-          <div class="direction">
-            <div class="direction-name">AI GAMES</div>
-            <div class="direction-price">45 900 ₽</div>
-          </div>
 
-          <div class="direction">
-            <div class="direction-name">AI 3D</div>
-            <div class="direction-price">25 900 ₽</div>
-          </div>
+        <div
+          class="directions-window"
+          id="directionsWindow"
+        >
 
-          <div class="direction">
-            <div class="direction-name">AI VIDEO</div>
-            <div class="direction-price">20 900 ₽</div>
-          </div>
+          <div
+            class="directions-track"
+            id="directionsTrack"
+          >
 
-          <div class="direction">
-            <div class="direction-name">AI CREATOR</div>
-            <div class="direction-price">14 900 ₽</div>
-          </div>
 
-          <div class="direction">
-            <div class="direction-name">AI DESIGN</div>
-            <div class="direction-price">14 900 ₽</div>
-          </div>
+            <div class="direction">
 
-          <div class="direction">
-            <div class="direction-name">AI PRODUCT ADD-ON</div>
-            <div class="direction-price">+10 900 ₽</div>
-          </div>
+              <div class="direction-name">
+                AI AGENTS + AI AUTOMATION
+              </div>
 
-          <div class="direction">
-            <div class="direction-name">AI MARKETING ADD-ON</div>
-            <div class="direction-price">+5 900 ₽</div>
+              <div class="direction-price">
+                59 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI WEBSITES
+              </div>
+
+              <div class="direction-price">
+                49 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI GAMES
+              </div>
+
+              <div class="direction-price">
+                45 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI 3D
+              </div>
+
+              <div class="direction-price">
+                25 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI VIDEO
+              </div>
+
+              <div class="direction-price">
+                20 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI CREATOR
+              </div>
+
+              <div class="direction-price">
+                14 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI DESIGN
+              </div>
+
+              <div class="direction-price">
+                14 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI PRODUCT ADD-ON
+              </div>
+
+              <div class="direction-price">
+                +10 900 ₽
+              </div>
+
+            </div>
+
+
+            <div class="direction">
+
+              <div class="direction-name">
+                AI MARKETING ADD-ON
+              </div>
+
+              <div class="direction-price">
+                +5 900 ₽
+              </div>
+
+            </div>
+
+
           </div>
 
         </div>
+
+
+        <button
+          class="direction-control next"
+          id="directionsNext"
+          type="button"
+          aria-label="Следующие направления"
+        >
+          →
+        </button>
+
 
       </div>
 
     </section>
 
-    <!-- =========================
-         ABOUT
-    ========================= -->
 
-    <section class="section about-section" id="about">
+    <!-- =====================================================
+         ABOUT
+    ====================================================== -->
+
+    <section
+      class="section about-section"
+      id="about"
+    >
 
       <div class="about-grid">
 
+
         <div class="reveal">
+
           <h2 class="about-heading">
             ШКОЛА НЕЙРОСЕТЕЙ MULTUM.AI
           </h2>
+
         </div>
+
 
         <div class="about-text reveal">
 
@@ -1303,15 +2394,20 @@
         </div>
 
       </div>
+
     </section>
 
-    <!-- =========================
-         APPLICATION
-    ========================= -->
 
-    <section class="section signup-section">
+    <!-- =====================================================
+         APPLICATION
+    ====================================================== -->
+
+    <section
+      class="section signup-section"
+    >
 
       <div class="signup-grid">
+
 
         <div class="signup-copy reveal">
 
@@ -1326,250 +2422,482 @@
 
         </div>
 
-        <form class="signup-card reveal" id="signupForm">
+
+        <form
+          class="signup-card reveal"
+          id="signupForm"
+        >
 
           <div class="form-group">
+
             <input
               type="text"
               name="name"
               placeholder="ИМЯ"
               required
-            />
+            >
+
           </div>
 
+
           <div class="form-group">
+
             <input
               type="tel"
               name="phone"
               placeholder="НОМЕР ТЕЛЕФОНА"
               required
-            />
+            >
+
           </div>
 
+
           <div class="form-group">
+
             <input
               type="text"
               name="telegram"
               placeholder="ЮЗ ТЕЛЕГРАМ"
               required
-            />
+            >
+
           </div>
 
+
           <div class="form-group">
+
             <textarea
               name="question"
               placeholder="ЧТО ХОЧЕШЬ УЗНАТЬ?"
               required
             ></textarea>
+
           </div>
 
-          <button class="submit-btn" type="submit">
+
+          <button
+            class="submit-btn"
+            type="submit"
+          >
             ОСТАВИТЬ ЗАЯВКУ
           </button>
 
         </form>
 
       </div>
+
     </section>
 
-    <!-- =========================
-         FAQ
-    ========================= -->
 
-    <section class="section faq-section" id="faq">
+    <!-- =====================================================
+         FAQ
+    ====================================================== -->
+
+    <section
+      class="section faq-section"
+      id="faq"
+    >
 
       <h2 class="faq-title reveal">
         FAQ
       </h2>
 
+
       <div class="faq-grid">
+
+
+        <!-- LEFT -->
 
         <div class="faq-column">
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Кому подходит MULTUM.AI?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Кому подходит MULTUM.AI?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Тем, кто хочет использовать AI для работы, бизнеса,
                 создания контента, проектов и автоматизации.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Нужно ли уметь работать с нейросетями заранее?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Нужно ли уметь работать с нейросетями заранее?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Нет. Обучение построено так, чтобы разобраться можно было
                 даже с самого начала.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Подойдёт ли обучение, если я вообще никогда не работал с AI?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Подойдёт ли обучение, если я вообще никогда не работал с AI?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Да. Мы начинаем с понятной основы и постепенно переходим
                 к практическому применению.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Чем MINI отличается от MAXI?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Чем MINI отличается от MAXI?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 MINI помогает уверенно начать работать с AI.
                 MAXI даёт более широкую систему создания, автоматизации
                 и запуска проектов.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Что я смогу создавать после обучения?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Что я смогу создавать после обучения?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Визуалы, продукты, сайты, видео, 3D, автоматизации,
                 AI-агентов и другие рабочие решения.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Можно ли использовать AI для работы и бизнеса?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Можно ли использовать AI для работы и бизнеса?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Именно для этого мы и показываем практическое применение
                 технологий, а не просто список сервисов.
               </div>
+
             </div>
+
           </div>
+
 
         </div>
 
+
+        <!-- RIGHT -->
+
         <div class="faq-column">
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Можно ли создавать сайты и приложения с помощью AI?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Можно ли создавать сайты и приложения с помощью AI?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Да. AI может помогать создавать интерфейсы, сайты,
                 прототипы и цифровые продукты.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Можно ли создавать AI-агентов и автоматизации?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Можно ли создавать AI-агентов и автоматизации?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Да, это отдельное направление MULTUM.AI и часть расширенной
                 программы MAXI.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Как проходит обучение?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Как проходит обучение?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Через практику, разборы и создание собственных решений
                 с использованием AI.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Что входит в MAXI?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Что входит в MAXI?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Расширенная работа с AI, создание цифровых продуктов,
                 сайты, игры, автоматизация, AI-агенты, визуал и другие
                 направления.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Можно ли купить отдельное направление?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Можно ли купить отдельное направление?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 Да. Отдельные направления доступны независимо.
               </div>
+
             </div>
+
           </div>
 
+
           <div class="faq-item reveal">
-            <button class="faq-question" type="button">
-              <span>Как происходит оплата и обучение?</span>
-              <span class="faq-icon">+</span>
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+
+              <span>
+                Как происходит оплата и обучение?
+              </span>
+
+              <span class="faq-icon">
+                +
+              </span>
+
             </button>
+
             <div class="faq-answer">
+
               <div class="faq-answer-inner">
                 После оплаты участник получает информацию о формате
                 и дальнейших шагах обучения.
               </div>
+
             </div>
+
           </div>
+
 
         </div>
 
       </div>
+
     </section>
 
-    <!-- =========================
-         REFERRAL
-    ========================= -->
 
-    <section class="section referral-section">
+    <!-- =====================================================
+         REFERRAL
+    ====================================================== -->
+
+    <section
+      class="section referral-section"
+    >
 
       <div class="referral-grid">
 
+
         <div class="referral-card reveal">
 
-          <h3>ПРИГЛАСИ СВОИХ</h3>
+          <h3>
+            ПРИГЛАСИ СВОИХ
+          </h3>
 
           <input
             class="referral-input"
             id="referralInput"
             type="text"
             placeholder="Введи реферальный код"
-          />
+          >
 
           <button
             class="referral-submit"
@@ -1581,6 +2909,7 @@
 
         </div>
 
+
         <div class="referral-copy reveal">
 
           <h2>
@@ -1589,35 +2918,69 @@
             РАСТИ.
           </h2>
 
+
           <div class="referral-step">
-            <div class="referral-number">01</div>
+
+            <div class="referral-number">
+              01
+            </div>
+
             <div>
-              <strong>ПРИГЛАСИ</strong>
+
+              <strong>
+                ПРИГЛАСИ
+              </strong>
+
               <span>
                 Поделись MULTUM.AI с теми, кому это действительно пригодится.
               </span>
+
             </div>
+
           </div>
 
+
           <div class="referral-step">
-            <div class="referral-number">02</div>
+
+            <div class="referral-number">
+              02
+            </div>
+
             <div>
-              <strong>ПОЛУЧИ</strong>
+
+              <strong>
+                ПОЛУЧИ
+              </strong>
+
               <span>
                 Используй свой реферальный код и получай бонусы.
               </span>
+
             </div>
+
           </div>
 
+
           <div class="referral-step">
-            <div class="referral-number">03</div>
+
+            <div class="referral-number">
+              03
+            </div>
+
             <div>
-              <strong>РАСТИ</strong>
+
+              <strong>
+                РАСТИ
+              </strong>
+
               <span>
                 Расти вместе с MULTUM.AI и открывай новые возможности.
               </span>
+
             </div>
+
           </div>
+
 
           <div class="socials">
 
@@ -1641,331 +3004,981 @@
 
           </div>
 
+
         </div>
 
       </div>
+
     </section>
+
 
   </main>
 
-  <!-- =========================
+
+  <!-- =====================================================
        FOOTER
-  ========================= -->
+  ====================================================== -->
 
   <footer>
 
     <div class="footer-line">
-      <a href="#">Пользовательское соглашение</a>
+
+      <a href="#">
+        Пользовательское соглашение
+      </a>
+
       <span>•</span>
-      <a href="#">Политика конфиденциальности</a>
+
+      <a href="#">
+        Политика конфиденциальности
+      </a>
+
       <span>•</span>
-      <a href="#">Публичная оферта ОУ</a>
+
+      <a href="#">
+        Публичная оферта ОУ
+      </a>
+
       <span>•</span>
-      <a href="#">Публичная оферта ИКУ</a>
+
+      <a href="#">
+        Публичная оферта ИКУ
+      </a>
+
     </div>
 
   </footer>
 
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
   <script>
-    /* =========================
-       BACKGROUND VIDEO
-       Видео меняется только при
-       прокрутке страницы.
-       На первом экране фон НЕ
-       переливается.
-    ========================= */
+
+    /* =====================================================
+       SCROLL-CONTROLLED VIDEO
+       
+       НИКАКОГО video.play()
+       
+       currentTime = положение страницы
+    ====================================================== */
 
     const videos = [
       document.getElementById("bg1"),
       document.getElementById("bg2"),
       document.getElementById("bg3")
-    ];
+    ].filter(Boolean);
+
+
+    let targetScrollProgress = 0;
+
+    let currentScrollProgress = 0;
+
+    let backgroundRAF = null;
+
+
+    /*
+      Полностью запрещаем обычное воспроизведение.
+    */
 
     videos.forEach(video => {
+
       video.pause();
-      video.currentTime = 0;
+
+      video.muted = true;
+
+      video.playsInline = true;
+
+      video.loop = false;
+
+      video.removeAttribute("autoplay");
+
+      video.addEventListener(
+        "play",
+        () => {
+          video.pause();
+        }
+      );
+
     });
 
-    let scrollRaf = null;
-    let lastScroll = window.scrollY;
-    let scrolling = false;
 
-    function updateBackground() {
+    /*
+      Получаем общий прогресс страницы.
+    */
+
+    function getScrollProgress() {
+
       const maxScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
+        document.documentElement.scrollHeight -
+        window.innerHeight;
 
-      const progress = maxScroll > 0
-        ? window.scrollY / maxScroll
-        : 0;
-
-      const position = progress * (videos.length - 1);
-
-      const currentIndex = Math.floor(position);
-      const nextIndex = Math.min(currentIndex + 1, videos.length - 1);
-
-      const localProgress = position - currentIndex;
-
-      videos.forEach((video, index) => {
-        video.classList.remove("active");
-
-        if (index === currentIndex) {
-          video.style.opacity = String(.30 * (1 - localProgress));
-        }
-
-        if (index === nextIndex) {
-          video.style.opacity = String(.30 * localProgress);
-        }
-      });
-
-      if (window.scrollY <= 20) {
-        videos.forEach((video, index) => {
-          video.style.opacity = index === 0 ? ".30" : "0";
-        });
+      if (maxScroll <= 0) {
+        return 0;
       }
 
-      scrollRaf = null;
+      return Math.max(
+        0,
+        Math.min(
+          1,
+          window.scrollY / maxScroll
+        )
+      );
+
     }
 
-    function requestBackgroundUpdate() {
-      scrolling = true;
 
-      if (!scrollRaf) {
-        scrollRaf = requestAnimationFrame(updateBackground);
+    /*
+      Обновляем кадры видео.
+    */
+
+    function updateBackground(progress) {
+
+      if (!videos.length) {
+        return;
       }
 
-      clearTimeout(window.__scrollTimeout);
 
-      window.__scrollTimeout = setTimeout(() => {
-        scrolling = false;
-      }, 120);
+      /*
+        Разделяем страницу на 3 части.
+
+        Видео 1:
+        начало → середина
+
+        Видео 2:
+        середина → дальше
+
+        Видео 3:
+        низ страницы
+      */
+
+      const total =
+        videos.length;
+
+      const scaled =
+        progress * total;
+
+      let activeIndex =
+        Math.floor(scaled);
+
+      activeIndex =
+        Math.min(
+          activeIndex,
+          total - 1
+        );
+
+      const localProgress =
+        scaled - activeIndex;
+
+
+      videos.forEach(
+        (video, index) => {
+
+          let opacity = 0;
+
+          let videoProgress = 0;
+
+
+          /*
+            Активное видео.
+          */
+
+          if (
+            index === activeIndex
+          ) {
+
+            opacity =
+              1 -
+              Math.min(
+                localProgress,
+                1
+              );
+
+            videoProgress =
+              localProgress;
+
+          }
+
+
+          /*
+            Следующее видео.
+          */
+
+          if (
+            index === activeIndex + 1
+          ) {
+
+            opacity =
+              Math.min(
+                localProgress,
+                1
+              );
+
+            videoProgress = 0;
+
+          }
+
+
+          /*
+            Уже пройденные видео
+            остаются на последнем кадре.
+          */
+
+          if (
+            index < activeIndex
+          ) {
+
+            opacity = 0;
+
+            videoProgress = 1;
+
+          }
+
+
+          /*
+            Будущие видео.
+          */
+
+          if (
+            index > activeIndex + 1
+          ) {
+
+            opacity = 0;
+
+            videoProgress = 0;
+
+          }
+
+
+          /*
+            Первый экран.
+          */
+
+          if (
+            progress <= 0
+          ) {
+
+            opacity =
+              index === 0
+                ? 1
+                : 0;
+
+            videoProgress = 0;
+
+          }
+
+
+          video.style.opacity =
+            String(opacity);
+
+
+          /*
+            Перемещаем видео по currentTime.
+            НЕ PLAY.
+          */
+
+          if (
+            video.readyState >= 1 &&
+            Number.isFinite(video.duration) &&
+            video.duration > 0
+          ) {
+
+            const maxTime =
+              Math.max(
+                0,
+                video.duration - .05
+              );
+
+
+            const targetTime =
+              maxTime *
+              Math.max(
+                0,
+                Math.min(
+                  1,
+                  videoProgress
+                )
+              );
+
+
+            if (
+              Math.abs(
+                video.currentTime -
+                targetTime
+              ) > .02
+            ) {
+
+              try {
+
+                video.currentTime =
+                  targetTime;
+
+              } catch (error) {}
+
+            }
+
+          }
+
+        }
+      );
+
     }
+
+
+    /*
+      Плавное следование видео
+      за скроллом.
+    */
+
+    function animateBackground() {
+
+      currentScrollProgress +=
+        (
+          targetScrollProgress -
+          currentScrollProgress
+        ) * .10;
+
+
+      updateBackground(
+        currentScrollProgress
+      );
+
+
+      if (
+        Math.abs(
+          targetScrollProgress -
+          currentScrollProgress
+        ) > .0001
+      ) {
+
+        backgroundRAF =
+          requestAnimationFrame(
+            animateBackground
+          );
+
+      } else {
+
+        backgroundRAF = null;
+
+      }
+
+    }
+
+
+    /*
+      Каждый scroll меняет
+      целевое положение видео.
+    */
+
+    function handleScroll() {
+
+      targetScrollProgress =
+        getScrollProgress();
+
+
+      if (!backgroundRAF) {
+
+        backgroundRAF =
+          requestAnimationFrame(
+            animateBackground
+          );
+
+      }
+
+    }
+
 
     window.addEventListener(
       "scroll",
-      requestBackgroundUpdate,
-      { passive: true }
+      handleScroll,
+      {
+        passive: true
+      }
     );
 
-    updateBackground();
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        targetScrollProgress =
+          getScrollProgress();
+
+        updateBackground(
+          currentScrollProgress
+        );
+
+      }
+    );
 
 
-    /* =========================
-       HEADER HIDE
-    ========================= */
+    /*
+      Первоначальный кадр.
+    */
 
-    const header = document.getElementById("header");
+    targetScrollProgress =
+      getScrollProgress();
+
+    currentScrollProgress =
+      targetScrollProgress;
+
+    updateBackground(
+      currentScrollProgress
+    );
+
+
+    /* =====================================================
+       HEADER
+    ====================================================== */
+
+    const header =
+      document.getElementById(
+        "header"
+      );
+
 
     window.addEventListener(
       "scroll",
       () => {
-        if (window.scrollY > window.innerHeight * .55) {
-          header.classList.add("hidden");
+
+        if (
+          window.scrollY >
+          window.innerHeight * .55
+        ) {
+
+          header.classList.add(
+            "hidden"
+          );
+
         } else {
-          header.classList.remove("hidden");
+
+          header.classList.remove(
+            "hidden"
+          );
+
         }
+
       },
-      { passive: true }
+      {
+        passive: true
+      }
     );
 
 
-    /* =========================
-       AI VERTICAL CAROUSEL
-    ========================= */
+    /* =====================================================
+       AI CAROUSEL
+    ====================================================== */
 
-    const aiCards = [...document.querySelectorAll(".ai-card")];
+    const aiCards =
+      [
+        ...document.querySelectorAll(
+          ".ai-card"
+        )
+      ];
+
 
     let aiActive = 0;
 
+
     function renderAICards() {
-      const total = aiCards.length;
 
-      aiCards.forEach((card, index) => {
-        let relative = index - aiActive;
+      const total =
+        aiCards.length;
 
-        if (relative > total / 2) {
-          relative -= total;
+
+      aiCards.forEach(
+        (card, index) => {
+
+          let relative =
+            index -
+            aiActive;
+
+
+          if (
+            relative >
+            total / 2
+          ) {
+
+            relative -= total;
+
+          }
+
+
+          if (
+            relative <
+            -total / 2
+          ) {
+
+            relative += total;
+
+          }
+
+
+          const offset =
+            relative * 106;
+
+
+          card.style.setProperty(
+            "--offset",
+            `calc(${offset}% - 50%)`
+          );
+
+
+          if (
+            Math.abs(relative) > 1
+          ) {
+
+            card.style.opacity =
+              "0";
+
+            card.style.pointerEvents =
+              "none";
+
+          } else {
+
+            card.style.opacity =
+              "1";
+
+            card.style.pointerEvents =
+              "auto";
+
+          }
+
+
+          card.style.zIndex =
+            String(
+              20 -
+              Math.abs(relative)
+            );
+
         }
+      );
 
-        if (relative < -total / 2) {
-          relative += total;
-        }
-
-        const offset = relative * 106;
-
-        card.style.setProperty(
-          "--offset",
-          `calc(${offset}% - 50%)`
-        );
-
-        if (Math.abs(relative) > 1) {
-          card.style.opacity = "0";
-          card.style.pointerEvents = "none";
-        } else {
-          card.style.opacity = "1";
-          card.style.pointerEvents = "auto";
-        }
-
-        card.style.zIndex = String(20 - Math.abs(relative));
-      });
     }
 
-    document.getElementById("aiNext").addEventListener("click", () => {
-      aiActive = (aiActive + 1) % aiCards.length;
-      renderAICards();
-    });
 
-    document.getElementById("aiPrev").addEventListener("click", () => {
-      aiActive = (aiActive - 1 + aiCards.length) % aiCards.length;
-      renderAICards();
-    });
+    const aiNext =
+      document.getElementById(
+        "aiNext"
+      );
+
+    const aiPrev =
+      document.getElementById(
+        "aiPrev"
+      );
+
+
+    if (aiNext) {
+
+      aiNext.addEventListener(
+        "click",
+        () => {
+
+          aiActive =
+            (
+              aiActive + 1
+            ) %
+            aiCards.length;
+
+          renderAICards();
+
+        }
+      );
+
+    }
+
+
+    if (aiPrev) {
+
+      aiPrev.addEventListener(
+        "click",
+        () => {
+
+          aiActive =
+            (
+              aiActive -
+              1 +
+              aiCards.length
+            ) %
+            aiCards.length;
+
+          renderAICards();
+
+        }
+      );
+
+    }
+
 
     renderAICards();
 
 
-    /* =========================
-       DIRECTIONS DRAG
-    ========================= */
+    /* =====================================================
+       DIRECTIONS CAROUSEL
+    ====================================================== */
 
     const directionsWindow =
-      document.getElementById("directionsWindow");
+      document.getElementById(
+        "directionsWindow"
+      );
 
     const directionsTrack =
-      document.getElementById("directionsTrack");
+      document.getElementById(
+        "directionsTrack"
+      );
 
-    let dragging = false;
-    let startX = 0;
-    let startTranslate = 0;
+    const directionsPrev =
+      document.getElementById(
+        "directionsPrev"
+      );
+
+    const directionsNext =
+      document.getElementById(
+        "directionsNext"
+      );
+
+
     let currentTranslate = 0;
 
-    directionsWindow.addEventListener("pointerdown", (event) => {
-      dragging = true;
-      startX = event.clientX;
-      startTranslate = currentTranslate;
+    let dragging = false;
 
-      directionsWindow.setPointerCapture(event.pointerId);
-    });
+    let startX = 0;
 
-    directionsWindow.addEventListener("pointermove", (event) => {
-      if (!dragging) return;
+    let startTranslate = 0;
 
-      const delta = event.clientX - startX;
-      currentTranslate = startTranslate + delta;
 
-      const maxTranslate =
-        Math.min(
-          0,
-          directionsWindow.clientWidth -
-          directionsTrack.scrollWidth
+    function getMinTranslate() {
+
+      if (
+        !directionsWindow ||
+        !directionsTrack
+      ) {
+
+        return 0;
+
+      }
+
+
+      return Math.min(
+        0,
+
+        directionsWindow.clientWidth -
+        directionsTrack.scrollWidth
+      );
+
+    }
+
+
+    function setDirectionsPosition(
+      value
+    ) {
+
+      const min =
+        getMinTranslate();
+
+
+      currentTranslate =
+        Math.max(
+          min,
+          Math.min(
+            0,
+            value
+          )
         );
 
-      currentTranslate = Math.max(
-        maxTranslate,
-        Math.min(0, currentTranslate)
-      );
 
       directionsTrack.style.transform =
         `translateX(${currentTranslate}px)`;
-    });
 
-    directionsWindow.addEventListener("pointerup", () => {
-      dragging = false;
-    });
-
-    directionsWindow.addEventListener("pointercancel", () => {
-      dragging = false;
-    });
+    }
 
 
-    /* =========================
-       FAQ
-    ========================= */
+    if (directionsPrev) {
 
-    const faqItems =
-      document.querySelectorAll(".faq-item");
+      directionsPrev.addEventListener(
+        "click",
+        () => {
 
-    faqItems.forEach(item => {
+          setDirectionsPosition(
+            currentTranslate + 300
+          );
 
-      const button =
-        item.querySelector(".faq-question");
-
-      const answer =
-        item.querySelector(".faq-answer");
-
-      button.addEventListener("click", () => {
-
-        const wasOpen =
-          item.classList.contains("open");
-
-        faqItems.forEach(other => {
-          other.classList.remove("open");
-          other.querySelector(".faq-answer").style.maxHeight = "0";
-        });
-
-        if (!wasOpen) {
-          item.classList.add("open");
-          answer.style.maxHeight =
-            answer.scrollHeight + "px";
         }
+      );
 
-      });
-
-    });
+    }
 
 
-    /* =========================
-       REFERRAL
-    ========================= */
+    if (directionsNext) {
 
-    document
-      .getElementById("referralSubmit")
-      .addEventListener("click", () => {
+      directionsNext.addEventListener(
+        "click",
+        () => {
 
-        const input =
-          document.getElementById("referralInput");
+          setDirectionsPosition(
+            currentTranslate - 300
+          );
 
-        if (!input.value.trim()) {
-          input.focus();
-          return;
         }
+      );
 
-        alert("Реферальный код применён.");
-      });
+    }
 
 
-    /* =========================
-       FORM
-    ========================= */
+    if (directionsWindow) {
 
-    document
-      .getElementById("signupForm")
-      .addEventListener("submit", (event) => {
+      directionsWindow.addEventListener(
+        "pointerdown",
+        event => {
 
-        event.preventDefault();
+          dragging = true;
 
-        alert(
-          "Заявка отправлена. Мы свяжемся с вами."
+          startX =
+            event.clientX;
+
+          startTranslate =
+            currentTranslate;
+
+          directionsWindow.setPointerCapture(
+            event.pointerId
+          );
+
+        }
+      );
+
+
+      directionsWindow.addEventListener(
+        "pointermove",
+        event => {
+
+          if (!dragging) {
+            return;
+          }
+
+
+          const delta =
+            event.clientX -
+            startX;
+
+
+          setDirectionsPosition(
+            startTranslate +
+            delta
+          );
+
+        }
+      );
+
+
+      directionsWindow.addEventListener(
+        "pointerup",
+        () => {
+
+          dragging = false;
+
+        }
+      );
+
+
+      directionsWindow.addEventListener(
+        "pointercancel",
+        () => {
+
+          dragging = false;
+
+        }
+      );
+
+    }
+
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        setDirectionsPosition(
+          currentTranslate
         );
 
-        event.target.reset();
-      });
+      }
+    );
 
 
-    /* =========================
-       REVEAL
-    ========================= */
+    /* =====================================================
+       FAQ
+    ====================================================== */
+
+    const faqItems =
+      document.querySelectorAll(
+        ".faq-item"
+      );
+
+
+    faqItems.forEach(
+      item => {
+
+        const button =
+          item.querySelector(
+            ".faq-question"
+          );
+
+        const answer =
+          item.querySelector(
+            ".faq-answer"
+          );
+
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const wasOpen =
+              item.classList.contains(
+                "open"
+              );
+
+
+            faqItems.forEach(
+              other => {
+
+                other.classList.remove(
+                  "open"
+                );
+
+                const otherAnswer =
+                  other.querySelector(
+                    ".faq-answer"
+                  );
+
+                otherAnswer.style.maxHeight =
+                  "0";
+
+              }
+            );
+
+
+            if (!wasOpen) {
+
+              item.classList.add(
+                "open"
+              );
+
+              answer.style.maxHeight =
+                answer.scrollHeight +
+                "px";
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       REFERRAL
+    ====================================================== */
+
+    const referralSubmit =
+      document.getElementById(
+        "referralSubmit"
+      );
+
+
+    if (referralSubmit) {
+
+      referralSubmit.addEventListener(
+        "click",
+        () => {
+
+          const input =
+            document.getElementById(
+              "referralInput"
+            );
+
+
+          if (
+            !input.value.trim()
+          ) {
+
+            input.focus();
+
+            return;
+
+          }
+
+
+          alert(
+            "Реферальный код применён."
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       FORM
+    ====================================================== */
+
+    const signupForm =
+      document.getElementById(
+        "signupForm"
+      );
+
+
+    if (signupForm) {
+
+      signupForm.addEventListener(
+        "submit",
+        event => {
+
+          event.preventDefault();
+
+
+          alert(
+            "Заявка отправлена. Мы свяжемся с вами."
+          );
+
+
+          event.target.reset();
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       REVEAL ANIMATION
+    ====================================================== */
 
     const observer =
       new IntersectionObserver(
         entries => {
 
-          entries.forEach(entry => {
+          entries.forEach(
+            entry => {
 
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              observer.unobserve(entry.target);
+              if (
+                entry.isIntersecting
+              ) {
+
+                entry.target.classList.add(
+                  "visible"
+                );
+
+                observer.unobserve(
+                  entry.target
+                );
+
+              }
+
             }
-
-          });
+          );
 
         },
         {
@@ -1973,11 +3986,19 @@
         }
       );
 
+
     document
       .querySelectorAll(".reveal")
-      .forEach(element => {
-        observer.observe(element);
-      });
+      .forEach(
+        element => {
+
+          observer.observe(
+            element
+          );
+
+        }
+      );
+
   </script>
 
 </body>
