@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import gsap from 'gsap';
 import { works } from '@/lib/data';
-import GlassCard from './GlassCard';
 
 const imageByType: Record<string, string> = {
   character: '/images/01-ai-character.png',
@@ -13,50 +12,71 @@ const imageByType: Record<string, string> = {
   automation: '/images/05-ai-automation.png',
 };
 
-function WorkVisual({ type, title }: { type: string; title: string }) {
-  const src = imageByType[type];
+function WorkCard({
+  work,
+  index,
+  active,
+  onSelect,
+}: {
+  work: (typeof works)[number];
+  index: number;
+  active: number;
+  onSelect: (index: number) => void;
+}) {
+  const src = imageByType[work.visual];
+
   return (
-    <div className="work-visual work-visual--image">
-      {src ? <img src={src} alt={title} loading="lazy" decoding="async" /> : null}
-    </div>
+    <article
+      className={`work-tile work-tile--${index + 1} ${index === active ? 'is-active' : ''}`}
+      onMouseEnter={() => onSelect(index)}
+      onFocus={() => onSelect(index)}
+      tabIndex={0}
+      aria-label={work.title}
+    >
+      <div className="work-tile__media">
+        {src ? <img src={src} alt="" loading={index < 3 ? 'eager' : 'lazy'} decoding="async" /> : null}
+        <div className="work-tile__wash" />
+        <div className="work-tile__top">
+          <span className="work-tile__number">{work.number}</span>
+          <span className="work-tile__category">{work.category}</span>
+        </div>
+        <div className="work-tile__content">
+          <span className="work-tile__label">{work.label}</span>
+          <h3>{work.title}</h3>
+          <p>{work.description}</p>
+        </div>
+        <span className="work-tile__spark">✦</span>
+      </div>
+    </article>
   );
 }
 
 export default function WorksCarousel() {
   const [active, setActive] = useState(0);
-  const item = works[active];
 
-  const change = (next: number) => {
-    const normalized = (next + works.length) % works.length;
-    const direction = normalized > active ? 18 : -18;
-    gsap.fromTo('.work-carousel__content', { opacity: 0, x: direction }, { opacity: 1, x: 0, duration: 0.42, ease: 'power3.out' });
-    setActive(normalized);
+  const select = (index: number) => {
+    if (index === active) return;
+    gsap.fromTo(
+      '.work-tile',
+      { opacity: 0.82, y: 8 },
+      { opacity: 1, y: 0, duration: 0.38, ease: 'power3.out', stagger: 0.025, overwrite: true },
+    );
+    setActive(index);
   };
 
   return (
-    <div className="work-carousel">
-      <div className="work-carousel__tabs" role="tablist" aria-label="Возможности ИИ">
+    <div className="works-gallery">
+      <div className="works-gallery__grid">
         {works.map((work, index) => (
-          <button key={work.category} onClick={() => change(index)} className={index === active ? 'is-active' : ''} role="tab" aria-selected={index === active}>
-            {work.category}
-          </button>
+          <WorkCard
+            key={work.category}
+            work={work}
+            index={index}
+            active={active}
+            onSelect={select}
+          />
         ))}
       </div>
-      <GlassCard className="work-carousel__card">
-        <div className="work-carousel__content">
-          <WorkVisual type={item.visual} title={item.title} />
-          <div className="work-carousel__meta">
-            <span className="eyebrow">{item.label}</span>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-          </div>
-          <div className="work-carousel__controls">
-            <button aria-label="Предыдущий пример" onClick={() => change(active - 1)}>←</button>
-            <span>{item.number}</span>
-            <button aria-label="Следующий пример" onClick={() => change(active + 1)}>→</button>
-          </div>
-        </div>
-      </GlassCard>
     </div>
   );
 }
