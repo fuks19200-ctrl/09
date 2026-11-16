@@ -234,22 +234,23 @@ export default function SiteClient() {
         </section>
 
         <section className="section section--hand section-shell">
-          <div className="hand-composition living-composition" data-reveal>
-            <div className="living-figure" aria-hidden="true">
-              <video className="living-figure__video" autoPlay muted loop playsInline preload="metadata" poster="/images/bg-2.jpg">
-                <source src="/videos/bloom-bg-2.mp4" type="video/mp4" />
-              </video>
-              <div className="living-figure__veil" />
-              <div className="living-figure__signal">03 / LIVING INTERFACE</div>
-              <div className="living-figure__caption">IDEA → SYSTEM → RESULT</div>
+          <div className="flora-handoff" data-reveal>
+            <div className="flora-handoff__label">
+              <span className="eyebrow">03 / LIVING INTERFACE</span>
+              <span>SCROLL-LOCKED ENVIRONMENT</span>
             </div>
-            <GlassCard className="hand-card">
+            <div className="flora-handoff__copy">
               <span className="eyebrow">О ШКОЛЕ · MULTUM.AI</span>
-              <h2>Школа нейросетей и практического ИИ</h2>
-              <p>Превращаем нейросети в понятные инструменты для работы, творчества и бизнеса.</p>
-              <p>Учимся на реальных задачах — от первого запроса до готового проекта.</p>
-              <div className="card-index">03 / MULTUM CORE</div>
-            </GlassCard>
+              <h2>Не отдельный экран.<br /><em>Живой интерфейс.</em></h2>
+              <p>Флора остаётся одним непрерывным пространством. Ты скроллишь — она движется вместе с тобой. Остановилась — она останавливается. Курс появляется внутри этой же сцены.</p>
+              <div className="flora-handoff__meta">
+                <span>IDEA → SYSTEM → RESULT</span>
+                <span>01 / 01 ENVIRONMENT</span>
+              </div>
+            </div>
+            <div className="flora-handoff__signal" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
           </div>
         </section>
 
