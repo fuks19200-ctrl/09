@@ -1300,3 +1300,7 @@ a:hover{
   .price-card{min-height:430px;}
   .plan-price{margin-top:55px;}
 }
+
+
+/* Bloom scene integrity: JS controls scene switching; never blend the three films. */
+.backdrop__video{transition:none !important;}
