@@ -22,6 +22,7 @@ export default function VideoBackdrop() {
     let targetLocal = 0;
     let renderedLocal = 0;
     let lastScroll = window.scrollY;
+    let floraPosterVisible = true;
 
     const sectionTop = (selector: string) => {
       const el = document.querySelector<HTMLElement>(selector);
@@ -100,10 +101,27 @@ export default function VideoBackdrop() {
       const local = Math.max(0, Math.min(1, renderedLocal));
       const video = videos[active];
 
+      // The Flora asset starts with a transition frame in the source video.
+      // Keep the verified Flora poster on screen at the very top, then enter
+      // the video slightly after its opening frames so the page never flashes
+      // the black-hole frame on first paint.
+      const floraLead = 0.12;
+      const videoLocal = active === 0 ? Math.max(floraLead, local) : local;
+      floraPosterVisible = active === 0 && local < floraLead;
+      const poster = root.querySelector<HTMLElement>('.backdrop__flora-poster');
+      if (poster) {
+        poster.style.opacity = floraPosterVisible ? '1' : '0';
+        poster.style.visibility = floraPosterVisible ? 'visible' : 'hidden';
+      }
+      if (video) {
+        video.style.opacity = active === 0 && floraPosterVisible ? '0' : '1';
+        video.style.visibility = active === 0 && floraPosterVisible ? 'hidden' : 'visible';
+      }
+
       if (video && Number.isFinite(video.duration) && video.duration > 0) {
         const targetTime = Math.min(
           Math.max(0, video.duration - 0.04),
-          local * video.duration,
+          videoLocal * video.duration,
         );
 
         if (Math.abs(video.currentTime - targetTime) > 0.001) {
@@ -126,6 +144,12 @@ export default function VideoBackdrop() {
         active = timeline.active;
         renderedLocal = timeline.local;
         targetLocal = timeline.local;
+        floraPosterVisible = active === 0;
+        const poster = root.querySelector<HTMLElement>('.backdrop__flora-poster');
+        if (poster) {
+          poster.style.opacity = floraPosterVisible ? '1' : '0';
+          poster.style.visibility = floraPosterVisible ? 'visible' : 'hidden';
+        }
         showOnly(active);
 
         const video = videos[active];
@@ -208,6 +232,22 @@ export default function VideoBackdrop() {
 
   return (
     <div ref={rootRef} className="backdrop" aria-hidden="true">
+      <div
+        className="backdrop__flora-poster"
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 2,
+          backgroundImage: "url('/images/bg-1.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          opacity: 1,
+          visibility: 'visible',
+          transition: 'none',
+          pointerEvents: 'none',
+        }}
+      />
       <video
         className="backdrop__video"
         poster="/images/bg-1.jpg"
