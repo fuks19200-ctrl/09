@@ -34,7 +34,7 @@ function WorkCard({
       aria-label={work.title}
     >
       <div className="work-tile__media">
-        {src ? <div className={`work-tile__art work-tile__art--${index + 1}`} style={{ backgroundImage: `url(${src})` }} aria-hidden="true" /> : null}
+        {src ? <img className={`work-tile__art work-tile__art--${index + 1}`} src={src} alt="" aria-hidden="true" draggable="false" /> : null}
         <div className="work-tile__wash" />
         <div className="work-tile__top">
           <span className="work-tile__number">{work.number}</span>
@@ -87,35 +87,25 @@ export default function WorksCarousel() {
           position: absolute;
           inset: 0;
           z-index: 0;
-          background-repeat: no-repeat;
-          background-size: 100% 100%;
-          background-position: center;
+          width: 100%;
+          height: 100%;
+          display: block;
+          object-fit: cover;
+          object-position: 50% 50%;
+          transform: none;
+          filter: none;
+          image-rendering: auto;
+          user-select: none;
+          -webkit-user-drag: none;
         }
 
-        .work-tile__art--1 {
-          background-size: cover;
-          background-position: center;
-        }
-
-        .work-tile__art--2 {
-          background-size: cover;
-          background-position: center;
-        }
-
-        .work-tile__art--3 {
-          background-size: cover;
-          background-position: center;
-        }
-
-        .work-tile__art--4 {
-          background-size: cover;
-          background-position: center;
-        }
-
-        .work-tile__art--5 {
-          background-size: cover;
-          background-position: center;
-        }
+        /* Focal points: keep the important subject inside the crop instead of
+           letting a generic center-crop cut faces/products off. */
+        .work-tile__art--1 { object-position: 50% 42%; }
+        .work-tile__art--2 { object-position: 50% 50%; }
+        .work-tile__art--3 { object-position: 50% 46%; }
+        .work-tile__art--4 { object-position: 50% 48%; }
+        .work-tile__art--5 { object-position: 50% 50%; }
 
         .work-tile__wash {
           z-index: 2 !important;
