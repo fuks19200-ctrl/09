@@ -1,8 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export const dynamic = "force-dynamic";
-
 export default function DebugMoodboard() {
   const file = path.join(process.cwd(), "Лавандовый футуристический мудборд.png");
   const base64 = fs.readFileSync(file).toString("base64");
