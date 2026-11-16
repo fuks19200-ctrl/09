@@ -14,7 +14,7 @@ export default function MagneticButton({ children, href, tone = 'light', classNa
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    const el = href ? anchorRef.current : buttonRef.current;
+    const el: HTMLElement | null = href ? anchorRef.current : buttonRef.current;
     if (!el) return;
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     if (coarse) return;
@@ -24,20 +24,13 @@ export default function MagneticButton({ children, href, tone = 'light', classNa
 
     const move = (event: MouseEvent) => {
       const r = el.getBoundingClientRect();
-      const dx = event.clientX - (r.left + r.width / 2);
-      const dy = event.clientY - (r.top + r.height / 2);
-      xTo(dx * 0.12);
-      yTo(dy * 0.12);
+      xTo((event.clientX - (r.left + r.width / 2)) * 0.12);
+      yTo((event.clientY - (r.top + r.height / 2)) * 0.12);
     };
-
-    const leave = () => {
-      xTo(0);
-      yTo(0);
-    };
+    const leave = () => { xTo(0); yTo(0); };
 
     el.addEventListener('mousemove', move);
     el.addEventListener('mouseleave', leave);
-
     return () => {
       el.removeEventListener('mousemove', move);
       el.removeEventListener('mouseleave', leave);
@@ -47,16 +40,8 @@ export default function MagneticButton({ children, href, tone = 'light', classNa
   const cls = `magnetic-button magnetic-button--${tone} ${className}`;
 
   if (href) {
-    return (
-      <a ref={anchorRef} className={cls} href={href}>
-        {children}
-      </a>
-    );
+    return <a ref={anchorRef} className={cls} href={href}>{children}</a>;
   }
 
-  return (
-    <button ref={buttonRef} className={cls} {...props}>
-      {children}
-    </button>
-  );
+  return <button ref={buttonRef} className={cls} {...props}>{children}</button>;
 }
