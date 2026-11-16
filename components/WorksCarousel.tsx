@@ -99,8 +99,23 @@ export default function WorksCarousel() {
           -webkit-user-drag: none;
         }
 
-        /* Focal points: keep the important subject inside the crop instead of
-           letting a generic center-crop cut faces/products off. */
+        /* Exact card-fit rules: image touches all four card edges with no inset or zoom. */
+        .work-tile__art {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          width: 100%;
+          height: 100%;
+          display: block;
+          object-fit: cover;
+          object-position: 50% 50%;
+          transform: none !important;
+          filter: none !important;
+          image-rendering: auto;
+          user-select: none;
+          -webkit-user-drag: none;
+        }
+
         .work-tile__art--1 { object-position: 50% 42%; }
         .work-tile__art--2 { object-position: 50% 50%; }
         .work-tile__art--3 { object-position: 50% 46%; }
