@@ -73,9 +73,16 @@ export default function WorksCarousel() {
           background: #e7def2 !important;
           border-color: rgba(255,255,255,.78) !important;
           box-shadow: 0 24px 70px rgba(77,58,105,.14), inset 0 1px 0 rgba(255,255,255,.9) !important;
+          overflow: hidden !important;
         }
 
         .work-tile__media {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          overflow: hidden !important;
+          border-radius: inherit !important;
           background: transparent !important;
         }
 
@@ -83,32 +90,27 @@ export default function WorksCarousel() {
           display: none !important;
         }
 
+        /*
+         * CARD / IMAGE GEOMETRY
+         * Desktop cards are:
+         * 01–03: 2/6 columns, aspect-ratio 1 / 1.035
+         * 04–05: 3/6 columns, aspect-ratio 2.05 / 1
+         * The source PNGs are landscape, so the image must be cropped by
+         * object-fit: cover inside the exact card box — never enlarged,
+         * inset or stretched.
+         */
         .work-tile__art {
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          width: 100%;
-          height: 100%;
-          display: block;
-          object-fit: cover;
-          object-position: 50% 50%;
-          transform: none;
-          filter: none;
-          image-rendering: auto;
-          user-select: none;
-          -webkit-user-drag: none;
-        }
-
-        /* Exact card-fit rules: image touches all four card edges with no inset or zoom. */
-        .work-tile__art {
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          width: 100%;
-          height: 100%;
-          display: block;
-          object-fit: cover;
-          object-position: 50% 50%;
+          position: absolute !important;
+          inset: 0 !important;
+          z-index: 0 !important;
+          display: block !important;
+          width: 100% !important;
+          height: 100% !important;
+          min-width: 100% !important;
+          min-height: 100% !important;
+          max-width: none !important;
+          max-height: none !important;
+          object-fit: cover !important;
           transform: none !important;
           filter: none !important;
           image-rendering: auto;
@@ -116,14 +118,19 @@ export default function WorksCarousel() {
           -webkit-user-drag: none;
         }
 
-        .work-tile__art--1 { object-position: 50% 42%; }
-        .work-tile__art--2 { object-position: 50% 50%; }
-        .work-tile__art--3 { object-position: 50% 46%; }
-        .work-tile__art--4 { object-position: 50% 48%; }
-        .work-tile__art--5 { object-position: 50% 50%; }
+        /* The first three source files are 850×487, 843×487 and 573×487.
+           Their focal point stays centered while the card ratio does the crop. */
+        .work-tile__art--1 { object-position: 50% 50% !important; }
+        .work-tile__art--2 { object-position: 50% 50% !important; }
+        .work-tile__art--3 { object-position: 50% 50% !important; }
+
+        /* 04 is 1129×487 and 05 is 572×487. */
+        .work-tile__art--4 { object-position: 50% 50% !important; }
+        .work-tile__art--5 { object-position: 50% 50% !important; }
 
         .work-tile__wash {
           z-index: 2 !important;
+          inset: 0 !important;
           background: transparent !important;
           mix-blend-mode: normal !important;
         }
