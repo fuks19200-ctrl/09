@@ -879,3 +879,378 @@ main,
 .glass-card{
   background:linear-gradient(135deg,rgba(27,27,31,.38),rgba(10,10,12,.20)) !important;
 }
+
+
+/* =========================================================
+   MULTUM.AI — FLORA TYPE + CONTRAST SYSTEM
+   Typography and color are derived from the Bloom/Flora reference.
+   The living woman remains the visual source; text must sit above it.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --flora-ink:#09070a;
+  --flora-plum:#21131b;
+  --flora-rose:#d8789b;
+  --flora-rose-hot:#f0a7bd;
+  --flora-pearl:#f7eef1;
+  --flora-soft:#e5d5da;
+  --flora-muted:rgba(247,238,241,.70);
+  --flora-dim:rgba(247,238,241,.48);
+  --flora-line:rgba(247,238,241,.18);
+  --flora-glass:rgba(10,7,10,.30);
+  --flora-glass-strong:rgba(9,6,9,.52);
+  --display:'Manrope',Arial,sans-serif;
+  --system:'IBM Plex Mono',monospace;
+}
+
+html,body{
+  color:var(--flora-pearl) !important;
+  background:transparent !important;
+}
+
+body{
+  font-family:var(--display) !important;
+  font-weight:500 !important;
+}
+
+/* Display typography: wide, clean, premium — no generic "AI sci-fi" font. */
+h1,h2,h3,
+.brand,
+.header-cta,
+.magnetic-button,
+.plan-name,
+.plan-price,
+.flow-node,
+.hand-screen span,
+.hand-screen strong,
+.footer-brand{
+  font-family:var(--display) !important;
+}
+
+h1,h2,h3{
+  color:var(--flora-pearl) !important;
+  text-shadow:
+    0 2px 18px rgba(0,0,0,.38),
+    0 12px 60px rgba(0,0,0,.26) !important;
+}
+
+p{
+  color:var(--flora-muted) !important;
+  text-shadow:0 2px 18px rgba(0,0,0,.38);
+}
+
+/* System labels use a deliberately different typographic voice. */
+.eyebrow,
+.hero-kicker,
+.hero-kicker__year,
+.hero-proof,
+.hero-side-note,
+.scroll-cue,
+.signal-cell span,
+.signal-cell small,
+.header-status,
+.card-index,
+.footer,
+.hero-coordinates,
+.hero-system-label,
+.living-figure__signal,
+.living-figure__caption{
+  font-family:var(--system) !important;
+  letter-spacing:.12em;
+}
+
+/* The hero gets a soft optical contrast field, not a rectangular black box. */
+.hero__copy{
+  position:relative;
+  z-index:5;
+}
+
+.hero__copy::before{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  left:-13vw;
+  top:-16vh;
+  width:min(74vw,1050px);
+  height:calc(100% + 32vh);
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 38% 48%,
+      rgba(8,5,8,.58) 0%,
+      rgba(8,5,8,.38) 34%,
+      rgba(8,5,8,.14) 58%,
+      transparent 78%);
+  filter:blur(5px);
+}
+
+.hero__copy h1{
+  max-width:900px;
+  font-weight:800 !important;
+  letter-spacing:-.072em !important;
+  line-height:.86 !important;
+  color:var(--flora-pearl) !important;
+}
+
+.hero__copy h1 span,
+.hero__copy h1 em{
+  display:block;
+}
+
+.hero__copy h1 em{
+  color:var(--flora-rose-hot) !important;
+  font-style:normal;
+  text-shadow:
+    0 2px 16px rgba(0,0,0,.45),
+    0 0 42px rgba(216,120,155,.16) !important;
+}
+
+.hero-hollow{
+  color:transparent !important;
+  -webkit-text-stroke:1.5px rgba(247,238,241,.88);
+  text-shadow:0 2px 18px rgba(0,0,0,.45) !important;
+}
+
+.hero-kicker{
+  color:rgba(247,238,241,.88) !important;
+  text-shadow:0 2px 14px rgba(0,0,0,.5);
+}
+
+.hero-kicker__dot{
+  background:var(--flora-rose-hot) !important;
+  box-shadow:0 0 16px rgba(240,167,189,.72) !important;
+}
+
+.hero__copy > p{
+  color:rgba(247,238,241,.82) !important;
+  font-weight:500;
+  text-shadow:
+    0 2px 16px rgba(0,0,0,.58),
+    0 8px 32px rgba(0,0,0,.34);
+}
+
+.hero-proof span{
+  border-color:rgba(247,238,241,.20) !important;
+  background:rgba(8,5,8,.28) !important;
+  color:rgba(247,238,241,.72) !important;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.text-link{
+  color:var(--flora-pearl) !important;
+  text-shadow:0 2px 14px rgba(0,0,0,.55);
+}
+
+.text-link__arrow{
+  color:var(--flora-rose-hot) !important;
+}
+
+/* Buttons: pearl surface + Flora accent, never radioactive neon. */
+.magnetic-button--pink,
+.form-submit{
+  background:var(--flora-rose-hot) !important;
+  color:#170b11 !important;
+  border-color:rgba(255,255,255,.18) !important;
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.28),
+    0 0 30px rgba(216,120,155,.14);
+}
+
+.magnetic-button--light,
+.plan-actions .plan-primary,
+.price-card.is-featured .plan-primary,
+.referral-card > button,
+.modal-select{
+  background:var(--flora-pearl) !important;
+  color:#120c10 !important;
+  border-color:var(--flora-pearl) !important;
+}
+
+/* Navigation stays readable over moving imagery. */
+.site-header{
+  background:rgba(8,5,8,.38) !important;
+  border-color:rgba(247,238,241,.18) !important;
+  box-shadow:0 18px 55px rgba(0,0,0,.20);
+}
+
+.site-header nav a{
+  color:rgba(247,238,241,.72) !important;
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+
+.site-header nav a:hover{
+  color:var(--flora-pearl) !important;
+}
+
+.brand{
+  color:var(--flora-pearl) !important;
+  text-shadow:0 2px 14px rgba(0,0,0,.5);
+}
+
+.brand-dot{
+  color:var(--flora-rose-hot) !important;
+}
+
+.header-status{
+  color:rgba(247,238,241,.64) !important;
+}
+
+.header-status i{
+  background:var(--flora-rose-hot) !important;
+  box-shadow:0 0 12px rgba(240,167,189,.65) !important;
+}
+
+.header-cta{
+  background:var(--flora-pearl) !important;
+  color:#120c10 !important;
+}
+
+/* Sections: preserve the girl instead of painting opaque panels over her. */
+.section,
+.hero,
+.signal-strip,
+.footer{
+  background:transparent !important;
+}
+
+.section-heading h2 span,
+.manifesto-copy h2 em,
+.contact-copy h2 em,
+.bottom-grid h2 em{
+  color:var(--flora-rose-hot) !important;
+}
+
+.eyebrow{
+  color:rgba(240,167,189,.86) !important;
+  text-shadow:0 2px 14px rgba(0,0,0,.5);
+}
+
+.signal-strip{
+  border-color:rgba(247,238,241,.16) !important;
+  background:rgba(7,4,7,.28) !important;
+  backdrop-filter:blur(18px) saturate(115%);
+  -webkit-backdrop-filter:blur(18px) saturate(115%);
+}
+
+.signal-cell strong{
+  color:var(--flora-pearl) !important;
+  text-shadow:0 2px 15px rgba(0,0,0,.45);
+}
+
+.signal-cell small{
+  color:var(--flora-dim) !important;
+}
+
+.signal-cell span{
+  color:var(--flora-rose-hot) !important;
+}
+
+/* Glass is smoky, not opaque: the Flora image remains part of the interface. */
+.glass-card{
+  border-color:rgba(247,238,241,.17) !important;
+  background:
+    linear-gradient(135deg,rgba(31,18,25,.54),rgba(8,6,9,.28)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 35px 100px rgba(0,0,0,.25) !important;
+}
+
+.glass-card::before{
+  background:
+    radial-gradient(circle at 12% 8%,rgba(255,220,229,.11),transparent 25%),
+    linear-gradient(120deg,transparent 0 55%,rgba(240,167,189,.045) 65%,transparent 76%) !important;
+}
+
+.work-carousel__tabs button{
+  color:rgba(247,238,241,.66) !important;
+  border-color:rgba(247,238,241,.15) !important;
+  background:rgba(8,5,8,.28) !important;
+}
+
+.work-carousel__tabs button:hover,
+.work-carousel__tabs button.is-active{
+  color:#170b11 !important;
+  background:var(--flora-rose-hot) !important;
+  border-color:var(--flora-rose-hot) !important;
+}
+
+/* Links and important numbers inherit the Flora hierarchy. */
+a:hover{
+  color:var(--flora-pearl);
+}
+
+.plan-name,
+.plan-price,
+.founder-principle,
+.contact-email strong{
+  color:var(--flora-pearl) !important;
+}
+
+.plan-volume{
+  color:var(--flora-muted) !important;
+}
+
+.faq-item button{
+  color:var(--flora-pearl) !important;
+  text-shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+.faq-item button span:last-child{
+  color:var(--flora-rose-hot) !important;
+}
+
+.lead-form input,
+.lead-form textarea,
+.referral-card input{
+  background:rgba(6,4,7,.34) !important;
+  border-color:rgba(247,238,241,.16) !important;
+  color:var(--flora-pearl) !important;
+}
+
+.lead-form input::placeholder,
+.lead-form textarea::placeholder,
+.referral-card input::placeholder{
+  color:rgba(247,238,241,.40) !important;
+}
+
+.contact-switch button{
+  color:rgba(247,238,241,.60) !important;
+}
+
+.contact-switch button.is-active{
+  color:#120c10 !important;
+  background:var(--flora-pearl) !important;
+}
+
+/* Mobile: maintain contrast without turning the screen into a black card. */
+@media(max-width:700px){
+  .hero__copy::before{
+    left:-28vw;
+    top:-10vh;
+    width:125vw;
+    height:120%;
+    background:radial-gradient(ellipse at 42% 48%,
+      rgba(8,5,8,.66) 0%,
+      rgba(8,5,8,.34) 46%,
+      transparent 76%);
+  }
+
+  .hero__copy h1{
+    font-size:clamp(54px,16vw,92px) !important;
+    line-height:.88 !important;
+  }
+
+  .hero__copy > p{
+    font-size:17px !important;
+  }
+}
+
+/* Respect reduced motion while retaining the visual hierarchy. */
+@media(prefers-reduced-motion:reduce){
+  .hero__copy h1,
+  h2,h3{
+    text-shadow:0 2px 14px rgba(0,0,0,.42) !important;
+  }
+}
