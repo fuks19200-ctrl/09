@@ -790,3 +790,23 @@ body{
 @media(prefers-reduced-motion:reduce){
   .hero-video-frame{transform:none}
 }
+
+
+/* BLOOM GIRL — primary full-screen visual */
+.backdrop{
+  z-index:-1 !important;
+  background:#090609 url('/images/bg-1.jpg') center center / cover no-repeat !important;
+}
+.backdrop__video{
+  object-fit:cover !important;
+  object-position:center center !important;
+  filter:saturate(1.08) contrast(1.02) brightness(.88) !important;
+}
+.backdrop__video.is-active{opacity:1 !important}
+.backdrop__shade{
+  background:linear-gradient(90deg,rgba(5,3,6,.30) 0%,rgba(5,3,6,.08) 42%,rgba(5,3,6,.10) 100%) !important;
+}
+.backdrop__vignette{
+  background:radial-gradient(ellipse at 52% 42%,transparent 26%,rgba(0,0,0,.08) 68%,rgba(0,0,0,.32) 100%) !important;
+}
+.hero__visual{display:none !important}
