@@ -122,6 +122,13 @@ export default function SiteClient() {
           </div>
 
           <div className="hero__visual" aria-hidden="true">
+            <div className="hero-video-frame">
+              <video className="hero-reference-video" autoPlay muted loop playsInline preload="auto" poster="/images/bg-1.jpg">
+                <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
+              </video>
+              <div className="hero-video-glass" />
+              <div className="hero-video-label"><span /> LIVING INTELLIGENCE / 01</div>
+            </div>
             <div className="hero-orbit hero-orbit--a" />
             <div className="hero-orbit hero-orbit--b" />
             <div className="hero-orbit hero-orbit--c" />
