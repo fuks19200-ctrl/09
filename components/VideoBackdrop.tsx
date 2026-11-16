@@ -43,18 +43,15 @@ export default function VideoBackdrop() {
         document.documentElement.scrollHeight - window.innerHeight,
       );
 
-      // HERO: Flora. The first screen is never the hand or the black hole.
+      // 01 — HERO: Flora / woman.
       if (scrollY < coursesTop) {
         return {
           active: 0,
-          local: Math.max(
-            0,
-            Math.min(1, scrollY / Math.max(1, coursesTop)),
-          ),
+          local: Math.max(0, Math.min(1, scrollY / Math.max(1, coursesTop))),
         };
       }
 
-      // COURSES: hand.
+      // 02 — COURSES: hand.
       if (scrollY < finaleTop) {
         return {
           active: 1,
@@ -68,7 +65,7 @@ export default function VideoBackdrop() {
         };
       }
 
-      // FINAL: black hole.
+      // 03 — FINAL: bloom / black-hole transition.
       return {
         active: 2,
         local: Math.max(
@@ -87,7 +84,6 @@ export default function VideoBackdrop() {
         video.style.opacity = visible ? '1' : '0';
         video.style.visibility = visible ? 'visible' : 'hidden';
         video.style.pointerEvents = 'none';
-
         if (!visible) video.pause();
       });
     };
@@ -115,7 +111,6 @@ export default function VideoBackdrop() {
             video.currentTime = targetTime;
           } catch {}
         }
-
         video.pause();
       }
 
@@ -127,7 +122,6 @@ export default function VideoBackdrop() {
     const applyScroll = (scrollY: number) => {
       const timeline = getTimeline(scrollY);
 
-      // Hard scene boundaries prevent touch scrolling from exposing two scenes at once.
       if (timeline.active !== active) {
         active = timeline.active;
         renderedLocal = timeline.local;
@@ -162,8 +156,6 @@ export default function VideoBackdrop() {
       video.preload = 'auto';
       video.pause();
       video.style.transition = 'none';
-
-      // Flora is the only visual allowed on the initial hero.
       video.style.opacity = index === 0 ? '1' : '0';
       video.style.visibility = index === 0 ? 'visible' : 'hidden';
 
@@ -177,7 +169,7 @@ export default function VideoBackdrop() {
       else video.load();
     });
 
-    // Always establish Flora before reading any later scroll position.
+    // Always start at Flora.
     active = 0;
     targetLocal = 0;
     renderedLocal = 0;
@@ -216,16 +208,34 @@ export default function VideoBackdrop() {
 
   return (
     <div ref={rootRef} className="backdrop" aria-hidden="true">
-      <video className="backdrop__video" muted playsInline preload="auto">
-        <source src="/videos/bloom-bg-3.mp4" type="video/mp4" />
+      <video
+        className="backdrop__video"
+        poster="/images/bg-1.jpg"
+        muted
+        playsInline
+        preload="auto"
+      >
+        <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
       </video>
 
-      <video className="backdrop__video" muted playsInline preload="auto">
+      <video
+        className="backdrop__video"
+        poster="/images/bg-2.jpg"
+        muted
+        playsInline
+        preload="auto"
+      >
         <source src="/videos/bloom-bg-2.mp4" type="video/mp4" />
       </video>
 
-      <video className="backdrop__video" muted playsInline preload="auto">
-        <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
+      <video
+        className="backdrop__video"
+        poster="/images/bg-3.jpg"
+        muted
+        playsInline
+        preload="auto"
+      >
+        <source src="/videos/bloom-bg-3.mp4" type="video/mp4" />
       </video>
 
       <div className="backdrop__shade" />
