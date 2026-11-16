@@ -45,5 +45,6 @@ export default function MagneticButton({ children, href, tone = 'light', classNa
   if (href) {
     return <a ref={ref as React.RefObject<HTMLAnchorElement>} className={cls} href={href}>{children}</a>;
   }
-  return <button ref={ref} className={cls} {...props}>{children}</button>;
+
+  return <button ref={ref as React.RefObject<HTMLButtonElement>} className={cls} {...props}>{children}</button>;
 }
