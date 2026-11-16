@@ -24,15 +24,15 @@ export default function VideoBackdrop() {
       Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 
     /*
-     * One continuous scroll timeline:
+     * One continuous scroll timeline — exactly in the visual order of the site:
      *
-     * 0.00 → 0.333  FLORA
-     * 0.333 → 0.666 HAND
-     * 0.666 → 1.00  BLACK HOLE
+     * 0.00 → 0.38  FLORA / opening hero
+     * 0.38 → 0.76  HAND / transition
+     * 0.76 → 1.00  BLACK HOLE / final scene
      *
-     * This is intentionally NOT reversed.
-     * The first screen is Flora. Scrolling DOWN moves forward through
-     * the three original Bloom scenes and the black hole is reached last.
+     * The first viewport is always Flora. Scrolling DOWN moves forward;
+     * scrolling UP reverses the same timeline. There is no autoplay and
+     * the black hole cannot appear before the final quarter of the journey.
      */
     const getProgress = () =>
       Math.min(1, Math.max(0, window.scrollY / maxScroll()));
@@ -55,14 +55,26 @@ export default function VideoBackdrop() {
       }
 
       // Smooth the scroll itself so the video never jumps frame-to-frame.
-      renderedProgress += (targetProgress - renderedProgress) * 0.18;
+      renderedProgress += (targetProgress - renderedProgress) * 0.22;
 
       const timeline = Math.min(0.999999, Math.max(0, renderedProgress));
-      const scaled = timeline * videos.length;
-      const active = Math.min(videos.length - 1, Math.floor(scaled));
-      const local = active === videos.length - 1
-        ? (timeline - 2 / 3) * 3
-        : scaled - active;
+      const stops = [0, 0.38, 0.76, 1];
+      let active = 0;
+
+      for (let index = 0; index < stops.length - 1; index += 1) {
+        if (timeline >= stops[index] && timeline < stops[index + 1]) {
+          active = index;
+          break;
+        }
+      }
+
+      if (timeline >= stops[stops.length - 1]) {
+        active = videos.length - 1;
+      }
+
+      const rangeStart = stops[active];
+      const rangeEnd = stops[active + 1];
+      const local = (timeline - rangeStart) / Math.max(0.0001, rangeEnd - rangeStart);
 
       setVisibleScene(active);
 
