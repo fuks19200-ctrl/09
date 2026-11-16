@@ -16,7 +16,7 @@ jobs:
           from PIL import Image
           import cv2, numpy as np, os
 
-          src = "public/images/Лавандовый футуристический мудборд.png"
+          src = "Лавандовый футуристический мудборд.png"
           out = "public/images/works"
           os.makedirs(out, exist_ok=True)
 
