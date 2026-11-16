@@ -1254,3 +1254,150 @@ a:hover{
     text-shadow:0 2px 14px rgba(0,0,0,.42) !important;
   }
 }
+
+
+/* =========================================================
+   FLORA HAND / COURSE DOCK
+   The three programs behave like luminous objects resting on
+   the hand in the Bloom composition — compact, dimensional,
+   and locked to the scroll choreography.
+   ========================================================= */
+#courses{
+  position:relative;
+  isolation:isolate;
+}
+
+#courses::after{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  width:min(58vw,820px);
+  height:min(38vw,520px);
+  right:-7vw;
+  top:22%;
+  background:radial-gradient(ellipse at center,
+    rgba(240,167,189,.11) 0%,
+    rgba(216,120,155,.055) 32%,
+    transparent 72%);
+  filter:blur(28px);
+  pointer-events:none;
+}
+
+#courses .pricing-grid{
+  position:relative;
+  width:min(92%,1180px);
+  margin:52px 0 0 auto;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  gap:clamp(10px,1.5vw,24px);
+  min-height:470px;
+  transform-style:preserve-3d;
+}
+
+#courses .price-card{
+  position:relative;
+  flex:0 0 clamp(245px,20vw,330px);
+  min-height:390px;
+  transform-style:preserve-3d;
+  overflow:hidden;
+  border-radius:30px;
+  background:
+    linear-gradient(145deg,rgba(38,20,29,.62),rgba(9,6,10,.34)) !important;
+  backdrop-filter:blur(16px) saturate(125%);
+  -webkit-backdrop-filter:blur(16px) saturate(125%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 34px 90px rgba(0,0,0,.28),
+    0 0 55px rgba(240,167,189,.045);
+}
+
+#courses .price-card::after{
+  content:'';
+  position:absolute;
+  inset:1px;
+  border-radius:29px;
+  pointer-events:none;
+  background:
+    linear-gradient(120deg,
+      rgba(255,255,255,.09),
+      transparent 24%,
+      transparent 72%,
+      rgba(240,167,189,.055));
+}
+
+#courses .price-card:nth-child(1){
+  transform:translateY(38px) rotateZ(-3deg) rotateY(4deg);
+}
+#courses .price-card:nth-child(2){
+  z-index:3;
+  transform:translateY(-12px) scale(1.035);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    0 42px 110px rgba(0,0,0,.32),
+    0 0 70px rgba(240,167,189,.10);
+}
+#courses .price-card:nth-child(3){
+  transform:translateY(30px) rotateZ(3deg) rotateY(-4deg);
+}
+
+#courses .price-card .plan-name{
+  letter-spacing:.08em;
+}
+#courses .price-card .plan-price{
+  font-size:clamp(38px,4vw,58px);
+}
+#courses .price-card .plan-actions{
+  position:relative;
+  z-index:4;
+}
+
+#courses .price-card.is-featured::before{
+  content:'MOST POWER';
+  position:absolute;
+  top:16px;
+  right:16px;
+  z-index:5;
+  padding:7px 9px;
+  border:1px solid rgba(240,167,189,.25);
+  border-radius:999px;
+  background:rgba(240,167,189,.08);
+  color:var(--flora-rose-hot);
+  font:500 8px/1 var(--system);
+  letter-spacing:.12em;
+}
+
+@media(max-width:1000px){
+  #courses .pricing-grid{
+    width:100%;
+    min-height:420px;
+    gap:12px;
+  }
+  #courses .price-card{
+    flex-basis:31%;
+    min-height:360px;
+  }
+}
+
+@media(max-width:700px){
+  #courses .pricing-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    min-height:0;
+    margin-top:34px;
+  }
+  #courses .price-card,
+  #courses .price-card:nth-child(1),
+  #courses .price-card:nth-child(2),
+  #courses .price-card:nth-child(3){
+    flex:none;
+    width:100%;
+    min-height:0;
+    transform:none;
+  }
+  #courses .price-card.is-featured::before{
+    top:12px;
+    right:12px;
+  }
+}
