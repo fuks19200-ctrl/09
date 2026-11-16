@@ -5,11 +5,11 @@ import gsap from 'gsap';
 import { works } from '@/lib/data';
 
 const imageByType: Record<string, string> = {
-  character: '/images/works-moodboard.jpg',
-  bottle: '/images/works-moodboard.jpg',
-  orb: '/images/works-moodboard.jpg',
-  editorial: '/images/works-moodboard.jpg',
-  automation: '/images/works-moodboard.jpg',
+  character: '/images/01-ai-character.png',
+  bottle: '/images/02-ai-product.png',
+  orb: '/images/03-ai-3d.png',
+  editorial: '/images/04-ai-visual.png',
+  automation: '/images/05-ai-automation.png',
 };
 
 function WorkCard({
@@ -93,28 +93,28 @@ export default function WorksCarousel() {
         }
 
         .work-tile__art--1 {
-          background-size: 314% 197%;
-          background-position: 0% 0%;
+          background-size: cover;
+          background-position: center;
         }
 
         .work-tile__art--2 {
-          background-size: 314% 197%;
-          background-position: 50% 0%;
+          background-size: cover;
+          background-position: center;
         }
 
         .work-tile__art--3 {
-          background-size: 314% 197%;
-          background-position: 100% 0%;
+          background-size: cover;
+          background-position: center;
         }
 
         .work-tile__art--4 {
-          background-size: 208% 237%;
-          background-position: 0% 100%;
+          background-size: cover;
+          background-position: center;
         }
 
         .work-tile__art--5 {
-          background-size: 208% 237%;
-          background-position: 100% 100%;
+          background-size: cover;
+          background-position: center;
         }
 
         .work-tile__wash {
@@ -126,7 +126,7 @@ export default function WorksCarousel() {
         .work-tile__content {
           z-index: 4 !important;
           border-color: rgba(255,255,255,.58) !important;
-          background: rgba(226,216,240,.52) !important;
+          background: rgba(20,14,24,.30) !important;
           box-shadow: 0 12px 34px rgba(66,48,91,.10);
         }
 
