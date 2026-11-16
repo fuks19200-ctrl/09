@@ -181,12 +181,14 @@ export default function SiteClient() {
         </section>
 
         <section className="section section--hand section-shell">
-          <div className="hand-composition" data-reveal>
-            <div className="hand-art" aria-hidden="true">
-              <div className="hand-glow" />
-              <div className="hand-shape" />
-              <div className="hand-screen"><span>MULTUM</span><strong>AI</strong></div>
-              <div className="hand-caption">IDEA → SYSTEM → RESULT</div>
+          <div className="hand-composition living-composition" data-reveal>
+            <div className="living-figure" aria-hidden="true">
+              <video className="living-figure__video" autoPlay muted loop playsInline preload="metadata" poster="/images/bg-2.jpg">
+                <source src="/videos/bloom-bg-2.mp4" type="video/mp4" />
+              </video>
+              <div className="living-figure__veil" />
+              <div className="living-figure__signal">03 / LIVING INTERFACE</div>
+              <div className="living-figure__caption">IDEA → SYSTEM → RESULT</div>
             </div>
             <GlassCard className="hand-card">
               <span className="eyebrow">О ШКОЛЕ · MULTUM.AI</span>
