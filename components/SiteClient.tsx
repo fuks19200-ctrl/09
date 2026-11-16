@@ -233,27 +233,6 @@ export default function SiteClient() {
           </div>
         </section>
 
-        <section className="section section--hand section-shell">
-          <div className="flora-handoff" data-reveal>
-            <div className="flora-handoff__label">
-              <span className="eyebrow">03 / LIVING INTERFACE</span>
-              <span>SCROLL-LOCKED ENVIRONMENT</span>
-            </div>
-            <div className="flora-handoff__copy">
-              <span className="eyebrow">О ШКОЛЕ · MULTUM.AI</span>
-              <h2>Не отдельный экран.<br /><em>Живой интерфейс.</em></h2>
-              <p>Флора остаётся одним непрерывным пространством. Ты скроллишь — она движется вместе с тобой. Остановилась — она останавливается. Курс появляется внутри этой же сцены.</p>
-              <div className="flora-handoff__meta">
-                <span>IDEA → SYSTEM → RESULT</span>
-                <span>01 / 01 ENVIRONMENT</span>
-              </div>
-            </div>
-            <div className="flora-handoff__signal" aria-hidden="true">
-              <i></i><i></i><i></i>
-            </div>
-          </div>
-        </section>
-
         <section id="courses" className="section section-shell">
           <div className="section-heading section-heading--split" data-reveal>
             <div>
