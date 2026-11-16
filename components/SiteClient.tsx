@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { navItems } from '@/lib/data';
 import LenisProvider from './LenisProvider';
 import VideoBackdrop from './VideoBackdrop';
-import NeuralScene from './NeuralScene';
 import MagneticButton from './MagneticButton';
 import GlassCard from './GlassCard';
 import WorksCarousel from './WorksCarousel';
@@ -18,7 +17,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function SiteClient() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const heroRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -29,20 +27,6 @@ export default function SiteClient() {
         });
       });
 
-      if (heroRef.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        gsap.to(heroRef.current.querySelector('[data-hero-copy]'), {
-          yPercent: -10,
-          opacity: 0.95,
-          ease: 'none',
-          scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
-        });
-        gsap.to(heroRef.current.querySelector('[data-neural]'), {
-          yPercent: 12,
-          scale: 1.05,
-          ease: 'none',
-          scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
-        });
-      }
     });
     return () => ctx.revert();
   }, []);
@@ -63,17 +47,16 @@ export default function SiteClient() {
       </header>
 
       <main id="top">
-        <section ref={heroRef} className="hero section-shell" data-dark-start>
-          <div className="hero__copy" data-hero-copy>
-            <span className="eyebrow">ШКОЛА НЕЙРОСЕТЕЙ</span>
-            <h1>Нейросети для<br />работы и<br />творчества</h1>
-            <p>Создавайте тексты, изображения и видео.<br />Применяйте ИИ в своих проектах.</p>
+        <section className="hero section-shell" data-dark-start>
+          <div className="hero__copy">
+            <span className="eyebrow">THE CREATIVE INTELLIGENCE COMPANY</span>
+            <h1>MULTUM.AI</h1>
+            <p>Школа, где искусственный интеллект превращается из набора инструментов в твой личный рабочий ресурс.</p>
             <div className="hero__actions">
-              <MagneticButton href="#courses" tone="pink">Выбрать курс →</MagneticButton>
-              <a className="text-link" href="#method">Как проходит обучение ↗</a>
+              <MagneticButton href="#courses" tone="pink">Выбрать обучение →</MagneticButton>
+              <a className="text-link" href="#contact">Оставить заявку ↗</a>
             </div>
           </div>
-          <div className="hero__visual" data-neural><NeuralScene /></div>
           <div className="scroll-cue"><span /> SCROLL</div>
         </section>
 
