@@ -13,28 +13,65 @@ export default function VideoBackdrop() {
     video.muted = true;
     video.playsInline = true;
     video.preload = 'auto';
+    video.pause();
 
-    const play = () => {
-      video.play().catch(() => {});
+    let raf = 0;
+    let lastProgress = -1;
+    let ready = false;
+
+    const maxScroll = () =>
+      Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+
+    const scrub = () => {
+      raf = 0;
+
+      const progress = Math.min(
+        1,
+        Math.max(0, window.scrollY / maxScroll())
+      );
+
+      if (Math.abs(progress - lastProgress) < 0.0005) return;
+      lastProgress = progress;
+
+      if (!ready || !Number.isFinite(video.duration) || video.duration <= 0) return;
+
+      const target = Math.min(
+        Math.max(0, video.duration - 0.05),
+        progress * video.duration
+      );
+
+      if (Math.abs(video.currentTime - target) > 0.01) {
+        try {
+          video.currentTime = target;
+        } catch {}
+      }
     };
 
-    play();
-    video.addEventListener('loadeddata', play);
-    video.addEventListener('canplay', play);
-
-    const resume = () => {
-      if (video.paused) play();
+    const requestScrub = () => {
+      if (!raf) raf = requestAnimationFrame(scrub);
     };
 
-    document.addEventListener('visibilitychange', resume);
-    window.addEventListener('pageshow', resume);
+    const onMetadata = () => {
+      ready = true;
+      video.pause();
+      requestScrub();
+    };
+
+    video.addEventListener('loadedmetadata', onMetadata);
+    window.addEventListener('scroll', requestScrub, { passive: true });
+    window.addEventListener('resize', requestScrub, { passive: true });
+
+    if (video.readyState >= 1) onMetadata();
+    else video.load();
+
+    requestScrub();
 
     return () => {
+      window.removeEventListener('scroll', requestScrub);
+      window.removeEventListener('resize', requestScrub);
+      video.removeEventListener('loadedmetadata', onMetadata);
       video.pause();
-      video.removeEventListener('loadeddata', play);
-      video.removeEventListener('canplay', play);
-      document.removeEventListener('visibilitychange', resume);
-      window.removeEventListener('pageshow', resume);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, []);
 
@@ -44,8 +81,6 @@ export default function VideoBackdrop() {
         className="backdrop__video is-active"
         poster="/images/bg-1.jpg"
         muted
-        autoPlay
-        loop
         playsInline
         preload="auto"
       >
