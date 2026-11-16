@@ -831,7 +831,7 @@ body{
   z-index:0 !important;
   display:block !important;
   overflow:hidden !important;
-  background:#090609 url('/images/bg-1.jpg') center center / cover no-repeat !important;
+  background:#090609 url('/images/bg-3.jpg') center center / cover no-repeat !important;
   pointer-events:none !important;
 }
 .backdrop__video{
@@ -841,7 +841,7 @@ body{
   height:100% !important;
   object-fit:cover !important;
   object-position:center center !important;
-  opacity:1 !important;
+  opacity:0;
   filter:saturate(1.08) contrast(1.03) brightness(.94) !important;
   transform:scale(1.015) !important;
 }
@@ -1308,9 +1308,9 @@ a:hover{
 
 /* FINAL BACKDROP FIX — only the scroll-selected Bloom scene may be visible. */
 .backdrop .backdrop__video{
-  opacity:0 !important;
+  opacity:0;
   transition:none !important;
 }
 .backdrop .backdrop__video.is-active{
-  opacity:1 !important;
+  opacity:1;
 }
