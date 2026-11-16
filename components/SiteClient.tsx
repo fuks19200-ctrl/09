@@ -208,7 +208,7 @@ export default function SiteClient() {
           <FAQ />
         </section>
 
-        <section className="section section--bottom section-shell">
+        <section className="section section--bottom section-shell" data-bloom-final>
           <div className="bottom-grid">
             <GlassCard className="referral-card" data-reveal>
               <span className="eyebrow">05 / REFERRAL SYSTEM</span>
