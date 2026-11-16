@@ -2,7 +2,7 @@
 
 Immersive dark / liquid-glass landing page for MULTUM.AI using Next.js, React, Three.js / R3F, GSAP, ScrollTrigger and Lenis.
 
-## 1. Install
+## Install
 
 ```bash
 npm install
@@ -11,67 +11,86 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-## 2. Add the real hero video
+## Project media
 
-The design intentionally expects the existing hero video at:
+The cinematic background sequence is stored in:
 
-`public/videos/hero.mp4`
+- `public/videos/bloom-bg-1.mp4`
+- `public/videos/bloom-bg-2.mp4`
+- `public/videos/bloom-bg-3.mp4`
 
-Replace that file with the original video. The code keeps the video as one continuous background layer and does not split the person/hand into independent elements.
+Poster/background images:
 
-Optional poster:
+- `public/images/bg-1.jpg`
+- `public/images/bg-2.jpg`
+- `public/images/bg-3.jpg`
 
-`public/images/video-poster.jpg`
+Project visuals:
 
-## 3. Configure real links
+- `public/images/01-ai-character.png`
+- `public/images/02-ai-product.png`
+- `public/images/03-ai-3d.png`
+- `public/images/04-ai-visual.png`
+- `public/images/05-ai-automation.png`
 
-Copy `.env.example` to `.env.local` and fill in the real approved links:
+## Architecture
 
-- Instagram
-- Telegram
-- offer
-- privacy policy
-- terms
-- contact email
-
-Do not invent production URLs.
-
-## 4. Architecture
-
-- `components/VideoBackdrop.tsx` — one persistent video + one black scroll-controlled overlay.
-- `components/NeuralScene.tsx` — lazy-loaded R3F scene isolated from the DOM.
-- `components/WorksCarousel.tsx` — one carousel controlled by category tabs and arrows.
-- `components/Pricing.tsx` — BASIC / ULTRA / ULTIMATE with content modal and course selection.
-- `components/LeadForm.tsx` — single-contact-method form.
+- `components/VideoBackdrop.tsx` — one persistent cinematic background system with three timeline clips.
+- `components/LenisProvider.tsx` — Lenis smooth scrolling synchronized with GSAP ScrollTrigger.
+- `components/NeuralScene.tsx` / `NeuralSceneInner.tsx` — isolated R3F scene with capped DPR and adaptive performance.
+- `components/WorksCarousel.tsx` — project carousel using the real media in `public/images`.
+- `components/Pricing.tsx` — BASIC / ULTRA / ULTIMATE program cards.
+- `components/LeadForm.tsx` — lead form UI; connect it to the production CRM/API before launch.
 - `components/FAQ.tsx` — glass accordion.
 - `components/MagneticButton.tsx` — desktop magnetic interaction; disabled on coarse pointers.
-- `components/LenisProvider.tsx` — smooth scrolling.
 - `lib/data.ts` — editable content.
 
-## 5. Performance rules used
+## Performance principles
 
-- WebGL is isolated from normal DOM layout.
-- R3F uses capped DPR and no expensive bloom/postprocessing.
-- `antialias: false` and `powerPreference: default` are used for Safari/iOS stability.
-- Magnetic interaction is disabled on touch/coarse pointers.
-- `prefers-reduced-motion` is respected.
-- The video is not transformed to make room for text.
-- The dark overlay is a single persistent layer and never stacks per section.
-- Glass is CSS backdrop-filter, not a full-screen WebGL distortion pass.
+The site follows a performance-first creative-development approach:
 
-## 6. Production checklist
+- Keep the main thread free from unnecessary work during scroll.
+- Prefer `transform` and `opacity` for animation.
+- Avoid React state updates on every animation frame.
+- Keep WebGL isolated from normal DOM layout.
+- Cap device pixel ratio and reduce 3D particle/geometry cost on smaller devices.
+- Use R3F performance monitoring and adaptive DPR when the 3D scene is active.
+- Avoid expensive post-processing and full-screen WebGL distortion unless the visual value justifies the GPU cost.
+- Respect `prefers-reduced-motion`.
+- Lazy-load project images.
+- Load only the first cinematic video eagerly; later clips use metadata until needed.
+- On coarse/mobile pointers, use the cinematic poster sequence instead of continuously seeking video frames.
+- Keep Safari/iOS behavior conservative.
 
-Before publishing:
+## GitHub Pages
 
-1. Put the original hero video in `public/videos/hero.mp4`.
-2. Replace the placeholder social/document URLs.
-3. Connect the lead form to the real CRM/API.
-4. Connect referral-code validation to the approved referral rules.
-5. Replace procedural work visuals with approved project images if desired.
-6. Test Safari iOS, Chrome mobile, tablet and desktop.
-7. Run a production build:
+The site is exported statically with Next.js:
+
+`next.config.ts` uses `output: 'export'`.
+
+Deployment is handled by:
+
+`.github/workflows/deploy.yml`
+
+The repository Pages source must remain **GitHub Actions**.
+
+The custom domain configured in GitHub Pages is:
+
+`multum.online`
+
+GitHub Pages custom-domain configuration is controlled from repository Settings → Pages. With a custom GitHub Actions publishing workflow, GitHub states that a repository CNAME file is not required; it is retained here only as a compatibility marker.
+
+## Production checklist
+
+Before launch:
+
+1. Connect the lead form to the real CRM/API.
+2. Replace placeholder social/legal/contact environment variables.
+3. Verify `multum.online` DNS and HTTPS.
+4. Test Safari desktop, Safari iOS, Chrome mobile, tablet and desktop.
+5. Check scroll/input responsiveness in Chrome DevTools Performance and Safari Web Inspector.
+6. Run:
 
 ```bash
 npm run build
-npm run start
 ```
