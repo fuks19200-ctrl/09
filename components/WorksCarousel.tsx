@@ -5,29 +5,31 @@ import gsap from 'gsap';
 import { works } from '@/lib/data';
 import GlassCard from './GlassCard';
 
-function WorkVisual({ type }: { type: string }) {
-  if (type === 'bottle') {
-    return <div className="work-visual work-visual--bottle"><div className="bottle"><span>M</span></div><div className="bottle-shadow" /></div>;
-  }
-  if (type === 'character') {
-    return <div className="work-visual work-visual--character"><div className="character-head" /><div className="character-body" /><div className="character-orbit orbit-a" /><div className="character-orbit orbit-b" /></div>;
-  }
-  if (type === 'orb') {
-    return <div className="work-visual work-visual--orb"><div className="orb-core" /><div className="orb-ring ring-a" /><div className="orb-ring ring-b" /></div>;
-  }
-  if (type === 'editorial') {
-    return <div className="work-visual work-visual--editorial"><div className="editorial-panel panel-a" /><div className="editorial-panel panel-b" /><div className="editorial-line" /></div>;
-  }
-  return <div className="work-visual work-visual--automation"><div className="flow-node node-a">IDEA</div><div className="flow-line line-a" /><div className="flow-node node-b">AI</div><div className="flow-line line-b" /><div className="flow-node node-c">RESULT</div></div>;
+const imageByType: Record<string, string> = {
+  character: '/images/01-ai-character.png',
+  bottle: '/images/02-ai-product.png',
+  orb: '/images/03-ai-3d.png',
+  editorial: '/images/04-ai-visual.png',
+  automation: '/images/05-ai-automation.png',
+};
+
+function WorkVisual({ type, title }: { type: string; title: string }) {
+  const src = imageByType[type];
+  return (
+    <div className="work-visual work-visual--image">
+      {src ? <img src={src} alt={title} loading="lazy" decoding="async" /> : null}
+    </div>
+  );
 }
 
 export default function WorksCarousel() {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const item = works[active];
 
   const change = (next: number) => {
     const normalized = (next + works.length) % works.length;
-    gsap.fromTo('.work-carousel__content', { opacity: 0, x: next > active ? 18 : -18 }, { opacity: 1, x: 0, duration: 0.42, ease: 'power3.out' });
+    const direction = normalized > active ? 18 : -18;
+    gsap.fromTo('.work-carousel__content', { opacity: 0, x: direction }, { opacity: 1, x: 0, duration: 0.42, ease: 'power3.out' });
     setActive(normalized);
   };
 
@@ -42,7 +44,7 @@ export default function WorksCarousel() {
       </div>
       <GlassCard className="work-carousel__card">
         <div className="work-carousel__content">
-          <WorkVisual type={item.visual} />
+          <WorkVisual type={item.visual} title={item.title} />
           <div className="work-carousel__meta">
             <span className="eyebrow">{item.label}</span>
             <h3>{item.title}</h3>

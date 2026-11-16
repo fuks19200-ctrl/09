@@ -22,9 +22,11 @@ export default function VideoBackdrop() {
 
     if (reduced || coarse) {
       overlay.style.opacity = '0.42';
-      if (video) video.pause();
+      video?.pause();
       return () => animation.kill();
     }
+
+    video?.play().catch(() => undefined);
 
     const st = ScrollTrigger.create({
       trigger,
@@ -42,8 +44,8 @@ export default function VideoBackdrop() {
 
   return (
     <div className="backdrop" aria-hidden="true">
-      <video ref={videoRef} className="backdrop__video" autoPlay muted loop playsInline preload="metadata">
-        <source src="/videos/hero.mp4" type="video/mp4" />
+      <video ref={videoRef} className="backdrop__video" autoPlay muted loop playsInline preload="metadata" poster="/images/bg-1.jpg">
+        <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
       </video>
       <div ref={overlayRef} className="backdrop__shade" />
       <div className="backdrop__grain" />
