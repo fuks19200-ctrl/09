@@ -29,7 +29,10 @@ export default function VideoBackdrop() {
       Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 
     const updateTarget = () => {
-      scrollProgress = Math.min(1, Math.max(0, window.scrollY / maxScroll()));
+      // IMPORTANT: scroll direction is intentionally reversed.
+      // At the bottom of the page the first scene is Flora.
+      // Scrolling UP therefore travels: Flora -> hand -> black hole.
+      scrollProgress = 1 - Math.min(1, Math.max(0, window.scrollY / maxScroll()));
       if (!raf) raf = requestAnimationFrame(render);
     };
 
@@ -40,10 +43,9 @@ export default function VideoBackdrop() {
         return;
       }
 
-      // Verified scene order from the supplied Bloom assets/posters:
-      // UI order: 01 Flora -> 02 hand -> 03 black hole / portal.
-      // Each scene gets its own scroll segment; we do NOT blend the scenes,
-      // so flowers from Flora cannot bleed into the portal scene.
+      // Reverse scroll mapping:
+      // scroll UP: 01 Flora -> 02 hand -> 03 black hole.
+      // scroll DOWN: black hole -> hand -> Flora.
       const segment = Math.min(2.999999, scrollProgress * 3);
       const active = Math.floor(segment);
       const local = segment - active;
@@ -57,8 +59,6 @@ export default function VideoBackdrop() {
 
         if (i === active) targets[i] = target;
 
-        // Faster response without snapping: the film follows the Lenis-smoothed scroll
-        // with a short critically-damped interpolation.
         rendered[i] += (targets[i] - rendered[i]) * 0.52;
 
         const opacity = i === active ? 1 : 0;
