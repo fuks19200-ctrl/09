@@ -1255,3 +1255,48 @@ a:hover{
   }
 }
 
+
+
+/* Restore original course cards — centered 3-column layout */
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  align-items:stretch;
+}
+.price-card{
+  min-height:510px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transform:none;
+}
+.price-card:hover{
+  transform:translateY(-6px);
+}
+.plan-name{
+  font:700 15px/1 var(--display),Arial,sans-serif;
+  letter-spacing:.12em;
+}
+.plan-price{
+  margin-top:65px;
+  font:700 clamp(36px,4vw,54px)/1 var(--display),Arial,sans-serif;
+  letter-spacing:-.05em;
+}
+.plan-volume{
+  margin-top:14px;
+  font-size:15px;
+}
+.price-card p{
+  margin-top:10px;
+  font-size:17px;
+}
+@media(max-width:1000px){
+  .pricing-grid{grid-template-columns:1fr;}
+  .price-card{min-height:420px;}
+}
+@media(max-width:700px){
+  .price-card{min-height:430px;}
+  .plan-price{margin-top:55px;}
+}
