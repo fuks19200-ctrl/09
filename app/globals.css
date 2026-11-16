@@ -1335,3 +1335,54 @@ a:hover{
 .backdrop__vignette{
   pointer-events:none !important;
 }
+
+
+/* ZIP reference film engine: the canvas is the only visible background layer. */
+.backdrop{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:0 !important;
+  overflow:hidden !important;
+  background:#090609 !important;
+  pointer-events:none !important;
+}
+.backdrop__canvas{
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  z-index:0 !important;
+}
+.backdrop .backdrop__video{
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+.backdrop__readability{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  opacity:1;
+  background:linear-gradient(
+    180deg,
+    transparent 18%,
+    rgba(8,5,8,.06) 42%,
+    rgba(8,5,8,.24) 72%,
+    rgba(8,5,8,.34) 100%
+  );
+}
+.backdrop__shade{
+  z-index:3 !important;
+  opacity:0 !important;
+  background:rgba(5,3,5,.55) !important;
+  transition:none !important;
+}
+.backdrop__grain{z-index:4 !important;}
+.backdrop__vignette{z-index:5 !important;}
+main,.footer{position:relative;z-index:1;}
