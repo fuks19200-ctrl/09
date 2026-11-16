@@ -17,25 +17,53 @@ export default function VideoBackdrop() {
 
     let raf = 0;
     let ready = 0;
-    let targetProgress = 0;
-    let renderedProgress = 0;
-
-    const maxScroll = () =>
-      Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    let targetActive = 0;
+    let targetLocal = 0;
+    let renderedActive = 0;
+    let renderedLocal = 0;
 
     /*
-     * One continuous scroll timeline — exactly in the visual order of the site:
+     * The Bloom films are tied to REAL SITE SECTIONS, not arbitrary percentages
+     * of the whole document.
      *
-     * 0.00 → 0.38  FLORA / opening hero
-     * 0.38 → 0.76  HAND / transition
-     * 0.76 → 1.00  BLACK HOLE / final scene
+     * HERO → FLORA
+     * COURSES → HAND
+     * REFERRAL / FINAL BLOCK → BLACK HOLE
      *
-     * The first viewport is always Flora. Scrolling DOWN moves forward;
-     * scrolling UP reverses the same timeline. There is no autoplay and
-     * the black hole cannot appear before the final quarter of the journey.
+     * This is what makes the visual story line up with what the visitor sees.
+     * Scrolling down moves Flora → hand → black hole; scrolling up reverses it.
      */
-    const getProgress = () =>
-      Math.min(1, Math.max(0, window.scrollY / maxScroll()));
+    const getTimeline = () => {
+      const hero = document.querySelector<HTMLElement>('.hero');
+      const courses = document.querySelector<HTMLElement>('#courses');
+      const finale = document.querySelector<HTMLElement>('.section--bottom');
+
+      const heroStart = hero?.offsetTop ?? 0;
+      const handStart = courses?.offsetTop ?? Math.round(document.documentElement.scrollHeight * 0.42);
+      const holeStart = finale?.offsetTop ?? Math.round(document.documentElement.scrollHeight * 0.82);
+
+      const scrollY = window.scrollY;
+
+      if (scrollY <= handStart) {
+        return {
+          active: 0,
+          local: Math.min(1, Math.max(0, (scrollY - heroStart) / Math.max(1, handStart - heroStart))),
+        };
+      }
+
+      if (scrollY < holeStart) {
+        return {
+          active: 1,
+          local: Math.min(1, Math.max(0, (scrollY - handStart) / Math.max(1, holeStart - handStart))),
+        };
+      }
+
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      return {
+        active: 2,
+        local: Math.min(1, Math.max(0, (scrollY - holeStart) / Math.max(1, maxScroll - holeStart))),
+      };
+    };
 
     const setVisibleScene = (active: number) => {
       videos.forEach((video, index) => {
@@ -54,27 +82,15 @@ export default function VideoBackdrop() {
         return;
       }
 
-      // Smooth the scroll itself so the video never jumps frame-to-frame.
-      renderedProgress += (targetProgress - renderedProgress) * 0.22;
+      // Smooth within each real page section. At a scene boundary we switch
+      // once, then scrub only the newly active film from its first to last frame.
+      renderedActive += (targetActive - renderedActive) * 0.32;
+      renderedLocal += (targetLocal - renderedLocal) * 0.22;
 
-      const timeline = Math.min(0.999999, Math.max(0, renderedProgress));
-      const stops = [0, 0.38, 0.76, 1];
-      let active = 0;
-
-      for (let index = 0; index < stops.length - 1; index += 1) {
-        if (timeline >= stops[index] && timeline < stops[index + 1]) {
-          active = index;
-          break;
-        }
-      }
-
-      if (timeline >= stops[stops.length - 1]) {
-        active = videos.length - 1;
-      }
-
-      const rangeStart = stops[active];
-      const rangeEnd = stops[active + 1];
-      const local = (timeline - rangeStart) / Math.max(0.0001, rangeEnd - rangeStart);
+      const active = Math.abs(targetActive - renderedActive) > 0.45
+        ? targetActive
+        : Math.round(renderedActive);
+      const local = Math.min(1, Math.max(0, renderedLocal));
 
       setVisibleScene(active);
 
@@ -105,7 +121,8 @@ export default function VideoBackdrop() {
       });
 
       if (
-        Math.abs(targetProgress - renderedProgress) > 0.0005 ||
+        Math.abs(targetActive - renderedActive) > 0.01 ||
+        Math.abs(targetLocal - renderedLocal) > 0.0005 ||
         ready < videos.length
       ) {
         raf = requestAnimationFrame(render);
@@ -113,7 +130,9 @@ export default function VideoBackdrop() {
     };
 
     const updateTarget = () => {
-      targetProgress = getProgress();
+      const timeline = getTimeline();
+      targetActive = timeline.active;
+      targetLocal = timeline.local;
       if (!raf) raf = requestAnimationFrame(render);
     };
 
@@ -142,9 +161,12 @@ export default function VideoBackdrop() {
       }
     });
 
-    targetProgress = getProgress();
-    renderedProgress = targetProgress;
-    setVisibleScene(0);
+    const initialTimeline = getTimeline();
+    targetActive = initialTimeline.active;
+    targetLocal = initialTimeline.local;
+    renderedActive = targetActive;
+    renderedLocal = targetLocal;
+    setVisibleScene(targetActive);
     if (!raf) raf = requestAnimationFrame(render);
 
     window.addEventListener('scroll', updateTarget, { passive: true });
