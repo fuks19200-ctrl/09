@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 
+type BloomScrollEvent = CustomEvent<{ scroll: number }>;
+
 export default function VideoBackdrop() {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
@@ -12,135 +14,118 @@ export default function VideoBackdrop() {
     const videos = Array.from(
       root.querySelectorAll<HTMLVideoElement>('.backdrop__video'),
     );
-
     if (videos.length !== 3) return;
 
     let raf = 0;
     let ready = 0;
-    let targetActive = 0;
+    let active = 0;
     let targetLocal = 0;
-    let renderedActive = 0;
     let renderedLocal = 0;
+    let lastScroll = window.scrollY;
 
-    /*
-     * The Bloom films are tied to REAL SITE SECTIONS, not arbitrary percentages
-     * of the whole document.
-     *
-     * HERO → FLORA
-     * COURSES → HAND
-     * REFERRAL / FINAL BLOCK → BLACK HOLE
-     *
-     * This is what makes the visual story line up with what the visitor sees.
-     * Scrolling down moves Flora → hand → black hole; scrolling up reverses it.
-     */
-    const getTimeline = () => {
-      const hero = document.querySelector<HTMLElement>('.hero');
-      const courses = document.querySelector<HTMLElement>('#courses');
-      const finale = document.querySelector<HTMLElement>('.section--bottom');
+    const sectionTop = (selector: string) => {
+      const el = document.querySelector<HTMLElement>(selector);
+      if (!el) return null;
+      return el.getBoundingClientRect().top + lastScroll;
+    };
 
-      const heroStart = hero?.offsetTop ?? 0;
-      const handStart = courses?.offsetTop ?? Math.round(document.documentElement.scrollHeight * 0.42);
-      const holeStart = finale?.offsetTop ?? Math.round(document.documentElement.scrollHeight * 0.82);
+    const getTimeline = (scrollY: number) => {
+      lastScroll = scrollY;
 
-      const scrollY = window.scrollY;
+      const coursesTop = sectionTop('#courses') ?? Math.round(document.documentElement.scrollHeight * 0.42);
+      const finaleTop = sectionTop('.section--bottom') ?? Math.round(document.documentElement.scrollHeight * 0.82);
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 
-      if (scrollY <= handStart) {
+      if (scrollY < coursesTop) {
         return {
           active: 0,
-          local: Math.min(1, Math.max(0, (scrollY - heroStart) / Math.max(1, handStart - heroStart))),
+          local: Math.max(0, Math.min(1, scrollY / Math.max(1, coursesTop))),
         };
       }
 
-      if (scrollY < holeStart) {
+      if (scrollY < finaleTop) {
         return {
           active: 1,
-          local: Math.min(1, Math.max(0, (scrollY - handStart) / Math.max(1, holeStart - handStart))),
+          local: Math.max(0, Math.min(1, (scrollY - coursesTop) / Math.max(1, finaleTop - coursesTop))),
         };
       }
 
-      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       return {
         active: 2,
-        local: Math.min(1, Math.max(0, (scrollY - holeStart) / Math.max(1, maxScroll - holeStart))),
+        local: Math.max(0, Math.min(1, (scrollY - finaleTop) / Math.max(1, maxScroll - finaleTop))),
       };
     };
 
-    const setVisibleScene = (active: number) => {
+    const showOnly = (nextActive: number) => {
       videos.forEach((video, index) => {
-        const opacity = index === active ? '1' : '0';
-        const visibility = index === active ? 'visible' : 'hidden';
-        if (video.style.opacity !== opacity) video.style.opacity = opacity;
-        if (video.style.visibility !== visibility) video.style.visibility = visibility;
+        const visible = index === nextActive;
+        video.style.opacity = visible ? '1' : '0';
+        video.style.visibility = visible ? 'visible' : 'hidden';
+        video.style.pointerEvents = 'none';
+        if (!visible) video.pause();
       });
     };
 
     const render = () => {
       raf = 0;
-
       if (ready < videos.length) {
         raf = requestAnimationFrame(render);
         return;
       }
 
-      // Smooth within each real page section. At a scene boundary we switch
-      // once, then scrub only the newly active film from its first to last frame.
-      renderedActive += (targetActive - renderedActive) * 0.32;
-      renderedLocal += (targetLocal - renderedLocal) * 0.22;
+      renderedLocal += (targetLocal - renderedLocal) * 0.28;
+      const local = Math.max(0, Math.min(1, renderedLocal));
 
-      const active = Math.abs(targetActive - renderedActive) > 0.45
-        ? targetActive
-        : Math.round(renderedActive);
-      const local = Math.min(1, Math.max(0, renderedLocal));
-
-      setVisibleScene(active);
-
-      videos.forEach((video, index) => {
-        if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-
-        // Keep every non-active film parked. Nothing plays by itself.
-        if (index !== active) {
-          video.pause();
-          return;
-        }
-
-        const safeLocal = Math.min(1, Math.max(0, local));
+      const video = videos[active];
+      if (video && Number.isFinite(video.duration) && video.duration > 0) {
         const targetTime = Math.min(
           Math.max(0, video.duration - 0.04),
-          safeLocal * video.duration,
+          local * video.duration,
         );
 
         if (Math.abs(video.currentTime - targetTime) > 0.001) {
           try {
             video.currentTime = targetTime;
-          } catch {
-            // Browser may reject a seek while media metadata is updating.
-          }
+          } catch {}
         }
-
         video.pause();
-      });
+      }
 
-      if (
-        Math.abs(targetActive - renderedActive) > 0.01 ||
-        Math.abs(targetLocal - renderedLocal) > 0.0005 ||
-        ready < videos.length
-      ) {
+      if (Math.abs(targetLocal - renderedLocal) > 0.0005) {
         raf = requestAnimationFrame(render);
       }
     };
 
-    const updateTarget = () => {
-      const timeline = getTimeline();
-      targetActive = timeline.active;
-      targetLocal = timeline.local;
+    const applyScroll = (scrollY: number) => {
+      const timeline = getTimeline(scrollY);
+
+      // Scene changes are HARD boundaries. We do not interpolate Flora/hand/hole
+      // because that creates the exact visual overlap seen on touch scrolling.
+      if (timeline.active !== active) {
+        active = timeline.active;
+        renderedLocal = timeline.local;
+        targetLocal = timeline.local;
+        showOnly(active);
+
+        const video = videos[active];
+        try {
+          video.currentTime = 0;
+        } catch {}
+      } else {
+        targetLocal = timeline.local;
+      }
+
       if (!raf) raf = requestAnimationFrame(render);
     };
+
+    const onNativeScroll = () => applyScroll(window.scrollY);
+    const onLenisScroll = (event: BloomScrollEvent) => applyScroll(event.detail.scroll);
 
     const onMetadata = (video: HTMLVideoElement) => {
       if (video.dataset.ready === '1') return;
       video.dataset.ready = '1';
       ready += 1;
-      updateTarget();
+      if (!raf) raf = requestAnimationFrame(render);
     };
 
     videos.forEach((video, index) => {
@@ -148,33 +133,29 @@ export default function VideoBackdrop() {
       video.playsInline = true;
       video.preload = 'auto';
       video.pause();
-      try { video.currentTime = 0; } catch {}
+      video.style.transition = 'none';
       video.style.opacity = index === 0 ? '1' : '0';
       video.style.visibility = index === 0 ? 'visible' : 'hidden';
-      video.style.transition = 'none';
       video.addEventListener('loadedmetadata', () => onMetadata(video), { once: true });
 
-      if (video.readyState >= 1) {
-        onMetadata(video);
-      } else {
-        video.load();
-      }
+      if (video.readyState >= 1) onMetadata(video);
+      else video.load();
     });
 
-    const initialTimeline = getTimeline();
-    targetActive = initialTimeline.active;
-    targetLocal = initialTimeline.local;
-    renderedActive = targetActive;
-    renderedLocal = targetLocal;
-    setVisibleScene(targetActive);
-    if (!raf) raf = requestAnimationFrame(render);
+    const initial = getTimeline(window.scrollY);
+    active = initial.active;
+    targetLocal = initial.local;
+    renderedLocal = initial.local;
+    showOnly(active);
 
-    window.addEventListener('scroll', updateTarget, { passive: true });
-    window.addEventListener('resize', updateTarget, { passive: true });
+    window.addEventListener('scroll', onNativeScroll, { passive: true });
+    window.addEventListener('resize', onNativeScroll, { passive: true });
+    window.addEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
 
     return () => {
-      window.removeEventListener('scroll', updateTarget);
-      window.removeEventListener('resize', updateTarget);
+      window.removeEventListener('scroll', onNativeScroll);
+      window.removeEventListener('resize', onNativeScroll);
+      window.removeEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
 
       videos.forEach((video) => {
         video.pause();
@@ -188,36 +169,15 @@ export default function VideoBackdrop() {
 
   return (
     <div ref={rootRef} className="backdrop" aria-hidden="true">
-      {/* 01 — Flora: the opening visual / first page */}
-      <video
-        className="backdrop__video"
-        poster="/images/bg-3.jpg"
-        muted
-        playsInline
-        preload="auto"
-      >
+      <video className="backdrop__video" poster="/images/bg-3.jpg" muted playsInline preload="auto">
         <source src="/videos/bloom-bg-3.mp4" type="video/mp4" />
       </video>
 
-      {/* 02 — Hand: appears only after scrolling through Flora */}
-      <video
-        className="backdrop__video"
-        poster="/images/bg-2.jpg"
-        muted
-        playsInline
-        preload="auto"
-      >
+      <video className="backdrop__video" poster="/images/bg-2.jpg" muted playsInline preload="auto">
         <source src="/videos/bloom-bg-2.mp4" type="video/mp4" />
       </video>
 
-      {/* 03 — Black hole: final scene only */}
-      <video
-        className="backdrop__video"
-        poster="/images/bg-1.jpg"
-        muted
-        playsInline
-        preload="auto"
-      >
+      <video className="backdrop__video" poster="/images/bg-1.jpg" muted playsInline preload="auto">
         <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
       </video>
 
