@@ -49,6 +49,57 @@ export default function SiteClient() {
           },
         );
       });
+
+      // COURSE HANDOFF: the pricing cards rise into the Bloom hand zone
+      // with scroll-linked inertia, so the hand feels like it is carrying them.
+      const pricingGrid = document.querySelector<HTMLElement>('.pricing-grid');
+      const priceCards = gsap.utils.toArray<HTMLElement>('.price-card');
+
+      if (pricingGrid && priceCards.length) {
+        gsap.set(pricingGrid, { transformPerspective: 1200 });
+
+        gsap.fromTo(
+          pricingGrid,
+          { y: 70, rotateX: 5, scale: 0.965 },
+          {
+            y: 0,
+            rotateX: 0,
+            scale: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#courses',
+              start: 'top bottom',
+              end: 'top 28%',
+              scrub: 1.35,
+            },
+          },
+        );
+
+        priceCards.forEach((card, index) => {
+          gsap.fromTo(
+            card,
+            {
+              y: 46 + index * 12,
+              x: index === 0 ? -18 : index === 2 ? 18 : 0,
+              rotateZ: index === 0 ? -1.2 : index === 2 ? 1.2 : 0,
+              rotateY: index === 0 ? -3 : index === 2 ? 3 : 0,
+            },
+            {
+              y: index === 0 ? -8 : index === 2 ? 8 : 0,
+              x: 0,
+              rotateZ: 0,
+              rotateY: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '#courses',
+                start: 'top 86%',
+                end: 'top 34%',
+                scrub: 1.6,
+              },
+            },
+          );
+        });
+      }
     });
 
     return () => ctx.revert();
