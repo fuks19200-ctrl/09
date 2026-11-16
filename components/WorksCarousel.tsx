@@ -76,28 +76,22 @@ export default function WorksCarousel() {
         }
 
         .work-tile__media {
-          background: linear-gradient(135deg, #cdbfe3 0%, #f5eff9 48%, #c5b5dd 100%) !important;
+          background: transparent !important;
         }
 
         .work-tile__media::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          pointer-events: none;
-          background: linear-gradient(135deg, rgba(231,222,242,.78), rgba(247,241,250,.68) 48%, rgba(216,205,232,.76));
-          mix-blend-mode: screen;
+          display: none !important;
         }
 
         .work-tile__media img {
           z-index: 0;
-          opacity: .48 !important;
-          filter: saturate(.42) brightness(1.08) contrast(.86) !important;
+          opacity: 1 !important;
+          filter: none !important;
         }
 
         .work-tile__wash {
           z-index: 2 !important;
-          background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(226,216,240,.08) 38%, rgba(157,137,191,.10) 100%) !important;
+          background: transparent !important;
           mix-blend-mode: normal !important;
         }
 
