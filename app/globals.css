@@ -281,3 +281,67 @@ body::before{z-index:-7;background:radial-gradient(ellipse 60% 55% at 75% 12%,rg
 @media (max-width:1000px){.header-status{display:none}.hero__visual{right:-22vw;width:75vw;opacity:.52}.hero__copy{width:min(780px,78vw)}.section-heading--split{grid-template-columns:1fr;gap:25px}.manifesto-grid{grid-template-columns:42px 1fr}.manifesto-aside{grid-column:2;max-width:440px}.signal-cell{min-height:80px}}
 @media (max-width:700px){.site-header{top:10px;width:calc(100% - 20px)}.brand{font-size:12px}.hero{padding-top:105px;padding-bottom:90px}.hero__copy{width:100%}.hero-kicker{font-size:8px;letter-spacing:.13em;margin-bottom:23px}.hero-kicker__year{display:none}.hero__copy h1{font-size:clamp(55px,16vw,82px)}.hero__copy>p{font-size:16px;max-width:440px;margin-top:25px}.hero__visual{display:block;right:-45vw;top:20%;width:100vw;height:60%;opacity:.26}.hero-side-note{display:none}.hero-proof{gap:12px;margin-top:28px}.hero-proof span{font-size:7px}.signal-strip{grid-template-columns:1fr 1fr}.signal-cell:nth-child(2){border-right:0}.signal-cell:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.08)}.signal-cell{min-height:76px;padding:13px}.signal-cell strong{font-size:10px}.signal-cell small{font-size:9px}.section{padding-top:105px;padding-bottom:105px}.section-heading--split{margin-bottom:38px}.section-heading h2{font-size:clamp(42px,11vw,58px)}.work-carousel__card{min-height:690px;padding:14px}.manifesto-grid{grid-template-columns:28px 1fr;gap:18px}.manifesto-copy h2{font-size:clamp(44px,12vw,68px)}.manifesto-aside{grid-column:2}.manifesto-number{font-size:65px}.hand-composition{min-height:650px}.hand-art{height:570px}.hand-card{width:100%;right:auto;bottom:0;padding:23px}.hand-card h2{font-size:29px}.hand-caption{font-size:7px;bottom:29%}.price-card{min-height:430px}.plan-price{margin-top:55px}.section--contact{grid-template-columns:1fr;gap:45px;padding-top:105px}.contact-copy h2{font-size:clamp(54px,15vw,76px)}.contact-orbit{width:170px;height:170px;right:0;bottom:-20px;opacity:.45}.bottom-grid .glass-card{min-height:380px}.footer{grid-template-columns:1fr;gap:13px}}
 @media (prefers-reduced-motion:reduce){.scroll-progress{animation:none;transform:scaleX(.35)}.hero-orbit--a,.hero-orbit--b{animation:none}}
+
+
+/* Premium interaction layer */
+.cursor-dot,.cursor-ring{
+  position:fixed;left:0;top:0;pointer-events:none;z-index:120;
+  transform:translate(-50%,-50%);opacity:0;
+}
+@media (pointer:fine){
+  body{cursor:none}
+  a,button{cursor:none}
+  .cursor-dot{
+    width:5px;height:5px;border-radius:50%;background:var(--acid);
+    box-shadow:0 0 18px rgba(217,255,104,.9);
+    opacity:1;
+  }
+  .cursor-ring{
+    width:34px;height:34px;border:1px solid rgba(255,255,255,.38);
+    border-radius:50%;opacity:1;mix-blend-mode:difference;
+  }
+  .cursor-ring span{
+    position:absolute;left:50%;top:50%;width:3px;height:3px;
+    transform:translate(-50%,-50%);border-radius:50%;background:#fff;
+  }
+}
+.hero::after{
+  content:'';
+  position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15) 35%,rgba(217,255,104,.35) 70%,transparent);
+}
+.hero__copy h1 span,.hero__copy h1 em{
+  will-change:transform;
+}
+.signal-cell{transition:background .4s ease,transform .4s ease}
+.signal-cell:hover{background:rgba(255,255,255,.025);transform:translateY(-2px)}
+.glass-card{
+  transition:border-color .4s ease,transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease;
+}
+.glass-card:hover{
+  border-color:rgba(255,255,255,.19);
+  transform:translateY(-4px);
+  box-shadow:inset 0 1px rgba(255,255,255,.09),0 45px 130px rgba(0,0,0,.32);
+}
+.price-card.is-featured:hover{border-color:rgba(217,255,104,.5)}
+.hero__visual:before{
+  content:'';
+  position:absolute;inset:5%;
+  border:1px solid rgba(255,255,255,.045);
+  border-radius:50%;
+  transform:rotate(-12deg) scaleY(.42);
+  box-shadow:0 0 100px rgba(157,130,255,.08);
+}
+.work-carousel__card{overflow:hidden}
+.work-carousel__content{will-change:transform,opacity}
+.work-visual--image{transition:transform .8s cubic-bezier(.22,1,.36,1),filter .5s ease}
+.work-carousel__card:hover .work-visual--image{transform:scale(1.025);filter:brightness(1.04)}
+.footer a{transition:color .25s ease}
+.footer a:hover{color:#fff}
+@media (pointer:coarse){
+  .cursor-dot,.cursor-ring{display:none}
+}
+@media (max-width:700px){
+  .hero::after{bottom:12px}
+  .glass-card:hover{transform:none}
+}
