@@ -65,18 +65,77 @@ export default function WorksCarousel() {
   };
 
   return (
-    <div className="works-gallery">
-      <div className="works-gallery__grid">
-        {works.map((work, index) => (
-          <WorkCard
-            key={work.category}
-            work={work}
-            index={index}
-            active={active}
-            onSelect={select}
-          />
-        ))}
+    <>
+      <style jsx global>{`
+        .works-gallery__grid { background: transparent !important; }
+
+        .work-tile {
+          background: #e7def2 !important;
+          border-color: rgba(255,255,255,.78) !important;
+          box-shadow: 0 24px 70px rgba(77,58,105,.14), inset 0 1px 0 rgba(255,255,255,.9) !important;
+        }
+
+        .work-tile__media {
+          background: linear-gradient(135deg, #cdbfe3 0%, #f5eff9 48%, #c5b5dd 100%) !important;
+        }
+
+        .work-tile__media::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          background: rgba(231,222,242,.30);
+          mix-blend-mode: screen;
+        }
+
+        .work-tile__media img {
+          z-index: 0;
+          filter: saturate(.68) brightness(1.12) contrast(.90) !important;
+        }
+
+        .work-tile__wash {
+          z-index: 2 !important;
+          background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(226,216,240,.08) 38%, rgba(157,137,191,.10) 100%) !important;
+          mix-blend-mode: normal !important;
+        }
+
+        .work-tile__content {
+          z-index: 4 !important;
+          border-color: rgba(255,255,255,.58) !important;
+          background: rgba(226,216,240,.52) !important;
+          box-shadow: 0 12px 34px rgba(66,48,91,.10);
+        }
+
+        .work-tile__content h3,
+        .work-tile__content p,
+        .work-tile__label,
+        .work-tile__top,
+        .work-tile__spark {
+          color: #fff !important;
+          text-shadow: 0 2px 14px rgba(45,31,58,.30);
+        }
+
+        .work-tile:hover,
+        .work-tile:focus-visible,
+        .work-tile.is-active {
+          box-shadow: 0 34px 90px rgba(72,48,103,.18), 0 0 0 1px rgba(155,127,234,.14), inset 0 1px 0 rgba(255,255,255,.95) !important;
+        }
+      `}</style>
+
+      <div className="works-gallery">
+        <div className="works-gallery__grid">
+          {works.map((work, index) => (
+            <WorkCard
+              key={work.category}
+              work={work}
+              index={index}
+              active={active}
+              onSelect={select}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
