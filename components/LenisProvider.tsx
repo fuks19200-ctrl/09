@@ -9,8 +9,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function LenisProvider() {
   useEffect(() => {
+    // Never let a previous anchor/scroll position decide where a fresh page load opens.
+    // This is especially important after clicking "Войти в систему" (#courses)
+    // and then refreshing: the browser would otherwise restore the courses block.
+    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+    const isReload = navigation?.type === 'reload';
+
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    if (isReload) {
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      window.scrollTo(0, 0);
+      requestAnimationFrame(() => window.scrollTo(0, 0));
+    }
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return;
+    if (reduceMotion) {
+      return () => {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
+      };
+    }
 
     const lenis = new Lenis({
       duration: 1.05,
@@ -36,6 +58,7 @@ export default function LenisProvider() {
     gsap.ticker.lagSmoothing(1000, 16);
 
     return () => {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
       gsap.ticker.remove(raf);
       lenis.off('scroll', onScroll);
       lenis.destroy();
