@@ -41,7 +41,7 @@ export default function VideoBackdrop() {
       }
 
       // Verified scene order from the supplied Bloom assets/posters:
-      // 01 Flora -> 02 hand -> 03 black hole / portal.
+      // UI order: 01 Flora -> 02 hand -> 03 black hole / portal.
       // Each scene gets its own scroll segment; we do NOT blend the scenes,
       // so flowers from Flora cannot bleed into the portal scene.
       const segment = Math.min(2.999999, scrollProgress * 3);
@@ -111,14 +111,14 @@ export default function VideoBackdrop() {
 
   return (
     <div ref={rootRef} className="backdrop" aria-hidden="true">
-      <video className="backdrop__video is-active" poster="/images/bg-1.jpg" muted playsInline preload="auto">
-        <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
+      <video className="backdrop__video is-active" poster="/images/bg-3.jpg" muted playsInline preload="auto">
+        <source src="/videos/bloom-bg-3.mp4" type="video/mp4" />
       </video>
       <video className="backdrop__video" poster="/images/bg-2.jpg" muted playsInline preload="auto">
         <source src="/videos/bloom-bg-2.mp4" type="video/mp4" />
       </video>
-      <video className="backdrop__video" poster="/images/bg-3.jpg" muted playsInline preload="auto">
-        <source src="/videos/bloom-bg-3.mp4" type="video/mp4" />
+      <video className="backdrop__video" poster="/images/bg-1.jpg" muted playsInline preload="auto">
+        <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
       </video>
       <div className="backdrop__shade" />
       <div className="backdrop__grain" />
