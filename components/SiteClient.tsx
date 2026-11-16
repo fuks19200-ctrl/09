@@ -90,12 +90,6 @@ export default function SiteClient() {
       <main id="top">
         <section className="hero section-shell" data-dark-start>
           <div className="hero__copy">
-            <div className="hero-kicker">
-              <span className="hero-kicker__dot" />
-              THE CREATIVE INTELLIGENCE COMPANY
-              <span className="hero-kicker__year">MMXXVI</span>
-            </div>
-
             <h1>
               <span>Не просто</span>
               <em>нейросети.</em>
