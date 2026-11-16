@@ -2,282 +2,333 @@
 
 import { useEffect, useRef } from 'react';
 
-type BloomScrollEvent = CustomEvent<{ scroll: number }>;
+type LenisScrollEvent = CustomEvent<{ scroll: number }>;
 
 export default function VideoBackdrop() {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    const canvas = root?.querySelector<HTMLCanvasElement>('.backdrop__canvas');
+    if (!root || !canvas) return;
+
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
 
     const videos = Array.from(
       root.querySelectorAll<HTMLVideoElement>('.backdrop__video'),
     );
     if (videos.length !== 3) return;
 
-    let raf = 0;
-    let ready = 0;
-    let active = 0;
-    let targetLocal = 0;
-    let renderedLocal = 0;
-    let lastScroll = window.scrollY;
-    let floraPosterVisible = true;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const durations = [0, 0, 0];
+    const posters = [1, 2, 3].map((n) => {
+      const image = new Image();
+      image.src = `/images/bg-${n}.jpg`;
+      return image;
+    });
 
-    const sectionTop = (selector: string) => {
-      const el = document.querySelector<HTMLElement>(selector);
-      if (!el) return null;
-      return el.getBoundingClientRect().top + lastScroll;
+    let progress = 0;
+    let target = 0;
+    let lastScroll = window.scrollY;
+    let lastSeekAt = 0;
+    let raf = 0;
+    let drawRaf = 0;
+    let lastSeek = [-1, -1, -1];
+    let lastActive = 0;
+    let timeline: Array<[number, number]> = [];
+
+    const clamp = (value: number, min = 0, max = 1) =>
+      Math.max(min, Math.min(max, value));
+
+    const documentTop = (el: HTMLElement) =>
+      el.getBoundingClientRect().top + lastScroll;
+
+    const refreshSceneAnchors = () => {
+      const max = Math.max(
+        1,
+        document.documentElement.scrollHeight - window.innerHeight,
+      );
+
+      const section = (selector: string) =>
+        document.querySelector<HTMLElement>(selector);
+
+      const focal = (selector: string) => {
+        const el = section(selector);
+        if (!el) return 0;
+        return documentTop(el) + (el.offsetHeight - window.innerHeight) * 0.5;
+      };
+
+      const courses = section('#courses');
+      if (!courses) return;
+
+      const raw: Array<[number, number]> = [
+        [0, 0],
+        [focal('#method'), 0.105],
+        [focal('#about'), 0.19],
+        [documentTop(courses) - window.innerHeight * 0.2, 7 / 24],
+        [
+          documentTop(courses) + courses.offsetHeight - window.innerHeight * 0.3,
+          8.35 / 24,
+        ],
+        [focal('#contact'), 0.53],
+        [focal('#faq'), 0.65],
+        [Math.min(max - window.innerHeight * 0.2, focal('.section--bottom')), 0.82],
+        [max, 1],
+      ];
+
+      timeline = [];
+      for (const [position, frame] of raw) {
+        const y = Math.max(0, Math.min(max, position));
+        if (timeline.length && y <= timeline[timeline.length - 1][0]) {
+          if (frame === 1) timeline[timeline.length - 1] = [max, 1];
+          continue;
+        }
+        timeline.push([y, frame]);
+      }
+
+      if (!timeline.length || timeline[timeline.length - 1][0] < max) {
+        timeline.push([max, 1]);
+      }
     };
 
-    const getTimeline = (scrollY: number) => {
-      lastScroll = scrollY;
+    const filmProgress = (scrollY: number) => {
+      if (!timeline.length) return 0;
 
-      const coursesTop =
-        sectionTop('#courses') ??
-        Math.round(document.documentElement.scrollHeight * 0.42);
-      const finaleTop =
-        sectionTop('.section--bottom') ??
-        Math.round(document.documentElement.scrollHeight * 0.82);
+      for (let i = 1; i < timeline.length; i += 1) {
+        const [end, to] = timeline[i];
+        const [start, from] = timeline[i - 1];
+        if (scrollY <= end) {
+          return from + (to - from) * clamp((scrollY - start) / Math.max(1, end - start));
+        }
+      }
+
+      return 1;
+    };
+
+    const activeVideo = (value: number) =>
+      value < 1 / 3 ? 0 : value < 2 / 3 ? 1 : 2;
+
+    const resize = () => {
+      const rect = root.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      draw();
+    };
+
+    const draw = () => {
+      const index = activeVideo(progress);
+      const video = videos[index];
+
+      let source: CanvasImageSource | null = null;
+      if (video.readyState >= 2 && video.videoWidth > 0) source = video;
+      else if (posters[index].complete && posters[index].naturalWidth > 0) source = posters[index];
+
+      if (!source) return;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const width = canvas.width / dpr;
+      const height = canvas.height / dpr;
+
+      const sourceWidth =
+        video.videoWidth || posters[index].naturalWidth || 1920;
+      const sourceHeight =
+        video.videoHeight || posters[index].naturalHeight || 1080;
+
+      const sourceAspect = sourceWidth / sourceHeight;
+      const canvasAspect = width / Math.max(1, height);
+
+      let drawWidth = width;
+      let drawHeight = height;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      if (sourceAspect > canvasAspect) {
+        drawWidth = height * sourceAspect;
+        offsetX = (width - drawWidth) / 2;
+      } else {
+        drawHeight = width / sourceAspect;
+        offsetY = (height - drawHeight) / 2;
+      }
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = '#090609';
+      ctx.fillRect(0, 0, width, height);
+
+      try {
+        ctx.drawImage(source, offsetX, offsetY, drawWidth, drawHeight);
+      } catch {
+        // Keep the last rendered frame if the browser is between video seeks.
+      }
+    };
+
+    const scheduleDraw = () => {
+      if (drawRaf) return;
+      drawRaf = requestAnimationFrame(() => {
+        drawRaf = 0;
+        draw();
+      });
+    };
+
+    const seekToProgress = (force = false) => {
+      if (reducedMotion.matches) return;
+
+      const now = performance.now();
+      if (!force && now - lastSeekAt < 42) return;
+
+      const index = activeVideo(progress);
+      const video = videos[index];
+      const duration = durations[index] || video.duration || 0;
+
+      if (!duration || video.seeking) return;
+
+      if (index !== lastActive) {
+        lastActive = index;
+        lastSeek = [-1, -1, -1];
+      }
+
+      const start = index === 0 ? 0 : index === 1 ? 1 / 3 : 2 / 3;
+      const local = clamp((progress - start) / (1 / 3));
+      const time = local * Math.max(0, duration - 0.03);
+
+      if (!force && Math.abs((lastSeek[index] ?? -1) - time) < 0.045) return;
+
+      lastSeek[index] = time;
+      lastSeekAt = now;
+
+      try {
+        video.pause();
+        video.currentTime = time;
+      } catch {
+        // Metadata may not be ready yet.
+      }
+    };
+
+    const updateTarget = (scrollY: number) => {
+      lastScroll = Math.max(0, scrollY);
       const maxScroll = Math.max(
         1,
         document.documentElement.scrollHeight - window.innerHeight,
       );
 
-      // 01 — HERO: Flora / woman.
-      if (scrollY < coursesTop) {
-        return {
-          active: 0,
-          local: Math.max(0, Math.min(1, scrollY / Math.max(1, coursesTop))),
-        };
-      }
+      target = filmProgress(clamp(lastScroll / maxScroll) * maxScroll);
 
-      // 02 — COURSES: hand.
-      if (scrollY < finaleTop) {
-        return {
-          active: 1,
-          local: Math.max(
-            0,
-            Math.min(
-              1,
-              (scrollY - coursesTop) / Math.max(1, finaleTop - coursesTop),
-            ),
-          ),
-        };
-      }
+      const darkness = clamp(
+        (lastScroll - window.innerHeight * 0.35) /
+          Math.max(1, window.innerHeight * 0.55),
+      );
 
-      // 03 — FINAL: bloom / black-hole transition.
-      return {
-        active: 2,
-        local: Math.max(
-          0,
-          Math.min(
-            1,
-            (scrollY - finaleTop) / Math.max(1, maxScroll - finaleTop),
-          ),
-        ),
-      };
+      const shade = root.querySelector<HTMLElement>('.backdrop__shade');
+      const readability = root.querySelector<HTMLElement>('.backdrop__readability');
+
+      if (shade) shade.style.opacity = String(0.55 * darkness);
+      if (readability) readability.style.opacity = String(1 - darkness);
+
+      seekToProgress();
+      scheduleDraw();
     };
 
-    const showOnly = (nextActive: number) => {
-      videos.forEach((video, index) => {
-        const visible = index === nextActive;
-        video.style.opacity = visible ? '1' : '0';
-        video.style.visibility = visible ? 'visible' : 'hidden';
-        video.style.pointerEvents = 'none';
-        if (!visible) video.pause();
-      });
+    const tick = () => {
+      const diff = target - progress;
+      progress += diff * 0.095;
+      if (Math.abs(diff) < 0.00008) progress = target;
+
+      seekToProgress();
+      scheduleDraw();
+      raf = requestAnimationFrame(tick);
     };
 
-    const render = () => {
-      raf = 0;
-
-      if (ready < videos.length) {
-        raf = requestAnimationFrame(render);
-        return;
-      }
-
-      renderedLocal += (targetLocal - renderedLocal) * 0.28;
-      const local = Math.max(0, Math.min(1, renderedLocal));
-      const video = videos[active];
-
-      // The Flora asset starts with a transition frame in the source video.
-      // Keep the verified Flora poster on screen at the very top, then enter
-      // the video slightly after its opening frames so the page never flashes
-      // the black-hole frame on first paint.
-      const floraLead = 0.12;
-      const videoLocal = active === 0 ? Math.max(floraLead, local) : local;
-      floraPosterVisible = active === 0 && local < floraLead;
-      const poster = root.querySelector<HTMLElement>('.backdrop__flora-poster');
-      if (poster) {
-        poster.style.opacity = floraPosterVisible ? '1' : '0';
-        poster.style.visibility = floraPosterVisible ? 'visible' : 'hidden';
-      }
-      if (video) {
-        video.style.opacity = active === 0 && floraPosterVisible ? '0' : '1';
-        video.style.visibility = active === 0 && floraPosterVisible ? 'hidden' : 'visible';
-      }
-
-      if (video && Number.isFinite(video.duration) && video.duration > 0) {
-        const targetTime = Math.min(
-          Math.max(0, video.duration - 0.04),
-          videoLocal * video.duration,
-        );
-
-        if (Math.abs(video.currentTime - targetTime) > 0.001) {
-          try {
-            video.currentTime = targetTime;
-          } catch {}
-        }
-        video.pause();
-      }
-
-      if (Math.abs(targetLocal - renderedLocal) > 0.0005) {
-        raf = requestAnimationFrame(render);
-      }
-    };
-
-    const applyScroll = (scrollY: number) => {
-      const timeline = getTimeline(scrollY);
-
-      if (timeline.active !== active) {
-        active = timeline.active;
-        renderedLocal = timeline.local;
-        targetLocal = timeline.local;
-        floraPosterVisible = active === 0;
-        const poster = root.querySelector<HTMLElement>('.backdrop__flora-poster');
-        if (poster) {
-          poster.style.opacity = floraPosterVisible ? '1' : '0';
-          poster.style.visibility = floraPosterVisible ? 'visible' : 'hidden';
-        }
-        showOnly(active);
-
-        const video = videos[active];
-        try {
-          video.currentTime = 0;
-        } catch {}
-      } else {
-        targetLocal = timeline.local;
-      }
-
-      if (!raf) raf = requestAnimationFrame(render);
-    };
-
-    const onNativeScroll = () => applyScroll(window.scrollY);
-    const onLenisScroll = (event: BloomScrollEvent) =>
-      applyScroll(event.detail.scroll);
-
-    const onMetadata = (video: HTMLVideoElement) => {
-      if (video.dataset.ready === '1') return;
-      video.dataset.ready = '1';
-      ready += 1;
-      if (!raf) raf = requestAnimationFrame(render);
-    };
+    const onNativeScroll = () => updateTarget(window.scrollY);
+    const onLenisScroll = (event: LenisScrollEvent) =>
+      updateTarget(event.detail.scroll);
 
     videos.forEach((video, index) => {
+      video.loop = false;
+      video.autoplay = false;
       video.muted = true;
       video.playsInline = true;
       video.preload = 'auto';
-      video.pause();
-      video.style.transition = 'none';
-      video.style.opacity = index === 0 ? '1' : '0';
-      video.style.visibility = index === 0 ? 'visible' : 'hidden';
 
-      video.addEventListener(
-        'loadedmetadata',
-        () => onMetadata(video),
-        { once: true },
-      );
+      video.addEventListener('loadedmetadata', () => {
+        durations[index] = video.duration || 10;
+        updateTarget(lastScroll);
+        seekToProgress(true);
+      });
 
-      if (video.readyState >= 1) onMetadata(video);
-      else video.load();
+      video.addEventListener('loadeddata', () => {
+        seekToProgress(true);
+        scheduleDraw();
+      });
+
+      video.addEventListener('seeked', scheduleDraw);
+      video.load();
     });
 
-    // Always start at Flora.
-    active = 0;
-    targetLocal = 0;
-    renderedLocal = 0;
-    showOnly(0);
+    posters.forEach((poster) => {
+      poster.addEventListener('load', scheduleDraw);
+    });
 
-    const initial = getTimeline(window.scrollY);
-    active = initial.active;
-    targetLocal = initial.local;
-    renderedLocal = initial.local;
-    showOnly(active);
+    refreshSceneAnchors();
+    target = filmProgress(lastScroll);
+    progress = target;
+    resize();
+    updateTarget(lastScroll);
+
+    window.addEventListener('resize', () => {
+      refreshSceneAnchors();
+      resize();
+      updateTarget(lastScroll);
+    }, { passive: true });
 
     window.addEventListener('scroll', onNativeScroll, { passive: true });
-    window.addEventListener('resize', onNativeScroll, { passive: true });
-    window.addEventListener(
-      'multum-lenis-scroll',
-      onLenisScroll as EventListener,
-    );
+    window.addEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
+
+    raf = requestAnimationFrame(tick);
+
+    const fontsReady = document.fonts?.ready.then(() => {
+      refreshSceneAnchors();
+      updateTarget(lastScroll);
+      scheduleDraw();
+    });
+
+    const observer = new ResizeObserver(() => {
+      refreshSceneAnchors();
+      updateTarget(lastScroll);
+      scheduleDraw();
+    });
+    observer.observe(document.querySelector('main') || root);
 
     return () => {
       window.removeEventListener('scroll', onNativeScroll);
-      window.removeEventListener('resize', onNativeScroll);
-      window.removeEventListener(
-        'multum-lenis-scroll',
-        onLenisScroll as EventListener,
-      );
-
+      window.removeEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
+      if (raf) cancelAnimationFrame(raf);
+      if (drawRaf) cancelAnimationFrame(drawRaf);
+      observer.disconnect();
+      void fontsReady;
       videos.forEach((video) => {
         video.pause();
         video.removeAttribute('src');
         video.load();
       });
-
-      if (raf) cancelAnimationFrame(raf);
     };
   }, []);
 
   return (
     <div ref={rootRef} className="backdrop" aria-hidden="true">
-      <div
-        className="backdrop__flora-poster"
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 2,
-          backgroundImage: "url('/images/bg-1.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center',
-          opacity: 1,
-          visibility: 'visible',
-          transition: 'none',
-          pointerEvents: 'none',
-        }}
-      />
-      <video
-        className="backdrop__video"
-        poster="/images/bg-1.jpg"
-        muted
-        playsInline
-        preload="auto"
-      >
+      <div className="backdrop__readability" />
+      <canvas className="backdrop__canvas" />
+      <video className="backdrop__video" muted playsInline preload="auto">
         <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
       </video>
-
-      <video
-        className="backdrop__video"
-        poster="/images/bg-2.jpg"
-        muted
-        playsInline
-        preload="auto"
-      >
+      <video className="backdrop__video" muted playsInline preload="auto">
         <source src="/videos/bloom-bg-2.mp4" type="video/mp4" />
       </video>
-
-      <video
-        className="backdrop__video"
-        poster="/images/bg-3.jpg"
-        muted
-        playsInline
-        preload="auto"
-      >
+      <video className="backdrop__video" muted playsInline preload="auto">
         <source src="/videos/bloom-bg-3.mp4" type="video/mp4" />
       </video>
-
       <div className="backdrop__shade" />
       <div className="backdrop__grain" />
       <div className="backdrop__vignette" />
