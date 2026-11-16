@@ -831,7 +831,7 @@ body{
   z-index:0 !important;
   display:block !important;
   overflow:hidden !important;
-  background:#090609 url('/images/bg-3.jpg') center center / cover no-repeat !important;
+  background:#090609 !important;
   pointer-events:none !important;
 }
 .backdrop__video{
@@ -842,6 +842,7 @@ body{
   object-fit:cover !important;
   object-position:center center !important;
   opacity:0;
+  visibility:hidden;
   filter:saturate(1.08) contrast(1.03) brightness(.94) !important;
   transform:scale(1.015) !important;
 }
@@ -1313,4 +1314,27 @@ a:hover{
 }
 .backdrop .backdrop__video.is-active{
   opacity:1;
+  visibility:visible;
+}
+
+
+/* FINAL BLOOM VISUAL RULES
+   The videos themselves are the background. Do not paint a permanent Flora
+   image underneath them: that would make the first scene appear stuck forever.
+*/
+.backdrop{
+  background:#090609 !important;
+}
+.backdrop .backdrop__video{
+  visibility:hidden !important;
+  opacity:0 !important;
+}
+.backdrop .backdrop__video[style*="opacity: 1"]{
+  visibility:visible !important;
+  opacity:1 !important;
+}
+.backdrop__shade,
+.backdrop__grain,
+.backdrop__vignette{
+  pointer-events:none !important;
 }
