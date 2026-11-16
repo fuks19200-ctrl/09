@@ -121,20 +121,6 @@ export default function SiteClient() {
             </div>
           </div>
 
-          <div className="hero__visual" aria-hidden="true">
-            <div className="hero-video-frame">
-              <video className="hero-reference-video" autoPlay muted loop playsInline preload="auto" poster="/images/bg-1.jpg">
-                <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
-              </video>
-              <div className="hero-video-glass" />
-              <div className="hero-video-label"><span /> LIVING INTELLIGENCE / 01</div>
-            </div>
-            <div className="hero-living-glow" />
-            <div className="hero-scanline" />
-            <div className="hero-coordinates">45° 12′ 08″ N<br />37° 36′ 44″ E</div>
-            <div className="hero-system-label">MULTUM / CORE<br /><span>CREATIVE INTELLIGENCE</span></div>
-          </div>
-
           <div className="hero-side-note">
             <span>01</span>
             <div data-line />
