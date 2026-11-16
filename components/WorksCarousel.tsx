@@ -5,11 +5,11 @@ import gsap from 'gsap';
 import { works } from '@/lib/data';
 
 const imageByType: Record<string, string> = {
-  character: '/images/01-ai-character.png',
-  bottle: '/images/02-ai-product.png',
-  orb: '/images/03-ai-3d.png',
-  editorial: '/images/04-ai-visual.png',
-  automation: '/images/05-ai-automation.png',
+  character: '/images/works/01.png',
+  bottle: '/images/works/02.png',
+  orb: '/images/works/03.png',
+  editorial: '/images/works/04.png',
+  automation: '/images/works/05.png',
 };
 
 function WorkCard({
