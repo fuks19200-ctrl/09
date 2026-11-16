@@ -10,15 +10,17 @@ export default function VideoBackdrop() {
     const videos = Array.from(root?.querySelectorAll<HTMLVideoElement>('.backdrop__video') || []);
     if (!root || videos.length !== 3) return;
 
-    videos.forEach(video => {
+    videos.forEach((video, i) => {
       video.muted = true;
       video.playsInline = true;
       video.preload = 'auto';
       video.pause();
+      video.style.opacity = i === 0 ? '1' : '0';
+      video.style.transition = 'none';
     });
 
     let raf = 0;
-    let readyCount = 0;
+    let ready = 0;
     let scrollProgress = 0;
     const rendered = [0, 0, 0];
     const targets = [0, 0, 0];
@@ -33,32 +35,34 @@ export default function VideoBackdrop() {
 
     const render = () => {
       raf = 0;
-      if (readyCount < 3) {
+      if (ready < 3) {
         raf = requestAnimationFrame(render);
         return;
       }
 
-      // The original Bloom composition uses three separate background films.
-      // Each film owns one third of the page scroll and crossfades into the next.
-      const segment = scrollProgress * 3;
-      const active = Math.min(2, Math.floor(segment));
-      const local = Math.min(1, Math.max(0, segment - active));
+      // Three distinct Bloom scenes:
+      // 01 Flora -> 02 hand -> 03 portal/hole.
+      // Each scene gets its own scroll segment; we do NOT blend the scenes,
+      // so flowers from Flora cannot bleed into the portal scene.
+      const segment = Math.min(2.999999, scrollProgress * 3);
+      const active = Math.floor(segment);
+      const local = segment - active;
 
-      for (let i = 0; i < 3; i++) {
-        const video = videos[i];
-        if (!Number.isFinite(video.duration) || video.duration <= 0) continue;
+      videos.forEach((video, i) => {
+        if (!Number.isFinite(video.duration) || video.duration <= 0) return;
 
-        const start = i === 0 ? 0 : i / 3;
-        const end = i === 2 ? 1 : (i + 1) / 3;
-        const fade = Math.max(0, Math.min(1, (scrollProgress - start) / (end - start)));
+        const target = i === active
+          ? Math.min(Math.max(0, video.duration - 0.04), local * video.duration)
+          : targets[i];
 
-        targets[i] = Math.min(Math.max(0, video.duration - 0.04), local * video.duration);
+        if (i === active) targets[i] = target;
 
-        // Faster cinematic response: strong easing, but never a frame-by-frame jump.
-        rendered[i] += (targets[i] - rendered[i]) * 0.34;
+        rendered[i] += (targets[i] - rendered[i]) * 0.38;
 
-        const opacity = i === active ? 1 : (i === active + 1 ? Math.max(0, fade) : 0);
-        video.style.opacity = String(opacity);
+        const opacity = i === active ? 1 : 0;
+        if (video.style.opacity !== String(opacity)) {
+          video.style.opacity = String(opacity);
+        }
 
         const safeTime = Math.min(
           Math.max(0, rendered[i]),
@@ -68,18 +72,18 @@ export default function VideoBackdrop() {
         if (Math.abs(video.currentTime - safeTime) > 0.001) {
           try { video.currentTime = safeTime; } catch {}
         }
-      }
+      });
 
       if (
-        videos.some((_, i) => Math.abs(targets[i] - rendered[i]) > 0.001) ||
-        readyCount < 3
+        Math.abs(targets[active] - rendered[active]) > 0.001 ||
+        ready < 3
       ) {
         raf = requestAnimationFrame(render);
       }
     };
 
     const onMetadata = () => {
-      readyCount += 1;
+      ready += 1;
       updateTarget();
     };
 
