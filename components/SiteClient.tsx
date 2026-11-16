@@ -50,62 +50,6 @@ export default function SiteClient() {
         );
       });
 
-      // COURSE HANDOFF: the pricing cards rise into the Bloom hand zone
-      // with scroll-linked inertia, so the hand feels like it is carrying them.
-      const pricingGrid = document.querySelector<HTMLElement>('.pricing-grid');
-      const priceCards = gsap.utils.toArray<HTMLElement>('.price-card');
-
-      if (pricingGrid && priceCards.length) {
-        gsap.set(pricingGrid, { transformPerspective: 1200 });
-
-        gsap.fromTo(
-          pricingGrid,
-          { y: 70, rotateX: 5, scale: 0.965 },
-          {
-            y: 0,
-            rotateX: 0,
-            scale: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '#courses',
-              start: 'top bottom',
-              end: 'top 28%',
-              scrub: 1.35,
-            },
-          },
-        );
-
-        priceCards.forEach((card, index) => {
-          const handPose = [
-            { y: 38, x: -6, rotateZ: -3, rotateY: 4, scale: 1 },
-            { y: -12, x: 0, rotateZ: 0, rotateY: 0, scale: 1.035 },
-            { y: 30, x: 6, rotateZ: 3, rotateY: -4, scale: 1 },
-          ][index] ?? { y: 0, x: 0, rotateZ: 0, rotateY: 0, scale: 1 };
-
-          gsap.fromTo(
-            card,
-            {
-              y: handPose.y + 110,
-              x: handPose.x * 1.8,
-              rotateZ: handPose.rotateZ * 0.35,
-              rotateY: handPose.rotateY * 0.35,
-              scale: handPose.scale * 0.94,
-              opacity: 0.45,
-            },
-            {
-              ...handPose,
-              opacity: 1,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '#courses',
-                start: 'top 92%',
-                end: 'top 38%',
-                scrub: 1.8,
-              },
-            },
-          );
-        });
-      }
     });
 
     return () => ctx.revert();
