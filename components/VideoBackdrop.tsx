@@ -153,7 +153,7 @@ export default function VideoBackdrop() {
     <div ref={rootRef} className="backdrop" aria-hidden="true">
       {/* 01 — Flora: the opening visual / first page */}
       <video
-        className="backdrop__video is-active"
+        className="backdrop__video"
         poster="/images/bg-3.jpg"
         muted
         playsInline
