@@ -47,9 +47,9 @@ export default function VideoBackdrop() {
       // Smoothly follow the scroll position instead of jumping to each scroll event.
       // This gives the background cinematic inertia while preserving exact direction.
       const delta = targetTime - renderedTime;
-      renderedTime += delta * 0.16;
+      renderedTime += delta * 0.24;
 
-      if (Math.abs(delta) < 0.003) {
+      if (Math.abs(delta) < 0.0015) {
         renderedTime = targetTime;
       }
 
@@ -58,14 +58,14 @@ export default function VideoBackdrop() {
         Math.max(0, video.duration - 0.04)
       );
 
-      if (Math.abs(video.currentTime - safeTime) > 0.004) {
+      if (Math.abs(video.currentTime - safeTime) > 0.0015) {
         try {
           video.currentTime = safeTime;
         } catch {}
       }
 
       // Keep animating while easing toward the scroll target.
-      if (Math.abs(targetTime - renderedTime) > 0.003) {
+      if (Math.abs(targetTime - renderedTime) > 0.0015) {
         raf = requestAnimationFrame(render);
       }
     };
