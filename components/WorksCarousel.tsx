@@ -85,13 +85,14 @@ export default function WorksCarousel() {
           inset: 0;
           z-index: 1;
           pointer-events: none;
-          background: rgba(231,222,242,.30);
+          background: linear-gradient(135deg, rgba(231,222,242,.78), rgba(247,241,250,.68) 48%, rgba(216,205,232,.76));
           mix-blend-mode: screen;
         }
 
         .work-tile__media img {
           z-index: 0;
-          filter: saturate(.68) brightness(1.12) contrast(.90) !important;
+          opacity: .48 !important;
+          filter: saturate(.42) brightness(1.08) contrast(.86) !important;
         }
 
         .work-tile__wash {
