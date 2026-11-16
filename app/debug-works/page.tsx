@@ -1,8 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export const dynamic = "force-dynamic";
-
 export default function DebugWorks() {
   const names = ["01","02","03","04","05"];
   const imgs = names.map((name) => {
