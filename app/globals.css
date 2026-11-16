@@ -609,3 +609,178 @@ body::before{z-index:-7;background:radial-gradient(ellipse 60% 55% at 75% 12%,rg
   .hero-video-frame{transform:none}
   .hero-video-label span{animation:none}
 }
+
+
+/* =========================================================
+   MULTUM.AI / LIVING SYSTEM v4
+   The reference girl is the visual anchor, not decoration.
+   ========================================================= */
+:root{
+  --living-pink:#f2c7d1;
+  --living-lilac:#9d82ff;
+  --living-violet:#6e5bd7;
+  --living-ice:#dfe7ff;
+}
+body{
+  background:
+    radial-gradient(70vw 55vw at 76% 18%,rgba(157,130,255,.11),transparent 62%),
+    radial-gradient(52vw 48vw at 18% 42%,rgba(242,199,209,.075),transparent 68%),
+    #07070a;
+}
+.hero__visual{
+  width:min(61vw,900px);
+  height:min(86vh,930px);
+  right:-1vw;
+  top:6vh;
+}
+.hero-video-frame{
+  border-color:rgba(242,199,209,.22);
+  box-shadow:
+    0 55px 170px rgba(0,0,0,.5),
+    0 0 110px rgba(157,130,255,.13),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+.hero-video-frame::before{
+  content:'';
+  position:absolute;
+  z-index:5;
+  inset:-1px;
+  border-radius:42px;
+  padding:1px;
+  background:linear-gradient(135deg,rgba(255,255,255,.32),rgba(242,199,209,.12),transparent 55%,rgba(157,130,255,.2));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+}
+.hero-video-glass{
+  background:
+    radial-gradient(circle at 25% 12%,rgba(242,199,209,.18),transparent 22%),
+    radial-gradient(circle at 78% 78%,rgba(157,130,255,.15),transparent 27%),
+    linear-gradient(110deg,rgba(255,255,255,.08),transparent 32%,transparent 68%,rgba(0,0,0,.2)),
+    linear-gradient(180deg,transparent 48%,rgba(0,0,0,.32));
+}
+.hero-reference-video{
+  filter:saturate(1.12) contrast(1.06) brightness(.94);
+}
+.hero__copy h1 em{
+  background:linear-gradient(105deg,var(--living-pink),#fff 42%,var(--living-lilac));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-stroke:0;
+  color:transparent;
+  filter:drop-shadow(0 0 30px rgba(157,130,255,.12));
+}
+.hero-proof span:hover{
+  border-color:rgba(242,199,209,.28);
+  background:rgba(242,199,209,.045);
+}
+.hero-orbit{
+  box-shadow:0 0 80px rgba(157,130,255,.12);
+}
+.hero__visual:after{
+  content:'';
+  position:absolute;
+  z-index:6;
+  left:-8%;
+  right:4%;
+  bottom:8%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(242,199,209,.45),rgba(157,130,255,.32),transparent);
+  opacity:.55;
+}
+
+/* Replace the old synthetic hand graphic with the actual moving reference footage. */
+.living-composition{
+  position:relative;
+  min-height:720px;
+}
+.living-figure{
+  position:absolute;
+  inset:0 30% 0 0;
+  overflow:hidden;
+  border-radius:44px;
+  border:1px solid rgba(255,255,255,.12);
+  background:#09090c;
+  box-shadow:0 50px 140px rgba(0,0,0,.4),0 0 100px rgba(157,130,255,.08);
+}
+.living-figure__video{
+  position:absolute;
+  inset:-2%;
+  width:104%;
+  height:104%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  filter:saturate(1.08) contrast(1.04);
+}
+.living-figure__veil{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 45%,transparent 20%,rgba(0,0,0,.08) 65%,rgba(0,0,0,.45) 100%),
+    linear-gradient(90deg,rgba(242,199,209,.06),transparent 35%,rgba(157,130,255,.08));
+  pointer-events:none;
+}
+.living-figure__signal,
+.living-figure__caption{
+  position:absolute;
+  z-index:3;
+  padding:9px 12px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+  background:rgba(8,8,10,.28);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+  color:rgba(255,255,255,.62);
+  font:600 8px/1 'Montserrat',sans-serif;
+  letter-spacing:.14em;
+}
+.living-figure__signal{top:20px;left:20px}
+.living-figure__caption{bottom:20px;left:20px;color:rgba(242,199,209,.72)}
+.living-figure + .hand-card{
+  width:52%;
+  right:0;
+  bottom:11%;
+  background:linear-gradient(135deg,rgba(13,13,17,.72),rgba(13,13,17,.4));
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+.section--hand{
+  position:relative;
+}
+.section--hand:before{
+  content:'';
+  position:absolute;
+  width:60vw;
+  height:60vw;
+  max-width:900px;
+  max-height:900px;
+  left:-25vw;
+  top:5%;
+  background:radial-gradient(circle,rgba(242,199,209,.08),rgba(157,130,255,.045) 35%,transparent 70%);
+  pointer-events:none;
+}
+@media(max-width:1000px){
+  .hero__visual{width:74vw;height:80vh;right:-19vw}
+  .living-composition{min-height:650px}
+  .living-figure{inset:0 18% 0 0}
+  .living-figure + .hand-card{width:58%}
+}
+@media(max-width:700px){
+  .hero__visual{width:120vw;height:67vh;right:-42vw;top:8vh;opacity:.5}
+  .hero-video-frame{border-radius:28px}
+  .living-composition{min-height:680px}
+  .living-figure{inset:0 0 155px 0;border-radius:30px}
+  .living-figure + .hand-card{
+    width:100%;
+    right:0;
+    bottom:0;
+    background:rgba(12,12,16,.78);
+  }
+  .living-figure__signal{top:14px;left:14px}
+  .living-figure__caption{bottom:14px;left:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-video-frame{transform:none}
+}
