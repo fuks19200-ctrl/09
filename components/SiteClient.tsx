@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { navItems } from '@/lib/data';
 import LenisProvider from './LenisProvider';
 import VideoBackdrop from './VideoBackdrop';
-import NeuralScene from './NeuralScene';
 import MagneticButton from './MagneticButton';
 import GlassCard from './GlassCard';
 import WorksCarousel from './WorksCarousel';
@@ -124,15 +123,13 @@ export default function SiteClient() {
           <div className="hero__visual" aria-hidden="true">
             <div className="hero-video-frame">
               <video className="hero-reference-video" autoPlay muted loop playsInline preload="auto" poster="/images/bg-1.jpg">
+                <source src="/videos/mobile/bloom-bg-1.mp4" media="(max-width: 820px)" type="video/mp4" />
                 <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
               </video>
               <div className="hero-video-glass" />
               <div className="hero-video-label"><span /> LIVING INTELLIGENCE / 01</div>
             </div>
-            <div className="hero-orbit hero-orbit--a" />
-            <div className="hero-orbit hero-orbit--b" />
-            <div className="hero-orbit hero-orbit--c" />
-            <div className="hero-neural"><NeuralScene /></div>
+            <div className="hero-living-glow" />
             <div className="hero-scanline" />
             <div className="hero-coordinates">45° 12′ 08″ N<br />37° 36′ 44″ E</div>
             <div className="hero-system-label">MULTUM / CORE<br /><span>CREATIVE INTELLIGENCE</span></div>
@@ -184,6 +181,7 @@ export default function SiteClient() {
           <div className="hand-composition living-composition" data-reveal>
             <div className="living-figure" aria-hidden="true">
               <video className="living-figure__video" autoPlay muted loop playsInline preload="metadata" poster="/images/bg-2.jpg">
+                <source src="/videos/mobile/bloom-bg-2.mp4" media="(max-width: 820px)" type="video/mp4" />
                 <source src="/videos/bloom-bg-2.mp4" type="video/mp4" />
               </video>
               <div className="living-figure__veil" />
