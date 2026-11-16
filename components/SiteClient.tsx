@@ -13,6 +13,7 @@ import WorksCarousel from './WorksCarousel';
 import Pricing from './Pricing';
 import LeadForm from './LeadForm';
 import FAQ from './FAQ';
+import CursorFX from './CursorFX';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,6 +62,7 @@ export default function SiteClient() {
 
   return (
     <>
+      <CursorFX />
       <LenisProvider />
       <VideoBackdrop />
 
