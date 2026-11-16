@@ -1304,3 +1304,13 @@ a:hover{
 
 /* Bloom scene integrity: JS controls scene switching; never blend the three films. */
 .backdrop__video{transition:none !important;}
+
+
+/* FINAL BACKDROP FIX — only the scroll-selected Bloom scene may be visible. */
+.backdrop .backdrop__video{
+  opacity:0 !important;
+  transition:none !important;
+}
+.backdrop .backdrop__video.is-active{
+  opacity:1 !important;
+}
