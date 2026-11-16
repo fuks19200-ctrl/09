@@ -1386,3 +1386,200 @@ a:hover{
 .backdrop__grain{z-index:4 !important;}
 .backdrop__vignette{z-index:5 !important;}
 main,.footer{position:relative;z-index:1;}
+
+
+/* =========================================================
+   WORKS GALLERY — LIGHT LAVENDER ART COLLECTION
+   Five visual tiles, matching the generated MULTUM direction.
+   ========================================================= */
+.works-gallery{
+  position:relative;
+  width:100%;
+  margin-top:18px;
+}
+.works-gallery__grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:14px;
+}
+.work-tile{
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.55);
+  background:#d9d0e8;
+  box-shadow:
+    0 24px 70px rgba(67,48,94,.12),
+    inset 0 1px 0 rgba(255,255,255,.72);
+  cursor:pointer;
+  outline:none;
+  transition:transform .45s cubic-bezier(.22,.61,.36,1),box-shadow .45s ease,border-color .45s ease;
+}
+.work-tile--1,
+.work-tile--2,
+.work-tile--3{
+  grid-column:span 2;
+  aspect-ratio:1 / 1.035;
+}
+.work-tile--4,
+.work-tile--5{
+  grid-column:span 3;
+  aspect-ratio:2.05 / 1;
+}
+.work-tile:hover,
+.work-tile:focus-visible,
+.work-tile.is-active{
+  transform:translateY(-5px);
+  border-color:rgba(255,255,255,.88);
+  box-shadow:
+    0 34px 90px rgba(72,48,103,.20),
+    0 0 0 1px rgba(155,127,234,.16),
+    inset 0 1px 0 rgba(255,255,255,.88);
+}
+.work-tile__media{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 30%,rgba(255,255,255,.72),transparent 34%),
+    linear-gradient(135deg,#c9bde0,#f2edf7 54%,#b8a7d6);
+}
+.work-tile__media img{
+  position:absolute;
+  inset:-1%;
+  width:102%;
+  height:102%;
+  object-fit:cover;
+  display:block;
+  filter:saturate(.82) brightness(1.06) contrast(.94);
+  transform:scale(1.01);
+  transition:transform .8s cubic-bezier(.22,.61,.36,1),filter .5s ease;
+}
+.work-tile:hover .work-tile__media img,
+.work-tile:focus-visible .work-tile__media img,
+.work-tile.is-active .work-tile__media img{
+  transform:scale(1.045);
+  filter:saturate(.92) brightness(1.08) contrast(.95);
+}
+.work-tile__wash{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.08),transparent 28%,rgba(89,63,119,.12) 100%),
+    radial-gradient(circle at 80% 15%,rgba(255,255,255,.28),transparent 30%);
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+.work-tile__top{
+  position:absolute;
+  z-index:3;
+  top:20px;
+  left:20px;
+  right:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  color:#fff;
+  text-shadow:0 2px 12px rgba(49,31,65,.22);
+}
+.work-tile__number{
+  font:500 10px/1 var(--system),monospace;
+  letter-spacing:.12em;
+  opacity:.9;
+}
+.work-tile__category{
+  font:600 10px/1 var(--system),monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  opacity:.88;
+}
+.work-tile__content{
+  position:absolute;
+  z-index:3;
+  left:20px;
+  right:20px;
+  bottom:20px;
+  padding:17px 18px 18px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:20px;
+  background:rgba(72,55,91,.22);
+  backdrop-filter:blur(18px) saturate(120%);
+  -webkit-backdrop-filter:blur(18px) saturate(120%);
+  transform:translateY(10px);
+  opacity:.0;
+  transition:opacity .4s ease,transform .4s cubic-bezier(.22,.61,.36,1);
+}
+.work-tile:hover .work-tile__content,
+.work-tile:focus-visible .work-tile__content,
+.work-tile.is-active .work-tile__content{
+  opacity:1;
+  transform:translateY(0);
+}
+.work-tile__label{
+  display:block;
+  margin-bottom:7px;
+  color:rgba(255,255,255,.78);
+  font:600 8px/1.25 var(--system),monospace;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.work-tile__content h3{
+  color:#fff !important;
+  margin:0 0 7px;
+  font-size:clamp(18px,1.65vw,28px);
+  line-height:1;
+  text-shadow:0 2px 16px rgba(50,30,65,.3) !important;
+}
+.work-tile__content p{
+  color:rgba(255,255,255,.82) !important;
+  font-size:13px;
+  line-height:1.35;
+  text-shadow:0 2px 12px rgba(50,30,65,.22);
+}
+.work-tile__spark{
+  position:absolute;
+  z-index:4;
+  right:19px;
+  top:18px;
+  color:rgba(255,255,255,.92);
+  font-size:15px;
+  text-shadow:0 0 18px rgba(255,255,255,.65);
+}
+.work-tile--1 .work-tile__media{
+  background:linear-gradient(135deg,#cbb5df,#f1dbe8 52%,#aa91c7);
+}
+.work-tile--2 .work-tile__media{
+  background:linear-gradient(135deg,#ddd4e8,#f7eff7 52%,#c3b2d8);
+}
+.work-tile--3 .work-tile__media{
+  background:linear-gradient(135deg,#c4b7df,#f2edfa 48%,#9e8bcb);
+}
+.work-tile--4 .work-tile__media{
+  background:linear-gradient(135deg,#c4b6df,#f6edf9 48%,#b7c8e4);
+}
+.work-tile--5 .work-tile__media{
+  background:linear-gradient(135deg,#c8b9e1,#f2edfa 46%,#b9e2d8);
+}
+@media(max-width:900px){
+  .works-gallery__grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .work-tile--1,.work-tile--2,.work-tile--3,.work-tile--4,.work-tile--5{
+    grid-column:span 1;
+    aspect-ratio:1 / 1.02;
+  }
+  .work-tile--4,.work-tile--5{aspect-ratio:1 / 1.02;}
+  .work-tile__content{opacity:1;transform:none;}
+}
+@media(max-width:600px){
+  .works-gallery__grid{grid-template-columns:1fr;gap:12px;}
+  .work-tile--1,.work-tile--2,.work-tile--3,.work-tile--4,.work-tile--5{
+    grid-column:span 1;
+    aspect-ratio:1 / .9;
+  }
+  .work-tile__content{
+    left:14px;right:14px;bottom:14px;
+    padding:14px;
+  }
+  .work-tile__top{top:15px;left:15px;right:15px;}
+}
