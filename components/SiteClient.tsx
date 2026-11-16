@@ -76,25 +76,31 @@ export default function SiteClient() {
         );
 
         priceCards.forEach((card, index) => {
+          const handPose = [
+            { y: 38, x: -6, rotateZ: -3, rotateY: 4, scale: 1 },
+            { y: -12, x: 0, rotateZ: 0, rotateY: 0, scale: 1.035 },
+            { y: 30, x: 6, rotateZ: 3, rotateY: -4, scale: 1 },
+          ][index] ?? { y: 0, x: 0, rotateZ: 0, rotateY: 0, scale: 1 };
+
           gsap.fromTo(
             card,
             {
-              y: 46 + index * 12,
-              x: index === 0 ? -18 : index === 2 ? 18 : 0,
-              rotateZ: index === 0 ? -1.2 : index === 2 ? 1.2 : 0,
-              rotateY: index === 0 ? -3 : index === 2 ? 3 : 0,
+              y: handPose.y + 110,
+              x: handPose.x * 1.8,
+              rotateZ: handPose.rotateZ * 0.35,
+              rotateY: handPose.rotateY * 0.35,
+              scale: handPose.scale * 0.94,
+              opacity: 0.45,
             },
             {
-              y: index === 0 ? -8 : index === 2 ? 8 : 0,
-              x: 0,
-              rotateZ: 0,
-              rotateY: 0,
+              ...handPose,
+              opacity: 1,
               ease: 'none',
               scrollTrigger: {
                 trigger: '#courses',
-                start: 'top 86%',
-                end: 'top 34%',
-                scrub: 1.6,
+                start: 'top 92%',
+                end: 'top 38%',
+                scrub: 1.8,
               },
             },
           );
