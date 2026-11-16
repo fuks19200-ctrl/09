@@ -13,15 +13,15 @@ export default function LenisProvider() {
     if (reduceMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.15,
+      duration: 1.05,
       smoothWheel: true,
       syncTouch: true,
-      touchMultiplier: 0.85,
+      touchMultiplier: 0.8,
       wheelMultiplier: 0.9,
+      autoRaf: false,
     });
 
     const onScroll = () => {
-      document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
       ScrollTrigger.update();
     };
 
@@ -33,12 +33,13 @@ export default function LenisProvider() {
 
     lenis.on('scroll', onScroll);
     gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(1000, 16);
 
     return () => {
       gsap.ticker.remove(raf);
       lenis.off('scroll', onScroll);
       lenis.destroy();
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
