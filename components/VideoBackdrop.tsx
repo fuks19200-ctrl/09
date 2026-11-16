@@ -40,9 +40,9 @@ export default function VideoBackdrop() {
     const setVisibleScene = (active: number) => {
       videos.forEach((video, index) => {
         const opacity = index === active ? '1' : '0';
-        if (video.style.opacity !== opacity) {
-          video.style.opacity = opacity;
-        }
+        const visibility = index === active ? 'visible' : 'hidden';
+        if (video.style.opacity !== opacity) video.style.opacity = opacity;
+        if (video.style.visibility !== visibility) video.style.visibility = visibility;
       });
     };
 
@@ -117,7 +117,9 @@ export default function VideoBackdrop() {
       if (!raf) raf = requestAnimationFrame(render);
     };
 
-    const onMetadata = () => {
+    const onMetadata = (video: HTMLVideoElement) => {
+      if (video.dataset.ready === '1') return;
+      video.dataset.ready = '1';
       ready += 1;
       updateTarget();
     };
@@ -127,13 +129,14 @@ export default function VideoBackdrop() {
       video.playsInline = true;
       video.preload = 'auto';
       video.pause();
-      video.currentTime = 0;
+      try { video.currentTime = 0; } catch {}
       video.style.opacity = index === 0 ? '1' : '0';
+      video.style.visibility = index === 0 ? 'visible' : 'hidden';
       video.style.transition = 'none';
-      video.addEventListener('loadedmetadata', onMetadata, { once: true });
+      video.addEventListener('loadedmetadata', () => onMetadata(video), { once: true });
 
       if (video.readyState >= 1) {
-        onMetadata();
+        onMetadata(video);
       } else {
         video.load();
       }
