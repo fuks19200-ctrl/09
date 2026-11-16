@@ -35,6 +35,8 @@ export default function VideoBackdrop() {
 
         if (!isActive) {
           video.pause();
+        } else if (!reduced) {
+          video.play().catch(() => {});
         }
       });
 
@@ -75,6 +77,8 @@ export default function VideoBackdrop() {
     videos.forEach((video) => {
       video.addEventListener('loadedmetadata', requestScrub);
     });
+
+    videos[0]?.play().catch(() => {});
 
     window.addEventListener('scroll', requestScrub, { passive: true });
     window.addEventListener('resize', requestScrub, { passive: true });
