@@ -1401,3 +1401,150 @@ a:hover{
     right:12px;
   }
 }
+
+
+/* =========================================================
+   ONE CONTINUOUS FLORA ENVIRONMENT
+   No second Bloom clip interrupts the main scroll world.
+   This section is a transparent editorial bridge into courses.
+   ========================================================= */
+.flora-handoff{
+  position:relative;
+  min-height:620px;
+  display:grid;
+  align-items:center;
+  padding:clamp(36px,7vw,100px) 0;
+  isolation:isolate;
+}
+.flora-handoff::before{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  left:-18vw;
+  right:-18vw;
+  top:8%;
+  bottom:8%;
+  background:
+    radial-gradient(ellipse at 70% 48%,rgba(240,167,189,.10),transparent 28%),
+    linear-gradient(90deg,transparent 0%,rgba(8,5,8,.16) 48%,rgba(8,5,8,.34) 100%);
+  filter:blur(18px);
+  pointer-events:none;
+}
+.flora-handoff__label{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(247,238,241,.12);
+  color:var(--flora-dim);
+  font:500 9px/1 var(--system);
+  letter-spacing:.14em;
+}
+.flora-handoff__label .eyebrow{
+  margin:0;
+}
+.flora-handoff__copy{
+  width:min(680px,72%);
+  margin-left:auto;
+  margin-right:4%;
+  padding:clamp(28px,4vw,56px);
+  border:1px solid rgba(247,238,241,.15);
+  border-radius:32px;
+  background:linear-gradient(135deg,rgba(31,18,25,.46),rgba(8,6,9,.18));
+  backdrop-filter:blur(17px) saturate(120%);
+  -webkit-backdrop-filter:blur(17px) saturate(120%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.09),
+    0 40px 110px rgba(0,0,0,.24);
+}
+.flora-handoff__copy h2{
+  margin-bottom:22px;
+}
+.flora-handoff__copy h2 em{
+  color:var(--flora-rose-hot);
+  font-style:normal;
+}
+.flora-handoff__copy p{
+  max-width:590px;
+  font-size:clamp(16px,1.35vw,20px);
+}
+.flora-handoff__meta{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:34px;
+  padding-top:18px;
+  border-top:1px solid rgba(247,238,241,.12);
+  color:rgba(240,167,189,.74);
+  font:500 9px/1.4 var(--system);
+  letter-spacing:.12em;
+}
+.flora-handoff__signal{
+  position:absolute;
+  left:11%;
+  bottom:13%;
+  width:150px;
+  height:150px;
+  border:1px solid rgba(240,167,189,.18);
+  border-radius:50%;
+  transform:rotate(-20deg);
+  box-shadow:0 0 80px rgba(240,167,189,.06);
+}
+.flora-handoff__signal::before,
+.flora-handoff__signal::after{
+  content:'';
+  position:absolute;
+  inset:20%;
+  border:1px solid rgba(247,238,241,.11);
+  border-radius:50%;
+}
+.flora-handoff__signal::after{
+  inset:45%;
+  background:var(--flora-rose-hot);
+  border:0;
+  box-shadow:0 0 24px rgba(240,167,189,.55);
+}
+.flora-handoff__signal i{
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--flora-pearl);
+}
+.flora-handoff__signal i:nth-child(1){left:14%;top:48%}
+.flora-handoff__signal i:nth-child(2){right:13%;top:26%}
+.flora-handoff__signal i:nth-child(3){right:22%;bottom:15%}
+
+@media(max-width:700px){
+  .flora-handoff{
+    min-height:600px;
+    padding-top:80px;
+  }
+  .flora-handoff__label{
+    font-size:8px;
+  }
+  .flora-handoff__label > span:last-child{
+    display:none;
+  }
+  .flora-handoff__copy{
+    width:100%;
+    margin:0;
+    padding:28px 22px;
+  }
+  .flora-handoff__meta{
+    flex-direction:column;
+    gap:10px;
+  }
+  .flora-handoff__signal{
+    left:auto;
+    right:5%;
+    bottom:4%;
+    width:110px;
+    height:110px;
+    opacity:.65;
+  }
+}
