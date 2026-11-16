@@ -241,7 +241,7 @@ body::before {
 .work-visual--image img{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92) contrast(1.04);transition:transform .7s cubic-bezier(.2,.8,.2,1),filter .5s ease}
 .work-carousel__card:hover .work-visual--image img{transform:scale(1.025);filter:saturate(1) contrast(1.06)}
 .work-visual--image::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.16))}
-.backdrop{background:#090609 url('/images/bg-3.jpg') center/cover no-repeat}
+
 
 
 /* =========================================================
@@ -793,10 +793,7 @@ body{
 
 
 /* BLOOM GIRL — primary full-screen visual */
-.backdrop{
-  z-index:-1 !important;
-  background:#090609 url('/images/bg-1.jpg') center center / cover no-repeat !important;
-}
+.backdrop{background:#090609 !important;}
 .backdrop__video{
   object-fit:cover !important;
   object-position:center center !important;
