@@ -1,77 +1,93 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
 
-  <title>MULTUM.AI — Школа нейросетей</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta
+    name="description"
+    content="MULTUM.AI — The Creative Intelligence Company."
+  />
+
+  <meta name="theme-color" content="#09090b" />
+
+  <link rel="icon" href="./favicon.svg" />
+
+  <title>MULTUM.AI — The Creative Intelligence Company</title>
+
+  <!-- =========================================================
+       EXTERNAL LIBRARIES
+       ========================================================= -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+
+
+  <!-- =========================================================
+       FONTS
+       ========================================================= -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet"
-  >
+  />
+
+
+  <!-- =========================================================
+       CSS
+       ========================================================= -->
 
   <style>
-
-    /* =========================================================
-       ROOT
-       ========================================================= */
-
-    :root {
-      --white: #ffffff;
-      --text: rgba(255,255,255,.96);
-      --muted: rgba(255,255,255,.88);
-
-      --border: rgba(255,255,255,.48);
-
-      --glass: rgba(20,25,31,.28);
-
-      --shadow:
-        0 24px 70px rgba(10,15,20,.20);
-
-      --container:
-        min(1180px, calc(100% - 48px));
-
-      --heading-size: 52px;
-      --body-size: 18px;
-
-      --section-gap: 110px;
-    }
-
 
     /* =========================================================
        RESET
        ========================================================= */
 
-    * {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     html {
-      scroll-behavior: smooth;
-      background: #aeb6c1;
+      margin: 0;
+      padding: 0;
+      background: #09090b;
+      color: #f7f7f7;
+      scroll-behavior: auto;
     }
 
     body {
-      font-family: "Fredoka", sans-serif;
-      color: var(--white);
-      background: transparent !important;
+      margin: 0;
+      padding: 0;
       overflow-x: hidden;
-      font-size: var(--body-size);
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(242, 207, 210, 0.06),
+          transparent 28%
+        ),
+        #09090b;
+      color: #f7f7f7;
+      font-family: "Inter", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    html,
-    body,
-    main,
-    section,
-    footer {
-      background: transparent !important;
+    body.modal-open {
+      overflow: hidden;
     }
 
     a {
@@ -85,181 +101,264 @@
       font: inherit;
     }
 
-
-    /* =========================================================
-       BACKGROUND
-       ========================================================= */
-
-    .background {
-      position: fixed;
-      inset: 0;
-
-      z-index: 0;
-
-      overflow: hidden;
-      pointer-events: none;
-
-      background: #aeb6c1;
+    button {
+      border: 0;
+      cursor: pointer;
     }
 
-    .bg-video {
-      position: absolute;
-
-      inset: -1.5%;
-
-      width: 103%;
-      height: 103%;
-
-      object-fit: cover;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      filter:
-        blur(2px)
-        saturate(.94)
-        brightness(.84)
-        contrast(1.01);
-
-      transform:
-        translateZ(0)
-        scale(1.01);
-
-      will-change: opacity;
+    img,
+    video {
+      display: block;
+      max-width: 100%;
     }
 
-    .bg-video.active {
-      opacity: 1;
-    }
-
-    .background::after {
-      content: "";
-
-      position: absolute;
-      inset: 0;
-
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255,255,255,.025),
-          rgba(255,255,255,.075)
-        );
-
-      pointer-events: none;
+    ::selection {
+      background: #f2cfd2;
+      color: #09090b;
     }
 
 
     /* =========================================================
-       HEADER
+       VARIABLES
        ========================================================= */
 
-    header {
-      position: fixed;
+    :root {
 
-      inset: 0 0 auto;
+      --bg: #09090b;
+      --bg-soft: #111114;
+      --white: #f7f7f7;
+      --grey: #a7a7ad;
+      --grey-2: #73737b;
 
+      --pink: #f2cfd2;
+      --pink-soft: rgba(242, 207, 210, 0.14);
+
+      --cream: #f1eee8;
+
+      --blue: #b5e7f7;
+      --blue-soft: rgba(181, 231, 247, 0.12);
+
+      --glass: rgba(255,255,255,0.045);
+      --glass-strong: rgba(255,255,255,0.075);
+
+      --border: rgba(255,255,255,0.13);
+      --border-soft: rgba(255,255,255,0.08);
+
+      --max: 1440px;
+
+      --radius: 28px;
+      --radius-lg: 44px;
+
+      --ease: cubic-bezier(.16,1,.3,1);
+    }
+
+
+    /* =========================================================
+       PAGE
+       ========================================================= */
+
+    .page {
+      position: relative;
       width: 100%;
+      min-height: 100vh;
+      overflow: clip;
+    }
 
-      padding:
-        22px
-        clamp(22px,3vw,48px);
 
-      display: flex;
-      align-items: center;
+    /* =========================================================
+       GLOBAL BACKGROUND
+       ========================================================= */
 
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -20;
+      pointer-events: none;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(242,207,210,.06),
+          transparent 32%
+        ),
+        #09090b;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      width: 55vw;
+      height: 55vw;
+      max-width: 900px;
+      max-height: 900px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .14;
+      mix-blend-mode: screen;
+      transform: translate3d(0,0,0);
+    }
+
+    .ambient-orb.one {
+      left: -20vw;
+      top: 10vh;
+      background: #8c6a78;
+    }
+
+    .ambient-orb.two {
+      right: -20vw;
+      top: 45vh;
+      background: #506f7b;
+    }
+
+    .ambient-orb.three {
+      left: 35%;
+      bottom: -40vh;
+      background: #8b5f7a;
+    }
+
+
+    /* =========================================================
+       WEBGL
+       ========================================================= */
+
+    #neural-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -5;
+      pointer-events: none;
+      opacity: .82;
+      transition: opacity .6s ease;
+    }
+
+    .webgl-disabled #neural-canvas {
+      display: none;
+    }
+
+
+    /* =========================================================
+       TOP NAV
+       ========================================================= */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       z-index: 100;
 
-      transition:
-        opacity .45s ease,
-        transform .45s ease;
-    }
+      padding:
+        max(18px, env(safe-area-inset-top))
+        24px
+        18px;
 
-    header.hidden {
-      opacity: 0;
-      transform: translateY(-20px);
       pointer-events: none;
     }
 
-    .logo {
-      flex: 0 0 auto;
-
-      font-size: 20px;
-      font-weight: 600;
-
-      letter-spacing: .07em;
-
-      text-shadow:
-        0 3px 18px rgba(0,0,0,.32);
-    }
-
-    nav {
-      margin-left: auto;
+    .nav-inner {
+      width: min(100%, var(--max));
+      margin: 0 auto;
 
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
-      gap:
-        clamp(13px,1.55vw,25px);
+      pointer-events: auto;
 
-      white-space: nowrap;
+      padding: 12px 14px 12px 18px;
+
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+
+      background: rgba(9,9,11,.45);
+      backdrop-filter: blur(22px) saturate(150%);
+      -webkit-backdrop-filter: blur(22px) saturate(150%);
+
+      box-shadow:
+        0 20px 80px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(255,255,255,.07);
     }
 
-    nav a {
-      font-size: 14px;
-      font-weight: 500;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-      text-shadow:
-        0 2px 15px rgba(0,0,0,.38);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+
+      background: #f7f7f7;
+
+      box-shadow:
+        0 0 12px rgba(242,207,210,.8),
+        0 0 30px rgba(242,207,210,.35);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+
+      color: rgba(255,255,255,.64);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      position: relative;
+      transition: color .3s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .35s var(--ease);
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-cta {
+      min-height: 40px;
+      padding: 0 17px;
+
+      border-radius: 999px;
+
+      color: #0a0a0b;
+      background: #f7f7f7;
+
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .02em;
 
       transition:
-        transform .25s ease,
-        opacity .25s ease;
+        transform .3s var(--ease),
+        background .3s ease;
     }
 
-    nav a:hover {
+    .nav-cta:hover {
       transform: translateY(-2px);
-    }
-
-
-    /* =========================================================
-       GLOBAL GRID
-       ========================================================= */
-
-    section {
-      position: relative;
-
-      width: var(--container);
-
-      margin: 0 auto;
-    }
-
-    .section {
-      padding:
-        var(--section-gap)
-        0;
-    }
-
-    .section-title,
-    .school-heading,
-    .about-heading,
-    .signup-heading,
-    .faq-title,
-    .referral-copy h2 {
-      font-size: var(--heading-size);
-
-      line-height: 1;
-
-      font-weight: 600;
-
-      letter-spacing: -.025em;
-
-      text-shadow:
-        0 4px 26px rgba(0,0,0,.42);
-    }
-
-    .section-title {
-      margin-bottom: 30px;
+      background: #f2cfd2;
     }
 
 
@@ -268,787 +367,1274 @@
        ========================================================= */
 
     .hero {
-      width: var(--container);
-
-      min-height: 100vh;
+      position: relative;
+      min-height: 100svh;
 
       display: flex;
       align-items: center;
+      justify-content: center;
 
       padding:
-        110px
-        0
-        70px;
+        150px 24px
+        100px;
+
+      overflow: hidden;
     }
 
-    .hero-inner {
-      width: 100%;
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+
+      opacity: .16;
+
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,.035) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.035) 1px,
+          transparent 1px
+        );
+
+      background-size: 100px 100px;
+
+      mask-image:
+        radial-gradient(
+          circle at center,
+          black,
+          transparent 75%
+        );
+
+      -webkit-mask-image:
+        radial-gradient(
+          circle at center,
+          black,
+          transparent 75%
+        );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+
+      width: min(100%, 1200px);
+      margin: auto;
+
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+
+      margin-bottom: 28px;
+
+      color: rgba(255,255,255,.62);
+
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 14px var(--pink);
     }
 
     .hero-title {
-      display: block;
+      margin: 0;
 
-      width: 100%;
+      font-family: "Manrope", sans-serif;
 
-      white-space: nowrap;
+      font-size: clamp(
+        70px,
+        14vw,
+        210px
+      );
 
-      font-size:
-        clamp(54px,9.3vw,142px);
+      line-height: .78;
+      letter-spacing: -.095em;
+      font-weight: 800;
 
-      line-height: .98;
+      color: #f7f7f7;
 
-      font-weight: 600;
+      transform: translateZ(0);
+    }
 
-      letter-spacing: -.035em;
+    .hero-title span {
+      display: inline-block;
+    }
 
-      color: transparent;
-
+    .hero-title .glow {
       background:
         linear-gradient(
-          105deg,
-          #fff 0%,
-          #fff 18%,
-          #dfe9f4 31%,
-          #fff 44%,
-          #f8fbff 56%,
-          #d9e4ef 70%,
-          #fff 84%,
-          #fff 100%
+          115deg,
+          #ffffff 0%,
+          #f7f7f7 30%,
+          #f2cfd2 48%,
+          #ffffff 65%,
+          #f7f7f7 100%
         );
 
-      background-size: 300% 100%;
+      background-size: 220% 100%;
 
       -webkit-background-clip: text;
       background-clip: text;
+      color: transparent;
 
-      animation:
-        whiteShimmer 5s ease-in-out infinite;
-
-      text-shadow:
-        0 10px 45px rgba(0,0,0,.25);
+      animation: titleShimmer 6s ease-in-out infinite;
     }
 
-    @keyframes whiteShimmer {
-
-      0%,
-      100% {
-        background-position: 0 50%;
+    @keyframes titleShimmer {
+      0%,100% {
+        background-position: 0% 50%;
       }
 
       50% {
         background-position: 100% 50%;
       }
-
     }
 
     .hero-subtitle {
-      margin-top: 30px;
+      max-width: 680px;
+      margin: 38px auto 0;
 
-      max-width: 650px;
+      color: rgba(255,255,255,.66);
 
-      font-size: var(--body-size);
-
-      line-height: 1.6;
-
-      color: var(--text);
-
-      text-shadow:
-        0 3px 22px rgba(0,0,0,.42);
+      font-size: clamp(15px, 1.7vw, 20px);
+      line-height: 1.55;
+      font-weight: 400;
     }
 
-
-    /* =========================================================
-       WHY AI
-       ========================================================= */
-
-    .why-section {
-      padding-top: 80px;
-    }
-
-    .why-layout {
-      display: grid;
-
-      grid-template-columns:
-        .8fr
-        1.2fr;
-
-      gap: 80px;
-
-      align-items: center;
-    }
-
-    .why-copy {
-      position: sticky;
-      top: 120px;
-    }
-
-    .why-copy p,
-    .school-text p,
-    .about-text p {
-      max-width: 640px;
-
-      font-size: var(--body-size);
-
-      line-height: 1.6;
-
-      color: var(--text);
-
-      text-shadow:
-        0 3px 20px rgba(0,0,0,.4);
-    }
-
-
-    /* =========================================================
-       VERTICAL AI CAROUSEL
-       ========================================================= */
-
-    .why-carousel {
-      position: relative;
-
-      width: 100%;
-      max-width: 560px;
-
-      height: 560px;
-
-      margin: 0 auto;
-
+    .hero-actions {
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 12px;
+
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .magnetic {
+      position: relative;
+
+      min-height: 56px;
+      padding: 0 25px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 999px;
 
       overflow: hidden;
 
-      isolation: isolate;
+      transition:
+        transform .3s var(--ease),
+        border-color .3s ease;
     }
 
-    .why-track {
+    .magnetic::before {
+      content: "";
       position: absolute;
+      inset: 0;
 
+      opacity: 0;
+      transition: opacity .4s ease;
+
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(255,255,255,.25),
+          transparent 60%
+        );
+    }
+
+    .magnetic:hover::before {
+      opacity: 1;
+    }
+
+    .button-primary {
+      color: #0a0a0b;
+      background: #f7f7f7;
+    }
+
+    .button-primary:hover {
+      background: #f2cfd2;
+    }
+
+    .button-secondary {
+      color: #f7f7f7;
+      background: rgba(255,255,255,.045);
+
+      border: 1px solid rgba(255,255,255,.13);
+
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .button-secondary:hover {
+      border-color: rgba(242,207,210,.5);
+    }
+
+    .button-text {
+      position: relative;
+      z-index: 2;
+
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      transform: translateX(-50%);
+
+      color: rgba(255,255,255,.35);
+
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(255,255,255,.5),
+          transparent
+        );
+
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%,100% {
+        opacity: .3;
+        transform: scaleY(.5);
+        transform-origin: top;
+      }
+
+      50% {
+        opacity: 1;
+        transform: scaleY(1);
+        transform-origin: top;
+      }
+    }
+
+
+    /* =========================================================
+       SECTION COMMON
+       ========================================================= */
+
+    .section {
+      position: relative;
+      width: 100%;
+
+      padding:
+        clamp(100px, 12vw, 190px)
+        24px;
+    }
+
+    .container {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+      gap: 60px;
+      align-items: end;
+
+      margin-bottom: 70px;
+    }
+
+    .section-kicker {
+      margin-bottom: 18px;
+
+      color: var(--pink);
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0;
+
+      font-family: "Manrope", sans-serif;
+
+      font-size: clamp(
+        42px,
+        7vw,
+        100px
+      );
+
+      line-height: .92;
+      letter-spacing: -.075em;
+      font-weight: 700;
+    }
+
+    .section-description {
+      margin: 0;
+
+      color: rgba(255,255,255,.55);
+
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+
+    /* =========================================================
+       GLASS CARD
+       ========================================================= */
+
+    .glass {
+      position: relative;
+
+      border: 1px solid var(--border-soft);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.075),
+          rgba(255,255,255,.025)
+        );
+
+      backdrop-filter: blur(28px) saturate(135%);
+      -webkit-backdrop-filter: blur(28px) saturate(135%);
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+      overflow: hidden;
+    }
+
+    .glass::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at 15% 0%,
+          rgba(255,255,255,.10),
+          transparent 35%
+        );
+
+      opacity: .7;
+    }
+
+
+    /* =========================================================
+       VIDEO STORY
+       ========================================================= */
+
+    .video-story {
+      position: relative;
+      height: 360vh;
+    }
+
+    .video-sticky {
+      position: sticky;
+      top: 0;
+
+      height: 100svh;
+      min-height: 680px;
+
+      overflow: hidden;
+
+      background: #09090b;
+    }
+
+    .story-video {
+      position: absolute;
       inset: 0;
 
       width: 100%;
       height: 100%;
 
-      overflow: hidden;
-
-      perspective: 1200px;
-
-      transform-style: preserve-3d;
-    }
-
-    .ai-card {
-      position: absolute;
-
-      top: 50%;
-      left: 50%;
-
-      width: min(430px, 78%);
-
-      aspect-ratio: 1 / 1;
-
-      border-radius: 28px;
-
-      overflow: hidden;
-
-      background: transparent;
-
-      border:
-        1px solid rgba(255,255,255,.60);
-
-      box-shadow:
-        0 24px 60px rgba(0,0,0,.25);
-
-      transform:
-        translate(-50%,-50%)
-        translate3d(
-          var(--x,0px),
-          var(--y,0px),
-          var(--z,0px)
-        )
-        rotateX(var(--rotateX,0deg))
-        rotateY(var(--rotateY,0deg))
-        scale(var(--scale,1));
-
-      transform-origin: center;
-
-      backface-visibility: hidden;
-
-      transition:
-        transform .65s cubic-bezier(.22,.75,.2,1),
-        opacity .45s ease,
-        filter .45s ease;
-    }
-
-    .ai-card img {
-      width: 100%;
-      height: 100%;
-
-      display: block;
-
       object-fit: cover;
 
-      background: transparent;
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity .35s ease,
+        visibility .35s ease;
+
+      filter: saturate(.92) contrast(1.03);
     }
 
+    .story-video.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
-    /* =========================================================
-       AI CAROUSEL CONTROLS
-       ========================================================= */
-
-    .carousel-controls {
+    .video-overlay {
       position: absolute;
+      inset: 0;
 
-      left: 50%;
-      bottom: 14px;
+      z-index: 3;
+      pointer-events: none;
 
-      transform: translateX(-50%);
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.20),
+          transparent 25%,
+          transparent 65%,
+          rgba(0,0,0,.55)
+        );
+    }
 
-      z-index: 30;
+    .video-darken {
+      position: absolute;
+      inset: 0;
+
+      z-index: 4;
+      pointer-events: none;
+
+      background: rgba(0,0,0,0);
+
+      transition: background .2s linear;
+    }
+
+    .story-content {
+      position: absolute;
+      inset: 0;
+
+      z-index: 5;
 
       display: flex;
-
-      justify-content: center;
-
-      gap: 12px;
+      align-items: center;
 
       pointer-events: none;
     }
 
-    .carousel-btn {
-      width: 48px;
-      height: 48px;
-
-      border:
-        1px solid rgba(255,255,255,.82);
-
-      border-radius: 50%;
-
-      color: #fff;
-
-      background:
-        rgba(25,30,36,.52);
-
-      backdrop-filter:
-        blur(12px);
-
-      box-shadow:
-        0 10px 30px rgba(0,0,0,.20);
-
-      cursor: pointer;
-
-      pointer-events: auto;
-
-      transition:
-        transform .2s ease,
-        background .2s ease;
+    .story-inner {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: 0 24px;
     }
 
-    .carousel-btn:hover {
-      transform: scale(1.08);
-
-      background:
-        rgba(25,30,36,.76);
+    .story-copy {
+      max-width: 650px;
     }
 
-    .carousel-dots {
+    .story-index {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      margin-bottom: 20px;
+
+      color: rgba(255,255,255,.7);
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .18em;
+    }
+
+    .story-index span {
+      width: 28px;
+      height: 1px;
+      background: rgba(255,255,255,.5);
+    }
+
+    .story-title {
+      margin: 0;
+
+      font-family: "Manrope", sans-serif;
+
+      font-size: clamp(48px, 8vw, 110px);
+      line-height: .9;
+
+      letter-spacing: -.07em;
+    }
+
+    .story-description {
+      max-width: 500px;
+      margin-top: 28px;
+
+      color: rgba(255,255,255,.75);
+
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .story-progress {
       position: absolute;
-
-      right: 12px;
+      left: 24px;
+      right: 24px;
       bottom: 32px;
 
-      z-index: 30;
+      z-index: 10;
 
       display: flex;
-
-      gap: 7px;
-
-      align-items: center;
+      gap: 5px;
     }
 
-    .carousel-dot {
-      width: 7px;
-      height: 7px;
+    .story-progress-item {
+      flex: 1;
+      height: 2px;
 
-      padding: 0;
-
-      border: 0;
-
-      border-radius: 50%;
-
-      background:
-        rgba(255,255,255,.45);
-
-      cursor: pointer;
-    }
-
-    .carousel-dot.active {
-      width: 22px;
-
-      border-radius: 10px;
-
-      background: #fff;
-    }
-
-
-    /* =========================================================
-       SCHOOL
-       ========================================================= */
-
-    .school-section {
-      padding-top: 100px;
-    }
-
-    .school-grid {
-      display: grid;
-
-      grid-template-columns:
-        .85fr
-        1.15fr;
-
-      gap: 80px;
-
-      align-items: start;
-    }
-
-    .school-heading {
-      max-width: 520px;
-    }
-
-    .school-text {
-      max-width: 640px;
-    }
-
-    .school-text p {
-      margin-bottom: 25px;
-    }
-
-
-    /* =========================================================
-       COURSES
-       ========================================================= */
-
-    .courses-section {
-      padding-top: 90px;
-    }
-
-    .courses-wrap {
-      display: grid;
-
-      grid-template-columns:
-        1fr
-        1fr;
-
-      gap: 18px;
-    }
-
-    .course-card {
-      min-height: 235px;
-
-      padding: 30px;
-
-      border-radius: 30px;
-
-      background:
-        rgba(20,25,31,.28);
-
-      border:
-        1px solid rgba(255,255,255,.48);
-
-      backdrop-filter:
-        blur(18px);
-
-      box-shadow:
-        var(--shadow);
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: center;
-    }
-
-    .course-card h3 {
-      font-size: var(--heading-size);
-
-      line-height: 1;
-
-      font-weight: 600;
-
-      text-shadow:
-        0 4px 22px rgba(0,0,0,.38);
-    }
-
-    .course-price {
-      margin-top: 12px;
-
-      font-size: 24px;
-
-      font-weight: 600;
-
-      text-shadow:
-        0 3px 18px rgba(0,0,0,.36);
-    }
-
-    .course-description {
-      margin-top: 12px;
-
-      font-size: var(--body-size);
-
-      line-height: 1.5;
-
-      color: var(--muted);
-
-      text-shadow:
-        0 3px 18px rgba(0,0,0,.35);
-    }
-
-
-    /* =========================================================
-       DIRECTIONS
-       ========================================================= */
-
-    .directions-title {
-      margin:
-        34px
-        0
-        16px;
-
-      font-size: 14px;
-
-      font-weight: 500;
-
-      letter-spacing: .08em;
-
-      text-transform: uppercase;
-
-      text-shadow:
-        0 3px 18px rgba(0,0,0,.38);
-    }
-
-    .directions-wrap {
-      position: relative;
-
-      padding:
-        0
-        56px;
-    }
-
-    .directions-window {
       overflow: hidden;
 
+      background: rgba(255,255,255,.18);
+    }
+
+    .story-progress-fill {
+      width: 0%;
+      height: 100%;
+
+      background: #fff;
+
+      transition: width .1s linear;
+    }
+
+
+    /* =========================================================
+       CREATE SECTION
+       ========================================================= */
+
+    .create-section {
+      min-height: 120vh;
+    }
+
+    .create-layout {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 50px;
+      align-items: start;
+    }
+
+    .create-nav {
+      position: sticky;
+      top: 120px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .create-tab {
+      position: relative;
+
       width: 100%;
 
-      cursor: grab;
+      padding: 18px 18px;
 
-      touch-action: pan-y;
-    }
-
-    .directions-window:active {
-      cursor: grabbing;
-    }
-
-    .directions-track {
       display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      gap: 14px;
+      border-radius: 16px;
 
-      width: max-content;
+      color: rgba(255,255,255,.42);
+      background: transparent;
 
-      user-select: none;
+      text-align: left;
 
       transition:
-        transform .35s ease;
+        color .35s ease,
+        background .35s ease,
+        transform .35s var(--ease);
     }
 
-    .direction {
-      width: 210px;
-      min-width: 210px;
+    .create-tab:hover {
+      color: rgba(255,255,255,.8);
+      transform: translateX(4px);
+    }
 
-      min-height: 110px;
+    .create-tab.active {
+      color: #fff;
+      background: rgba(255,255,255,.055);
+    }
 
-      padding: 20px 22px;
+    .create-tab-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-      border-radius: 24px;
+    .create-tab-number {
+      font-size: 9px;
+      font-weight: 800;
+      opacity: .55;
+    }
+
+    .create-display {
+      position: relative;
+
+      min-height: 680px;
+
+      border-radius: var(--radius-lg);
+
+      overflow: hidden;
 
       background:
-        rgba(20,25,31,.28);
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(242,207,210,.14),
+          transparent 40%
+        ),
+        #0c0c0f;
 
-      border:
-        1px solid rgba(255,255,255,.46);
-
-      backdrop-filter:
-        blur(14px);
-
-      box-shadow:
-        0 12px 35px rgba(0,0,0,.10);
+      border: 1px solid rgba(255,255,255,.10);
     }
 
-    .direction-name {
-      font-size: 15px;
-
-      line-height: 1.3;
-
-      font-weight: 600;
-
-      text-shadow:
-        0 2px 15px rgba(0,0,0,.35);
-    }
-
-    .direction-price {
-      margin-top: 8px;
-
-      font-size: 15px;
-
-      color:
-        rgba(255,255,255,.88);
-    }
-
-    .direction-control {
+    .create-bg {
       position: absolute;
+      inset: 0;
 
-      top: 50%;
+      width: 100%;
+      height: 100%;
 
-      transform:
-        translateY(-50%);
+      object-fit: cover;
 
-      width: 46px;
-      height: 46px;
+      opacity: .32;
+
+      transition:
+        opacity .5s ease,
+        transform 1s var(--ease);
+
+      filter: saturate(.85) contrast(1.05);
+    }
+
+    .create-display:hover .create-bg {
+      transform: scale(1.04);
+    }
+
+    .create-shade {
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.05),
+          rgba(0,0,0,.7)
+        );
+    }
+
+    .create-number {
+      position: absolute;
+      top: 28px;
+      right: 30px;
+
+      color: rgba(255,255,255,.6);
+
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .create-content {
+      position: absolute;
+      inset: 0;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      padding: 45px;
+    }
+
+    .create-label {
+      margin-bottom: 15px;
+
+      color: var(--pink);
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .create-title {
+      margin: 0;
+
+      font-family: "Manrope", sans-serif;
+
+      font-size: clamp(52px, 7vw, 100px);
+      line-height: .85;
+      letter-spacing: -.07em;
+    }
+
+    .create-text {
+      max-width: 510px;
+
+      margin: 25px 0 0;
+
+      color: rgba(255,255,255,.66);
+
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+
+    /* =========================================================
+       PROGRAMS
+       ========================================================= */
+
+    .programs-section {
+      padding-top: 120px;
+    }
+
+    .programs-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0,1fr));
+
+      gap: 16px;
+    }
+
+    .program-card {
+      position: relative;
+
+      min-height: 620px;
+
+      display: flex;
+      flex-direction: column;
+
+      padding: 28px;
+
+      border-radius: 34px;
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(255,255,255,.08),
+          transparent 42%
+        ),
+        rgba(255,255,255,.035);
+
+      transition:
+        transform .6s var(--ease),
+        border-color .4s ease;
+    }
+
+    .program-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255,255,255,.24);
+    }
+
+    .program-card::before {
+      content: "";
+
+      position: absolute;
+      width: 280px;
+      height: 280px;
+
+      top: 80px;
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      border-radius: 50%;
+
+      filter: blur(30px);
+
+      opacity: .4;
+
+      pointer-events: none;
+    }
+
+    .program-card.basic::before {
+      background: #b5e7f7;
+    }
+
+    .program-card.ultra::before {
+      background: #f2cfd2;
+    }
+
+    .program-card.ultimate::before {
+      background: #a98bff;
+    }
+
+    .program-card-top {
+      position: relative;
+      z-index: 2;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .program-tag {
+      padding: 7px 10px;
+
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+
+      color: rgba(255,255,255,.6);
+
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: .14em;
+    }
+
+    .program-number {
+      color: rgba(255,255,255,.28);
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .program-object {
+      position: relative;
+      z-index: 1;
+
+      width: 230px;
+      height: 230px;
+
+      margin: 65px auto 40px;
 
       border-radius: 50%;
 
       border:
-        1px solid rgba(255,255,255,.72);
+        1px solid rgba(255,255,255,.22);
 
       background:
-        rgba(20,25,31,.40);
-
-      backdrop-filter:
-        blur(14px);
-
-      color: #fff;
-
-      cursor: pointer;
-
-      z-index: 5;
-    }
-
-    .direction-control.prev {
-      left: 0;
-    }
-
-    .direction-control.next {
-      right: 0;
-    }
-
-
-    /* =========================================================
-       ABOUT
-       ========================================================= */
-
-    .about-section {
-      padding-top: 110px;
-    }
-
-    /*
-      НИКАКОЙ КАРТОЧКИ.
-      Только сетка, заголовок и текст.
-    */
-
-    .about-card {
-      padding: 0;
-
-      background: transparent;
-
-      border: 0;
-
-      box-shadow: none;
-
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-
-    .about-grid {
-      display: grid;
-
-      grid-template-columns:
-        .85fr
-        1.15fr;
-
-      gap: 80px;
-
-      align-items: start;
-    }
-
-    .about-heading {
-      max-width: 520px;
-    }
-
-    .about-text {
-      max-width: 640px;
-    }
-
-    .about-text p {
-      margin-bottom: 25px;
-    }
-
-
-    /* =========================================================
-       SIGNUP
-       ========================================================= */
-
-    .signup-section {
-      padding-top: 90px;
-    }
-
-    .signup-card {
-      padding: 42px;
-
-      border-radius: 30px;
-
-      background:
-        rgba(20,25,31,.28);
-
-      border:
-        1px solid rgba(255,255,255,.48);
-
-      backdrop-filter:
-        blur(18px);
-
-      -webkit-backdrop-filter:
-        blur(18px);
+        radial-gradient(
+          circle at 30% 25%,
+          rgba(255,255,255,.8),
+          rgba(255,255,255,.16) 10%,
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 55% 60%,
+          rgba(242,207,210,.34),
+          transparent 50%
+        ),
+        rgba(255,255,255,.035);
 
       box-shadow:
-        var(--shadow);
+        inset -30px -40px 90px rgba(0,0,0,.35),
+        inset 25px 20px 60px rgba(255,255,255,.07),
+        0 40px 100px rgba(0,0,0,.35);
+
+      transform:
+        rotateX(8deg)
+        rotateY(-10deg);
+
+      transition:
+        transform .8s var(--ease);
     }
 
-    .signup-grid {
-      display: grid;
-
-      grid-template-columns:
-        1fr
-        1fr;
-
-      gap: 70px;
-
-      align-items: center;
+    .program-card:hover .program-object {
+      transform:
+        rotateX(0deg)
+        rotateY(15deg)
+        scale(1.05);
     }
 
-    .signup-heading {
-      max-width: 520px;
+    .program-object::before {
+      content: "";
+
+      position: absolute;
+      inset: -25px;
+
+      border-radius: 50%;
+
+      border: 1px solid rgba(255,255,255,.08);
+
+      transform: rotate(35deg) scaleY(.28);
     }
 
-    .signup-copy {
-      margin-top: 22px;
+    .program-object::after {
+      content: "";
 
-      max-width: 560px;
+      position: absolute;
+      inset: 30px;
 
-      font-size: var(--body-size);
+      border-radius: 50%;
 
+      border: 1px solid rgba(255,255,255,.10);
+
+      filter: blur(.2px);
+    }
+
+    .program-name {
+      position: relative;
+      z-index: 3;
+
+      margin: 0;
+
+      font-family: "Manrope", sans-serif;
+
+      font-size: clamp(48px, 5vw, 76px);
+      line-height: .8;
+
+      letter-spacing: -.07em;
+    }
+
+    .program-description {
+      position: relative;
+      z-index: 3;
+
+      margin: 20px 0 0;
+
+      color: rgba(255,255,255,.54);
+
+      font-size: 13px;
       line-height: 1.6;
-
-      color: var(--muted);
     }
 
-    .signup-form {
-      display: grid;
+    .program-bottom {
+      position: relative;
+      z-index: 3;
 
-      grid-template-columns:
-        1fr
-        1fr;
-
-      gap: 18px;
+      margin-top: auto;
+      padding-top: 30px;
     }
 
-    .signup-field {
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 7px;
-    }
-
-    .signup-field.full {
-      grid-column: 1 / -1;
-    }
-
-    .signup-field label {
-      font-size: 12px;
-
-      letter-spacing: .08em;
-
-      font-weight: 500;
-    }
-
-    .signup-field input,
-    .signup-field textarea {
+    .program-button {
       width: 100%;
+      min-height: 52px;
 
-      border:
-        1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
 
-      border-radius: 14px;
+      color: #0a0a0b;
+      background: #f7f7f7;
 
-      padding:
-        14px
-        15px;
+      font-size: 11px;
+      font-weight: 800;
+
+      transition:
+        transform .3s var(--ease),
+        background .3s ease;
+    }
+
+    .program-button:hover {
+      transform: translateY(-2px);
+      background: var(--pink);
+    }
+
+
+    /* =========================================================
+       MANIFESTO
+       ========================================================= */
+
+    .manifesto {
+      min-height: 90vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+    }
+
+    .manifesto-inner {
+      width: min(100%, 1100px);
+    }
+
+    .manifesto-small {
+      margin-bottom: 30px;
+
+      color: rgba(255,255,255,.4);
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .manifesto-title {
+      margin: 0;
+
+      font-family: "Manrope", sans-serif;
+
+      font-size: clamp(
+        45px,
+        8vw,
+        120px
+      );
+
+      line-height: .9;
+      letter-spacing: -.08em;
+    }
+
+    .manifesto-title span {
+      color: var(--pink);
+    }
+
+
+    /* =========================================================
+       FOUNDERS
+       ========================================================= */
+
+    .founders-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .founder-card {
+      position: relative;
+
+      min-height: 520px;
+
+      padding: 32px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      border-radius: 32px;
+
+      overflow: hidden;
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      background: #111114;
+    }
+
+    .founder-bg {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      opacity: .55;
+
+      filter: grayscale(.35) contrast(1.05);
+
+      transition:
+        transform 1s var(--ease),
+        opacity .5s ease;
+    }
+
+    .founder-card:hover .founder-bg {
+      transform: scale(1.05);
+      opacity: .7;
+    }
+
+    .founder-shade {
+      position: absolute;
+      inset: 0;
 
       background:
-        rgba(255,255,255,.10);
+        linear-gradient(
+          to bottom,
+          transparent 30%,
+          rgba(0,0,0,.82)
+        );
+    }
+
+    .founder-content {
+      position: relative;
+      z-index: 3;
+    }
+
+    .founder-role {
+      margin-bottom: 10px;
+
+      color: var(--pink);
+
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .founder-name {
+      margin: 0;
+
+      font-family: "Manrope", sans-serif;
+
+      font-size: clamp(42px, 5vw, 70px);
+      line-height: .85;
+      letter-spacing: -.07em;
+    }
+
+    .founder-description {
+      max-width: 480px;
+
+      margin: 20px 0 0;
+
+      color: rgba(255,255,255,.64);
+
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+
+    /* =========================================================
+       LEAD
+       ========================================================= */
+
+    .lead-section {
+      padding-bottom: 170px;
+    }
+
+    .lead-box {
+      position: relative;
+
+      min-height: 600px;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 60px;
+
+      align-items: center;
+
+      padding: clamp(35px, 7vw, 80px);
+
+      border-radius: 42px;
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 75% 20%,
+          rgba(242,207,210,.18),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 15% 80%,
+          rgba(181,231,247,.10),
+          transparent 30%
+        ),
+        rgba(255,255,255,.035);
+
+      border: 1px solid rgba(255,255,255,.11);
+
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+    }
+
+    .lead-title {
+      margin: 0;
+
+      font-family: "Manrope", sans-serif;
+
+      font-size: clamp(
+        48px,
+        7vw,
+        100px
+      );
+
+      line-height: .88;
+      letter-spacing: -.075em;
+    }
+
+    .lead-description {
+      max-width: 500px;
+
+      margin: 30px 0 0;
+
+      color: rgba(255,255,255,.56);
+
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .field {
+      width: 100%;
+
+      min-height: 58px;
+
+      padding: 0 18px;
+
+      border-radius: 16px;
 
       color: #fff;
+
+      border: 1px solid rgba(255,255,255,.11);
+
+      background: rgba(255,255,255,.045);
 
       outline: none;
 
       transition:
-        border-color .25s ease,
-        background .25s ease;
+        border-color .3s ease,
+        background .3s ease;
     }
 
-    .signup-field input::placeholder,
-    .signup-field textarea::placeholder {
-      color:
-        rgba(255,255,255,.58);
+    .field::placeholder {
+      color: rgba(255,255,255,.35);
     }
 
-    .signup-field input:focus,
-    .signup-field textarea:focus {
-      border-color:
-        rgba(255,255,255,.65);
-
-      background:
-        rgba(255,255,255,.14);
+    .field:focus {
+      border-color: rgba(242,207,210,.55);
+      background: rgba(255,255,255,.07);
     }
 
-    .signup-submit {
-      width: 100%;
+    textarea.field {
+      min-height: 120px;
+      padding-top: 17px;
+      resize: vertical;
+    }
 
-      border: 0;
+    .form-submit {
+      min-height: 58px;
 
-      border-radius: 15px;
+      border-radius: 16px;
 
-      padding:
-        15px
-        20px;
+      background: #f7f7f7;
+      color: #09090b;
 
-      color: #30363d;
-
-      background: #fff;
-
-      cursor: pointer;
-
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 800;
 
       transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+        transform .3s var(--ease),
+        background .3s ease;
     }
 
-    .signup-submit:hover {
-      transform:
-        translateY(-3px);
+    .form-submit:hover {
+      transform: translateY(-2px);
+      background: var(--pink);
+    }
 
-      box-shadow:
-        0 14px 30px rgba(0,0,0,.22);
+    .form-note {
+      margin-top: 5px;
+
+      color: rgba(255,255,255,.3);
+
+      font-size: 9px;
+      line-height: 1.5;
     }
 
 
@@ -1056,91 +1642,83 @@
        FAQ
        ========================================================= */
 
-    .faq-section {
-      padding-top: 110px;
-    }
-
-    .faq-title {
-      margin-bottom: 34px;
-    }
-
-    .faq-grid {
-      display: grid;
-
-      grid-template-columns:
-        1fr
-        1fr;
-
-      gap: 14px;
-
-      align-items: start;
-    }
-
-    .faq-column {
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 12px;
+    .faq-list {
+      border-top: 1px solid rgba(255,255,255,.10);
     }
 
     .faq-item {
-      overflow: hidden;
-
-      border-radius: 22px;
-
-      background:
-        rgba(20,25,31,.38);
-
-      border:
-        1px solid rgba(255,255,255,.48);
-
-      backdrop-filter:
-        blur(16px);
-
-      box-shadow:
-        0 12px 30px rgba(0,0,0,.10);
+      border-bottom: 1px solid rgba(255,255,255,.10);
     }
 
     .faq-question {
       width: 100%;
 
-      border: 0;
+      min-height: 90px;
 
-      background: transparent;
-
-      padding:
-        20px
-        22px;
+      padding: 0;
 
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
 
-      gap: 20px;
+      gap: 30px;
 
-      color: #fff;
+      color: #f7f7f7;
+      background: transparent;
 
       text-align: left;
+    }
 
-      cursor: pointer;
+    .faq-question-text {
+      font-family: "Manrope", sans-serif;
 
-      font-size: 16px;
+      font-size: clamp(18px, 2.4vw, 28px);
+      font-weight: 600;
 
-      font-weight: 500;
+      letter-spacing: -.035em;
     }
 
     .faq-icon {
-      flex: 0 0 auto;
+      position: relative;
 
-      font-size: 23px;
+      width: 34px;
+      height: 34px;
 
-      font-weight: 300;
+      flex: 0 0 34px;
 
-      transition:
-        transform .3s ease;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 50%;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: "";
+
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+
+      width: 11px;
+      height: 1px;
+
+      background: #fff;
+
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-icon::after {
+      transform:
+        translate(-50%, -50%)
+        rotate(90deg);
+
+      transition: transform .35s var(--ease);
+    }
+
+    .faq-item.open .faq-icon::after {
+      transform:
+        translate(-50%, -50%)
+        rotate(0deg);
     }
 
     .faq-answer {
@@ -1149,225 +1727,20 @@
       overflow: hidden;
 
       transition:
-        max-height .4s ease;
+        max-height .55s var(--ease);
     }
 
     .faq-answer-inner {
-      padding:
-        0
-        22px
-        20px;
-
-      font-size: var(--body-size);
-
-      line-height: 1.55;
-
-      color:
-        rgba(255,255,255,.88);
-    }
-
-    .faq-item.open .faq-icon {
-      transform:
-        rotate(45deg);
-    }
-
-
-    /* =========================================================
-       REFERRAL
-       ========================================================= */
-
-    .referral-section {
-      padding-top: 100px;
-    }
-
-    .referral-grid {
-      display: grid;
-
-      grid-template-columns:
-        .9fr
-        1.1fr;
-
-      gap: 70px;
-
-      align-items: center;
-    }
-
-    .referral-card {
-      padding: 42px;
-
-      border-radius: 34px;
-
-      background:
-        rgba(15,20,27,.56);
-
-      border:
-        1px solid rgba(255,255,255,.38);
-
-      backdrop-filter:
-        blur(18px);
-
-      box-shadow:
-        0 22px 55px rgba(0,0,0,.20);
-    }
-
-    .referral-card h3 {
-      margin-bottom: 22px;
-
-      font-size: 30px;
-    }
-
-    .referral-input {
-      width: 100%;
+      max-width: 760px;
 
       padding:
-        15px
-        16px;
+        0 60px
+        30px 0;
 
-      border-radius: 15px;
+      color: rgba(255,255,255,.52);
 
-      border:
-        1px solid rgba(40,45,50,.14);
-
-      background:
-        rgba(255,255,255,.90);
-
-      outline: none;
-
-      color: #30363d;
-
-      margin-bottom: 12px;
-    }
-
-    .referral-submit {
-      width: 100%;
-
-      border: 0;
-
-      border-radius: 15px;
-
-      padding: 15px;
-
-      color: #fff;
-
-      background:
-        #282e35;
-
-      cursor: pointer;
-
-      font-size: 24px;
-    }
-
-    .referral-copy h2 {
-      margin-bottom: 30px;
-    }
-
-    .referral-steps {
-      display: grid;
-
-      grid-template-columns:
-        repeat(3,1fr);
-
-      gap: 18px;
-
-      width: 100%;
-    }
-
-    .referral-step {
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 8px;
-
-      min-width: 0;
-    }
-
-    .referral-number {
-      font-size: 13px;
-
-      letter-spacing: .08em;
-
-      color:
-        rgba(255,255,255,.70);
-    }
-
-    .referral-step strong {
-      display: block;
-
-      font-size: 18px;
-    }
-
-    .referral-step span {
-      display: block;
-
-      font-size: var(--body-size);
-
-      line-height: 1.45;
-
-      color:
-        rgba(255,255,255,.90);
-    }
-
-    .socials {
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-      gap: 16px;
-
-      margin:
-        38px
-        auto
-        0;
-
-      flex-wrap: wrap;
-    }
-
-    .social-btn {
-      min-width: 142px;
-
-      padding:
-        13px
-        22px;
-
-      border-radius: 999px;
-
-      border:
-        1px solid rgba(255,255,255,.50);
-
-      background:
-        rgba(20,25,31,.42);
-
-      text-align: center;
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-      letter-spacing: .06em;
-
-      box-shadow:
-        0 9px 24px rgba(0,0,0,.16);
-
-      transition:
-        transform .35s ease,
-        box-shadow .35s ease,
-        border-color .35s ease;
-    }
-
-    .social-btn:hover {
-      transform:
-        translateY(-7px)
-        scale(1.045);
-
-      border-color:
-        rgba(255,255,255,.90);
-
-      box-shadow:
-        0 16px 34px rgba(0,0,0,.30),
-        0 0 22px rgba(255,255,255,.16);
+      font-size: 14px;
+      line-height: 1.7;
     }
 
 
@@ -1375,34 +1748,207 @@
        FOOTER
        ========================================================= */
 
-    footer {
-      width: var(--container);
-
-      margin: 0 auto;
+    .footer {
+      position: relative;
 
       padding:
-        70px
-        0
-        35px;
+        100px 24px
+        max(40px, env(safe-area-inset-bottom));
+
+      border-top: 1px solid rgba(255,255,255,.08);
     }
 
-    .footer-line {
+    .footer-top {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+
       display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
 
-      justify-content: center;
+      gap: 40px;
+    }
 
-      align-items: center;
+    .footer-brand {
+      font-family: "Manrope", sans-serif;
 
+      font-size: clamp(
+        60px,
+        12vw,
+        170px
+      );
+
+      line-height: .75;
+
+      letter-spacing: -.09em;
+
+      color: #f7f7f7;
+    }
+
+    .footer-links {
+      display: flex;
       gap: 18px;
 
-      flex-wrap: nowrap;
-
-      white-space: nowrap;
+      color: rgba(255,255,255,.45);
 
       font-size: 11px;
+    }
 
-      color:
-        rgba(255,255,255,.78);
+    .footer-links a {
+      transition: color .3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      width: min(100%, var(--max));
+      margin: 70px auto 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      color: rgba(255,255,255,.25);
+
+      font-size: 9px;
+      letter-spacing: .06em;
+    }
+
+
+    /* =========================================================
+       MODAL
+       ========================================================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+
+      z-index: 500;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 24px;
+
+      background: rgba(0,0,0,.68);
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity .35s ease,
+        visibility .35s ease;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      position: relative;
+
+      width: min(100%, 700px);
+      max-height: min(85vh, 800px);
+
+      overflow-y: auto;
+
+      padding: 40px;
+
+      border-radius: 32px;
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.09),
+          rgba(255,255,255,.035)
+        ),
+        #111114;
+
+      box-shadow:
+        0 50px 160px rgba(0,0,0,.5);
+
+      transform: translateY(25px) scale(.97);
+
+      transition:
+        transform .55s var(--ease);
+    }
+
+    .modal.open .modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+
+      top: 18px;
+      right: 18px;
+
+      width: 40px;
+      height: 40px;
+
+      border-radius: 50%;
+
+      color: #fff;
+
+      background: rgba(255,255,255,.06);
+
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .modal-kicker {
+      color: var(--pink);
+
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .modal-title {
+      margin: 15px 0 0;
+
+      font-family: "Manrope", sans-serif;
+
+      font-size: clamp(46px, 8vw, 80px);
+      line-height: .85;
+
+      letter-spacing: -.075em;
+    }
+
+    .modal-list {
+      margin: 35px 0 0;
+      padding: 0;
+
+      list-style: none;
+    }
+
+    .modal-list li {
+      padding: 15px 0;
+
+      border-bottom: 1px solid rgba(255,255,255,.09);
+
+      color: rgba(255,255,255,.68);
+
+      font-size: 14px;
+    }
+
+    .modal-list li::before {
+      content: "→";
+
+      display: inline-block;
+
+      margin-right: 12px;
+
+      color: var(--pink);
     }
 
 
@@ -1412,166 +1958,213 @@
 
     @media (max-width: 1000px) {
 
-      .why-layout,
-      .school-grid,
-      .about-grid,
-      .faq-grid,
-      .referral-grid,
-      .signup-grid {
-        grid-template-columns: 1fr;
-
-        gap: 50px;
-      }
-
-      .why-copy {
-        position: static;
-      }
-
-      .why-carousel {
-        max-width: 560px;
-      }
-
-    }
-
-
-    @media (max-width: 760px) {
-
-      :root {
-        --container:
-          calc(100% - 32px);
-
-        --heading-size: 36px;
-
-        --body-size: 17px;
-
-        --section-gap: 80px;
-      }
-
-      header {
-        padding:
-          18px
-          20px;
-      }
-
-      nav {
+      .nav-links {
         display: none;
       }
 
-      .hero {
-        min-height: 92vh;
+      .section-head {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
 
+      .create-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .create-nav {
+        position: relative;
+        top: auto;
+
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+
+      .programs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .program-card {
+        min-height: 560px;
+      }
+
+      .lead-box {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    @media (max-width: 700px) {
+
+      .nav {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .nav-inner {
+        padding-left: 14px;
+      }
+
+      .brand {
+        font-size: 12px;
+      }
+
+      .nav-cta {
+        min-height: 36px;
+        padding: 0 13px;
+        font-size: 9px;
+      }
+
+      .hero {
         padding:
-          100px
-          0
-          60px;
+          130px 18px
+          100px;
       }
 
       .hero-title {
-        font-size:
-          clamp(43px,10.4vw,78px);
+        font-size: clamp(
+          60px,
+          19vw,
+          120px
+        );
 
-        letter-spacing:
-          -.045em;
+        line-height: .8;
       }
 
       .hero-subtitle {
-        margin-top: 24px;
+        font-size: 14px;
       }
 
-      .why-carousel {
-        width: 100%;
-
-        height: 500px;
+      .section {
+        padding-left: 18px;
+        padding-right: 18px;
       }
 
-      .ai-card {
-        width:
-          min(330px,76vw);
-
-        border-radius:
-          24px;
+      .section-title {
+        font-size: clamp(42px, 14vw, 80px);
       }
 
-      .carousel-controls {
-        bottom: 8px;
+      .video-story {
+        height: 310vh;
       }
 
-      .carousel-dots {
-        right: 4px;
-        bottom: 25px;
+      .video-sticky {
+        min-height: 100svh;
       }
 
-      .courses-wrap {
+      .story-inner {
+        padding: 0 18px;
+      }
+
+      .story-title {
+        font-size: clamp(
+          50px,
+          15vw,
+          90px
+        );
+      }
+
+      .story-description {
+        font-size: 13px;
+      }
+
+      .create-nav {
         grid-template-columns: 1fr;
       }
 
-      .course-card h3 {
-        font-size: 44px;
+      .create-display {
+        min-height: 580px;
+        border-radius: 28px;
       }
 
-      .directions-wrap {
-        padding:
-          0
-          42px;
+      .create-content {
+        padding: 28px;
       }
 
-      .direction {
-        min-width: 190px;
+      .create-title {
+        font-size: clamp(
+          48px,
+          15vw,
+          80px
+        );
+      }
+
+      .program-card {
+        min-height: 540px;
+        padding: 23px;
+        border-radius: 28px;
+      }
+
+      .program-object {
         width: 190px;
+        height: 190px;
+        margin-top: 60px;
       }
 
-      .signup-card {
-        padding: 26px;
-      }
-
-      .signup-form {
+      .founders-grid {
         grid-template-columns: 1fr;
       }
 
-      .signup-field.full {
-        grid-column: auto;
+      .founder-card {
+        min-height: 480px;
       }
 
-      .referral-card {
-        padding: 26px;
+      .lead-box {
+        padding: 28px;
+        border-radius: 30px;
       }
 
-      .referral-steps {
-        grid-template-columns: 1fr;
-
-        gap: 22px;
+      .lead-title {
+        font-size: clamp(48px, 14vw, 80px);
       }
 
-      .socials {
-        margin-top: 32px;
+      .faq-question {
+        min-height: 80px;
       }
 
-      .footer-line {
-        white-space: normal;
+      .faq-question-text {
+        font-size: 18px;
+      }
 
+      .footer-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-links {
         flex-wrap: wrap;
-
-        gap:
-          8px
-          14px;
       }
 
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .modal {
+        padding: 12px;
+      }
+
+      .modal-card {
+        padding: 30px 24px;
+        border-radius: 25px;
+      }
     }
 
 
     @media (prefers-reduced-motion: reduce) {
 
-      html {
-        scroll-behavior: auto;
-      }
-
       *,
       *::before,
       *::after {
         animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
       }
 
+      #neural-canvas {
+        display: none;
+      }
     }
 
   </style>
@@ -1580,1833 +2173,2215 @@
 
 <body>
 
+  <div class="page">
 
-  <!-- =========================================================
-       BACKGROUND
-       ========================================================= -->
+    <!-- =======================================================
+         AMBIENT BACKGROUND
+         ======================================================= -->
 
-  <div
-    class="background"
-    aria-hidden="true">
+    <div class="ambient" aria-hidden="true">
 
-    <video
-      class="bg-video active"
-      id="bg1"
-      src="bloom-bg-1.mp4"
-      muted
-      playsinline
-      preload="auto">
-    </video>
+      <div class="ambient-orb one"></div>
+      <div class="ambient-orb two"></div>
+      <div class="ambient-orb three"></div>
 
-    <video
-      class="bg-video"
-      id="bg2"
-      src="bloom-bg-2.mp4"
-      muted
-      playsinline
-      preload="metadata">
-    </video>
-
-    <video
-      class="bg-video"
-      id="bg3"
-      src="bloom-bg-3.mp4"
-      muted
-      playsinline
-      preload="metadata">
-    </video>
-
-  </div>
+    </div>
 
 
-  <!-- =========================================================
-       HEADER
-       ========================================================= -->
+    <!-- =======================================================
+         WEBGL
+         ======================================================= -->
 
-  <header id="header">
-
-    <a
-      href="#hero"
-      class="logo">
-
-      MULTUM.AI
-
-    </a>
-
-    <nav>
-
-      <a href="#hero">
-        Главная
-      </a>
-
-      <a href="#why">
-        Зачем тебе AI?
-      </a>
-
-      <a href="#courses">
-        Курсы
-      </a>
-
-      <a href="#about">
-        О нас
-      </a>
-
-      <a href="#faq">
-        FAQ
-      </a>
-
-    </nav>
-
-  </header>
+    <canvas id="neural-canvas"></canvas>
 
 
-  <main>
+    <!-- =======================================================
+         NAVIGATION
+         ======================================================= -->
 
+    <header class="nav">
 
-    <!-- =========================================================
-         HERO
-         ========================================================= -->
+      <div class="nav-inner">
 
-    <section
-      class="hero"
-      id="hero">
+        <a href="#top" class="brand">
 
-      <div class="hero-inner">
+          <span class="brand-dot"></span>
 
-        <h1 class="hero-title">
           MULTUM.AI
-        </h1>
 
-        <p class="hero-subtitle">
-          Школа нейросетей для людей, которые хотят не просто пользоваться AI, а строить вокруг него реальный результат.
-        </p>
+        </a>
+
+
+        <nav class="nav-links">
+
+          <a href="#possibilities">
+            Возможности
+          </a>
+
+          <a href="#programs">
+            Программы
+          </a>
+
+          <a href="#founders">
+            MULTUM
+          </a>
+
+          <a href="#faq">
+            FAQ
+          </a>
+
+        </nav>
+
+
+        <a
+          href="#contact"
+          class="nav-cta magnetic-trigger"
+        >
+          ВОЙТИ В MULTUM
+        </a>
 
       </div>
 
-    </section>
+    </header>
 
 
-    <!-- =========================================================
-         WHY AI
-         ========================================================= -->
+    <!-- =======================================================
+         HERO
+         ======================================================= -->
 
-    <section
-      class="section why-section"
-      id="why">
+    <main id="top">
 
-      <div class="why-layout">
+      <section class="hero">
+
+        <div class="hero-grid"></div>
 
 
-        <div class="why-copy">
+        <div class="hero-content">
 
-          <h2 class="section-title">
-            Зачем тебе AI?
-          </h2>
+          <div class="eyebrow">
 
-          <p>
-            AI уже изменил работу, продукцию и скорость принятия решений. Наша задача — научить тебя использовать это осознанно, эффективно и без хаоса.
+            <span class="eyebrow-dot"></span>
+
+            THE CREATIVE INTELLIGENCE COMPANY
+
+          </div>
+
+
+          <h1 class="hero-title">
+
+            <span class="glow">
+              MULTUM
+            </span>
+
+            <br />
+
+            <span class="glow">
+              .AI
+            </span>
+
+          </h1>
+
+
+          <p class="hero-subtitle">
+
+            Не просто AI-инструменты.
+            Пространство, где интеллект,
+            технология и творчество становятся
+            одной системой.
+
           </p>
+
+
+          <div class="hero-actions">
+
+            <a
+              href="#possibilities"
+              class="magnetic button-primary magnetic-button"
+            >
+
+              <span class="button-text">
+                ИССЛЕДОВАТЬ MULTUM
+              </span>
+
+            </a>
+
+
+            <a
+              href="#programs"
+              class="magnetic button-secondary magnetic-button"
+            >
+
+              <span class="button-text">
+                ВЫБРАТЬ ПРОГРАММУ
+              </span>
+
+            </a>
+
+          </div>
 
         </div>
 
 
-        <!-- VERTICAL CAROUSEL -->
+        <div class="hero-scroll">
 
-        <div
-          class="why-carousel"
-          aria-label="Примеры направлений AI">
+          SCROLL
+
+          <span class="scroll-line"></span>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           VIDEO STORY
+           ===================================================== -->
+
+      <section
+        class="video-story"
+        id="story"
+      >
+
+        <div class="video-sticky">
+
+
+          <!-- VIDEO 01 -->
+
+          <video
+            class="story-video active"
+            id="video-1"
+            src="./bloom-bg-1.mp4"
+            muted
+            playsinline
+            preload="metadata"
+          ></video>
+
+
+          <!-- VIDEO 02 -->
+
+          <video
+            class="story-video"
+            id="video-2"
+            src="./bloom-bg-2.mp4"
+            muted
+            playsinline
+            preload="metadata"
+          ></video>
+
+
+          <!-- VIDEO 03 -->
+
+          <video
+            class="story-video"
+            id="video-3"
+            src="./bloom-bg-3.mp4"
+            muted
+            playsinline
+            preload="metadata"
+          ></video>
+
+
+          <div class="video-overlay"></div>
 
           <div
-            class="why-track"
-            id="whyTrack">
+            class="video-darken"
+            id="video-darken"
+          ></div>
 
 
-            <article
-              class="ai-card"
-              data-index="0">
+          <div class="story-content">
 
-              <img
-                src="01-ai-character.png"
-                alt="AI Character">
+            <div class="story-inner">
 
-            </article>
+              <div
+                class="story-copy"
+                id="story-copy"
+              >
 
+                <div class="story-index">
 
-            <article
-              class="ai-card"
-              data-index="1">
+                  <span></span>
 
-              <img
-                src="02-ai-product.png"
-                alt="AI Product">
+                  01 / 03
 
-            </article>
+                </div>
 
 
-            <article
-              class="ai-card"
-              data-index="2">
-
-              <img
-                src="03-ai-3d.png"
-                alt="AI 3D">
-
-            </article>
-
-
-            <article
-              class="ai-card"
-              data-index="3">
-
-              <img
-                src="04-ai-visual.png"
-                alt="AI Visual">
-
-            </article>
+                <h2 class="story-title">
+                  AI
+                  <br />
+                  меняет
+                  <br />
+                  способ
+                  <br />
+                  создавать.
+                </h2>
 
 
-            <article
-              class="ai-card"
-              data-index="4">
+                <p class="story-description">
 
-              <img
-                src="05-ai-automation.png"
-                alt="AI Automation">
+                  Мы больше не ограничены
+                  только тем, что умеем делать
+                  руками. Теперь интерфейсом
+                  становится собственное
+                  воображение.
 
-            </article>
+                </p>
 
+              </div>
+
+            </div>
 
           </div>
 
 
-          <div class="carousel-controls">
-
-            <button
-              class="carousel-btn"
-              id="aiPrev"
-              type="button"
-              aria-label="Предыдущая">
-
-              ↑
-
-            </button>
-
-            <button
-              class="carousel-btn"
-              id="aiNext"
-              type="button"
-              aria-label="Следующая">
-
-              ↓
-
-            </button>
-
-          </div>
-
-
-          <div
-            class="carousel-dots"
-            id="carouselDots"
-            aria-label="Выбор изображения">
-          </div>
-
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         SCHOOL
-         ========================================================= -->
-
-    <section
-      class="section school-section"
-      id="school">
-
-      <div class="school-grid">
-
-
-        <div>
-
-          <h2 class="school-heading">
-            Школа нейросетей и практического AI
-          </h2>
-
-        </div>
-
-
-        <div class="school-text">
-
-          <p>
-            MULTUM.AI — пространство, где нейросети превращаются в понятные инструменты для работы, творчества и собственного дела.
-          </p>
-
-          <p>
-            Мы соединяем обучение, практику и реальные задачи, чтобы знания не оставались теорией, а помогали создавать проекты и находить новые возможности.
-          </p>
-
-          <p>
-            Учимся применять AI на практике — от первых запросов до готовых продуктов и автоматизированных процессов.
-          </p>
-
-        </div>
-
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         COURSES
-         ========================================================= -->
-
-    <section
-      class="section courses-section"
-      id="courses">
-
-
-      <h2 class="section-title">
-        Курсы
-      </h2>
-
-
-      <div class="courses-wrap">
-
-
-        <article class="course-card">
-
-          <h3>
-            MAXI
-          </h3>
-
-          <div class="course-price">
-            99 900 ₽
-          </div>
-
-          <p class="course-description">
-            Полный курс по работе с AI в жизни, бизнесе и продукте.
-          </p>
-
-        </article>
-
-
-        <article class="course-card">
-
-          <h3>
-            MINI
-          </h3>
-
-          <div class="course-price">
-            7 900 ₽
-          </div>
-
-          <p class="course-description">
-            Практический курс по основам нейросетей и полезным AI-инструментам.
-          </p>
-
-        </article>
-
-
-      </div>
-
-
-      <div class="directions-title">
-        Направления
-      </div>
-
-
-      <div class="directions-wrap">
-
-
-        <button
-          class="direction-control prev"
-          id="directionsPrev"
-          type="button"
-          aria-label="Назад">
-
-          ‹
-
-        </button>
-
-
-        <div
-          class="directions-window"
-          id="directionsWindow">
-
-
-          <div
-            class="directions-track"
-            id="directionsTrack">
-
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI AGENTS + AI AUTOMATION
-              </div>
-
-              <div class="direction-price">
-                59 900 ₽
-              </div>
-
+          <div class="story-progress">
+
+            <div class="story-progress-item">
+              <div
+                class="story-progress-fill"
+                id="progress-1"
+              ></div>
             </div>
 
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI WEBSITES
-              </div>
-
-              <div class="direction-price">
-                49 900 ₽
-              </div>
-
+            <div class="story-progress-item">
+              <div
+                class="story-progress-fill"
+                id="progress-2"
+              ></div>
             </div>
 
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI GAMES
-              </div>
-
-              <div class="direction-price">
-                45 900 ₽
-              </div>
-
+            <div class="story-progress-item">
+              <div
+                class="story-progress-fill"
+                id="progress-3"
+              ></div>
             </div>
-
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI 3D
-              </div>
-
-              <div class="direction-price">
-                25 900 ₽
-              </div>
-
-            </div>
-
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI VIDEO
-              </div>
-
-              <div class="direction-price">
-                20 900 ₽
-              </div>
-
-            </div>
-
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI CREATOR
-              </div>
-
-              <div class="direction-price">
-                14 900 ₽
-              </div>
-
-            </div>
-
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI DESIGN
-              </div>
-
-              <div class="direction-price">
-                14 900 ₽
-              </div>
-
-            </div>
-
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI PRODUCT ADD-ON
-              </div>
-
-              <div class="direction-price">
-                +10 900 ₽
-              </div>
-
-            </div>
-
-
-            <div class="direction">
-
-              <div class="direction-name">
-                AI MARKETING ADD-ON
-              </div>
-
-              <div class="direction-price">
-                +5 900 ₽
-              </div>
-
-            </div>
-
 
           </div>
 
         </div>
 
-
-        <button
-          class="direction-control next"
-          id="directionsNext"
-          type="button"
-          aria-label="Вперёд">
-
-          ›
-
-        </button>
+      </section>
 
 
-      </div>
+      <!-- =====================================================
+           POSSIBILITIES
+           ===================================================== -->
 
-    </section>
+      <section
+        class="section create-section"
+        id="possibilities"
+      >
+
+        <div class="container">
+
+          <div class="section-head">
+
+            <div>
+
+              <div class="section-kicker">
+                POSSIBILITIES
+              </div>
+
+              <h2 class="section-title">
+                Что ты
+                <br />
+                можешь создать
+              </h2>
+
+            </div>
 
 
-    <!-- =========================================================
-         ABOUT
-         ========================================================= -->
+            <p class="section-description">
 
-    <section
-      class="section about-section"
-      id="about">
+              AI — это не один инструмент.
+              Это новая среда производства.
+              Выбирай направление и смотри,
+              куда может привести идея.
 
-
-      <div class="about-card">
-
-        <div class="about-grid">
-
-
-          <h2 class="about-heading">
-            О нас — и почему мы создали MULTUM.AI
-          </h2>
-
-
-          <div class="about-text">
-
-            <p>
-              Привет! Нас зовут Алина и Даша.
-            </p>
-
-            <p>
-              Мы познакомились в сфере инфобизнеса и довольно быстро поняли, что нас объединяет не только любовь к созданию проектов, но и огромное любопытство к тому, как технологии могут менять привычный способ работать, создавать и развивать идеи.
-            </p>
-
-            <p>
-              Когда в нашу жизнь пришёл искусственный интеллект, мы увидели в нём гораздо больше, чем очередной набор модных сервисов. AI может стать настоящим рабочим ресурсом: помогать быстрее создавать контент и продукты, автоматизировать рутину, находить решения, тестировать идеи и делать то, на что раньше требовались время, деньги и целая команда.
-            </p>
-
-            <p>
-              Но есть одна проблема: инструментов становится всё больше, а понятной системы работы с ними у большинства людей по-прежнему нет.
-            </p>
-
-            <p>
-              Поэтому мы создали MULTUM.AI.
-            </p>
-
-            <p>
-              Здесь мы учим не просто нажимать кнопки в нейросетях. Мы показываем, как мыслить вместе с AI, собирать из разных инструментов рабочую систему и превращать собственные идеи в реальные результаты.
-            </p>
-
-            <p>
-              Нам хочется, чтобы после обучения человек уходил не с папкой из сотни случайных промптов, а с ощущением: «Я понимаю, что делать дальше. Я могу создавать это сам».
-            </p>
-
-            <p>
-              MULTUM.AI — это школа для тех, кто хочет не наблюдать за будущим, а использовать его уже сейчас.
             </p>
 
           </div>
 
 
-        </div>
-
-      </div>
-
-    </section>
+          <div class="create-layout">
 
 
-    <!-- =========================================================
-         SIGNUP
-         ========================================================= -->
+            <!-- LEFT NAV -->
 
-    <section
-      class="section signup-section"
-      id="signup">
-
-
-      <div class="signup-card">
-
-
-        <div class="signup-grid">
-
-
-          <div>
-
-            <h2 class="signup-heading">
-              Оставь заявку
-            </h2>
-
-            <p class="signup-copy">
-              Расскажи немного о себе и о том, чему хочешь обучиться. Мы поможем выбрать подходящую программу.
-            </p>
-
-          </div>
-
-
-          <form
-            class="signup-form"
-            id="signupForm">
-
-
-            <div class="signup-field">
-
-              <label for="signupName">
-                ИМЯ
-              </label>
-
-              <input
-                id="signupName"
-                name="name"
-                type="text"
-                placeholder="Твоё имя"
-                required>
-
-            </div>
-
-
-            <div class="signup-field">
-
-              <label for="signupPhone">
-                НОМЕР ТЕЛЕФОНА
-              </label>
-
-              <input
-                id="signupPhone"
-                name="phone"
-                type="tel"
-                placeholder="+7 ..."
-                required>
-
-            </div>
-
-
-            <div class="signup-field">
-
-              <label for="signupTelegram">
-                ЮЗ ТЕЛЕГРАМ
-              </label>
-
-              <input
-                id="signupTelegram"
-                name="telegram"
-                type="text"
-                placeholder="@username">
-
-            </div>
-
-
-            <div class="signup-field">
-
-              <label for="signupQuestion">
-                ЧТО ХОЧЕШЬ УЗНАТЬ?
-              </label>
-
-              <input
-                id="signupQuestion"
-                name="question"
-                type="text"
-                placeholder="Напиши здесь">
-
-            </div>
-
-
-            <div class="signup-field full">
+            <div class="create-nav">
 
               <button
-                class="signup-submit"
-                type="submit">
+                class="create-tab active"
+                data-create="0"
+              >
 
-                ОСТАВИТЬ ЗАЯВКУ
+                <span class="create-tab-name">
+                  AI CHARACTER
+                </span>
+
+                <span class="create-tab-number">
+                  01
+                </span>
+
+              </button>
+
+
+              <button
+                class="create-tab"
+                data-create="1"
+              >
+
+                <span class="create-tab-name">
+                  AI PRODUCT
+                </span>
+
+                <span class="create-tab-number">
+                  02
+                </span>
+
+              </button>
+
+
+              <button
+                class="create-tab"
+                data-create="2"
+              >
+
+                <span class="create-tab-name">
+                  AI 3D
+                </span>
+
+                <span class="create-tab-number">
+                  03
+                </span>
+
+              </button>
+
+
+              <button
+                class="create-tab"
+                data-create="3"
+              >
+
+                <span class="create-tab-name">
+                  AI VISUAL
+                </span>
+
+                <span class="create-tab-number">
+                  04
+                </span>
+
+              </button>
+
+
+              <button
+                class="create-tab"
+                data-create="4"
+              >
+
+                <span class="create-tab-name">
+                  AI AUTOMATION
+                </span>
+
+                <span class="create-tab-number">
+                  05
+                </span>
 
               </button>
 
             </div>
 
 
-          </form>
+            <!-- DISPLAY -->
 
+            <div
+              class="create-display"
+              id="create-display"
+            >
+
+              <img
+                id="create-image"
+                class="create-bg"
+                src="./01-ai-character.png"
+                alt="AI Character"
+              />
+
+
+              <div class="create-shade"></div>
+
+
+              <div class="create-number">
+                01 / 05
+              </div>
+
+
+              <div class="create-content">
+
+                <div
+                  class="create-label"
+                  id="create-label"
+                >
+                  AI CHARACTER
+                </div>
+
+
+                <h3
+                  class="create-title"
+                  id="create-title"
+                >
+                  CHARACTER
+                </h3>
+
+
+                <p
+                  class="create-text"
+                  id="create-text"
+                >
+
+                  Создавай собственных персонажей,
+                  визуальные образы и цифровые
+                  идентичности, которые можно
+                  развивать дальше.
+
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
-
-      </div>
-
-    </section>
+      </section>
 
 
-    <!-- =========================================================
-         FAQ
-         ========================================================= -->
+      <!-- =====================================================
+           MANIFESTO
+           ===================================================== -->
 
-    <section
-      class="section faq-section"
-      id="faq">
+      <section class="section manifesto">
 
+        <div class="manifesto-inner">
 
-      <h2 class="faq-title">
-        FAQ
-      </h2>
-
-
-      <div class="faq-grid">
-
-
-        <div class="faq-column">
-
-
-          <div class="faq-item">
-
-            <button
-              class="faq-question"
-              type="button"
-              aria-expanded="false">
-
-              <span>
-                Что именно учат в школе?
-              </span>
-
-              <span class="faq-icon">
-                +
-              </span>
-
-            </button>
-
-            <div class="faq-answer">
-
-              <div class="faq-answer-inner">
-                Мы учим использовать AI в работе, создании продуктов, автоматизации, дизайне, маркетинге и генерации контента.
-              </div>
-
-            </div>
-
+          <div class="manifesto-small">
+            THE IMPOSSIBLE INTERFACE
           </div>
 
 
-          <div class="faq-item">
+          <h2 class="manifesto-title">
 
-            <button
-              class="faq-question"
-              type="button"
-              aria-expanded="false">
+            Технология —
+            <br />
 
-              <span>
-                Подойдёт ли обучение новичку?
-              </span>
+            это инструмент.
 
-              <span class="faq-icon">
-                +
-              </span>
+            <br />
 
-            </button>
+            <span>
+              Ты — интерфейс.
+            </span>
 
-            <div class="faq-answer">
-
-              <div class="faq-answer-inner">
-                Да. Начинаем с основ и постепенно переходим к практике, поэтому техническая база не обязательна.
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="faq-item">
-
-            <button
-              class="faq-question"
-              type="button"
-              aria-expanded="false">
-
-              <span>
-                Нужен ли опыт программирования?
-              </span>
-
-              <span class="faq-icon">
-                +
-              </span>
-
-            </button>
-
-            <div class="faq-answer">
-
-              <div class="faq-answer-inner">
-                Для большинства направлений программирование не требуется. Там, где код нужен, разбираем всё на понятных примерах.
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="faq-item">
-
-            <button
-              class="faq-question"
-              type="button"
-              aria-expanded="false">
-
-              <span>
-                Как проходят занятия?
-              </span>
-
-              <span class="faq-icon">
-                +
-              </span>
-
-            </button>
-
-            <div class="faq-answer">
-
-              <div class="faq-answer-inner">
-                Пошагово: теория, примеры, кейсы и практика в рабочих задачах с применением AI.
-              </div>
-
-            </div>
-
-          </div>
-
-
-        </div>
-
-
-        <div class="faq-column">
-
-
-          <div class="faq-item">
-
-            <button
-              class="faq-question"
-              type="button"
-              aria-expanded="false">
-
-              <span>
-                Чем отличаются MINI и MAXI?
-              </span>
-
-              <span class="faq-icon">
-                +
-              </span>
-
-            </button>
-
-            <div class="faq-answer">
-
-              <div class="faq-answer-inner">
-                MINI — компактный практический маршрут, MAXI — расширенная программа с более широким набором тем и задач.
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="faq-item">
-
-            <button
-              class="faq-question"
-              type="button"
-              aria-expanded="false">
-
-              <span>
-                Какие инструменты будем изучать?
-              </span>
-
-              <span class="faq-icon">
-                +
-              </span>
-
-            </button>
-
-            <div class="faq-answer">
-
-              <div class="faq-answer-inner">
-                Инструменты подбираются под направления: генерация текста и визуала, видео, 3D, сайты, агенты и автоматизация.
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="faq-item">
-
-            <button
-              class="faq-question"
-              type="button"
-              aria-expanded="false">
-
-              <span>
-                Можно ли сразу применять знания в работе?
-              </span>
-
-              <span class="faq-icon">
-                +
-              </span>
-
-            </button>
-
-            <div class="faq-answer">
-
-              <div class="faq-answer-inner">
-                Да, обучение построено вокруг практических задач и примеров, которые можно адаптировать к своей работе или проекту.
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="faq-item">
-
-            <button
-              class="faq-question"
-              type="button"
-              aria-expanded="false">
-
-              <span>
-                Как записаться или задать вопрос?
-              </span>
-
-              <span class="faq-icon">
-                +
-              </span>
-
-            </button>
-
-            <div class="faq-answer">
-
-              <div class="faq-answer-inner">
-                Оставь заявку в форме на сайте или напиши нам в Telegram — поможем выбрать подходящий формат.
-              </div>
-
-            </div>
-
-          </div>
-
-
-        </div>
-
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         REFERRAL
-         ========================================================= -->
-
-    <section
-      class="section referral-section"
-      id="referral">
-
-
-      <div class="referral-grid">
-
-
-        <div class="referral-card">
-
-          <h3>
-            ПРИГЛАСИ СВОИХ
-          </h3>
-
-          <input
-            class="referral-input"
-            id="referralInput"
-            type="text"
-            placeholder="Введи реферальный код">
-
-          <button
-            class="referral-submit"
-            id="referralSubmit"
-            type="button">
-
-            →
-
-          </button>
-
-        </div>
-
-
-        <div class="referral-copy">
-
-          <h2>
-            ПРИГЛАСИ СВОИХ
           </h2>
 
+        </div>
 
-          <div class="referral-steps">
+      </section>
 
 
-            <div class="referral-step">
+      <!-- =====================================================
+           PROGRAMS
+           ===================================================== -->
 
-              <div class="referral-number">
-                01
+      <section
+        class="section programs-section"
+        id="programs"
+      >
+
+        <div class="container">
+
+          <div class="section-head">
+
+            <div>
+
+              <div class="section-kicker">
+                CHOOSE YOUR LEVEL
               </div>
 
-              <strong>
-                ПРИГЛАСИ
-              </strong>
-
-              <span>
-                Поделись MULTUM.AI с теми, кому это действительно пригодится.
-              </span>
+              <h2 class="section-title">
+                Выбери
+                <br />
+                свой уровень
+              </h2>
 
             </div>
 
 
-            <div class="referral-step">
+            <p class="section-description">
 
-              <div class="referral-number">
-                02
-              </div>
+              Три уровня погружения.
+              От знакомства с AI до полной
+              свободы создания собственных
+              цифровых продуктов.
 
-              <strong>
-                ПОЛУЧИ
-              </strong>
-
-              <span>
-                Используй свой реферальный код и получай бонусы.
-              </span>
-
-            </div>
-
-
-            <div class="referral-step">
-
-              <div class="referral-number">
-                03
-              </div>
-
-              <strong>
-                РАСТИ
-              </strong>
-
-              <span>
-                Расти вместе с MULTUM.AI и сообществом.
-              </span>
-
-            </div>
-
+            </p>
 
           </div>
 
 
-          <div class="socials">
-
-            <a
-              class="social-btn"
-              href="https://www.instagram.com/multumai?xtok=dnV0dnRmaml2N3dl"
-              target="_blank"
-              rel="noopener noreferrer">
-
-              INSTAGRAM
-
-            </a>
+          <div class="programs-grid">
 
 
-            <a
-              class="social-btn"
-              href="https://t.me/multumai"
-              target="_blank"
-              rel="noopener noreferrer">
+            <!-- BASIC -->
 
-              TELEGRAM
+            <article
+              class="program-card basic"
+              data-program="BASIC"
+            >
 
-            </a>
+              <div class="program-card-top">
+
+                <span class="program-tag">
+                  START
+                </span>
+
+                <span class="program-number">
+                  01
+                </span>
+
+              </div>
+
+
+              <div class="program-object"></div>
+
+
+              <h3 class="program-name">
+                BASIC
+              </h3>
+
+
+              <p class="program-description">
+
+                Основа.
+                Первое системное знакомство
+                с возможностями AI и современным
+                creative workflow.
+
+              </p>
+
+
+              <div class="program-bottom">
+
+                <button
+                  class="program-button"
+                  data-open-program="BASIC"
+                >
+                  ПОСМОТРЕТЬ ПРОГРАММУ
+                </button>
+
+              </div>
+
+            </article>
+
+
+            <!-- ULTRA -->
+
+            <article
+              class="program-card ultra"
+              data-program="ULTRA"
+            >
+
+              <div class="program-card-top">
+
+                <span class="program-tag">
+                  CREATOR
+                </span>
+
+                <span class="program-number">
+                  02
+                </span>
+
+              </div>
+
+
+              <div class="program-object"></div>
+
+
+              <h3 class="program-name">
+                ULTRA
+              </h3>
+
+
+              <p class="program-description">
+
+                Больше инструментов.
+                Больше контроля.
+                AI становится частью твоего
+                ежедневного creative-процесса.
+
+              </p>
+
+
+              <div class="program-bottom">
+
+                <button
+                  class="program-button"
+                  data-open-program="ULTRA"
+                >
+                  ПОСМОТРЕТЬ ПРОГРАММУ
+                </button>
+
+              </div>
+
+            </article>
+
+
+            <!-- ULTIMATE -->
+
+            <article
+              class="program-card ultimate"
+              data-program="ULTIMATE"
+            >
+
+              <div class="program-card-top">
+
+                <span class="program-tag">
+                  FULL SYSTEM
+                </span>
+
+                <span class="program-number">
+                  03
+                </span>
+
+              </div>
+
+
+              <div class="program-object"></div>
+
+
+              <h3 class="program-name">
+                ULTIMATE
+              </h3>
+
+
+              <p class="program-description">
+
+                Максимальное погружение.
+                Создание систем, продуктов,
+                автоматизаций и собственных
+                AI-powered workflows.
+
+              </p>
+
+
+              <div class="program-bottom">
+
+                <button
+                  class="program-button"
+                  data-open-program="ULTIMATE"
+                >
+                  ПОСМОТРЕТЬ ПРОГРАММУ
+                </button>
+
+              </div>
+
+            </article>
 
           </div>
-
 
         </div>
 
+      </section>
+
+
+      <!-- =====================================================
+           FOUNDERS
+           ===================================================== -->
+
+      <section
+        class="section"
+        id="founders"
+      >
+
+        <div class="container">
+
+          <div class="section-head">
+
+            <div>
+
+              <div class="section-kicker">
+                THE PEOPLE BEHIND MULTUM
+              </div>
+
+              <h2 class="section-title">
+                Мы создаём
+                <br />
+                MULTUM.
+              </h2>
+
+            </div>
+
+
+            <p class="section-description">
+
+              MULTUM появился из идеи,
+              что AI должен не усложнять
+              творчество, а открывать
+              человеку больше возможностей.
+
+            </p>
+
+          </div>
+
+
+          <div class="founders-grid">
+
+
+            <!-- ALINA -->
+
+            <article class="founder-card">
+
+              <img
+                class="founder-bg"
+                src="./bg-1.jpg"
+                alt=""
+              />
+
+              <div class="founder-shade"></div>
+
+
+              <div class="founder-content">
+
+                <div class="founder-role">
+                  CO-FOUNDER / CEO
+                </div>
+
+                <h3 class="founder-name">
+                  Алина
+                </h3>
+
+                <p class="founder-description">
+
+                  Стратегия, продукт,
+                  развитие MULTUM и
+                  направление creative intelligence.
+
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <!-- DASHA -->
+
+            <article class="founder-card">
+
+              <img
+                class="founder-bg"
+                src="./bg-2.jpg"
+                alt=""
+              />
+
+              <div class="founder-shade"></div>
+
+
+              <div class="founder-content">
+
+                <div class="founder-role">
+                  CO-FOUNDER
+                </div>
+
+                <h3 class="founder-name">
+                  Даша
+                </h3>
+
+                <p class="founder-description">
+
+                  Развитие продукта,
+                  creative-направление
+                  и создание экосистемы MULTUM.
+
+                </p>
+
+              </div>
+
+            </article>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           CONTACT
+           ===================================================== -->
+
+      <section
+        class="section lead-section"
+        id="contact"
+      >
+
+        <div class="container">
+
+          <div class="lead-box">
+
+            <div>
+
+              <div class="section-kicker">
+                ENTER THE SYSTEM
+              </div>
+
+
+              <h2 class="lead-title">
+
+                Давай
+                <br />
+                создадим
+                <br />
+                что-то
+                <br />
+                невозможное.
+
+              </h2>
+
+
+              <p class="lead-description">
+
+                Оставь заявку.
+                Расскажи, что хочешь создать —
+                и мы покажем, как превратить
+                идею в AI-powered проект.
+
+              </p>
+
+            </div>
+
+
+            <form
+              class="lead-form"
+              id="lead-form"
+            >
+
+              <input
+                class="field"
+                type="text"
+                name="name"
+                placeholder="Имя"
+                required
+              />
+
+
+              <input
+                class="field"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+              />
+
+
+              <input
+                class="field"
+                type="tel"
+                name="phone"
+                placeholder="Телефон"
+              />
+
+
+              <textarea
+                class="field"
+                name="message"
+                placeholder="Что хочешь создать?"
+              ></textarea>
+
+
+              <button
+                class="form-submit"
+                type="submit"
+              >
+                ОТПРАВИТЬ ЗАЯВКУ
+              </button>
+
+
+              <div class="form-note">
+
+                Нажимая кнопку, вы соглашаетесь
+                на обработку предоставленных данных.
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           FAQ
+           ===================================================== -->
+
+      <section
+        class="section"
+        id="faq"
+      >
+
+        <div class="container">
+
+          <div class="section-head">
+
+            <div>
+
+              <div class="section-kicker">
+                FAQ
+              </div>
+
+              <h2 class="section-title">
+                Остались
+                <br />
+                вопросы?
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="faq-list">
+
+
+            <div class="faq-item">
+
+              <button class="faq-question">
+
+                <span class="faq-question-text">
+                  Что такое MULTUM.AI?
+                </span>
+
+                <span class="faq-icon"></span>
+
+              </button>
+
+
+              <div class="faq-answer">
+
+                <div class="faq-answer-inner">
+
+                  MULTUM.AI — creative intelligence
+                  company и образовательная среда,
+                  которая помогает использовать AI
+                  для создания контента, визуалов,
+                  цифровых продуктов и автоматизаций.
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+              <button class="faq-question">
+
+                <span class="faq-question-text">
+                  Нужно ли уметь программировать?
+                </span>
+
+                <span class="faq-icon"></span>
+
+              </button>
+
+
+              <div class="faq-answer">
+
+                <div class="faq-answer-inner">
+
+                  Нет. Уровень технической подготовки
+                  зависит от выбранной программы.
+                  Мы строим обучение вокруг результата,
+                  а не вокруг необходимости знать
+                  программирование заранее.
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+              <button class="faq-question">
+
+                <span class="faq-question-text">
+                  Чем отличаются BASIC, ULTRA и ULTIMATE?
+                </span>
+
+                <span class="faq-icon"></span>
+
+              </button>
+
+
+              <div class="faq-answer">
+
+                <div class="faq-answer-inner">
+
+                  Это три уровня глубины погружения
+                  в AI и creative workflows.
+                  BASIC — фундамент.
+                  ULTRA — расширенный creator-level.
+                  ULTIMATE — максимально полная система.
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+              <button class="faq-question">
+
+                <span class="faq-question-text">
+                  Можно ли прийти со своей идеей?
+                </span>
+
+                <span class="faq-icon"></span>
+
+              </button>
+
+
+              <div class="faq-answer">
+
+                <div class="faq-answer-inner">
+
+                  Да. Более того, собственная идея —
+                  один из лучших способов использовать
+                  AI не как игрушку, а как реальный
+                  инструмент создания.
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+              <button class="faq-question">
+
+                <span class="faq-question-text">
+                  Что можно создавать с AI?
+                </span>
+
+                <span class="faq-icon"></span>
+
+              </button>
+
+
+              <div class="faq-answer">
+
+                <div class="faq-answer-inner">
+
+                  Персонажей, изображения, видео,
+                  3D, сайты, цифровые продукты,
+                  автоматизации и собственные
+                  creative workflows.
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =======================================================
+         FOOTER
+         ======================================================= -->
+
+    <footer class="footer">
+
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          MULTUM.AI
+        </div>
+
+
+        <div class="footer-links">
+
+          <a href="#possibilities">
+            Возможности
+          </a>
+
+          <a href="#programs">
+            Программы
+          </a>
+
+          <a href="#contact">
+            Контакты
+          </a>
+
+          <a href="#">
+            Telegram
+          </a>
+
+        </div>
 
       </div>
 
-    </section>
+
+      <div class="footer-bottom">
+
+        <span>
+          © 2026 MULTUM.AI
+        </span>
+
+        <span>
+          THE CREATIVE INTELLIGENCE COMPANY
+        </span>
+
+      </div>
+
+    </footer>
 
 
-  </main>
+    <!-- =======================================================
+         PROGRAM MODAL
+         ======================================================= -->
+
+    <div
+      class="modal"
+      id="program-modal"
+      aria-hidden="true"
+    >
+
+      <div class="modal-card">
+
+        <button
+          class="modal-close"
+          id="modal-close"
+          aria-label="Закрыть"
+        >
+          ×
+        </button>
 
 
-  <!-- =========================================================
-       FOOTER
-       ========================================================= -->
+        <div
+          class="modal-kicker"
+          id="modal-kicker"
+        >
+          PROGRAM
+        </div>
 
-  <footer>
 
-    <div class="footer-line">
+        <h2
+          class="modal-title"
+          id="modal-title"
+        >
+          BASIC
+        </h2>
 
-      <a href="#">
-        Пользовательское соглашение
-      </a>
 
-      <span>
-        •
-      </span>
+        <ul
+          class="modal-list"
+          id="modal-list"
+        ></ul>
 
-      <a href="#">
-        Политика конфиденциальности
-      </a>
 
-      <span>
-        •
-      </span>
+        <a
+          href="#contact"
+          class="magnetic button-primary magnetic-button"
+          style="
+            width:100%;
+            margin-top:30px;
+          "
+          id="modal-cta"
+        >
 
-      <a href="#">
-        Публичная оферта ОУ
-      </a>
+          <span class="button-text">
+            ОСТАВИТЬ ЗАЯВКУ
+          </span>
 
-      <span>
-        •
-      </span>
+        </a>
 
-      <a href="#">
-        Публичная оферта ИКУ
-      </a>
+      </div>
 
     </div>
 
-  </footer>
+  </div>
 
+
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
 
   <script>
 
     /* =========================================================
-       HELPERS
+       GLOBAL HELPERS
        ========================================================= */
 
-    const clamp = (value, min, max) =>
-      Math.min(max, Math.max(min, value));
+    const $ = (selector, root = document) =>
+      root.querySelector(selector);
+
+    const $$ = (selector, root = document) =>
+      Array.from(root.querySelectorAll(selector));
 
 
     /* =========================================================
-       BACKGROUND
+       REDUCED MOTION
        ========================================================= */
 
-    const videos =
-      [...document.querySelectorAll(".bg-video")];
-
-    let targetProgress = 0;
-    let renderedProgress = 0;
-
-    let activeVideo = -1;
-
-    let backgroundFrame = 0;
-
-    let lastFrameTime = 0;
-
-    let lastSeekTime = 0;
-
-    const SEEK_INTERVAL =
-      1000 / 30;
-
-
-    videos.forEach(video => {
-
-      video.pause();
-
-      video.muted = true;
-
-      video.playsInline = true;
-
-      video.loop = false;
-
-      video.removeAttribute("autoplay");
-
-      video.addEventListener(
-        "play",
-        () => {
-          video.pause();
-        }
-      );
-
-    });
-
-
-    function pageProgress() {
-
-      const max =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
-
-      if (max <= 0) {
-        return 0;
-      }
-
-      return clamp(
-        window.scrollY / max,
-        0,
-        1
-      );
-
-    }
-
-
-    function showOnlyVideo(index) {
-
-      if (index === activeVideo) {
-        return;
-      }
-
-      videos.forEach(
-        (video, i) => {
-
-          const isActive =
-            i === index;
-
-          video.classList.toggle(
-            "active",
-            isActive
-          );
-
-          video.style.opacity =
-            isActive
-              ? "1"
-              : "0";
-
-        }
-      );
-
-      activeVideo = index;
-
-      const next =
-        videos[index];
-
-      if (
-        next &&
-        next.readyState >= 1
-      ) {
-
-        try {
-          next.currentTime = 0;
-        } catch (_) {}
-
-      }
-
-    }
-
-
-    function renderBackground(
-      progress,
-      force = false
-    ) {
-
-      if (!videos.length) {
-        return;
-      }
-
-      const count =
-        videos.length;
-
-      const scaled =
-        clamp(
-          progress * count,
-          0,
-          count - 0.000001
-        );
-
-      const index =
-        Math.floor(scaled);
-
-      const local =
-        scaled - index;
-
-      showOnlyVideo(index);
-
-      const video =
-        videos[index];
-
-      if (
-        !video ||
-        video.readyState < 1 ||
-        !Number.isFinite(video.duration) ||
-        video.duration <= 0
-      ) {
-        return;
-      }
-
-      const now =
-        performance.now();
-
-      if (
-        !force &&
-        now - lastSeekTime <
-        SEEK_INTERVAL
-      ) {
-        return;
-      }
-
-      if (video.seeking) {
-        return;
-      }
-
-      const duration =
-        Math.max(
-          0,
-          video.duration - 0.05
-        );
-
-      const wanted =
-        clamp(
-          local,
-          0,
-          1
-        ) * duration;
-
-      if (
-        Math.abs(
-          video.currentTime - wanted
-        ) < 0.035
-      ) {
-        return;
-      }
-
-      lastSeekTime = now;
-
-      try {
-
-        video.currentTime =
-          wanted;
-
-      } catch (_) {}
-
-    }
-
-
-    function animateBackground(now) {
-
-      const dt =
-        lastFrameTime
-          ? Math.min(
-              (now - lastFrameTime) / 1000,
-              .05
-            )
-          : 1 / 60;
-
-      lastFrameTime =
-        now;
-
-      const factor =
-        1 -
-        Math.exp(
-          -dt * 10
-        );
-
-      renderedProgress +=
-        (
-          targetProgress -
-          renderedProgress
-        ) * factor;
-
-      if (
-        Math.abs(
-          targetProgress -
-          renderedProgress
-        ) < .00005
-      ) {
-
-        renderedProgress =
-          targetProgress;
-
-      }
-
-      renderBackground(
-        renderedProgress
-      );
-
-      if (
-        Math.abs(
-          targetProgress -
-          renderedProgress
-        ) > .00005
-      ) {
-
-        backgroundFrame =
-          requestAnimationFrame(
-            animateBackground
-          );
-
-      } else {
-
-        backgroundFrame = 0;
-
-        lastFrameTime = 0;
-
-      }
-
-    }
-
-
-    function onScroll() {
-
-      targetProgress =
-        pageProgress();
-
-      if (!backgroundFrame) {
-
-        backgroundFrame =
-          requestAnimationFrame(
-            animateBackground
-          );
-
-      }
-
-    }
-
-
-    window.addEventListener(
-      "scroll",
-      onScroll,
-      {
-        passive: true
-      }
-    );
-
-
-    window.addEventListener(
-      "resize",
-      () => {
-
-        targetProgress =
-          pageProgress();
-
-        if (!backgroundFrame) {
-
-          backgroundFrame =
-            requestAnimationFrame(
-              animateBackground
-            );
-
-        }
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    targetProgress =
-      pageProgress();
-
-    renderedProgress =
-      targetProgress;
-
-    renderBackground(
-      renderedProgress,
-      true
-    );
+    const reducedMotion =
+      window.matchMedia &&
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
 
     /* =========================================================
-       HEADER
+       LENIS
        ========================================================= */
 
-    const header =
-      document.getElementById("header");
+    let lenis = null;
 
-    window.addEventListener(
-      "scroll",
-      () => {
+    if (!reducedMotion && window.Lenis) {
 
-        header.classList.toggle(
-          "hidden",
-          window.scrollY >
-          window.innerHeight * .55
-        );
+      lenis = new Lenis({
+        duration: 1.05,
+        smoothWheel: true,
+        smoothTouch: false,
+        wheelMultiplier: .85,
+        touchMultiplier: 1
+      });
 
-      },
-      {
-        passive: true
+
+      lenis.on("scroll", () => {
+
+        if (window.ScrollTrigger) {
+          ScrollTrigger.update();
+        }
+
+      });
+
+
+      function raf(time) {
+
+        lenis.raf(time);
+
+        requestAnimationFrame(raf);
+
       }
-    );
+
+      requestAnimationFrame(raf);
+
+    }
 
 
     /* =========================================================
-       VERTICAL AI CAROUSEL
+       GSAP
        ========================================================= */
 
-    const cards =
-      [
-        ...document.querySelectorAll(
-          ".ai-card"
-        )
-      ];
+    if (window.gsap && window.ScrollTrigger) {
 
-    const dots =
-      document.getElementById(
-        "carouselDots"
-      );
+      gsap.registerPlugin(ScrollTrigger);
 
-    let activeCard = 0;
+    }
 
 
-    cards.forEach(
-      (_, i) => {
+    /* =========================================================
+       MAGNETIC BUTTONS
+       ========================================================= */
 
-        const dot =
-          document.createElement(
-            "button"
-          );
+    const magneticButtons =
+      $$(".magnetic-button, .magnetic-trigger");
 
-        dot.type =
-          "button";
 
-        dot.className =
-          "carousel-dot";
+    if (!reducedMotion) {
 
-        dot.setAttribute(
-          "aria-label",
-          `Показать изображение ${i + 1}`
+      magneticButtons.forEach(button => {
+
+        let xTo = gsap.quickTo(
+          button,
+          "x",
+          {
+            duration: .45,
+            ease: "power3.out"
+          }
         );
 
-        dot.addEventListener(
-          "click",
+        let yTo = gsap.quickTo(
+          button,
+          "y",
+          {
+            duration: .45,
+            ease: "power3.out"
+          }
+        );
+
+
+        button.addEventListener(
+          "pointermove",
+          event => {
+
+            if (
+              event.pointerType === "touch"
+            ) {
+              return;
+            }
+
+
+            const rect =
+              button.getBoundingClientRect();
+
+
+            const x =
+              event.clientX -
+              rect.left -
+              rect.width / 2;
+
+
+            const y =
+              event.clientY -
+              rect.top -
+              rect.height / 2;
+
+
+            xTo(x * .18);
+            yTo(y * .18);
+
+          }
+        );
+
+
+        button.addEventListener(
+          "pointerleave",
           () => {
 
-            activeCard = i;
-
-            renderCards();
+            xTo(0);
+            yTo(0);
 
           }
         );
 
-        dots.append(dot);
+      });
+
+    }
+
+
+    /* =========================================================
+       HERO INTRO
+       ========================================================= */
+
+    if (
+      !reducedMotion &&
+      window.gsap
+    ) {
+
+      const heroElements =
+        gsap.utils.toArray(
+          ".hero .eyebrow, .hero-title span, .hero-subtitle, .hero-actions"
+        );
+
+
+      gsap.from(heroElements, {
+
+        y: 50,
+        opacity: 0,
+
+        duration: 1.2,
+
+        stagger: .08,
+
+        ease: "power4.out",
+
+        delay: .15
+
+      });
+
+    }
+
+
+    /* =========================================================
+       AMBIENT PARALLAX
+       ========================================================= */
+
+    if (!reducedMotion) {
+
+      window.addEventListener(
+        "pointermove",
+        event => {
+
+          if (
+            event.pointerType === "touch"
+          ) {
+            return;
+          }
+
+
+          const x =
+            event.clientX /
+            window.innerWidth -
+            .5;
+
+
+          const y =
+            event.clientY /
+            window.innerHeight -
+            .5;
+
+
+          const orb1 =
+            $(".ambient-orb.one");
+
+
+          const orb2 =
+            $(".ambient-orb.two");
+
+
+          const orb3 =
+            $(".ambient-orb.three");
+
+
+          if (orb1) {
+
+            orb1.style.transform =
+              `translate3d(${x * 40}px, ${y * 30}px, 0)`;
+
+          }
+
+
+          if (orb2) {
+
+            orb2.style.transform =
+              `translate3d(${x * -30}px, ${y * -25}px, 0)`;
+
+          }
+
+
+          if (orb3) {
+
+            orb3.style.transform =
+              `translate3d(${x * 20}px, ${y * -20}px, 0)`;
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       VIDEO STORY
+       ========================================================= */
+
+    const storySection =
+      $(".video-story");
+
+    const storyVideos =
+      $$(".story-video");
+
+    const darken =
+      $("#video-darken");
+
+    const storyCopy =
+      $("#story-copy");
+
+    const progressFills =
+      [
+        $("#progress-1"),
+        $("#progress-2"),
+        $("#progress-3")
+      ];
+
+
+    const storyData = [
+
+      {
+        title:
+          "AI<br>меняет<br>способ<br>создавать.",
+
+        description:
+          "Мы больше не ограничены только тем, что умеем делать руками. Теперь интерфейсом становится собственное воображение."
+      },
+
+      {
+        title:
+          "ИДЕЯ<br>СТАНОВИТСЯ<br>РЕАЛЬНОСТЬЮ.",
+
+        description:
+          "От первого импульса до визуального результата — AI сокращает дистанцию между тем, что ты придумал, и тем, что можно показать миру."
+      },
+
+      {
+        title:
+          "ТЫ<br>СТАНОВИШЬСЯ<br>СОЗДАТЕЛЕМ.",
+
+        description:
+          "MULTUM соединяет технологии, дизайн, AI и автоматизацию в одну творческую систему."
+      }
+
+    ];
+
+
+    function activateStory(index) {
+
+      storyVideos.forEach(
+        (video, i) => {
+
+          if (i === index) {
+
+            video.classList.add("active");
+
+            if (!reducedMotion) {
+
+              const playPromise =
+                video.play();
+
+              if (
+                playPromise &&
+                typeof playPromise.catch === "function"
+              ) {
+
+                playPromise.catch(
+                  () => {}
+                );
+
+              }
+
+            }
+
+          } else {
+
+            video.classList.remove("active");
+
+            video.pause();
+
+          }
+
+        }
+      );
+
+
+      const data =
+        storyData[index];
+
+
+      if (storyCopy && data) {
+
+        const title =
+          $(".story-title", storyCopy);
+
+        const description =
+          $(".story-description", storyCopy);
+
+        const indexLabel =
+          $(".story-index", storyCopy);
+
+
+        if (title) {
+
+          gsap.killTweensOf(title);
+
+          gsap.to(title, {
+
+            opacity: 0,
+            y: 20,
+
+            duration: .15,
+
+            onComplete: () => {
+
+              title.innerHTML =
+                data.title;
+
+              gsap.to(title, {
+
+                opacity: 1,
+                y: 0,
+
+                duration: .5,
+                ease: "power3.out"
+
+              });
+
+            }
+
+          });
+
+        }
+
+
+        if (description) {
+
+          gsap.killTweensOf(
+            description
+          );
+
+          gsap.to(
+            description,
+            {
+              opacity: 0,
+              y: 10,
+              duration: .12,
+              onComplete: () => {
+
+                description.textContent =
+                  data.description;
+
+                gsap.to(
+                  description,
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: .45
+                  }
+                );
+
+              }
+            }
+          );
+
+        }
+
+
+        if (indexLabel) {
+
+          indexLabel.innerHTML =
+            `<span></span>0${index + 1} / 03`;
+
+        }
 
       }
-    );
+
+    }
 
 
-    function renderCards() {
+    if (
+      storySection &&
+      window.ScrollTrigger &&
+      !reducedMotion
+    ) {
 
-      cards.forEach(
-        (card, i) => {
+      ScrollTrigger.create({
 
-          let r =
-            i - activeCard;
+        trigger: storySection,
 
+        start: "top top",
 
-          if (
-            r >
-            cards.length / 2
-          ) {
+        end: "bottom bottom",
 
-            r -= cards.length;
+        scrub: true,
 
-          }
+        onUpdate: self => {
 
-
-          if (
-            r <
-            -cards.length / 2
-          ) {
-
-            r += cards.length;
-
-          }
+          const p =
+            self.progress;
 
 
-          const d =
-            Math.abs(r);
+          const index =
+            Math.min(
+              2,
+              Math.floor(
+                p * 3
+              )
+            );
+
+
+          activateStory(index);
+
+
+          const local =
+            (p * 3) -
+            index;
+
+
+          progressFills.forEach(
+            (fill, i) => {
+
+              if (!fill) {
+                return;
+              }
+
+
+              let value = 0;
+
+
+              if (i < index) {
+
+                value = 100;
+
+              } else if (
+                i === index
+              ) {
+
+                value =
+                  Math.min(
+                    100,
+                    local * 100
+                  );
+
+              }
+
+
+              fill.style.width =
+                `${value}%`;
+
+            }
+          );
 
 
           /*
-            Вертикальная композиция.
-            Центральная картинка большая.
-            Остальные уходят вверх/вниз.
+             VIDEO DARKEN
+
+             0% -> 0%
+             55% -> 55%
+
+             The interface itself does not
+             get darkened. Only the video layer.
           */
 
-          card.style.setProperty(
-            "--x",
-            `${Math.sin(r * .08) * 5}px`
-          );
-
-          card.style.setProperty(
-            "--y",
-            `${r * 155}px`
-          );
-
-          card.style.setProperty(
-            "--z",
-            `${d === 0 ? 0 : -100 * d}px`
-          );
-
-          card.style.setProperty(
-            "--rotateX",
-            `${-r * 11}deg`
-          );
-
-          card.style.setProperty(
-            "--rotateY",
-            `${r * 2}deg`
-          );
-
-          card.style.setProperty(
-            "--scale",
-            d === 0
-              ? "1"
-              : d === 1
-                ? ".82"
-                : ".66"
-          );
-
-
-          card.style.opacity =
-            d > 2
-              ? "0"
-              : d === 0
-                ? "1"
-                : ".48";
-
-
-          card.style.filter =
-            d
-              ? "brightness(.72)"
-              : "brightness(1)";
-
-
-          card.style.zIndex =
-            String(
-              20 - d
+          const darkAmount =
+            Math.min(
+              .55,
+              p * .55
             );
 
 
-          card.style.pointerEvents =
-            d
-              ? "none"
-              : "auto";
+          if (darken) {
+
+            darken.style.background =
+              `rgba(0,0,0,${darkAmount})`;
+
+          }
 
         }
-      );
 
-
-      [
-        ...dots.children
-      ].forEach(
-        (dot, i) => {
-
-          dot.classList.toggle(
-            "active",
-            i === activeCard
-          );
-
-        }
-      );
+      });
 
     }
-
-
-    document
-      .getElementById("aiPrev")
-      .addEventListener(
-        "click",
-        () => {
-
-          activeCard =
-            (
-              activeCard -
-              1 +
-              cards.length
-            ) %
-            cards.length;
-
-          renderCards();
-
-        }
-      );
-
-
-    document
-      .getElementById("aiNext")
-      .addEventListener(
-        "click",
-        () => {
-
-          activeCard =
-            (
-              activeCard +
-              1
-            ) %
-            cards.length;
-
-          renderCards();
-
-        }
-      );
-
-
-    renderCards();
 
 
     /* =========================================================
-       DIRECTIONS CAROUSEL
+       CREATE CAROUSEL
        ========================================================= */
 
-    const directionsWindow =
-      document.getElementById(
-        "directionsWindow"
+    const createData = [
+
+      {
+        image:
+          "./01-ai-character.png",
+
+        label:
+          "AI CHARACTER",
+
+        title:
+          "CHARACTER",
+
+        text:
+          "Создавай собственных персонажей, визуальные образы и цифровые идентичности, которые можно развивать дальше."
+      },
+
+      {
+        image:
+          "./02-ai-product.png",
+
+        label:
+          "AI PRODUCT",
+
+        title:
+          "PRODUCT",
+
+        text:
+          "Превращай идеи в визуальные концепции продуктов, кампаний, упаковки и digital-презентаций."
+      },
+
+      {
+        image:
+          "./03-ai-3d.png",
+
+        label:
+          "AI 3D",
+
+        title:
+          "3D",
+
+        text:
+          "Исследуй объём, пространство, объекты и цифровые среды — от первых концептов до визуальных сцен."
+      },
+
+      {
+        image:
+          "./04-ai-visual.png",
+
+        label:
+          "AI VISUAL",
+
+        title:
+          "VISUAL",
+
+        text:
+          "Создавай изображения, арт-дирекцию, рекламные концепции и визуальные истории с помощью AI."
+      },
+
+      {
+        image:
+          "./05-ai-automation.png",
+
+        label:
+          "AI AUTOMATION",
+
+        title:
+          "AUTOMATION",
+
+        text:
+          "Собирай процессы, которые работают сами: AI-инструменты, агенты, автоматизации и собственные workflows."
+      }
+
+    ];
+
+
+    const createTabs =
+      $$(".create-tab");
+
+    const createImage =
+      $("#create-image");
+
+    const createLabel =
+      $("#create-label");
+
+    const createTitle =
+      $("#create-title");
+
+    const createText =
+      $("#create-text");
+
+    const createNumber =
+      $(".create-number");
+
+
+    function setCreate(index) {
+
+      const data =
+        createData[index];
+
+      if (!data) {
+        return;
+      }
+
+
+      createTabs.forEach(
+        (tab, i) => {
+
+          tab.classList.toggle(
+            "active",
+            i === index
+          );
+
+        }
       );
 
-    const directionsTrack =
-      document.getElementById(
-        "directionsTrack"
+
+      if (!createImage) {
+        return;
+      }
+
+
+      gsap.to(
+        [
+          createImage,
+          createLabel,
+          createTitle,
+          createText
+        ],
+        {
+          opacity: 0,
+          y: 12,
+          duration: .18,
+          ease: "power2.out",
+
+          onComplete: () => {
+
+            createImage.src =
+              data.image;
+
+            createImage.alt =
+              data.title;
+
+
+            createLabel.textContent =
+              data.label;
+
+            createTitle.textContent =
+              data.title;
+
+            createText.textContent =
+              data.text;
+
+            createNumber.textContent =
+              `0${index + 1} / 05`;
+
+
+            gsap.to(
+              [
+                createImage,
+                createLabel,
+                createTitle,
+                createText
+              ],
+              {
+                opacity: 1,
+                y: 0,
+                duration: .55,
+                stagger: .035,
+                ease: "power3.out"
+              }
+            );
+
+          }
+
+        }
       );
-
-    let directionX = 0;
-
-
-    function setDirections(value) {
-
-      const min =
-        Math.min(
-          0,
-          directionsWindow.clientWidth -
-          directionsTrack.scrollWidth
-        );
-
-      directionX =
-        clamp(
-          value,
-          min,
-          0
-        );
-
-      directionsTrack.style.transform =
-        `translateX(${directionX}px)`;
 
     }
 
 
-    document
-      .getElementById("directionsPrev")
-      .addEventListener(
-        "click",
-        () => {
+    createTabs.forEach(
+      (tab, index) => {
 
-          setDirections(
-            directionX + 300
-          );
+        tab.addEventListener(
+          "click",
+          () => {
+
+            setCreate(index);
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       PROGRAM DATA
+       ========================================================= */
+
+    const programData = {
+
+      BASIC: [
+
+        "Основы работы с AI",
+
+        "Понимание современных AI-инструментов",
+
+        "Создание первых AI-результатов",
+
+        "AI для визуального контента",
+
+        "Рабочая система для дальнейшего роста"
+
+      ],
+
+
+      ULTRA: [
+
+        "Расширенная работа с AI",
+
+        "AI для контента и визуального продакшна",
+
+        "Персонажи и визуальные системы",
+
+        "AI-видео и creative workflows",
+
+        "Создание собственных digital-решений",
+
+        "Автоматизация повторяющихся задач"
+
+      ],
+
+
+      ULTIMATE: [
+
+        "Полная AI creative ecosystem",
+
+        "Продвинутые creative workflows",
+
+        "AI-видео, 3D и digital environments",
+
+        "Сайты и цифровые продукты",
+
+        "AI-агенты и автоматизация",
+
+        "Собственные AI-powered системы",
+
+        "Системное использование AI для бизнеса и творчества"
+
+      ]
+
+    };
+
+
+    /* =========================================================
+       PROGRAM MODAL
+       ========================================================= */
+
+    const modal =
+      $("#program-modal");
+
+    const modalTitle =
+      $("#modal-title");
+
+    const modalKicker =
+      $("#modal-kicker");
+
+    const modalList =
+      $("#modal-list");
+
+    const modalClose =
+      $("#modal-close");
+
+
+    function openProgram(name) {
+
+      if (!modal) {
+        return;
+      }
+
+
+      const list =
+        programData[name] || [];
+
+
+      modalTitle.textContent =
+        name;
+
+      modalKicker.textContent =
+        `${name} PROGRAM`;
+
+
+      modalList.innerHTML =
+        list
+          .map(
+            item =>
+              `<li>${item}</li>`
+          )
+          .join("");
+
+
+      modal.classList.add("open");
+
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      document.body.classList.add(
+        "modal-open"
+      );
+
+    }
+
+
+    function closeProgram() {
+
+      if (!modal) {
+        return;
+      }
+
+
+      modal.classList.remove("open");
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      document.body.classList.remove(
+        "modal-open"
+      );
+
+    }
+
+
+    $$("[data-open-program]")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            openProgram(
+              button.dataset.openProgram
+            );
+
+          }
+        );
+
+      });
+
+
+    if (modalClose) {
+
+      modalClose.addEventListener(
+        "click",
+        closeProgram
+      );
+
+    }
+
+
+    if (modal) {
+
+      modal.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target === modal
+          ) {
+
+            closeProgram();
+
+          }
 
         }
       );
 
-
-    document
-      .getElementById("directionsNext")
-      .addEventListener(
-        "click",
-        () => {
-
-          setDirections(
-            directionX - 300
-          );
-
-        }
-      );
+    }
 
 
-    let dragging = false;
-
-    let dragX = 0;
-
-    let dragStart = 0;
-
-
-    directionsWindow.addEventListener(
-      "pointerdown",
+    document.addEventListener(
+      "keydown",
       event => {
 
-        dragging = true;
+        if (
+          event.key === "Escape"
+        ) {
 
-        dragX =
-          event.clientX;
+          closeProgram();
 
-        dragStart =
-          directionX;
-
-        directionsWindow.setPointerCapture(
-          event.pointerId
-        );
-
-      }
-    );
-
-
-    directionsWindow.addEventListener(
-      "pointermove",
-      event => {
-
-        if (!dragging) {
-          return;
         }
-
-        setDirections(
-          dragStart +
-          event.clientX -
-          dragX
-        );
-
-      }
-    );
-
-
-    directionsWindow.addEventListener(
-      "pointerup",
-      () => {
-
-        dragging = false;
-
-      }
-    );
-
-
-    directionsWindow.addEventListener(
-      "pointercancel",
-      () => {
-
-        dragging = false;
-
-      }
-    );
-
-
-    window.addEventListener(
-      "resize",
-      () => {
-
-        setDirections(
-          directionX
-        );
 
       }
     );
@@ -3416,80 +4391,867 @@
        FAQ
        ========================================================= */
 
-    const faqItems =
-      [
-        ...document.querySelectorAll(
-          ".faq-item"
-        )
-      ];
-
-
-    faqItems.forEach(
-      item => {
-
-        const button =
-          item.querySelector(
-            ".faq-question"
-          );
-
-        const answer =
-          item.querySelector(
-            ".faq-answer"
-          );
-
+    $$(".faq-question")
+      .forEach(button => {
 
         button.addEventListener(
           "click",
           () => {
 
-            const open =
-              !item.classList.contains(
+            const item =
+              button.closest(
+                ".faq-item"
+              );
+
+
+            if (!item) {
+              return;
+            }
+
+
+            const answer =
+              $(".faq-answer", item);
+
+
+            const isOpen =
+              item.classList.contains(
                 "open"
               );
 
 
-            faqItems.forEach(
-              other => {
+            $$(".faq-item")
+              .forEach(
+                other => {
 
-                other.classList.remove(
-                  "open"
-                );
-
-                other
-                  .querySelector(
-                    ".faq-question"
-                  )
-                  .setAttribute(
-                    "aria-expanded",
-                    "false"
+                  other.classList.remove(
+                    "open"
                   );
 
-                other
-                  .querySelector(
-                    ".faq-answer"
-                  )
-                  .style.maxHeight =
-                    "0px";
+                  const otherAnswer =
+                    $(".faq-answer", other);
 
-              }
-            );
+                  if (otherAnswer) {
+
+                    otherAnswer.style.maxHeight =
+                      null;
+
+                  }
+
+                }
+              );
 
 
-            if (open) {
+            if (!isOpen) {
 
               item.classList.add(
                 "open"
               );
 
-              button.setAttribute(
-                "aria-expanded",
-                "true"
-              );
 
               answer.style.maxHeight =
-                `${answer.scrollHeight}px`;
+                answer.scrollHeight +
+                "px";
 
             }
+
+          }
+        );
+
+      });
+
+
+    /* =========================================================
+       FORM
+       ========================================================= */
+
+    const leadForm =
+      $("#lead-form");
+
+
+    if (leadForm) {
+
+      leadForm.addEventListener(
+        "submit",
+        event => {
+
+          event.preventDefault();
+
+
+          const submit =
+            $(".form-submit", leadForm);
+
+
+          const originalText =
+            submit.textContent;
+
+
+          submit.textContent =
+            "ЗАЯВКА ПРИНЯТА";
+
+
+          submit.style.background =
+            "#f2cfd2";
+
+
+          setTimeout(
+            () => {
+
+              leadForm.reset();
+
+              submit.textContent =
+                originalText;
+
+              submit.style.background =
+                "";
+
+            },
+            2200
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       SCROLL REVEALS
+       ========================================================= */
+
+    if (
+      window.gsap &&
+      window.ScrollTrigger &&
+      !reducedMotion
+    ) {
+
+      gsap.utils.toArray(
+        ".section-head, .program-card, .founder-card, .lead-box, .faq-list"
+      ).forEach(
+        element => {
+
+          gsap.from(
+            element,
+            {
+
+              y: 70,
+              opacity: 0,
+
+              duration: 1,
+
+              ease: "power3.out",
+
+              scrollTrigger: {
+
+                trigger: element,
+
+                start: "top 85%",
+
+                once: true
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+
+      gsap.to(
+        ".manifesto-title",
+        {
+
+          y: -50,
+
+          ease: "none",
+
+          scrollTrigger: {
+
+            trigger: ".manifesto",
+
+            start: "top bottom",
+
+            end: "bottom top",
+
+            scrub: true
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       THREE.JS NEURAL SCENE
+       ========================================================= */
+
+    let renderer = null;
+    let scene = null;
+    let camera = null;
+    let particleSystem = null;
+    let animationFrame = null;
+
+    const canvas =
+      document.getElementById(
+        "neural-canvas"
+      );
+
+
+    function shouldDisableWebGL() {
+
+      const width =
+        window.innerWidth;
+
+      const deviceMemory =
+        navigator.deviceMemory || 4;
+
+      const cores =
+        navigator.hardwareConcurrency || 4;
+
+
+      if (reducedMotion) {
+        return true;
+      }
+
+
+      /*
+        Keep mobile Safari lightweight.
+      */
+
+      if (
+        width < 700 &&
+        (
+          deviceMemory <= 2 ||
+          cores <= 4
+        )
+      ) {
+
+        return true;
+
+      }
+
+
+      return false;
+
+    }
+
+
+    function initNeuralScene() {
+
+      if (
+        !canvas ||
+        !window.THREE
+      ) {
+
+        return;
+
+      }
+
+
+      if (shouldDisableWebGL()) {
+
+        document.body.classList.add(
+          "webgl-disabled"
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        renderer =
+          new THREE.WebGLRenderer({
+
+            canvas,
+
+            alpha: true,
+
+            antialias:
+              window.innerWidth > 900,
+
+            powerPreference:
+              "default"
+
+          });
+
+
+        renderer.setPixelRatio(
+          Math.min(
+            window.devicePixelRatio || 1,
+            window.innerWidth < 900
+              ? 1.25
+              : 1.6
+          )
+        );
+
+
+        renderer.setSize(
+          window.innerWidth,
+          window.innerHeight,
+          false
+        );
+
+
+        scene =
+          new THREE.Scene();
+
+
+        camera =
+          new THREE.PerspectiveCamera(
+            45,
+            window.innerWidth /
+              window.innerHeight,
+            .1,
+            100
+          );
+
+
+        camera.position.z =
+          7;
+
+
+        /*
+          Particle count intentionally kept
+          moderate for Safari.
+        */
+
+        const isMobile =
+          window.innerWidth < 800;
+
+
+        const count =
+          isMobile
+            ? 700
+            : 1400;
+
+
+        const positions =
+          new Float32Array(
+            count * 3
+          );
+
+
+        const scales =
+          new Float32Array(
+            count
+          );
+
+
+        for (
+          let i = 0;
+          i < count;
+          i++
+        ) {
+
+          const radius =
+            2.2 +
+            Math.random() * 2.8;
+
+
+          const theta =
+            Math.random() *
+            Math.PI * 2;
+
+
+          const phi =
+            Math.acos(
+              2 * Math.random() - 1
+            );
+
+
+          const organic =
+            1 +
+            Math.sin(
+              theta * 3 +
+              phi * 2
+            ) * .18;
+
+
+          positions[
+            i * 3
+          ] =
+            Math.sin(phi) *
+            Math.cos(theta) *
+            radius *
+            organic;
+
+
+          positions[
+            i * 3 + 1
+          ] =
+            Math.cos(phi) *
+            radius *
+            organic;
+
+
+          positions[
+            i * 3 + 2
+          ] =
+            Math.sin(phi) *
+            Math.sin(theta) *
+            radius *
+            organic;
+
+
+          scales[i] =
+            .4 +
+            Math.random() *
+            .9;
+
+        }
+
+
+        const geometry =
+          new THREE.BufferGeometry();
+
+
+        geometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(
+            positions,
+            3
+          )
+        );
+
+
+        geometry.setAttribute(
+          "aScale",
+          new THREE.BufferAttribute(
+            scales,
+            1
+          )
+        );
+
+
+        /*
+          Soft particle texture generated
+          in canvas — no external texture.
+        */
+
+        const particleCanvas =
+          document.createElement(
+            "canvas"
+          );
+
+
+        particleCanvas.width =
+          64;
+
+        particleCanvas.height =
+          64;
+
+
+        const context =
+          particleCanvas.getContext(
+            "2d"
+          );
+
+
+        if (context) {
+
+          const gradient =
+            context.createRadialGradient(
+              32,
+              32,
+              0,
+              32,
+              32,
+              32
+            );
+
+
+          gradient.addColorStop(
+            0,
+            "rgba(255,255,255,1)"
+          );
+
+
+          gradient.addColorStop(
+            .25,
+            "rgba(255,255,255,.75)"
+          );
+
+
+          gradient.addColorStop(
+            1,
+            "rgba(255,255,255,0)"
+          );
+
+
+          context.fillStyle =
+            gradient;
+
+
+          context.fillRect(
+            0,
+            0,
+            64,
+            64
+          );
+
+        }
+
+
+        const texture =
+          new THREE.CanvasTexture(
+            particleCanvas
+          );
+
+
+        const material =
+          new THREE.PointsMaterial({
+
+            color:
+              new THREE.Color(
+                "#f2cfd2"
+              ),
+
+            size:
+              isMobile
+                ? .025
+                : .035,
+
+            map:
+              texture,
+
+            transparent: true,
+
+            opacity: .72,
+
+            depthWrite: false,
+
+            blending:
+              THREE.AdditiveBlending
+
+          });
+
+
+        particleSystem =
+          new THREE.Points(
+            geometry,
+            material
+          );
+
+
+        scene.add(
+          particleSystem
+        );
+
+
+        /*
+          Inner core
+        */
+
+        const coreGeometry =
+          new THREE.IcosahedronGeometry(
+            1.5,
+            2
+          );
+
+
+        const coreMaterial =
+          new THREE.MeshBasicMaterial({
+
+            color:
+              new THREE.Color(
+                "#f2cfd2"
+              ),
+
+            transparent: true,
+
+            opacity: .025,
+
+            wireframe: true
+
+          });
+
+
+        const core =
+          new THREE.Mesh(
+            coreGeometry,
+            coreMaterial
+          );
+
+
+        scene.add(core);
+
+
+        /*
+          Pointer state
+        */
+
+        const pointer = {
+          x: 0,
+          y: 0,
+          tx: 0,
+          ty: 0
+        };
+
+
+        window.addEventListener(
+          "pointermove",
+          event => {
+
+            if (
+              event.pointerType === "touch"
+            ) {
+              return;
+            }
+
+
+            pointer.tx =
+              (
+                event.clientX /
+                window.innerWidth -
+                .5
+              ) * 2;
+
+
+            pointer.ty =
+              (
+                event.clientY /
+                window.innerHeight -
+                .5
+              ) * 2;
+
+          },
+          {
+            passive: true
+          }
+        );
+
+
+        /*
+          Animation
+        */
+
+        const clock =
+          new THREE.Clock();
+
+
+        function animate() {
+
+          animationFrame =
+            requestAnimationFrame(
+              animate
+            );
+
+
+          const elapsed =
+            clock.getElapsedTime();
+
+
+          pointer.x +=
+            (
+              pointer.tx -
+              pointer.x
+            ) * .025;
+
+
+          pointer.y +=
+            (
+              pointer.ty -
+              pointer.y
+            ) * .025;
+
+
+          particleSystem.rotation.y =
+            elapsed * .025 +
+            pointer.x * .12;
+
+
+          particleSystem.rotation.x =
+            Math.sin(
+              elapsed * .12
+            ) * .035 +
+            pointer.y * .08;
+
+
+          core.rotation.x =
+            elapsed * .05;
+
+
+          core.rotation.y =
+            elapsed * .07;
+
+
+          core.position.x =
+            pointer.x * .18;
+
+
+          core.position.y =
+            -pointer.y * .12;
+
+
+          /*
+            Subtle breathing.
+          */
+
+          const scale =
+            1 +
+            Math.sin(
+              elapsed * .55
+            ) * .025;
+
+
+          particleSystem.scale.set(
+            scale,
+            scale,
+            scale
+          );
+
+
+          renderer.render(
+            scene,
+            camera
+          );
+
+        }
+
+
+        animate();
+
+
+        /*
+          Resize
+        */
+
+        window.addEventListener(
+          "resize",
+          () => {
+
+            if (!renderer || !camera) {
+              return;
+            }
+
+
+            camera.aspect =
+              window.innerWidth /
+              window.innerHeight;
+
+
+            camera.updateProjectionMatrix();
+
+
+            renderer.setPixelRatio(
+              Math.min(
+                window.devicePixelRatio || 1,
+                window.innerWidth < 900
+                  ? 1.25
+                  : 1.6
+              )
+            );
+
+
+            renderer.setSize(
+              window.innerWidth,
+              window.innerHeight,
+              false
+            );
+
+          }
+        );
+
+
+      } catch (error) {
+
+        console.warn(
+          "MULTUM WebGL disabled:",
+          error
+        );
+
+
+        document.body.classList.add(
+          "webgl-disabled"
+        );
+
+      }
+
+    }
+
+
+    initNeuralScene();
+
+
+    /* =========================================================
+       PAUSE WEBGL WHEN TAB IS HIDDEN
+       ========================================================= */
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+
+        if (
+          document.hidden &&
+          animationFrame
+        ) {
+
+          cancelAnimationFrame(
+            animationFrame
+          );
+
+          animationFrame = null;
+
+        } else if (
+          !document.hidden &&
+          renderer &&
+          !animationFrame
+        ) {
+
+          /*
+            Lightweight restart.
+          */
+
+          const loop = () => {
+
+            animationFrame =
+              requestAnimationFrame(
+                loop
+              );
+
+            if (
+              renderer &&
+              scene &&
+              camera
+            ) {
+
+              renderer.render(
+                scene,
+                camera
+              );
+
+            }
+
+          };
+
+
+          loop();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================================
+       VIDEO AUTOPLAY FALLBACK
+       ========================================================= */
+
+    storyVideos.forEach(
+      video => {
+
+        video.addEventListener(
+          "loadedmetadata",
+          () => {
+
+            /*
+              Videos are intentionally muted
+              so browsers can autoplay.
+            */
 
           }
         );
@@ -3499,59 +5261,78 @@
 
 
     /* =========================================================
-       REFERRAL
+       INITIAL STATE
        ========================================================= */
 
-    document
-      .getElementById("referralSubmit")
-      .addEventListener(
-        "click",
-        () => {
-
-          const input =
-            document.getElementById(
-              "referralInput"
-            );
-
-          if (
-            !input.value.trim()
-          ) {
-
-            input.focus();
-
-            return;
-
-          }
-
-          alert(
-            "Спасибо! Ваш реферальный код принят."
-          );
-
-        }
-      );
+    setCreate(0);
 
 
     /* =========================================================
-       SIGNUP
+       SMOOTH ANCHOR SCROLL
        ========================================================= */
 
-    document
-      .getElementById("signupForm")
-      .addEventListener(
-        "submit",
-        event => {
+    $$('a[href^="#"]')
+      .forEach(link => {
 
-          event.preventDefault();
+        link.addEventListener(
+          "click",
+          event => {
 
-          alert(
-            "Заявка отправлена."
-          );
+            const href =
+              link.getAttribute(
+                "href"
+              );
 
-        }
-      );
+
+            if (
+              !href ||
+              href === "#"
+            ) {
+              return;
+            }
+
+
+            const target =
+              document.querySelector(
+                href
+              );
+
+
+            if (!target) {
+              return;
+            }
+
+
+            event.preventDefault();
+
+
+            if (lenis) {
+
+              lenis.scrollTo(
+                target,
+                {
+                  offset: -30,
+                  duration: 1.1
+                }
+              );
+
+            } else {
+
+              target.scrollIntoView({
+                behavior:
+                  reducedMotion
+                    ? "auto"
+                    : "smooth"
+              });
+
+            }
+
+          }
+        );
+
+      });
 
   </script>
 
 </body>
-
 </html>
