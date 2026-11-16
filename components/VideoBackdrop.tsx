@@ -40,8 +40,8 @@ export default function VideoBackdrop() {
         return;
       }
 
-      // Three distinct Bloom scenes:
-      // 01 Flora -> 02 hand -> 03 portal/hole.
+      // Verified scene order from the supplied Bloom assets/posters:
+      // 01 Flora -> 02 hand -> 03 black hole / portal.
       // Each scene gets its own scroll segment; we do NOT blend the scenes,
       // so flowers from Flora cannot bleed into the portal scene.
       const segment = Math.min(2.999999, scrollProgress * 3);
@@ -57,7 +57,9 @@ export default function VideoBackdrop() {
 
         if (i === active) targets[i] = target;
 
-        rendered[i] += (targets[i] - rendered[i]) * 0.38;
+        // Faster response without snapping: the film follows the Lenis-smoothed scroll
+        // with a short critically-damped interpolation.
+        rendered[i] += (targets[i] - rendered[i]) * 0.52;
 
         const opacity = i === active ? 1 : 0;
         if (video.style.opacity !== String(opacity)) {
