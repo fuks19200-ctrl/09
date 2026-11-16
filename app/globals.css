@@ -810,3 +810,72 @@ body{
   background:radial-gradient(ellipse at 52% 42%,transparent 26%,rgba(0,0,0,.08) 68%,rgba(0,0,0,.32) 100%) !important;
 }
 .hero__visual{display:none !important}
+
+
+/* =========================================================
+   BLOOM / TRUE FULL-SCREEN BACKGROUND
+   The reference girl is the actual environment of MULTUM.AI.
+   Keep the image/video behind the interface, never behind <body>.
+   ========================================================= */
+html{
+  background:#090609 !important;
+}
+body{
+  background:transparent !important;
+  position:relative;
+  isolation:isolate;
+}
+.backdrop{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:0 !important;
+  display:block !important;
+  overflow:hidden !important;
+  background:#090609 url('/images/bg-1.jpg') center center / cover no-repeat !important;
+  pointer-events:none !important;
+}
+.backdrop__video{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+  opacity:1 !important;
+  filter:saturate(1.08) contrast(1.03) brightness(.94) !important;
+  transform:scale(1.015) !important;
+}
+.backdrop__shade{
+  background:
+    linear-gradient(90deg,rgba(5,3,6,.34) 0%,rgba(5,3,6,.06) 42%,rgba(5,3,6,.04) 72%,rgba(5,3,6,.22) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.04) 0%,transparent 45%,rgba(0,0,0,.22) 100%) !important;
+}
+.backdrop__vignette{
+  background:
+    radial-gradient(ellipse 72% 82% at 52% 43%,transparent 28%,rgba(0,0,0,.08) 68%,rgba(0,0,0,.30) 100%) !important;
+}
+.backdrop__grain{
+  opacity:.025 !important;
+}
+
+/* Content sits above the living background instead of covering it. */
+main,
+.footer{
+  position:relative;
+  z-index:1;
+}
+.site-header{
+  z-index:50 !important;
+}
+
+/* Let the girl remain visible through the interface. */
+.signal-strip{
+  background:rgba(7,7,8,.18) !important;
+}
+.section--contact .lead-form,
+.lead-form{
+  background:rgba(12,12,14,.40) !important;
+}
+.glass-card{
+  background:linear-gradient(135deg,rgba(27,27,31,.38),rgba(10,10,12,.20)) !important;
+}
