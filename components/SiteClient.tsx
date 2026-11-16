@@ -123,7 +123,6 @@ export default function SiteClient() {
           <div className="hero__visual" aria-hidden="true">
             <div className="hero-video-frame">
               <video className="hero-reference-video" autoPlay muted loop playsInline preload="auto" poster="/images/bg-1.jpg">
-                <source src="/videos/mobile/bloom-bg-1.mp4" media="(max-width: 820px)" type="video/mp4" />
                 <source src="/videos/bloom-bg-1.mp4" type="video/mp4" />
               </video>
               <div className="hero-video-glass" />
@@ -181,7 +180,6 @@ export default function SiteClient() {
           <div className="hand-composition living-composition" data-reveal>
             <div className="living-figure" aria-hidden="true">
               <video className="living-figure__video" autoPlay muted loop playsInline preload="metadata" poster="/images/bg-2.jpg">
-                <source src="/videos/mobile/bloom-bg-2.mp4" media="(max-width: 820px)" type="video/mp4" />
                 <source src="/videos/bloom-bg-2.mp4" type="video/mp4" />
               </video>
               <div className="living-figure__veil" />
