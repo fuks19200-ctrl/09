@@ -43,8 +43,13 @@ export default function LenisProvider() {
       autoRaf: false,
     });
 
-    const onScroll = () => {
+    const onScroll = (event: { scroll: number }) => {
       ScrollTrigger.update();
+      window.dispatchEvent(
+        new CustomEvent('multum-lenis-scroll', {
+          detail: { scroll: event.scroll },
+        }),
+      );
     };
 
     let rafId = 0;
