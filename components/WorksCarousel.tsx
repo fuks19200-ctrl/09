@@ -157,8 +157,7 @@ export default function WorksCarousel() {
           transition: transform .5s cubic-bezier(.22,.8,.24,1), filter .45s ease !important;
         }
         .work-tile:hover,
-        .work-tile:focus-visible,
-        .work-tile.is-active {
+        .work-tile:focus-visible {
           transform: translateY(-7px);
         }
         .work-tile:hover .work-tile__art,
@@ -201,8 +200,7 @@ export default function WorksCarousel() {
           transform-origin: center;
         }
         .work-tile:hover .work-tile__spark,
-        .work-tile:focus-visible .work-tile__spark,
-        .work-tile.is-active .work-tile__spark {
+        .work-tile:focus-visible .work-tile__spark {
           animation-duration: 1.5s;
           transform: scale(1.12);
         }
@@ -212,9 +210,9 @@ export default function WorksCarousel() {
         }
 
         .work-tile:hover,
-        .work-tile:focus-visible,
-        .work-tile.is-active {
-          box-shadow: 0 34px 90px rgba(72,48,103,.18), 0 0 0 1px rgba(155,127,234,.14), inset 0 1px 0 rgba(255,255,255,.95) !important;
+        .work-tile:focus-visible {
+          box-shadow: 0 24px 70px rgba(77,58,105,.14) !important;
+          border-color: transparent !important;
         }
       `}</style>
 
