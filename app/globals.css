@@ -1563,16 +1563,15 @@ main,.footer{position:relative;z-index:1;}
   .works-gallery__grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .work-tile--1,.work-tile--2,.work-tile--3,.work-tile--4,.work-tile--5{
     grid-column:span 1;
-    aspect-ratio:1 / 1.02;
+    aspect-ratio:1 / 1 !important;
   }
-  .work-tile--4,.work-tile--5{aspect-ratio:1 / 1.02;}
   .work-tile__content{opacity:1;transform:none;}
 }
 @media(max-width:600px){
   .works-gallery__grid{grid-template-columns:1fr;gap:12px;}
   .work-tile--1,.work-tile--2,.work-tile--3,.work-tile--4,.work-tile--5{
     grid-column:span 1;
-    aspect-ratio:1 / .9;
+    aspect-ratio:1 / 1 !important;
   }
   .work-tile__content{
     left:14px;right:14px;bottom:14px;
