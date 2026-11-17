@@ -42,6 +42,8 @@ export default function VideoBackdrop() {
     let videoFrameCallbacks: number[] = [0, 0, 0];
     let scrollStopTimer = 0;
     let scrolling = false;
+    let lastSeekAt = 0;
+    let lastSeekProgress = -1;
 
     const clamp = (value: number, min = 0, max = 1) =>
       Math.max(min, Math.min(max, value));
@@ -107,10 +109,32 @@ export default function VideoBackdrop() {
       return 1;
     };
 
+    const syncVideoToScroll = () => {
+      if (mobile.matches || reducedMotion.matches || !loaded[activeIndex]) return;
+      const video = videos[activeIndex];
+      if (!video.duration || !Number.isFinite(video.duration)) return;
+      const now = performance.now();
+      if (now - lastSeekAt < 32 && Math.abs(progress - lastSeekProgress) < 0.0025) return;
+      const start = clipStartOffset[activeIndex];
+      const end = Math.max(start + 0.1, video.duration);
+      const local = activeIndex === 0
+        ? clamp(progress / (1 / 3))
+        : activeIndex === 1
+          ? clamp((progress - 1 / 3) / (1 / 3))
+          : clamp((progress - 2 / 3) / (1 / 3));
+      const nextTime = start + (end - start) * local;
+      if (Math.abs(video.currentTime - nextTime) > 0.045) {
+        try { video.currentTime = nextTime; } catch {}
+      }
+      lastSeekAt = now;
+      lastSeekProgress = progress;
+      dirty = true;
+    };
+
     const applySmoothMotion = () => {
-      // The scroll position controls only a gentle camera move. We never seek
-      // the video to a scroll frame, because currentTime scrubbing is what
-      // creates the visible "Nokia / frame-by-frame" stutter.
+      // Scroll drives the film timeline. The canvas also gets a very subtle
+      // camera drift so the background feels alive without stuttering.
+      syncVideoToScroll();
       const scale = 1.045 + progress * 0.035;
       const x = (progress - 0.5) * -16;
       const y = (progress - 0.5) * -8;
@@ -128,6 +152,10 @@ export default function VideoBackdrop() {
       dirty = true;
       scheduleDraw();
       applySmoothMotion();
+      if (Math.abs(diff) >= 0.00008) {
+        dirty = true;
+        scheduleDraw();
+      }
     };
 
     const draw = () => {
@@ -248,7 +276,7 @@ export default function VideoBackdrop() {
       const video = videos[index];
       video.preload = 'auto';
       video.load();
-      if (scrolling) void video.play().catch(() => {});
+      video.pause();
       scheduleVideoFrame(index);
     };
 
@@ -278,7 +306,8 @@ export default function VideoBackdrop() {
         const startAt = clipStartOffset[nextIndex];
         const setStart = () => {
           try { nextVideo.currentTime = startAt; } catch {}
-          if (scrolling) void nextVideo.play().catch(() => {});
+          nextVideo.pause();
+          syncVideoToScroll();
           dirty = true;
           scheduleDraw();
           scheduleVideoFrame(nextIndex);
@@ -328,8 +357,8 @@ export default function VideoBackdrop() {
 
       if (!mobile.matches && !reducedMotion.matches) {
         ensureVideoLoaded(activeIndex);
-        void videos[activeIndex].play().catch(() => {});
-        scheduleVideoFrame(activeIndex);
+        videos[activeIndex].pause();
+        syncVideoToScroll();
       }
       scheduleDraw();
 
@@ -382,7 +411,7 @@ export default function VideoBackdrop() {
       video.addEventListener('loadeddata', () => {
         if (index === activeIndex) {
           dirty = true;
-          if (scrolling) void video.play().catch(() => {});
+          syncVideoToScroll();
           scheduleDraw();
           scheduleVideoFrame(index);
         }
