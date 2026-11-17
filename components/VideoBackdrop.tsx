@@ -152,7 +152,7 @@ export default function VideoBackdrop() {
       dirty = true;
       scheduleDraw();
       applySmoothMotion();
-      if (Math.abs(diff) >= 0.00008) {
+      if (Math.abs(target - progress) >= 0.00008) {
         dirty = true;
         scheduleDraw();
       }
