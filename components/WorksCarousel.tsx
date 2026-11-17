@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import gsap from 'gsap';
 import { works } from '@/lib/data';
 
 const imageByType: Record<string, string> = {
@@ -15,21 +13,15 @@ const imageByType: Record<string, string> = {
 function WorkCard({
   work,
   index,
-  active,
-  onSelect,
 }: {
   work: (typeof works)[number];
   index: number;
-  active: number;
-  onSelect: (index: number) => void;
 }) {
   const src = imageByType[work.visual];
 
   return (
     <article
       className={`work-tile work-tile--${index + 1}`}
-      onMouseEnter={() => onSelect(index)}
-      onFocus={() => onSelect(index)}
       tabIndex={0}
       aria-label={work.title}
     >
@@ -52,18 +44,6 @@ function WorkCard({
 }
 
 export default function WorksCarousel() {
-  const [active, setActive] = useState(0);
-
-  const select = (index: number) => {
-    if (index === active) return;
-    gsap.fromTo(
-      '.work-tile',
-      { opacity: 0.82, y: 8 },
-      { opacity: 1, y: 0, duration: 0.38, ease: 'power3.out', stagger: 0.025, overwrite: true },
-    );
-    setActive(index);
-  };
-
   return (
     <>
       <style jsx global>{`
@@ -222,8 +202,6 @@ export default function WorksCarousel() {
               key={work.category}
               work={work}
               index={index}
-              active={active}
-              onSelect={select}
             />
           ))}
         </div>
