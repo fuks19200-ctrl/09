@@ -1400,7 +1400,8 @@ main,.footer{position:relative;z-index:1;}
 .works-gallery__grid{
   display:grid;
   grid-template-columns:repeat(6,minmax(0,1fr));
-  gap:34px;
+  column-gap:46px;
+  row-gap:34px;
 }
 .work-tile{
   position:relative;
