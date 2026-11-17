@@ -291,6 +291,18 @@ export default function VideoBackdrop() {
       window.setTimeout(() => unloadVideo(previous), 1400);
     };
 
+    const stopPlaybackImmediately = () => {
+      scrolling = false;
+      if (scrollStopTimer) {
+        window.clearTimeout(scrollStopTimer);
+        scrollStopTimer = 0;
+      }
+      videos.forEach((video, index) => {
+        video.pause();
+        stopVideoFrameLoop(index);
+      });
+    };
+
     const updateTarget = (scrollY: number) => {
       lastScroll = Math.max(0, scrollY);
       scrolling = true;
@@ -338,6 +350,13 @@ export default function VideoBackdrop() {
 
     const onNativeScroll = () => updateTarget(window.scrollY);
     const onLenisScroll = (event: LenisScrollEvent) => updateTarget(event.detail.scroll);
+
+    // Stop on the exact moment the user releases/stops scrolling.
+    // The timeout remains only as a safety fallback for Lenis/inertial scroll.
+    const onScrollEnd = () => stopPlaybackImmediately();
+    window.addEventListener('wheel', onScrollEnd, { passive: true });
+    window.addEventListener('touchend', onScrollEnd, { passive: true });
+    window.addEventListener('pointerup', onScrollEnd, { passive: true });
 
     const onMediaChange = () => {
       if (mobile.matches) {
@@ -417,6 +436,9 @@ export default function VideoBackdrop() {
       window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', onNativeScroll);
       window.removeEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
+      window.removeEventListener('wheel', onScrollEnd);
+      window.removeEventListener('touchend', onScrollEnd);
+      window.removeEventListener('pointerup', onScrollEnd);
       mobile.removeEventListener('change', onMediaChange);
       if (raf) cancelAnimationFrame(raf);
       if (drawRaf) cancelAnimationFrame(drawRaf);
