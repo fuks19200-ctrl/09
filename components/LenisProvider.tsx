@@ -47,7 +47,7 @@ export default function LenisProvider() {
       ScrollTrigger.update();
       window.dispatchEvent(
         new CustomEvent('multum-lenis-scroll', {
-          detail: { scroll: event.scroll },
+          detail: { scroll: event.scroll, isScrolling: lenis.isScrolling },
         }),
       );
     };
