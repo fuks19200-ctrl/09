@@ -47,6 +47,7 @@ function WorkCard({
       <div className="work-tile__media">
         {src ? <img className={`work-tile__art work-tile__art--${index + 1}`} src={src} alt="" aria-hidden="true" draggable="false" /> : null}
         <div className="work-tile__wash" />
+        <span className="work-tile__spark" aria-hidden="true">✦</span>
         <div className="work-tile__top">
           <span className="work-tile__number">{work.number}</span>
           <span className="work-tile__category">{work.category}</span>
