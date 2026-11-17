@@ -142,10 +142,28 @@ export default function WorksCarousel() {
         .work-tile__content h3,
         .work-tile__content p,
         .work-tile__label,
-        .work-tile__top,
-        .work-tile__spark {
+        .work-tile__top {
           color: #fff !important;
           text-shadow: 0 2px 14px rgba(45,31,58,.30);
+        }
+
+        .work-tile__content h3 {
+          font-weight: 800 !important;
+        }
+
+        .work-tile__number {
+          color: var(--acid) !important;
+          font-weight: 800 !important;
+          text-shadow: 0 0 12px rgba(217,255,104,.22) !important;
+        }
+
+        .work-tile__spark {
+          right: 20px !important;
+          top: auto !important;
+          bottom: 18px !important;
+          color: var(--acid) !important;
+          font-weight: 900 !important;
+          text-shadow: 0 0 12px rgba(217,255,104,.35), 0 0 28px rgba(217,255,104,.18) !important;
         }
 
         .work-tile:hover,
