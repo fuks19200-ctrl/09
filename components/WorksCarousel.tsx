@@ -149,21 +149,21 @@ export default function WorksCarousel() {
 
         .work-tile {
           transform: translateY(0);
-          transition: transform .42s cubic-bezier(.22,.8,.24,1), box-shadow .42s ease, border-color .42s ease;
+          transition: transform .5s cubic-bezier(.22,.8,.24,1), box-shadow .42s ease, border-color .42s ease;
           will-change: transform;
         }
         .work-tile__art {
-          transform: scale(1.025) !important;
-          transition: transform .5s cubic-bezier(.22,.8,.24,1), filter .45s ease !important;
+          transform: none !important;
+          transition: none !important;
         }
         .work-tile:hover,
         .work-tile:focus-visible {
-          transform: translateY(-7px);
+          transform: translateY(-8px);
         }
         .work-tile:hover .work-tile__art,
         .work-tile:focus-visible .work-tile__art,
         .work-tile.is-active .work-tile__art {
-          transform: scale(1.045) !important;
+          transform: none !important;
         }
         .work-tile__wash {
           transition: transform .42s ease-out;
