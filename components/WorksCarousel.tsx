@@ -27,7 +27,7 @@ function WorkCard({
 
   return (
     <article
-      className={`work-tile work-tile--${index + 1} ${index === active ? 'is-active' : ''}`}
+      className={`work-tile work-tile--${index + 1}`}
       onMouseEnter={() => onSelect(index)}
       onFocus={() => onSelect(index)}
       tabIndex={0}
@@ -161,8 +161,7 @@ export default function WorksCarousel() {
           transform: translateY(-8px);
         }
         .work-tile:hover .work-tile__art,
-        .work-tile:focus-visible .work-tile__art,
-        .work-tile.is-active .work-tile__art {
+        .work-tile:focus-visible .work-tile__art {
           transform: none !important;
         }
         .work-tile__wash {
