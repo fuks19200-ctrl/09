@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-type LenisScrollEvent = CustomEvent<{ scroll: number }>;
+type LenisScrollEvent = CustomEvent<{ scroll: number; isScrolling?: boolean }>;
 
 export default function VideoBackdrop() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -349,14 +349,10 @@ export default function VideoBackdrop() {
     };
 
     const onNativeScroll = () => updateTarget(window.scrollY);
-    const onLenisScroll = (event: LenisScrollEvent) => updateTarget(event.detail.scroll);
-
-    // Stop on the exact moment the user releases/stops scrolling.
-    // The timeout remains only as a safety fallback for Lenis/inertial scroll.
-    const onScrollEnd = () => stopPlaybackImmediately();
-    window.addEventListener('wheel', onScrollEnd, { passive: true });
-    window.addEventListener('touchend', onScrollEnd, { passive: true });
-    window.addEventListener('pointerup', onScrollEnd, { passive: true });
+    const onLenisScroll = (event: LenisScrollEvent) => {
+      updateTarget(event.detail.scroll);
+      if (event.detail.isScrolling === false) stopPlaybackImmediately();
+    };
 
     const onMediaChange = () => {
       if (mobile.matches) {
@@ -436,9 +432,6 @@ export default function VideoBackdrop() {
       window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', onNativeScroll);
       window.removeEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
-      window.removeEventListener('wheel', onScrollEnd);
-      window.removeEventListener('touchend', onScrollEnd);
-      window.removeEventListener('pointerup', onScrollEnd);
       mobile.removeEventListener('change', onMediaChange);
       if (raf) cancelAnimationFrame(raf);
       if (drawRaf) cancelAnimationFrame(drawRaf);
