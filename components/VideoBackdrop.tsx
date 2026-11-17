@@ -33,6 +33,9 @@ export default function VideoBackdrop() {
     let raf = 0;
     let drawRaf = 0;
     let activeIndex = 0;
+    let previousIndex = -1;
+    let transitionStartedAt = 0;
+    let transitionRaf = 0;
     let loaded = [false, false, false];
     let timeline: Array<[number, number]> = [];
     let dirty = true;
@@ -48,6 +51,12 @@ export default function VideoBackdrop() {
 
     const activeVideo = (value: number) =>
       value < 1 / 3 ? 0 : value < 2 / 3 ? 1 : 2;
+
+    // The three 8-second films form one continuous visual sequence.
+    // Clip 2 contains the hole later in the shot, so it must not restart
+    // from its opening hand frame when the first film ends.
+    const clipStartOffset = [0, 3.2, 0] as const;
+    const transitionDuration = 520;
 
     const refreshSceneAnchors = () => {
       const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
@@ -125,45 +134,72 @@ export default function VideoBackdrop() {
       drawRaf = 0;
       if (!dirty) return;
 
-      const video = videos[activeIndex];
-      const poster = posters[activeIndex];
-      const source: CanvasImageSource | null =
-        !mobile.matches && video.readyState >= 2 && video.videoWidth > 0
-          ? video
-          : poster.complete && poster.naturalWidth > 0
-            ? poster
-            : null;
-
-      if (!source) return;
-
       const dpr = Math.min(window.devicePixelRatio || 1, mobile.matches ? 1 : 1.25);
       const width = canvas.width / dpr;
       const height = canvas.height / dpr;
-      const sourceWidth = video.videoWidth || poster.naturalWidth || 1920;
-      const sourceHeight = video.videoHeight || poster.naturalHeight || 1080;
-      const sourceAspect = sourceWidth / sourceHeight;
       const canvasAspect = width / Math.max(1, height);
 
-      let drawWidth = width;
-      let drawHeight = height;
-      let offsetX = 0;
-      let offsetY = 0;
+      const drawSource = (index: number, alpha = 1) => {
+        const video = videos[index];
+        const poster = posters[index];
+        const source: CanvasImageSource | null =
+          !mobile.matches && video.readyState >= 2 && video.videoWidth > 0
+            ? video
+            : poster.complete && poster.naturalWidth > 0
+              ? poster
+              : null;
+        if (!source) return false;
 
-      if (sourceAspect > canvasAspect) {
-        drawWidth = height * sourceAspect;
-        offsetX = (width - drawWidth) / 2;
-      } else {
-        drawHeight = width / sourceAspect;
-        offsetY = (height - drawHeight) / 2;
-      }
+        const sourceWidth = video.videoWidth || poster.naturalWidth || 1920;
+        const sourceHeight = video.videoHeight || poster.naturalHeight || 1080;
+        const sourceAspect = sourceWidth / sourceHeight;
+        let drawWidth = width;
+        let drawHeight = height;
+        let offsetX = 0;
+        let offsetY = 0;
+        if (sourceAspect > canvasAspect) {
+          drawWidth = height * sourceAspect;
+          offsetX = (width - drawWidth) / 2;
+        } else {
+          drawHeight = width / sourceAspect;
+          offsetY = (height - drawHeight) / 2;
+        }
+
+        ctx.globalAlpha = alpha;
+        ctx.drawImage(source, offsetX, offsetY, drawWidth, drawHeight);
+        return true;
+      };
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalAlpha = 1;
       ctx.fillStyle = '#090609';
       ctx.fillRect(0, 0, width, height);
+
       try {
-        ctx.drawImage(source, offsetX, offsetY, drawWidth, drawHeight);
-        dirty = false;
+        if (previousIndex >= 0 && transitionStartedAt) {
+          const t = clamp((performance.now() - transitionStartedAt) / transitionDuration);
+          const eased = t * t * (3 - 2 * t);
+          drawSource(previousIndex, 1 - eased);
+          drawSource(activeIndex, eased);
+          ctx.globalAlpha = 1;
+          if (t < 1) {
+            dirty = true;
+            if (!transitionRaf) transitionRaf = requestAnimationFrame(() => {
+              transitionRaf = 0;
+              scheduleDraw();
+            });
+          } else {
+            previousIndex = -1;
+            transitionStartedAt = 0;
+            dirty = false;
+          }
+        } else {
+          drawSource(activeIndex, 1);
+          ctx.globalAlpha = 1;
+          dirty = false;
+        }
       } catch {
+        ctx.globalAlpha = 1;
         // Keep the last good frame.
       }
     };
@@ -231,13 +267,24 @@ export default function VideoBackdrop() {
 
       const previous = activeIndex;
       stopVideoFrameLoop(previous);
+      previousIndex = previous;
+      transitionStartedAt = performance.now();
       activeIndex = nextIndex;
       dirty = true;
 
       if (!mobile.matches) {
         ensureVideoLoaded(nextIndex);
-        videos[nextIndex].currentTime = 0;
-        if (scrolling) void videos[nextIndex].play().catch(() => {});
+        const nextVideo = videos[nextIndex];
+        const startAt = clipStartOffset[nextIndex];
+        const setStart = () => {
+          try { nextVideo.currentTime = startAt; } catch {}
+          if (scrolling) void nextVideo.play().catch(() => {});
+          dirty = true;
+          scheduleDraw();
+          scheduleVideoFrame(nextIndex);
+        };
+        if (nextVideo.readyState >= 1) setStart();
+        else nextVideo.addEventListener('loadedmetadata', setStart, { once: true });
       }
 
       scheduleDraw();
@@ -312,7 +359,7 @@ export default function VideoBackdrop() {
     };
 
     videos.forEach((video, index) => {
-      video.loop = true;
+      video.loop = false;
       video.autoplay = false;
       video.muted = true;
       video.playsInline = true;
@@ -373,6 +420,7 @@ export default function VideoBackdrop() {
       mobile.removeEventListener('change', onMediaChange);
       if (raf) cancelAnimationFrame(raf);
       if (drawRaf) cancelAnimationFrame(drawRaf);
+      if (transitionRaf) cancelAnimationFrame(transitionRaf);
       if (scrollStopTimer) window.clearTimeout(scrollStopTimer);
       videoFrameCallbacks.forEach((_, index) => stopVideoFrameLoop(index));
       observer.disconnect();
