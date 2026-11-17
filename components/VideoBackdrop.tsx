@@ -145,6 +145,21 @@ export default function VideoBackdrop() {
         offsetY = (height - drawHeight) / 2;
       }
 
+      // On mobile the video is intentionally not decoded. Instead, gently
+      // move/scale the poster with the same smoothed scroll progress.
+      // This keeps the background alive without bringing the heavy video cost back.
+      if (mobile.matches) {
+        const mobileScale = 1.035 + progress * 0.045;
+        const mobileX = (progress - 0.5) * -18;
+        const mobileY = (progress - 0.5) * -10;
+        const scaledWidth = drawWidth * mobileScale;
+        const scaledHeight = drawHeight * mobileScale;
+        offsetX = (width - scaledWidth) / 2 + mobileX;
+        offsetY = (height - scaledHeight) / 2 + mobileY;
+        drawWidth = scaledWidth;
+        drawHeight = scaledHeight;
+      }
+
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = '#090609';
       ctx.fillRect(0, 0, width, height);
@@ -246,7 +261,7 @@ export default function VideoBackdrop() {
     const tick = () => {
       raf = 0;
       const diff = target - progress;
-      progress += diff * 0.075;
+      progress += diff * 0.09;
       if (Math.abs(diff) < 0.00008) {
         progress = target;
         running = false;
