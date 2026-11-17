@@ -128,20 +128,20 @@ export default function WorksCarousel() {
         }
 
         .work-tile {
-          transform: translateY(0);
-          transition: transform .5s cubic-bezier(.22,.8,.24,1), box-shadow .42s ease, border-color .42s ease;
-          will-change: transform;
+          position: relative !important;
+          top: 0;
+          transform: none !important;
+          transition: top .5s cubic-bezier(.22,.8,.24,1);
+          will-change: top;
         }
         .work-tile__art {
           transform: none !important;
           transition: none !important;
         }
-        .work-tile:hover,
-        .work-tile:focus-visible {
-          transform: translateY(-8px);
+        .work-tile:hover {
+          top: -8px;
         }
-        .work-tile:hover .work-tile__art,
-        .work-tile:focus-visible .work-tile__art {
+        .work-tile__art {
           transform: none !important;
         }
         .work-tile__wash {
@@ -178,18 +178,12 @@ export default function WorksCarousel() {
           animation: workSparkFloat 2.8s ease-in-out infinite;
           transform-origin: center;
         }
-        .work-tile:hover .work-tile__spark,
-        .work-tile:focus-visible .work-tile__spark {
-          animation-duration: 1.5s;
-          transform: scale(1.12);
-        }
         @keyframes workSparkFloat {
           0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); opacity: .72; }
           50% { transform: translate3d(0, -5px, 0) rotate(12deg) scale(1.14); opacity: 1; }
         }
 
-        .work-tile:hover,
-        .work-tile:focus-visible {
+        .work-tile:hover {
           box-shadow: 0 24px 70px rgba(77,58,105,.14) !important;
           border-color: transparent !important;
         }
