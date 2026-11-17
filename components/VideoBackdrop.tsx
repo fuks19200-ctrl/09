@@ -55,8 +55,8 @@ export default function VideoBackdrop() {
     // The three 8-second films form one continuous visual sequence.
     // Clip 2 contains the hole later in the shot, so it must not restart
     // from its opening hand frame when the first film ends.
-    const clipStartOffset = [0, 3.2, 0] as const;
-    const transitionDuration = 520;
+    const clipStartOffset = [0, 5.2, 0] as const;
+    const transitionDuration = 180;
 
     const refreshSceneAnchors = () => {
       const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
