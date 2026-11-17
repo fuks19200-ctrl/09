@@ -191,6 +191,16 @@ export default function WorksCarousel() {
 
         .work-tile__content h3 {
           font-weight: 800 !important;
+          font-size: clamp(18px, 1.55vw, 25px) !important;
+          line-height: 1.08 !important;
+          margin-bottom: 6px !important;
+        }
+
+        .work-tile__content p {
+          font-size: clamp(11px, .82vw, 14px) !important;
+          line-height: 1.35 !important;
+          max-width: 34ch !important;
+          margin-top: 0 !important;
         }
 
         .work-tile__number {
