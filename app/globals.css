@@ -1424,6 +1424,13 @@ main,.footer{position:relative;z-index:1;}
   grid-column:span 2;
   aspect-ratio:1 / 1 !important;
 }
+
+/* Automation card: taller downward on desktop */
+.work-tile--1{
+  aspect-ratio:auto !important;
+  grid-row:span 2;
+  min-height:calc(100% + 24px);
+}
 .work-tile:hover,
 .work-tile:focus-visible,
 .work-tile.is-active{
