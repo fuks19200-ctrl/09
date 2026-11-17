@@ -150,7 +150,7 @@ export default function SiteClient() {
               <h2>ИИ — это не<br /><em>кнопка.</em><br />Это новый слой<br />возможностей.</h2>
             </div>
             <div className="manifesto-aside" data-reveal>
-              <div className="manifesto-number">∞</div>
+              <div className="manifesto-number manifesto-number--acid">∞</div>
               <p>Мы не привязываем тебя к одному сервису. Мы учим видеть задачу, собирать систему и доводить идею до результата.</p>
               <a href="#courses">Узнать, как это работает <span>↗</span></a>
             </div>
