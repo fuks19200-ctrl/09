@@ -20,7 +20,6 @@ export default function VideoBackdrop() {
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const mobile = window.matchMedia('(max-width: 700px)');
-    const durations = [0, 0, 0];
     const posters = [1, 2, 3].map((n) => {
       const image = new Image();
       image.decoding = 'async';
@@ -33,13 +32,11 @@ export default function VideoBackdrop() {
     let lastScroll = window.scrollY;
     let raf = 0;
     let drawRaf = 0;
-    let seekTimer = 0;
-    let seekRaf = 0;
     let activeIndex = 0;
     let loaded = [false, false, false];
     let timeline: Array<[number, number]> = [];
     let dirty = true;
-    let running = false;
+    let videoFrameCallbacks: number[] = [0, 0, 0];
 
     const clamp = (value: number, min = 0, max = 1) =>
       Math.max(min, Math.min(max, value));
@@ -58,7 +55,6 @@ export default function VideoBackdrop() {
         if (!el) return 0;
         return documentTop(el) + (el.offsetHeight - window.innerHeight) * 0.5;
       };
-
       const courses = section('#courses');
       if (!courses) return;
 
@@ -100,6 +96,17 @@ export default function VideoBackdrop() {
       return 1;
     };
 
+    const applySmoothMotion = () => {
+      // The scroll position controls only a gentle camera move. We never seek
+      // the video to a scroll frame, because currentTime scrubbing is what
+      // creates the visible "Nokia / frame-by-frame" stutter.
+      const scale = 1.045 + progress * 0.035;
+      const x = (progress - 0.5) * -16;
+      const y = (progress - 0.5) * -8;
+      canvas.style.transform = `translate3d(${x}px,${y}px,0) scale(${scale})`;
+      canvas.style.transformOrigin = '50% 50%';
+    };
+
     const resize = () => {
       const rect = root.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, mobile.matches ? 1 : 1.25);
@@ -109,19 +116,22 @@ export default function VideoBackdrop() {
       canvas.style.height = `${rect.height}px`;
       dirty = true;
       scheduleDraw();
+      applySmoothMotion();
     };
 
     const draw = () => {
       drawRaf = 0;
       if (!dirty) return;
 
-      const index = activeIndex;
-      const video = videos[index];
-      const poster = posters[index];
+      const video = videos[activeIndex];
+      const poster = posters[activeIndex];
+      const source: CanvasImageSource | null =
+        !mobile.matches && video.readyState >= 2 && video.videoWidth > 0
+          ? video
+          : poster.complete && poster.naturalWidth > 0
+            ? poster
+            : null;
 
-      let source: CanvasImageSource | null = null;
-      if (video.readyState >= 2 && video.videoWidth > 0) source = video;
-      else if (poster.complete && poster.naturalWidth > 0) source = poster;
       if (!source) return;
 
       const dpr = Math.min(window.devicePixelRatio || 1, mobile.matches ? 1 : 1.25);
@@ -145,21 +155,6 @@ export default function VideoBackdrop() {
         offsetY = (height - drawHeight) / 2;
       }
 
-      // On mobile the video is intentionally not decoded. Instead, gently
-      // move/scale the poster with the same smoothed scroll progress.
-      // This keeps the background alive without bringing the heavy video cost back.
-      if (mobile.matches) {
-        const mobileScale = 1.035 + progress * 0.045;
-        const mobileX = (progress - 0.5) * -18;
-        const mobileY = (progress - 0.5) * -10;
-        const scaledWidth = drawWidth * mobileScale;
-        const scaledHeight = drawHeight * mobileScale;
-        offsetX = (width - scaledWidth) / 2 + mobileX;
-        offsetY = (height - scaledHeight) / 2 + mobileY;
-        drawWidth = scaledWidth;
-        drawHeight = scaledHeight;
-      }
-
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = '#090609';
       ctx.fillRect(0, 0, width, height);
@@ -167,7 +162,7 @@ export default function VideoBackdrop() {
         ctx.drawImage(source, offsetX, offsetY, drawWidth, drawHeight);
         dirty = false;
       } catch {
-        // Keep the existing frame if the browser is between video seeks.
+        // Keep the last good frame.
       }
     };
 
@@ -177,57 +172,74 @@ export default function VideoBackdrop() {
       drawRaf = requestAnimationFrame(draw);
     };
 
+    const stopVideoFrameLoop = (index: number) => {
+      const video = videos[index];
+      const id = videoFrameCallbacks[index];
+      if (id && 'cancelVideoFrameCallback' in video) {
+        try { (video as HTMLVideoElement & { cancelVideoFrameCallback?: (handle: number) => void }).cancelVideoFrameCallback?.(id); } catch {}
+      }
+      videoFrameCallbacks[index] = 0;
+    };
+
+    const scheduleVideoFrame = (index: number) => {
+      if (mobile.matches) return;
+      const video = videos[index];
+      if (index !== activeIndex || video.paused) return;
+
+      const request = (video as HTMLVideoElement & {
+        requestVideoFrameCallback?: (callback: () => void) => number;
+      }).requestVideoFrameCallback;
+
+      if (request) {
+        videoFrameCallbacks[index] = request.call(video, () => {
+          if (index === activeIndex) {
+            dirty = true;
+            scheduleDraw();
+            scheduleVideoFrame(index);
+          }
+        });
+      } else {
+        scheduleDraw();
+        requestAnimationFrame(() => scheduleVideoFrame(index));
+      }
+    };
+
     const ensureVideoLoaded = (index: number) => {
       if (mobile.matches || loaded[index]) return;
       loaded[index] = true;
       const video = videos[index];
-      video.preload = 'metadata';
+      video.preload = 'auto';
       video.load();
+      void video.play().catch(() => {});
+      scheduleVideoFrame(index);
     };
 
     const unloadVideo = (index: number) => {
       if (index === activeIndex || !loaded[index]) return;
       const video = videos[index];
+      stopVideoFrameLoop(index);
       video.pause();
       video.removeAttribute('src');
       video.load();
       loaded[index] = false;
-      durations[index] = 0;
-    };
-
-    const seekToProgress = (force = false) => {
-      if (mobile.matches || reducedMotion.matches) return;
-
-      const index = activeIndex;
-      const video = videos[index];
-      const duration = durations[index] || video.duration || 0;
-      if (!duration || video.seeking || video.readyState < 1) return;
-
-      const start = index === 0 ? 0 : index === 1 ? 1 / 3 : 2 / 3;
-      const local = clamp((progress - start) / (1 / 3));
-      const time = local * Math.max(0, duration - 0.05);
-      const lastTime = Number(video.dataset.lastSeek || -1);
-
-      if (!force && Math.abs(lastTime - time) < 0.14) return;
-
-      video.dataset.lastSeek = String(time);
-      try {
-        video.currentTime = time;
-      } catch {
-        // Metadata may not be ready yet.
-      }
     };
 
     const setActiveScene = (nextIndex: number) => {
       if (nextIndex === activeIndex) return;
 
       const previous = activeIndex;
+      stopVideoFrameLoop(previous);
       activeIndex = nextIndex;
-      ensureVideoLoaded(nextIndex);
+      dirty = true;
+
+      if (!mobile.matches) {
+        ensureVideoLoaded(nextIndex);
+        videos[nextIndex].currentTime = 0;
+        void videos[nextIndex].play().catch(() => {});
+      }
+
       scheduleDraw();
-      window.clearTimeout(seekTimer);
-      seekTimer = window.setTimeout(() => seekToProgress(true), 70);
-      if (previous !== nextIndex) window.setTimeout(() => unloadVideo(previous), 1200);
+      window.setTimeout(() => unloadVideo(previous), 1400);
     };
 
     const updateTarget = (scrollY: number) => {
@@ -235,8 +247,7 @@ export default function VideoBackdrop() {
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       target = filmProgress(clamp(lastScroll / maxScroll) * maxScroll);
 
-      const nextIndex = activeVideo(target);
-      setActiveScene(nextIndex);
+      setActiveScene(activeVideo(target));
 
       const darkness = clamp(
         (lastScroll - window.innerHeight * 0.35) /
@@ -247,37 +258,21 @@ export default function VideoBackdrop() {
       if (shade) shade.style.opacity = String(0.55 * darkness);
       if (readability) readability.style.opacity = String(1 - darkness);
 
-      if (!mobile.matches) {
-        ensureVideoLoaded(activeIndex);
-        seekToProgress();
-      }
       scheduleDraw();
 
-      const moving = Math.abs(target - progress) > 0.00008;
-      running = moving;
-      if (moving && !raf) raf = requestAnimationFrame(tick);
+      if (!raf) raf = requestAnimationFrame(tick);
     };
 
     const tick = () => {
       raf = 0;
       const diff = target - progress;
-      progress += diff * 0.09;
+      progress += diff * 0.16;
       if (Math.abs(diff) < 0.00008) {
         progress = target;
-        running = false;
-        scheduleDraw();
-        return;
+      } else {
+        raf = requestAnimationFrame(tick);
       }
-
-      if (!mobile.matches) {
-        if (seekRaf) cancelAnimationFrame(seekRaf);
-        seekRaf = requestAnimationFrame(() => {
-          seekRaf = 0;
-          seekToProgress();
-        });
-      }
-      scheduleDraw();
-      raf = requestAnimationFrame(tick);
+      applySmoothMotion();
     };
 
     const onNativeScroll = () => updateTarget(window.scrollY);
@@ -285,37 +280,37 @@ export default function VideoBackdrop() {
 
     const onMediaChange = () => {
       if (mobile.matches) {
-        videos.forEach((video) => {
+        videos.forEach((video, index) => {
+          stopVideoFrameLoop(index);
           video.pause();
           video.removeAttribute('src');
           video.load();
         });
         loaded = [false, false, false];
-        resize();
         activeIndex = 0;
         progress = target;
+        resize();
         scheduleDraw();
       } else {
         ensureVideoLoaded(activeIndex);
-        seekToProgress(true);
         scheduleDraw();
       }
     };
 
     videos.forEach((video, index) => {
-      video.loop = false;
+      video.loop = true;
       video.autoplay = false;
       video.muted = true;
       video.playsInline = true;
       video.preload = 'none';
-
-      video.addEventListener('loadedmetadata', () => {
-        durations[index] = video.duration || 10;
-        if (index === activeIndex) seekToProgress(true);
-        scheduleDraw();
+      video.addEventListener('loadeddata', () => {
+        if (index === activeIndex) {
+          dirty = true;
+          void video.play().catch(() => {});
+          scheduleDraw();
+          scheduleVideoFrame(index);
+        }
       });
-      video.addEventListener('loadeddata', scheduleDraw);
-      video.addEventListener('seeked', scheduleDraw);
     });
 
     posters.forEach((poster) => poster.addEventListener('load', scheduleDraw));
@@ -326,15 +321,16 @@ export default function VideoBackdrop() {
     activeIndex = activeVideo(target);
     resize();
 
-    if (!mobile.matches) ensureVideoLoaded(activeIndex);
+    if (!mobile.matches && !reducedMotion.matches) ensureVideoLoaded(activeIndex);
     updateTarget(lastScroll);
 
-    window.addEventListener('resize', () => {
+    const onResize = () => {
       refreshSceneAnchors();
       resize();
       updateTarget(lastScroll);
-    }, { passive: true });
+    };
 
+    window.addEventListener('resize', onResize, { passive: true });
     window.addEventListener('scroll', onNativeScroll, { passive: true });
     window.addEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
     mobile.addEventListener('change', onMediaChange);
@@ -352,13 +348,13 @@ export default function VideoBackdrop() {
     });
 
     return () => {
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', onNativeScroll);
       window.removeEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
       mobile.removeEventListener('change', onMediaChange);
       if (raf) cancelAnimationFrame(raf);
-      if (seekRaf) cancelAnimationFrame(seekRaf);
       if (drawRaf) cancelAnimationFrame(drawRaf);
-      window.clearTimeout(seekTimer);
+      videoFrameCallbacks.forEach((_, index) => stopVideoFrameLoop(index));
       observer.disconnect();
       void fontsReady;
       videos.forEach((video) => {
