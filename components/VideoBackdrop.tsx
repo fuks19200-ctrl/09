@@ -37,6 +37,8 @@ export default function VideoBackdrop() {
     let timeline: Array<[number, number]> = [];
     let dirty = true;
     let videoFrameCallbacks: number[] = [0, 0, 0];
+    let scrollStopTimer = 0;
+    let scrolling = false;
 
     const clamp = (value: number, min = 0, max = 1) =>
       Math.max(min, Math.min(max, value));
@@ -210,7 +212,7 @@ export default function VideoBackdrop() {
       const video = videos[index];
       video.preload = 'auto';
       video.load();
-      void video.play().catch(() => {});
+      if (scrolling) void video.play().catch(() => {});
       scheduleVideoFrame(index);
     };
 
@@ -235,7 +237,7 @@ export default function VideoBackdrop() {
       if (!mobile.matches) {
         ensureVideoLoaded(nextIndex);
         videos[nextIndex].currentTime = 0;
-        void videos[nextIndex].play().catch(() => {});
+        if (scrolling) void videos[nextIndex].play().catch(() => {});
       }
 
       scheduleDraw();
@@ -244,6 +246,13 @@ export default function VideoBackdrop() {
 
     const updateTarget = (scrollY: number) => {
       lastScroll = Math.max(0, scrollY);
+      scrolling = true;
+      if (scrollStopTimer) window.clearTimeout(scrollStopTimer);
+      scrollStopTimer = window.setTimeout(() => {
+        scrolling = false;
+        videos.forEach((video) => video.pause());
+        stopVideoFrameLoop(activeIndex);
+      }, 110);
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       target = filmProgress(clamp(lastScroll / maxScroll) * maxScroll);
 
@@ -258,6 +267,11 @@ export default function VideoBackdrop() {
       if (shade) shade.style.opacity = String(0.55 * darkness);
       if (readability) readability.style.opacity = String(1 - darkness);
 
+      if (!mobile.matches && !reducedMotion.matches) {
+        ensureVideoLoaded(activeIndex);
+        void videos[activeIndex].play().catch(() => {});
+        scheduleVideoFrame(activeIndex);
+      }
       scheduleDraw();
 
       if (!raf) raf = requestAnimationFrame(tick);
@@ -306,7 +320,7 @@ export default function VideoBackdrop() {
       video.addEventListener('loadeddata', () => {
         if (index === activeIndex) {
           dirty = true;
-          void video.play().catch(() => {});
+          if (scrolling) void video.play().catch(() => {});
           scheduleDraw();
           scheduleVideoFrame(index);
         }
@@ -321,8 +335,13 @@ export default function VideoBackdrop() {
     activeIndex = activeVideo(target);
     resize();
 
-    if (!mobile.matches && !reducedMotion.matches) ensureVideoLoaded(activeIndex);
+    if (!mobile.matches && !reducedMotion.matches) {
+      ensureVideoLoaded(activeIndex);
+      videos[activeIndex].pause();
+    }
     updateTarget(lastScroll);
+    scrolling = false;
+    videos.forEach((video) => video.pause());
 
     const onResize = () => {
       refreshSceneAnchors();
@@ -354,6 +373,7 @@ export default function VideoBackdrop() {
       mobile.removeEventListener('change', onMediaChange);
       if (raf) cancelAnimationFrame(raf);
       if (drawRaf) cancelAnimationFrame(drawRaf);
+      if (scrollStopTimer) window.clearTimeout(scrollStopTimer);
       videoFrameCallbacks.forEach((_, index) => stopVideoFrameLoop(index));
       observer.disconnect();
       void fontsReady;
