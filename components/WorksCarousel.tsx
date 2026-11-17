@@ -5,11 +5,11 @@ import gsap from 'gsap';
 import { works } from '@/lib/data';
 
 const imageByType: Record<string, string> = {
-  character: '/images/works/01.png',
-  bottle: '/images/works/02.png',
-  orb: '/images/works/03.png',
-  editorial: '/images/works/04.png',
-  automation: '/images/works/05.png',
+  character: '/images/Лавандовая_сеть_из_стеклянных_сфер.png',
+  bottle: '/images/Стеклянная_лаванда_в_перламутровом_сиянии_4.png',
+  orb: '/images/Парящий_лавандовый_шар_в_переливчатых_кольцах_3.png',
+  editorial: '/images/Лавандовый_парфюм,_ирис_и_стеклянная_лента_2.png',
+  automation: '/images/Лавандовый_бьюти_портрет_с_фиалковыми_лепестками_1.png',
 };
 
 function WorkCard({
@@ -92,12 +92,9 @@ export default function WorksCarousel() {
 
         /*
          * CARD / IMAGE GEOMETRY
-         * Desktop cards are:
-         * 01–03: 2/6 columns, aspect-ratio 1 / 1.035
-         * 04–05: 3/6 columns, aspect-ratio 2.05 / 1
-         * The source PNGs are landscape, so the image must be cropped by
-         * object-fit: cover inside the exact card box — never enlarged,
-         * inset or stretched.
+         * The new artwork is the visual source of truth. Keep the cards
+         * compact and image-led, with a consistent near-square frame.
+         * No stretched placeholders, no old burgundy artwork.
          */
         .work-tile__art {
           position: absolute !important;
