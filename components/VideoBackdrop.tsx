@@ -34,6 +34,7 @@ export default function VideoBackdrop() {
     let raf = 0;
     let drawRaf = 0;
     let seekTimer = 0;
+    let seekRaf = 0;
     let activeIndex = 0;
     let loaded = [false, false, false];
     let timeline: Array<[number, number]> = [];
@@ -192,7 +193,7 @@ export default function VideoBackdrop() {
       const time = local * Math.max(0, duration - 0.05);
       const lastTime = Number(video.dataset.lastSeek || -1);
 
-      if (!force && Math.abs(lastTime - time) < 0.09) return;
+      if (!force && Math.abs(lastTime - time) < 0.14) return;
 
       video.dataset.lastSeek = String(time);
       try {
@@ -245,7 +246,7 @@ export default function VideoBackdrop() {
     const tick = () => {
       raf = 0;
       const diff = target - progress;
-      progress += diff * 0.12;
+      progress += diff * 0.075;
       if (Math.abs(diff) < 0.00008) {
         progress = target;
         running = false;
@@ -253,7 +254,13 @@ export default function VideoBackdrop() {
         return;
       }
 
-      if (!mobile.matches) seekToProgress();
+      if (!mobile.matches) {
+        if (seekRaf) cancelAnimationFrame(seekRaf);
+        seekRaf = requestAnimationFrame(() => {
+          seekRaf = 0;
+          seekToProgress();
+        });
+      }
       scheduleDraw();
       raf = requestAnimationFrame(tick);
     };
@@ -334,6 +341,7 @@ export default function VideoBackdrop() {
       window.removeEventListener('multum-lenis-scroll', onLenisScroll as EventListener);
       mobile.removeEventListener('change', onMediaChange);
       if (raf) cancelAnimationFrame(raf);
+      if (seekRaf) cancelAnimationFrame(seekRaf);
       if (drawRaf) cancelAnimationFrame(drawRaf);
       window.clearTimeout(seekTimer);
       observer.disconnect();
