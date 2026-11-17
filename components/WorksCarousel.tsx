@@ -29,6 +29,17 @@ function WorkCard({
     <article
       className={`work-tile work-tile--${index + 1} ${index === active ? 'is-active' : ''}`}
       onMouseEnter={() => onSelect(index)}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        e.currentTarget.style.setProperty('--mx', x.toFixed(3));
+        e.currentTarget.style.setProperty('--my', y.toFixed(3));
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.setProperty('--mx', '0');
+        e.currentTarget.style.setProperty('--my', '0');
+      }}
       onFocus={() => onSelect(index)}
       tabIndex={0}
       aria-label={work.title}
@@ -45,7 +56,6 @@ function WorkCard({
           <h3>{work.title}</h3>
           <p>{work.description}</p>
         </div>
-        <span className="work-tile__spark">✦</span>
       </div>
     </article>
   );
@@ -145,6 +155,37 @@ export default function WorksCarousel() {
         .work-tile__top {
           color: #fff !important;
           text-shadow: 0 2px 14px rgba(45,31,58,.30);
+        }
+
+        .work-tile {
+          --mx: 0;
+          --my: 0;
+          transform: perspective(1100px) rotateX(calc(var(--my) * -3deg)) rotateY(calc(var(--mx) * 3deg));
+          transition: transform .22s ease, box-shadow .45s ease, border-color .45s ease;
+        }
+        .work-tile__art {
+          transform: translate3d(calc(var(--mx) * -10px), calc(var(--my) * -10px), 0) scale(1.045) !important;
+          transition: transform .18s ease-out, filter .45s ease !important;
+        }
+        .work-tile__wash {
+          transform: translate3d(calc(var(--mx) * 5px), calc(var(--my) * 5px), 0);
+          transition: transform .22s ease-out;
+        }
+        .work-tile::after {
+          content: '';
+          position: absolute;
+          inset: -25%;
+          z-index: 3;
+          pointer-events: none;
+          opacity: 0;
+          background: radial-gradient(circle at calc(50% + var(--mx) * 100%) calc(50% + var(--my) * 100%), rgba(217,255,104,.28), transparent 24%);
+          mix-blend-mode: screen;
+          transition: opacity .25s ease;
+        }
+        .work-tile:hover::after,
+        .work-tile:focus-visible::after,
+        .work-tile.is-active::after {
+          opacity: 1;
         }
 
         .work-tile__content h3 {
