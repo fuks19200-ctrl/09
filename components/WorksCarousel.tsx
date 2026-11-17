@@ -5,11 +5,11 @@ import gsap from 'gsap';
 import { works } from '@/lib/data';
 
 const imageByType: Record<string, string> = {
-  character: '/images/Лавандовая_сеть_из_стеклянных_сфер.png',
+  character: '/images/Лавандовый_бьюти_портрет_с_фиалковыми_лепестками_1.png',
   bottle: '/images/Стеклянная_лаванда_в_перламутровом_сиянии_4.png',
   orb: '/images/Парящий_лавандовый_шар_в_переливчатых_кольцах_3.png',
   editorial: '/images/Лавандовый_парфюм,_ирис_и_стеклянная_лента_2.png',
-  automation: '/images/Лавандовый_бьюти_портрет_с_фиалковыми_лепестками_1.png',
+  automation: '/images/Лавандовая_сеть_из_стеклянных_сфер.png',
 };
 
 function WorkCard({
