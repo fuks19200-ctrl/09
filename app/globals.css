@@ -13,6 +13,7 @@
   --border-soft: rgba(255,255,255,0.11);
   --radius: 30px;
   --max: 1440px;
+  --content-gutter: clamp(20px, 4vw, 64px);
 }
 
 * { box-sizing: border-box; }
@@ -29,16 +30,16 @@ button { cursor: pointer; }
 .backdrop__grain { position: absolute; inset: -50%; opacity: .055; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E"); transform: rotate(2deg); }
 .backdrop__vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 38%, transparent 30%, rgba(0,0,0,.35) 100%); }
 
-.site-header { position: fixed; z-index: 50; top: 18px; left: 50%; transform: translateX(-50%); width: min(calc(100% - 40px), var(--max)); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; padding: 12px 14px 12px 18px; border: 1px solid rgba(255,255,255,.13); background: rgba(14,14,16,.26); backdrop-filter: blur(22px) saturate(120%); -webkit-backdrop-filter: blur(22px) saturate(120%); border-radius: 999px; }
+.site-header { position: fixed; z-index: 50; top: 18px; left: 50%; transform: translateX(-50%); width: min(calc(100% - 2 * var(--content-gutter)), var(--max)); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; padding: 12px 14px 12px 18px; border: 1px solid rgba(255,255,255,.13); background: rgba(14,14,16,.26); backdrop-filter: blur(22px) saturate(120%); -webkit-backdrop-filter: blur(22px) saturate(120%); border-radius: 999px; }
 .brand { font: 700 15px/1 'Montserrat', sans-serif; letter-spacing: .08em; }
 .site-header nav { display: flex; gap: 28px; }
 .site-header nav a { font-size: 13px; color: rgba(255,255,255,.8); transition: color .25s ease; }
 .site-header nav a:hover { color: #fff; }
 .header-cta { justify-self: end; padding: 10px 15px; border-radius: 999px; background: rgba(255,255,255,.93); color: var(--ink); font-size: 13px; font-weight: 700; }
 
-.section-shell { width: min(calc(100% - 64px), var(--max)); margin: 0 auto; }
+.section-shell { width: min(calc(100% - 2 * var(--content-gutter)), var(--max)); margin: 0 auto; }
 .hero { min-height: 100svh; position: relative; display: flex; align-items: center; padding-top: 100px; padding-bottom: 90px; }
-.hero__copy { position: relative; z-index: 4; width: min(760px, 68vw); padding-left: 2px; }
+ .hero__copy { position: relative; z-index: 4; width: min(760px, 100%); padding-left: 0; }
 .hero__copy h1 { font-size: clamp(78px, 12vw, 178px); line-height: .84; letter-spacing: -.075em; text-shadow: 0 12px 60px rgba(0,0,0,.18); }
 .hero__copy .eyebrow { margin-bottom: 28px; color: rgba(255,255,255,.88); font-size: 12px; letter-spacing: .18em; }
 .hero__copy > p { max-width: 610px; font-size: clamp(18px, 1.65vw, 24px); color: rgba(255,255,255,.9); text-shadow: 0 8px 35px rgba(0,0,0,.25); }
@@ -1394,7 +1395,8 @@ main,.footer{position:relative;z-index:1;}
    ========================================================= */
 .works-gallery{
   position:relative;
-  width:min(82%,1100px);
+  width:100%;
+  max-width:1100px;
   margin:18px auto 0;
 }
 .works-gallery__grid{
@@ -1589,6 +1591,9 @@ main,.footer{position:relative;z-index:1;}
   background:linear-gradient(135deg,#c8b9e1,#f2edfa 46%,#b9e2d8);
 }
 @media(max-width:900px){
+  .site-header{width:calc(100% - 32px);}
+  .section-shell{width:calc(100% - 32px);}
+  .works-gallery{width:100%;}
   .works-gallery__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;}
   .work-tile--1,.work-tile--2,.work-tile--3,.work-tile--4,.work-tile--5{
     grid-column:span 1;
@@ -1598,6 +1603,10 @@ main,.footer{position:relative;z-index:1;}
   .work-tile__content{opacity:1;transform:none;}
 }
 @media(max-width:600px){
+  .site-header{top:10px;width:calc(100% - 20px);}
+  .section-shell{width:calc(100% - 28px);}
+  .hero{padding-top:86px;}
+  .hero__copy{width:100%;}
   .works-gallery__grid{grid-template-columns:1fr;gap:24px;}
   .work-tile--1,.work-tile--2,.work-tile--3,.work-tile--4,.work-tile--5{
     grid-column:span 1;
