@@ -1418,14 +1418,11 @@ main,.footer{position:relative;z-index:1;}
 }
 .work-tile--1,
 .work-tile--2,
-.work-tile--3{
-  grid-column:span 2;
-  aspect-ratio:1 / 1.035;
-}
+.work-tile--3,
 .work-tile--4,
 .work-tile--5{
-  grid-column:span 3;
-  aspect-ratio:2.05 / 1;
+  grid-column:span 2;
+  aspect-ratio:1 / 1 !important;
 }
 .work-tile:hover,
 .work-tile:focus-visible,
