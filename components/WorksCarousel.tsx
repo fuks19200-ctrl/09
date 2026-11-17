@@ -71,8 +71,8 @@ export default function WorksCarousel() {
 
         .work-tile {
           background: #e7def2 !important;
-          border-color: rgba(255,255,255,.78) !important;
-          box-shadow: 0 24px 70px rgba(77,58,105,.14), inset 0 1px 0 rgba(255,255,255,.9) !important;
+          border-color: transparent !important;
+          box-shadow: 0 24px 70px rgba(77,58,105,.14) !important;
           overflow: hidden !important;
         }
 
