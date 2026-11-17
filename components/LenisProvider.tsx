@@ -52,10 +52,8 @@ export default function LenisProvider() {
       );
     };
 
-    let rafId = 0;
     const raf = (time: number) => {
       lenis.raf(time * 1000);
-      rafId = requestAnimationFrame(raf);
     };
 
     lenis.on('scroll', onScroll);
@@ -67,7 +65,6 @@ export default function LenisProvider() {
       gsap.ticker.remove(raf);
       lenis.off('scroll', onScroll);
       lenis.destroy();
-      cancelAnimationFrame(rafId);
     };
   }, []);
 
