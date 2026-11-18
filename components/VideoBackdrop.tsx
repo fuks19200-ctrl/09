@@ -508,136 +508,74 @@ export default function VideoBackdrop() {
         startTime +
         (endTime - startTime) * local;
 
-      /*
-       * MOBILE:
-       * Safari/iOS does not reliably run a scroll-controlled video
-       * through playbackRate. Scrub the SAME video directly instead.
-       * There is no poster fallback and no autoplay dependency.
-       */
-      if (mobile.matches) {
-        /*
-         * MOBILE PERFORMANCE PATH:
-         * Never redraw the video into canvas. Safari is much happier
-         * rendering the <video> element directly.
-         *
-         * Forward scroll = native video playback, which keeps decoded
-         * frames smooth. Reverse scroll = throttled seeks, only to the
-         * latest target, so dozens of scroll events cannot queue seeks.
-         */
-        mobileTargetTime = targetTime;
-
-        if (delta > 0.035) {
-          video.playbackRate = clamp(delta * 7, 0.35, 2.2);
-          void video.play().catch(() => {});
-        } else if (delta < -0.035) {
-          video.pause();
-
-          if (!mobileSeekRaf) {
-            mobileSeekRaf = requestAnimationFrame(() => {
-              mobileSeekRaf = 0;
-              const latest = mobileTargetTime;
-              if (
-                Number.isFinite(latest) &&
-                Math.abs(video.currentTime - latest) > 0.025
-              ) {
-                try {
-                  video.currentTime = latest;
-                } catch {}
-              }
-            });
-          }
-        } else {
-          video.pause();
-        }
-
-        videos.forEach((item, index) => {
-          item.classList.toggle(
-            'backdrop__video--mobile-active',
-            index === activeIndex,
-          );
-        });
-
-        return;
-      }
+      const delta = targetTime - video.currentTime;
 
       /*
        * IMPORTANT:
-       * The film is now a real continuous playback timeline.
+       * Never write currentTime on every scroll event.
+       * That forces Safari/Chrome to repeatedly decode keyframes and
+       * causes the desktop lag/judder we were seeing.
        *
-       * We do NOT seek on every scroll event. Constant currentTime
-       * assignment makes Safari jump between decoded keyframes.
-       * Scroll controls playback speed; the video itself supplies the
-       * continuous frames.
+       * Forward: native decoder plays continuously.
+       * Reverse: coalesce seeks to one requestAnimationFrame.
        */
-      const delta = targetTime - video.currentTime;
-
-      if (Math.abs(delta) < 0.025) {
-        video.playbackRate = 0.01;
+      if (Math.abs(delta) < 0.03) {
         video.pause();
       } else if (delta > 0) {
-        /*
-         * Forward scroll: let the decoder play normally and accelerate
-         * only enough to catch the scroll target.
-         */
         video.playbackRate = clamp(
-          delta * 9,
-          0.18,
-          2.5,
+          delta * 8,
+          0.22,
+          mobile.matches ? 2.0 : 2.75,
         );
-
         void video.play().catch(() => {});
       } else {
-        /*
-         * Reverse scroll cannot be played natively backwards reliably.
-         * Seek only when the user actually reverses direction; this is
-         * rare compared with the normal forward cinematic movement.
-         */
         video.pause();
 
-        if (
-          Math.abs(
-            video.currentTime - targetTime,
-          ) > 0.045
-        ) {
-          try {
-            video.currentTime = targetTime;
-          } catch {}
+        mobileTargetTime = targetTime;
+
+        if (!mobileSeekRaf) {
+          mobileSeekRaf = requestAnimationFrame(() => {
+            mobileSeekRaf = 0;
+
+            const latest = mobileTargetTime;
+
+            if (
+              Number.isFinite(latest) &&
+              Math.abs(video.currentTime - latest) > 0.03
+            ) {
+              try {
+                video.currentTime = latest;
+              } catch {}
+            }
+          });
         }
       }
+
+      videos.forEach((item, index) => {
+        item.classList.toggle(
+          'backdrop__video--mobile-active',
+          index === activeIndex,
+        );
+      });
 
       dirty = true;
       scheduleDraw();
     };
 
-    const applyMotion =
-      () => {
-        /*
-         * Only a tiny camera drift remains. It is deterministic and
-         * tied directly to scroll, so it cannot continue moving after
-         * the user stops scrolling.
-         */
-        const scale =
-          1.045 +
-          progress * 0.035;
+    const applyMotion = () => {
+      const scale = 1.045 + progress * 0.035;
+      const x = (progress - 0.5) * -16;
+      const y = (progress - 0.5) * -8;
 
-        const x =
-          (progress - 0.5) *
-          -16;
+      videos.forEach((video, index) => {
+        if (index !== activeIndex) return;
+        video.style.transform =
+          `translate3d(${x}px,${y}px,0) scale(${scale})`;
+        video.style.transformOrigin = '50% 50%';
+      });
 
-        const y =
-          (progress - 0.5) *
-          -8;
-
-        if (mobile.matches) {
-          canvas.style.transform = 'none';
-        } else {
-          canvas.style.transform =
-            `translate3d(${x}px,${y}px,0) scale(${scale})`;
-        }
-
-        canvas.style.transformOrigin =
-          '50% 50%';
-      };
+      canvas.style.transform = 'none';
+    };
 
     const updateFromScroll =
       (scrollY: number) => {
