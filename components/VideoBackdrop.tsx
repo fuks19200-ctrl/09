@@ -414,54 +414,44 @@ export default function VideoBackdrop() {
 
     const setScene =
       (nextIndex: number) => {
-        if (
-          nextIndex === activeIndex
-        ) {
-          return;
-        }
+        if (nextIndex === activeIndex) return;
 
-        activeIndex = nextIndex;
+        const video = videos[nextIndex];
+        ensureVideoLoaded(nextIndex);
+        const startAt = clipStartOffset[nextIndex];
 
-        const video =
-          videos[activeIndex];
-
-        ensureVideoLoaded(
-          activeIndex,
-        );
-
-        const startAt =
-          clipStartOffset[
-            activeIndex
-          ];
-
-        const setStart = () => {
-          try {
-            video.currentTime =
-              Math.min(
-                startAt,
-                Math.max(
-                  0,
-                  video.duration - 0.05,
-                ),
-              );
-          } catch {}
-
+        const switchToNext = () => {
+          if (video.readyState < 2) {
+            video.addEventListener('canplay', switchToNext, { once: true });
+            return;
+          }
+          activeIndex = nextIndex;
           video.pause();
-
           dirty = true;
           scheduleDraw();
         };
 
-        if (
-          video.readyState >= 1
-        ) {
-          setStart();
-        } else {
-          video.addEventListener(
-            'loadedmetadata',
-            setStart,
-            { once: true },
+        const seekToContinuityFrame = () => {
+          const endTime = Math.max(
+            startAt + 0.1,
+            (video.duration || startAt + 0.1) - 0.04,
           );
+          try {
+            video.currentTime = Math.min(startAt, endTime);
+          } catch {}
+
+          if (video.readyState >= 2) {
+            video.addEventListener('seeked', switchToNext, { once: true });
+            switchToNext();
+          } else {
+            video.addEventListener('canplay', switchToNext, { once: true });
+          }
+        };
+
+        if (video.readyState >= 1) {
+          seekToContinuityFrame();
+        } else {
+          video.addEventListener('loadedmetadata', seekToContinuityFrame, { once: true });
         }
       };
 
