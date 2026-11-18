@@ -2069,7 +2069,6 @@ main,.footer{position:relative;z-index:1;}
   }
 
   .backdrop__video {
-    display: none;
     opacity: 0 !important;
     transition: none !important;
     will-change: auto;
