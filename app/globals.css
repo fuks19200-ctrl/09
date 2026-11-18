@@ -2076,7 +2076,12 @@ main,.footer{position:relative;z-index:1;}
   }
 
   .backdrop__video.backdrop__video--mobile-active {
-    display: block;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    visibility: visible !important;
     opacity: 1 !important;
+    object-fit: cover !important;
+    object-position: center center !important;
   }
 }
