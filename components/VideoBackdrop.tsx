@@ -440,10 +440,8 @@ export default function VideoBackdrop() {
             video.currentTime = Math.min(startAt, endTime);
           } catch {}
 
-          if (video.readyState >= 2) {
-            video.addEventListener('seeked', switchToNext, { once: true });
-            switchToNext();
-          } else {
+          video.addEventListener('seeked', switchToNext, { once: true });
+          if (video.readyState < 2) {
             video.addEventListener('canplay', switchToNext, { once: true });
           }
         };
