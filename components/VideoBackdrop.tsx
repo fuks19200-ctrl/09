@@ -62,6 +62,8 @@ export default function VideoBackdrop() {
     let raf = 0;
     let lastSeekAt = 0;
     let lastSeekProgress = -1;
+    let mobileTargetTime = -1;
+    let mobileSeekRaf = 0;
     let loaded = [false, false, false];
 
     /*
@@ -425,6 +427,12 @@ export default function VideoBackdrop() {
           }
           activeIndex = nextIndex;
           video.pause();
+          videos.forEach((item, index) => {
+            item.classList.toggle(
+              'backdrop__video--mobile-active',
+              index === activeIndex,
+            );
+          });
           dirty = true;
           scheduleDraw();
         };
@@ -507,18 +515,48 @@ export default function VideoBackdrop() {
        * There is no poster fallback and no autoplay dependency.
        */
       if (mobile.matches) {
-        video.pause();
+        /*
+         * MOBILE PERFORMANCE PATH:
+         * Never redraw the video into canvas. Safari is much happier
+         * rendering the <video> element directly.
+         *
+         * Forward scroll = native video playback, which keeps decoded
+         * frames smooth. Reverse scroll = throttled seeks, only to the
+         * latest target, so dozens of scroll events cannot queue seeks.
+         */
+        mobileTargetTime = targetTime;
 
-        if (
-          Math.abs(video.currentTime - targetTime) > 0.012
-        ) {
-          try {
-            video.currentTime = targetTime;
-          } catch {}
+        if (delta > 0.035) {
+          video.playbackRate = clamp(delta * 7, 0.35, 2.2);
+          void video.play().catch(() => {});
+        } else if (delta < -0.035) {
+          video.pause();
+
+          if (!mobileSeekRaf) {
+            mobileSeekRaf = requestAnimationFrame(() => {
+              mobileSeekRaf = 0;
+              const latest = mobileTargetTime;
+              if (
+                Number.isFinite(latest) &&
+                Math.abs(video.currentTime - latest) > 0.025
+              ) {
+                try {
+                  video.currentTime = latest;
+                } catch {}
+              }
+            });
+          }
+        } else {
+          video.pause();
         }
 
-        dirty = true;
-        scheduleDraw();
+        videos.forEach((item, index) => {
+          item.classList.toggle(
+            'backdrop__video--mobile-active',
+            index === activeIndex,
+          );
+        });
+
         return;
       }
 
@@ -590,8 +628,12 @@ export default function VideoBackdrop() {
           (progress - 0.5) *
           -8;
 
-        canvas.style.transform =
-          `translate3d(${x}px,${y}px,0) scale(${scale})`;
+        if (mobile.matches) {
+          canvas.style.transform = 'none';
+        } else {
+          canvas.style.transform =
+            `translate3d(${x}px,${y}px,0) scale(${scale})`;
+        }
 
         canvas.style.transformOrigin =
           '50% 50%';
@@ -737,6 +779,7 @@ export default function VideoBackdrop() {
         if (mobile.matches) {
           videos.forEach((video) => {
             video.pause();
+            video.classList.remove('backdrop__video--mobile-active');
             video.muted = true;
             video.playsInline = true;
             video.preload = 'auto';
@@ -747,6 +790,7 @@ export default function VideoBackdrop() {
 
           activeIndex = getSceneIndex(progress);
           ensureVideoLoaded(activeIndex);
+          videos[activeIndex].classList.add('backdrop__video--mobile-active');
 
           if (activeIndex < 2) {
             ensureVideoLoaded(activeIndex + 1);
@@ -845,6 +889,10 @@ export default function VideoBackdrop() {
     /*
      * Background is completely paused after initial positioning.
      */
+    if (mobile.matches) {
+      videos[activeIndex].classList.add('backdrop__video--mobile-active');
+    }
+
     stopImmediately();
 
     window.addEventListener(
@@ -926,6 +974,10 @@ export default function VideoBackdrop() {
         cancelAnimationFrame(
           drawRaf,
         );
+      }
+
+      if (mobileSeekRaf) {
+        cancelAnimationFrame(mobileSeekRaf);
       }
 
       observer.disconnect();
