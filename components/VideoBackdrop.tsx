@@ -239,7 +239,6 @@ export default function VideoBackdrop() {
       const poster = posters[index];
 
       const source: CanvasImageSource | null =
-        !mobile.matches &&
         video.readyState >= 2 &&
         video.videoWidth > 0
           ? video
@@ -386,7 +385,6 @@ export default function VideoBackdrop() {
     const ensureVideoLoaded =
       (index: number) => {
         if (
-          mobile.matches ||
           reducedMotion.matches ||
           loaded[index]
         ) {
@@ -461,7 +459,7 @@ export default function VideoBackdrop() {
      * exactly that frame. Lenis itself remains smooth.
      */
     const syncVideoToScroll = () => {
-      if (mobile.matches || reducedMotion.matches) return;
+      if (reducedMotion.matches) return;
 
       const video = videos[activeIndex];
 
@@ -501,6 +499,28 @@ export default function VideoBackdrop() {
       const targetTime =
         startTime +
         (endTime - startTime) * local;
+
+      /*
+       * MOBILE:
+       * Safari/iOS does not reliably run a scroll-controlled video
+       * through playbackRate. Scrub the SAME video directly instead.
+       * There is no poster fallback and no autoplay dependency.
+       */
+      if (mobile.matches) {
+        video.pause();
+
+        if (
+          Math.abs(video.currentTime - targetTime) > 0.012
+        ) {
+          try {
+            video.currentTime = targetTime;
+          } catch {}
+        }
+
+        dirty = true;
+        scheduleDraw();
+        return;
+      }
 
       /*
        * IMPORTANT:
@@ -715,33 +735,33 @@ export default function VideoBackdrop() {
     const onMediaChange =
       () => {
         if (mobile.matches) {
-          videos.forEach(
-            (video) => {
-              video.pause();
-              video.removeAttribute(
-                'src',
-              );
-              video.load();
-            },
-          );
+          videos.forEach((video) => {
+            video.pause();
+            video.muted = true;
+            video.playsInline = true;
+            video.preload = 'auto';
+            video.load();
+          });
 
-          loaded = [
-            false,
-            false,
-            false,
-          ];
+          loaded = [false, false, false];
 
-          activeIndex = 0;
+          activeIndex = getSceneIndex(progress);
+          ensureVideoLoaded(activeIndex);
+
+          if (activeIndex < 2) {
+            ensureVideoLoaded(activeIndex + 1);
+          }
+
           resize();
-          scheduleDraw();
+          updateFromScroll(lastScroll);
         } else {
-          ensureVideoLoaded(
-            activeIndex,
-          );
+          ensureVideoLoaded(activeIndex);
 
-          updateFromScroll(
-            lastScroll,
-          );
+          if (activeIndex < 2) {
+            ensureVideoLoaded(activeIndex + 1);
+          }
+
+          updateFromScroll(lastScroll);
         }
       };
 
@@ -803,30 +823,19 @@ export default function VideoBackdrop() {
 
     resize();
 
-    if (
-      !mobile.matches &&
-      !reducedMotion.matches
-    ) {
+    if (!reducedMotion.matches) {
       /*
-       * Load current + next clip before the user reaches the boundary.
-       * This is the key fix for the sudden hand/black frame.
+       * Load current + next clip on BOTH desktop and mobile.
+       * Mobile used to fall back to static posters and therefore
+       * could not move with scroll at all.
        */
-      ensureVideoLoaded(
-        activeIndex,
-      );
+      ensureVideoLoaded(activeIndex);
 
-      if (
-        activeIndex < 2
-      ) {
-        ensureVideoLoaded(
-          activeIndex + 1,
-        );
+      if (activeIndex < 2) {
+        ensureVideoLoaded(activeIndex + 1);
       }
 
-      videos.forEach(
-        (video) =>
-          video.pause(),
-      );
+      videos.forEach((video) => video.pause());
     }
 
     updateFromScroll(
