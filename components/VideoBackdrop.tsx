@@ -73,7 +73,6 @@ export default function VideoBackdrop() {
      */
     const clipStartOffset = [0, 5.2, 0.25] as const;
     const sceneBoundary = [0.30, 0.68] as const;
-    const holeTransition = [0.60, 0.68] as const;
 
     const clamp = (
       value: number,
@@ -356,68 +355,7 @@ export default function VideoBackdrop() {
         height,
       );
 
-      const transitionStart = holeTransition[0];
-      const transitionEnd = holeTransition[1];
-      const inHoleTransition =
-        progress >= transitionStart &&
-        progress < transitionEnd &&
-        !mobile.matches &&
-        !reducedMotion.matches;
-
-      if (inHoleTransition) {
-        const t = clamp(
-          (progress - transitionStart) /
-            Math.max(0.0001, transitionEnd - transitionStart),
-        );
-        const next = videos[2];
-        const nextStart = clipStartOffset[2];
-        const nextEnd = Math.max(
-          nextStart + 0.1,
-          (next.duration || nextStart + 0.8) - 0.04,
-        );
-
-        /*
-         * The hand is the last continuous image. We do NOT dissolve the
-         * two unrelated clips — that creates the "double frame / jump"
-         * effect. Instead the camera leaves the hand first, then the hole
-         * opens as a physical iris/reveal from the centre of the frame.
-         */
-        if (next.readyState >= 2 && next.duration) {
-          try {
-            next.currentTime =
-              nextStart +
-              (nextEnd - nextStart) * t;
-          } catch {}
-        }
-
-        drawSource(
-          1,
-          1,
-          -height * 0.22 * t,
-          1 + 0.12 * t,
-        );
-
-        const holeCx = width * 0.5;
-        const holeCy = height * 0.56;
-        const maxRadius = Math.hypot(width, height) * 0.72;
-        const radius = maxRadius * Math.pow(t, 0.82);
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(holeCx, holeCy, radius, 0, Math.PI * 2);
-        ctx.clip();
-
-        drawSource(
-          2,
-          1,
-          height * 0.22 * (1 - t),
-          1.18 - 0.18 * t,
-        );
-
-        ctx.restore();
-      } else {
-        drawSource(activeIndex, 1);
-      }
+      drawSource(activeIndex, 1);
 
       ctx.globalAlpha = 1;
 
@@ -522,112 +460,96 @@ export default function VideoBackdrop() {
      * When Lenis reports a new scroll position, the film jumps to
      * exactly that frame. Lenis itself remains smooth.
      */
-    const syncVideoToScroll =
-      () => {
-        if (
-          mobile.matches ||
-          reducedMotion.matches
-        ) {
-          return;
-        }
+    const syncVideoToScroll = () => {
+      if (mobile.matches || reducedMotion.matches) return;
 
-        const video =
-          videos[activeIndex];
+      const video = videos[activeIndex];
 
-        if (
-          video.readyState < 2 ||
-          !video.duration ||
-          !Number.isFinite(
-            video.duration,
-          )
-        ) {
-          return;
-        }
+      if (
+        video.readyState < 2 ||
+        !video.duration ||
+        !Number.isFinite(video.duration)
+      ) {
+        return;
+      }
 
-        const now =
-          performance.now();
-
-        /*
-         * During rapid wheel input we still seek often enough to feel
-         * continuous, but do not spam the decoder with identical seeks.
-         */
-        if (
-          now - lastSeekAt < 16 &&
-          Math.abs(
-            progress -
-              lastSeekProgress,
-          ) < 0.001
-        ) {
-          return;
-        }
-
-        const segmentStart =
-          activeIndex === 0
-            ? 0
-            : activeIndex === 1
-              ? sceneBoundary[0]
-              : holeTransition[0];
-
-        const segmentEnd =
-          activeIndex === 0
+      const segmentStart =
+        activeIndex === 0
+          ? 0
+          : activeIndex === 1
             ? sceneBoundary[0]
-            : activeIndex === 1
-              ? sceneBoundary[1]
-              : 1;
+            : sceneBoundary[1];
 
-        const local =
-          clamp(
-            (progress -
-              segmentStart) /
-              Math.max(
-                0.0001,
-                segmentEnd -
-                  segmentStart,
-              ),
-          );
+      const segmentEnd =
+        activeIndex === 0
+          ? sceneBoundary[0]
+          : activeIndex === 1
+            ? sceneBoundary[1]
+            : 1;
 
-        const start =
-          clipStartOffset[
-            activeIndex
-          ];
+      const local = clamp(
+        (progress - segmentStart) /
+          Math.max(0.0001, segmentEnd - segmentStart),
+      );
 
-        const end =
-          Math.max(
-            start + 0.1,
-            video.duration - 0.04,
-          );
+      const startTime = clipStartOffset[activeIndex];
+      const endTime = Math.max(
+        startTime + 0.1,
+        video.duration - 0.04,
+      );
 
-        const nextTime =
-          start +
-          (end - start) *
-            local;
+      const targetTime =
+        startTime +
+        (endTime - startTime) * local;
 
-        if (
-          Math.abs(
-            video.currentTime -
-              nextTime,
-          ) > 0.018
-        ) {
-          try {
-            video.currentTime =
-              nextTime;
-          } catch {}
-        }
+      /*
+       * IMPORTANT:
+       * The film is now a real continuous playback timeline.
+       *
+       * We do NOT seek on every scroll event. Constant currentTime
+       * assignment makes Safari jump between decoded keyframes.
+       * Scroll controls playback speed; the video itself supplies the
+       * continuous frames.
+       */
+      const delta = targetTime - video.currentTime;
 
+      if (Math.abs(delta) < 0.025) {
+        video.playbackRate = 0.01;
+        video.pause();
+      } else if (delta > 0) {
         /*
-         * NEVER play the video.
-         *
-         * Scroll is the timeline.
+         * Forward scroll: let the decoder play normally and accelerate
+         * only enough to catch the scroll target.
+         */
+        video.playbackRate = clamp(
+          delta * 9,
+          0.18,
+          2.5,
+        );
+
+        void video.play().catch(() => {});
+      } else {
+        /*
+         * Reverse scroll cannot be played natively backwards reliably.
+         * Seek only when the user actually reverses direction; this is
+         * rare compared with the normal forward cinematic movement.
          */
         video.pause();
 
-        lastSeekAt = now;
-        lastSeekProgress =
-          progress;
+        if (
+          Math.abs(
+            video.currentTime - targetTime,
+          ) > 0.045
+        ) {
+          try {
+            video.currentTime = targetTime;
+          } catch {}
+        }
+      }
 
-        dirty = true;
-        scheduleDraw();
-      };
+      dirty = true;
+      scheduleDraw();
+    };
 
     const applyMotion =
       () => {
@@ -699,7 +621,7 @@ export default function VideoBackdrop() {
         }
 
         ensureVideoLoaded(activeIndex);
-        if (!mobile.matches && !reducedMotion.matches && progress >= holeTransition[0]) {
+        if (!mobile.matches && !reducedMotion.matches && progress >= sceneBoundary[1]) {
           ensureVideoLoaded(2);
         }
 
