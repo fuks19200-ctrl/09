@@ -73,6 +73,7 @@ export default function VideoBackdrop() {
      */
     const clipStartOffset = [0, 5.2, 0.25] as const;
     const sceneBoundary = [0.30, 0.68] as const;
+    const holeTransition = [0.60, 0.68] as const;
 
     const clamp = (
       value: number,
@@ -232,6 +233,8 @@ export default function VideoBackdrop() {
     const drawSource = (
       index: number,
       alpha = 1,
+      transitionY = 0,
+      transitionScale = 1,
     ) => {
       const video = videos[index];
       const poster = posters[index];
@@ -297,7 +300,14 @@ export default function VideoBackdrop() {
           (height - drawHeight) / 2;
       }
 
+      ctx.save();
       ctx.globalAlpha = alpha;
+
+      if (transitionY !== 0 || transitionScale !== 1) {
+        ctx.translate(width * 0.5, height * 0.5 + transitionY);
+        ctx.scale(transitionScale, transitionScale);
+        ctx.translate(-width * 0.5, -height * 0.5);
+      }
 
       ctx.drawImage(
         source,
@@ -306,6 +316,7 @@ export default function VideoBackdrop() {
         drawWidth,
         drawHeight,
       );
+      ctx.restore();
 
       return true;
     };
@@ -345,17 +356,50 @@ export default function VideoBackdrop() {
         height,
       );
 
-      /*
-       * NO CROSSFADE.
-       *
-       * A crossfade between two videos was visually wrong because
-       * both clips contain the hand. The old frame must end, then the
-       * next clip must continue from its continuity frame.
-       */
-      drawSource(
-        activeIndex,
-        1,
-      );
+      const transitionStart = holeTransition[0];
+      const transitionEnd = holeTransition[1];
+      const inHoleTransition =
+        progress >= transitionStart &&
+        progress < transitionEnd &&
+        !mobile.matches &&
+        !reducedMotion.matches;
+
+      if (inHoleTransition) {
+        const t = clamp(
+          (progress - transitionStart) /
+            Math.max(0.0001, transitionEnd - transitionStart),
+        );
+        const next = videos[2];
+        const nextStart = clipStartOffset[2];
+        const nextEnd = Math.max(nextStart + 0.1, (next.duration || nextStart + 0.8) - 0.04);
+        const nextLocal = clamp(t * 0.22);
+
+        if (next.readyState >= 2 && next.duration) {
+          try {
+            next.currentTime = nextStart + (nextEnd - nextStart) * nextLocal;
+          } catch {}
+        }
+
+        /*
+         * This is not a normal dissolve. The camera appears to leave the
+         * hand and physically drop into the opening: the hand frame rises,
+         * the incoming hole frame starts lower, then punches forward.
+         */
+        drawSource(
+          1,
+          1 - t,
+          -height * 0.10 * t,
+          1 + 0.07 * t,
+        );
+        drawSource(
+          2,
+          t,
+          height * 0.18 * (1 - t),
+          1.14 - 0.09 * t,
+        );
+      } else {
+        drawSource(activeIndex, 1);
+      }
 
       ctx.globalAlpha = 1;
 
@@ -503,12 +547,12 @@ export default function VideoBackdrop() {
           activeIndex === 0
             ? 0
             : activeIndex === 1
-              ? 7 / 24
-              : 8.35 / 24;
+              ? sceneBoundary[0]
+              : holeTransition[0];
 
         const segmentEnd =
           activeIndex === 0
-            ? 7 / 24
+            ? sceneBoundary[0]
             : activeIndex === 1
               ? sceneBoundary[1]
               : 1;
@@ -636,9 +680,10 @@ export default function VideoBackdrop() {
           );
         }
 
-        ensureVideoLoaded(
-          activeIndex,
-        );
+        ensureVideoLoaded(activeIndex);
+        if (!mobile.matches && !reducedMotion.matches && progress >= holeTransition[0]) {
+          ensureVideoLoaded(2);
+        }
 
         syncVideoToScroll();
         applyMotion();
