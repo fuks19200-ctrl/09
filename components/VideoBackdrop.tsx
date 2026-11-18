@@ -71,7 +71,8 @@ export default function VideoBackdrop() {
      *
      * Clip 3 starts from its first frame.
      */
-    const clipStartOffset = [0, 5.2, 0] as const;
+    const clipStartOffset = [0, 5.2, 0.25] as const;
+    const sceneBoundary = [0.30, 0.68] as const;
 
     const clamp = (
       value: number,
@@ -124,13 +125,13 @@ export default function VideoBackdrop() {
         [focal('#about'), 0.19],
         [
           documentTop(courses) - window.innerHeight * 0.2,
-          7 / 24,
+          sceneBoundary[0],
         ],
         [
           documentTop(courses) +
             courses.offsetHeight -
             window.innerHeight * 0.3,
-          8.35 / 24,
+          sceneBoundary[1],
         ],
         [focal('#contact'), 0.53],
         [focal('#faq'), 0.65],
@@ -198,8 +199,8 @@ export default function VideoBackdrop() {
      * cannot unexpectedly restart at a visual beat.
      */
     const getSceneIndex = (value: number) => {
-      if (value < 7 / 24) return 0;
-      if (value < 8.35 / 24) return 1;
+      if (value < sceneBoundary[0]) return 0;
+      if (value < sceneBoundary[1]) return 1;
       return 2;
     };
 
@@ -521,7 +522,7 @@ export default function VideoBackdrop() {
           activeIndex === 0
             ? 7 / 24
             : activeIndex === 1
-              ? 8.35 / 24
+              ? sceneBoundary[1]
               : 1;
 
         const local =
