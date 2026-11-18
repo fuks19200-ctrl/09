@@ -2057,3 +2057,27 @@ main,.footer{position:relative;z-index:1;}
   .price-card{padding:18px !important;}
   .plan-price{font-size:36px !important;}
 }
+
+
+/* Mobile cinematic video path: render the decoded video directly.
+   Canvas is kept for desktop only because canvas frame copies are
+   unnecessarily expensive on iOS/Safari. */
+@media (max-width: 700px) {
+  .backdrop__canvas {
+    display: none !important;
+    transform: none !important;
+  }
+
+  .backdrop__video {
+    display: none;
+    opacity: 0 !important;
+    transition: none !important;
+    will-change: auto;
+    filter: saturate(1.08) contrast(1.02);
+  }
+
+  .backdrop__video.backdrop__video--mobile-active {
+    display: block;
+    opacity: 1 !important;
+  }
+}
