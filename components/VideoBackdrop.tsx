@@ -371,32 +371,50 @@ export default function VideoBackdrop() {
         );
         const next = videos[2];
         const nextStart = clipStartOffset[2];
-        const nextEnd = Math.max(nextStart + 0.1, (next.duration || nextStart + 0.8) - 0.04);
-        const nextLocal = clamp(t * 0.22);
+        const nextEnd = Math.max(
+          nextStart + 0.1,
+          (next.duration || nextStart + 0.8) - 0.04,
+        );
 
+        /*
+         * The hand is the last continuous image. We do NOT dissolve the
+         * two unrelated clips — that creates the "double frame / jump"
+         * effect. Instead the camera leaves the hand first, then the hole
+         * opens as a physical iris/reveal from the centre of the frame.
+         */
         if (next.readyState >= 2 && next.duration) {
           try {
-            next.currentTime = nextStart + (nextEnd - nextStart) * nextLocal;
+            next.currentTime =
+              nextStart +
+              (nextEnd - nextStart) * t;
           } catch {}
         }
 
-        /*
-         * This is not a normal dissolve. The camera appears to leave the
-         * hand and physically drop into the opening: the hand frame rises,
-         * the incoming hole frame starts lower, then punches forward.
-         */
         drawSource(
           1,
-          1 - t,
-          -height * 0.10 * t,
-          1 + 0.07 * t,
+          1,
+          -height * 0.22 * t,
+          1 + 0.12 * t,
         );
+
+        const holeCx = width * 0.5;
+        const holeCy = height * 0.56;
+        const maxRadius = Math.hypot(width, height) * 0.72;
+        const radius = maxRadius * Math.pow(t, 0.82);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(holeCx, holeCy, radius, 0, Math.PI * 2);
+        ctx.clip();
+
         drawSource(
           2,
-          t,
-          height * 0.18 * (1 - t),
-          1.14 - 0.09 * t,
+          1,
+          height * 0.22 * (1 - t),
+          1.18 - 0.18 * t,
         );
+
+        ctx.restore();
       } else {
         drawSource(activeIndex, 1);
       }
