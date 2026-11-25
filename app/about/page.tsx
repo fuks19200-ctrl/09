@@ -11,17 +11,27 @@ export default function About() {
     <main className="site-background about-page">
       <SiteNav active="about" />
       <article className="founders-story">
-        <p className="founders-story__eyebrow">История MULTUM.AI</p>
-        <h1>Будущее принадлежит тем, кто умеет <span>мыслить.</span></h1>
-        <p className="founders-story__lead">Мы — Алина и Дарья, основательницы MULTUM.AI. Нас объединила идея создать не просто школу нейросетей, а пространство, где технологии развивают человеческое мышление.</p>
-        <p>Чем больше люди делегируют искусственному интеллекту собственное мышление, тем ценнее становятся критический анализ, креативность и способность правильно формулировать задачи.</p>
-        <p><strong>В будущем редкостью станет не человек, который знает о нейросетях, а специалист, который понимает, как ими управлять.</strong></p>
-        <p>Поэтому в основе MULTUM.AI — практика, реальные проекты и профессиональные навыки. Мы учим анализировать, экспериментировать, самостоятельно принимать решения и превращать идеи в работающие цифровые продукты.</p>
-        <p>Наша задача — не заменить человеческий интеллект искусственным, а раскрыть его потенциал с помощью технологий.</p>
-        <p className="founders-story__signature">Мы не учим следовать за будущим. Мы учим его создавать.</p>
-        <a className="button button--glass founders-cta" href="/courses/">
-          <span>Выбрать обучение</span>
-        </a>
+        <header className="founders-intro">
+          <p className="founders-kicker"><span aria-hidden="true" /> История MULTUM.AI</p>
+          <h1>Будущее —<span>за теми, кто мыслит.</span></h1>
+          <p className="founders-byline">Алина и Дарья <span>·</span> Основательницы MULTUM.AI</p>
+        </header>
+        <p className="founders-body">Мы создали MULTUM.AI, чтобы научить людей управлять технологиями, не делегируя им собственное мышление. Чем доступнее AI, тем ценнее критический анализ, креативность и умение задавать правильные вопросы.</p>
+        <blockquote className="founders-quote">
+          <span className="founders-quote__label">Наша философия</span>
+          <p>Редкостью станет не тот, кто знает о нейросетях, а тот, кто <strong>умеет ими управлять.</strong></p>
+        </blockquote>
+        <section className="founders-practice" aria-labelledby="practice-title">
+          <h2 id="practice-title">От знаний — к реальным результатам.</h2>
+          <div className="founders-pillars">
+            <span>Практика</span><span>Реальные проекты</span><span>Навыки</span>
+          </div>
+          <p className="founders-body">Мы учим анализировать, экспериментировать, самостоятельно принимать решения и превращать идеи в работающие цифровые продукты. Не заменять интеллект, а усиливать его.</p>
+        </section>
+        <footer className="founders-footer">
+          <p>Не следовать за будущим.<br /><strong>Создавать его.</strong></p>
+          <a className="button button--glass founders-cta" href="/courses/">Выбрать обучение</a>
+        </footer>
       </article>
     </main>
   );

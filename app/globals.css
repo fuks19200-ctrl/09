@@ -188,52 +188,126 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 }
 
 
-/* Founders story: original full-screen photograph and right-hand editorial copy. */
+/* Founders story: editorial composition, with the portrait kept clear. */
 .about-page {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
   padding: 0;
   background: #fff5f4 url('/images/%D0%A1%D1%82%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B8%CC%86%20%D0%B4%D1%83%D1%8D%D1%82%20%D0%B2%20%D1%81%D0%BE%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D0%B8%CC%86%20%D1%83%D0%BB%D0%B8%D1%87%D0%BD%D0%BE%D0%B8%CC%86%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%B5.png') left center / cover no-repeat;
-  background-attachment: local;
   overflow-x: hidden;
   overflow-y: auto;
 }
 .founders-story {
-  width: min(49%, 690px);
-  margin: 0 5% 0 auto;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 80px 0 36px;
+  width: min(43.5%, 650px);
+  margin: auto 5.4% auto 0;
+  padding: 88px 0 42px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   color: var(--color-black);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(17px, 2.5vh, 27px);
 }
-.founders-story__eyebrow {
-  margin: 0 0 14px;
-  font-size: 11px;
-  font-weight: 650;
+.founders-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 15px;
+  color: #684e5b;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .17em;
   text-transform: uppercase;
-  letter-spacing: .18em;
-  color: #674b59;
 }
-.founders-story h1 {
-  font-size: clamp(34px, 4.15vw, 66px);
-  font-weight: 680;
-  line-height: 1.02;
-  letter-spacing: -.055em;
-  margin: 0 0 22px;
+.founders-kicker > span { width: 24px; height: 1px; background: #A8440C; }
+.founders-intro h1 {
+  font-size: clamp(30px, 3.05vw, 51px);
+  font-weight: 450;
+  line-height: 1.1;
+  letter-spacing: -.045em;
+  margin: 0;
 }
-.founders-story h1 span { color: #A8440C; }
-.founders-story > p:not(.founders-story__eyebrow) {
-  margin: 0 0 13px;
-  max-width: 59ch;
-  font-size: clamp(14px, 1.18vw, 18px);
+.founders-intro h1 > span { display: block; font-weight: 570; color: #A8440C; }
+.founders-byline {
+  margin: 14px 0 0;
+  font-size: clamp(11px, .92vw, 14px);
+  font-weight: 500;
   line-height: 1.5;
-  color: #3e333e;
+  color: #614b56;
 }
-.founders-story > p.founders-story__lead { font-size: clamp(16px, 1.4vw, 21px); font-weight: 600; color: var(--color-black); }
-.founders-story > p.founders-story__signature { font-weight: 600; color: var(--color-black); margin: 6px 0 22px; }
+.founders-byline > span { margin: 0 4px; color: #A8440C; }
+.founders-body {
+  margin: 0;
+  font-size: clamp(13.5px, 1.01vw, 16px);
+  line-height: 1.65;
+  font-weight: 400;
+  color: #40323c;
+}
+.founders-quote {
+  margin: 0;
+  padding: 16px 21px 18px;
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: 20px;
+  background: linear-gradient(120deg,rgba(255,255,255,.43),rgba(255,255,255,.13));
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.55);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.founders-quote__label {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .13em;
+  color: #765565;
+}
+.founders-quote p {
+  margin: 0;
+  font-size: clamp(17px, 1.53vw, 24px);
+  font-weight: 450;
+  line-height: 1.35;
+  letter-spacing: -.025em;
+}
+.founders-quote strong { font-weight: 650; color: #A8440C; }
+.founders-practice h2 {
+  font-size: clamp(16px, 1.4vw, 22px);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+.founders-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0 0 13px;
+}
+.founders-pillars span {
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #563e4d;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.8);
+  background: rgba(255,255,255,.32);
+}
+.founders-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-top: 1px solid rgba(104,78,91,.19);
+  padding-top: 18px;
+}
+.founders-footer p {
+  margin: 0;
+  font-size: clamp(12px, 1.02vw, 16px);
+  color: #614b56;
+  line-height: 1.5;
+}
+.founders-footer strong { color: var(--color-black); font-weight: 650; }
 .founders-cta {
   align-self: flex-end;
   isolation: isolate;
@@ -264,21 +338,36 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 @media (prefers-reduced-motion: reduce) {
   .founders-cta:hover::after, .founders-cta:focus-visible::after { animation: none; }
 }
-@media (max-width: 900px), (max-aspect-ratio: 5/4) {
+
+.founders-footer .founders-cta {
+  flex: 0 0 auto;
+  align-self: center;
+  min-height: 46px;
+  padding: 12px 21px;
+  font-size: 13px;
+}
+@media (max-width: 900px), (max-aspect-ratio: 3/2) {
   .about-page {
+    display: block;
     background-color: #fff5f4;
     background-image: url('/images/%D0%A1%D1%82%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B8%CC%86%20%D0%B4%D1%83%D1%8D%D1%82%20%D0%B2%20%D1%81%D0%BE%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D0%B8%CC%86%20%D1%83%D0%BB%D0%B8%D1%87%D0%BD%D0%BE%D0%B8%CC%86%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%B5.png'), linear-gradient(150deg,#fff9f7,#f7dce9 65%,#eadcf9);
     background-position: left top, center;
-    background-size: auto clamp(300px, 60vw, 510px), cover;
+    background-size: auto clamp(310px, 65vw, 540px), cover;
     background-repeat: no-repeat;
+    background-attachment: local;
   }
   .founders-story {
     width: auto;
-    min-height: auto;
-    margin: 0;
-    padding: calc(clamp(300px, 60vw, 510px) + 24px) clamp(22px, 6vw, 52px) 42px;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: calc(clamp(310px, 65vw, 540px) + 26px) clamp(22px, 6vw, 52px) 40px;
+    gap: 24px;
   }
-  .founders-story h1 { font-size: clamp(35px, 7vw, 55px); }
-  .founders-story > p:not(.founders-story__eyebrow) { font-size: 16px; }
-  .founders-story > p.founders-story__lead { font-size: 19px; }
+  .founders-intro h1 { font-size: clamp(31px, 6.5vw, 48px); }
+  .founders-body { font-size: 15px; }
+  .founders-quote p { font-size: 21px; }
+}
+@media (max-width: 420px) {
+  .founders-footer { flex-wrap: wrap; }
+  .founders-footer .founders-cta { margin-left: auto; }
 }
