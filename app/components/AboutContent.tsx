@@ -54,11 +54,17 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
       </section>
       <section className="creative-manifesto" id="manifesto" aria-label="Принципы MULTUM AI">
         <div className="creative-manifesto__copy">
+          <p className="creative-manifesto__eyebrow">Школа нейросетей</p>
           <h2>
             <span>Мыслить</span>
             <span>Создавать</span>
-            <span>Опережать</span>
+            <span>Опережать<span className="creative-manifesto__dot">.</span></span>
           </h2>
+          <p className="creative-manifesto__description">Осваивайте нейросети и воплощайте идеи в реальных проектах.</p>
+          <div className="creative-manifesto__actions">
+            <a className="creative-manifesto__primary" href="/courses/">Выбрать курс <span aria-hidden="true">→</span></a>
+            <a className="creative-manifesto__secondary" href="#approach"><span className="creative-manifesto__circle" aria-hidden="true">↗</span>Как проходит обучение</a>
+          </div>
         </div>
         <div className="creative-manifesto__visual" aria-hidden="true" />
       </section>
