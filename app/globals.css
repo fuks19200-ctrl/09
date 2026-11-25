@@ -586,16 +586,7 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
-.creative-manifesto__visual::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #ef762b66 13%, #ef762b99 50%, #ef762b66 87%, transparent);
-  pointer-events: none;
-}
+
 @media (max-width: 1000px) {
   .creative-manifesto__copy h2 { font-size: clamp(28px,4.15vw,44px); }
 }
@@ -608,18 +599,22 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 
 /* Philosophy heading below the manifesto artwork. */
 .creative-philosophy-label {
-  grid-column: 1 / -1;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  transform: translateY(50%);
   display: flex;
   align-items: center;
-  justify-self: start;
   gap: 12px;
-  margin: clamp(20px,3vh,36px) 0 0;
+  margin: 0;
   color: var(--color-black);
   font-size: clamp(10px,.9vw,13px);
   font-weight: 600;
   letter-spacing: .1em;
   line-height: 1.4;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .creative-philosophy-label::after {
   content: "";
