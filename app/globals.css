@@ -1387,3 +1387,62 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     border-radius: 18px;
   }
 }
+
+
+/* Compact, single-screen courses composition on the shared page grid. */
+.courses-page > .creative-manifesto--centered {
+  align-content: center;
+  row-gap: clamp(14px,2.1svh,22px);
+  padding-bottom: clamp(22px,3svh,32px);
+}
+.creative-manifesto--centered .creative-manifesto__eyebrow {
+  margin-bottom: clamp(10px,1.5svh,16px);
+}
+.creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) {
+  font-size: clamp(30px,min(3.65vw,6.4svh),54px);
+}
+.creative-manifesto--centered .creative-manifesto__actions {
+  margin-top: clamp(14px,2svh,22px);
+}
+.creative-manifesto--centered .creative-manifesto__portrait {
+  width: min(100%,760px,78svh);
+  aspect-ratio: 1.9;
+  background-position: center 34%;
+  border-radius: clamp(18px,2vw,26px);
+}
+.creative-manifesto--centered .creative-philosophy {
+  width: 100%;
+  max-width: var(--layout-max);
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+.creative-manifesto--centered .creative-philosophy::before { display: none; }
+.creative-manifesto--centered .creative-philosophy-copy {
+  max-width: none;
+  width: 100%;
+  margin-inline: auto;
+}
+.creative-manifesto--centered .creative-philosophy-copy :is(h2,h3) {
+  margin: 0;
+  font-size: clamp(23px,min(2.35vw,4.3svh),34px);
+  line-height: 1.18;
+  text-align: center;
+}
+@media (max-width:650px) {
+  .courses-page > .creative-manifesto--centered {
+    row-gap: 20px;
+    padding-bottom: 28px;
+  }
+  .creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) {
+    font-size: clamp(23px,5.4vw,34px);
+  }
+  .creative-manifesto--centered .creative-manifesto__portrait {
+    width: 100%;
+    aspect-ratio: 1.55;
+    border-radius: 18px;
+  }
+  .creative-manifesto--centered .creative-philosophy-copy :is(h2,h3) {
+    font-size: clamp(20px,5vw,28px);
+  }
+}

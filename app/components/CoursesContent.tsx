@@ -30,7 +30,6 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
             <span>Создавать</span>
             <span>Опережать</span>
           </Heading>
-          <p className="creative-manifesto__description">Осваивайте нейросети и воплощайте идеи в реальных проектах.</p>
           <div className="creative-manifesto__actions">
             <a className="creative-manifesto__primary" href="#programs">Выбрать курс <span aria-hidden="true">→</span></a>
           </div>
@@ -38,9 +37,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
         <div className="creative-philosophy-image creative-manifesto__portrait" aria-hidden="true" />
         <section className="creative-philosophy" id="philosophy" aria-labelledby="philosophy-heading">
           <div className="creative-philosophy-copy">
-            <p className="creative-philosophy-label">Философия MULTUM AI</p>
             <h2 id="philosophy-heading">Технологии меняют мир<br />Мы учим <span>менять его вместе с ними</span></h2>
-            <p className="creative-philosophy-paragraph">Развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
           </div>
         </section>
       </section>
