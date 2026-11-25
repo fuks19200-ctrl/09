@@ -13,23 +13,24 @@ export default function About() {
       <article className="founders-story">
         <header className="founders-intro">
           <p className="founders-kicker"><span aria-hidden="true" /> История MULTUM.AI</p>
-          <h1>Будущее —<span>за теми, кто мыслит.</span></h1>
-          <p className="founders-byline">Алина и Дарья <span>·</span> Основательницы MULTUM.AI</p>
+          <h1>MULTUM.AI —<span>больше, чем школа нейросетей.</span></h1>
+          <p className="founders-byline">Мы — Алина и Дарья, основательницы MULTUM.AI.</p>
         </header>
-        <p className="founders-body">Мы создали MULTUM.AI, чтобы научить людей управлять технологиями, не делегируя им собственное мышление. Чем доступнее AI, тем ценнее критический анализ, креативность и умение задавать правильные вопросы.</p>
+        <p className="founders-body">Создавая школу, мы хотели изменить сам подход к изучению искусственного интеллекта и показать, насколько далеко можно зайти, когда технологии становятся продолжением собственного мышления.</p>
+        <section className="founders-practice" aria-label="Наш подход">
+          <p className="founders-body">В MULTUM.AI обучение строится вокруг практики. Здесь знания не остаются теорией — они превращаются в реальные проекты, профессиональный опыт и новые возможности.</p>
+          <p className="founders-body" style={{ marginTop: "10px" }}>Мы учим смотреть на задачи шире, видеть потенциал там, где другие замечают ограничения, и использовать искусственный интеллект для реализации собственных идей.</p>
+        </section>
         <blockquote className="founders-quote">
-          <span className="founders-quote__label">Наша философия</span>
-          <p>Редкостью станет не тот, кто знает о нейросетях, а тот, кто <strong>умеет ими управлять.</strong></p>
+          <span className="founders-quote__label">Наш подход</span>
+          <p>Для нас важно не то, сколько нейросетей вы освоите, а то, <strong>на что вы будете способны после обучения.</strong></p>
         </blockquote>
-        <section className="founders-practice" aria-labelledby="practice-title">
-          <h2 id="practice-title">От знаний — к реальным результатам.</h2>
-          <div className="founders-pillars">
-            <span>Практика</span><span>Реальные проекты</span><span>Навыки</span>
-          </div>
-          <p className="founders-body">Мы учим анализировать, экспериментировать, самостоятельно принимать решения и превращать идеи в работающие цифровые продукты. Не заменять интеллект, а усиливать его.</p>
+        <section className="founders-practice" aria-label="Ценность обучения">
+          <p className="founders-body">Мы хотим, чтобы каждый ученик вышел из школы с уверенностью в своих навыках и пониманием того, как превратить их в востребованную профессию, собственный проект или источник дохода.</p>
+          <p className="founders-body" style={{ marginTop: "10px" }}>Мы убеждены: чем доступнее становится искусственный интеллект, тем ценнее становится человек, способный мыслить самостоятельно.</p>
         </section>
         <footer className="founders-footer">
-          <p>Не следовать за будущим.<br /><strong>Создавать его.</strong></p>
+          <p>Поэтому мы учим не просто работать с технологиями.<br /><strong>Мы учим мыслить на шаг вперёд.</strong></p>
           <a className="button button--glass founders-cta" href="/courses/">Выбрать обучение</a>
         </footer>
       </article>
