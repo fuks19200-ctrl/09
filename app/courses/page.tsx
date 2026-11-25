@@ -29,17 +29,36 @@ const contact = "https://t.me/multumai";
 export default function Courses() {
   return (
     <main className="site-background courses-page">
-      <section className="courses-screen courses-intro" aria-labelledby="courses-title">
-        <SiteNav active="courses" />
+      <SiteNav active="courses" />
+      <section className="creative-manifesto" id="manifesto" aria-labelledby="manifesto-title">
+        <div className="creative-manifesto__copy">
+          <p className="creative-manifesto__eyebrow">Школа нейросетей</p>
+          <h1 id="manifesto-title">
+            <span>Мыслить</span>
+            <span>Создавать</span>
+            <span>Опережать</span>
+          </h1>
+          <p className="creative-manifesto__description">Осваивайте нейросети и воплощайте идеи в реальных проектах.</p>
+          <div className="creative-manifesto__actions">
+            <a className="creative-manifesto__primary" href="#programs">Выбрать курс <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div className="creative-manifesto__visual" aria-hidden="true" />
+        <section className="creative-philosophy" id="philosophy" aria-labelledby="philosophy-heading">
+          <div className="creative-philosophy-image" aria-hidden="true" />
+          <div className="creative-philosophy-copy">
+            <p className="creative-philosophy-label">Философия MULTUM AI</p>
+            <h2 id="philosophy-heading">Технологии меняют мир<br />Мы учим <span>менять его вместе с ними</span></h2>
+            <p className="creative-philosophy-paragraph">Развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
+          </div>
+        </section>
+      </section>
+      <section className="courses-screen courses-intro" id="programs" aria-labelledby="courses-title">
         <div className="courses-container">
           <div className="courses-program-layout">
             <header className="courses-manifesto">
-              <p className="courses-kicker">MULTUM AI / COURSES</p>
-              <h1 id="courses-title" className="courses-manifesto-title">
-                <span>Мыслить</span>
-                <span>Создавать</span>
-                <span>Опережать</span>
-              </h1>
+              <p className="courses-kicker">ОСНОВНЫЕ КУРСЫ</p>
+              <h2 id="courses-title" className="courses-programs-title">Программы <span>обучения</span></h2>
               <p className="courses-manifesto-description">Комплексное обучение искусственному интеллекту: от базовых навыков работы с нейросетями до создания собственных цифровых продуктов и монетизации знаний.</p>
             </header>
             <div className="program-grid">
@@ -49,7 +68,7 @@ export default function Courses() {
                   <p className="program-label">{program.label}</p>
                   <span className="program-index" aria-hidden="true">{program.theme === "basis" ? "01" : "02"}</span>
                 </div>
-                <h2>{program.name}</h2>
+                <h3 className="program-name">{program.name}</h3>
                 <p className="program-description">{program.description}</p>
                 <div className="program-footer">
                   <strong>{program.price}</strong>
