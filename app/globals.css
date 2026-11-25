@@ -1087,3 +1087,17 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width:650px) {
   .about-details .about-course-banner { padding-block: 14px; gap: 12px; }
 }
+
+/* Shared body-copy scale, taken from the approved About introduction. */
+:root { --body-copy-size: clamp(15px,1.14vw,19px); }
+.about-lead,
+.about-details-copy p,
+.creative-manifesto__description,
+.creative-philosophy-paragraph,
+.courses-manifesto-description,
+.program-description,
+.directions-heading > p,
+.specialty-content p,
+.courses-help p {
+  font-size: var(--body-copy-size);
+}
