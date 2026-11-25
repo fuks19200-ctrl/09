@@ -1152,3 +1152,25 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .creative-philosophy {
   background: transparent;
 }
+
+/* Compact approach screen: reduce vertical footprint while preserving the common grid and body text scale. */
+.about-details {
+  padding-block: clamp(20px,2.9vh,36px);
+}
+.about-details-inner {
+  row-gap: clamp(14px,1.95vh,22px);
+}
+.about-details .about-eyebrow { margin-bottom: 12px; }
+.about-details h2 { font-size: clamp(26px,2.35vw,36px); }
+.about-details-copy p {
+  padding-top: 13px;
+  line-height: 1.45;
+}
+.about-details .about-course-banner {
+  margin-top: clamp(16px,2.25vh,25px);
+  padding-block: 6px;
+}
+@media (max-width:650px) {
+  .about-details h2 { font-size: clamp(24px,6.4vw,32px); }
+  .about-details .about-course-banner { padding-block: 12px; }
+}
