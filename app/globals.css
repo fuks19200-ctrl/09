@@ -419,3 +419,64 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width: 680px) { .courses-screen { padding: 86px 5% 32px; } .courses-directions { padding-top: 42px; } .specialty-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; } .specialty-art { height: 100px; } .specialty-content { padding: 12px; } .courses-help { flex-wrap: wrap; } }
 @media (max-width: 350px) { .specialty-grid { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .course-action { transition: none; } }
+
+
+/* Compact editorial CTA: black, warm orange, no separate section. */
+.about-course-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) clamp(60px,12vw,180px) auto;
+  align-items: center;
+  gap: clamp(12px,2vw,30px);
+  max-width: 1240px;
+  margin: clamp(30px,4vw,58px) auto 0;
+  padding: clamp(18px,1.8vw,26px) clamp(20px,2.3vw,34px);
+  border-radius: 16px;
+  background: #101011;
+  color: #fff;
+}
+.about-course-banner__copy { min-width: 0; }
+.about-course-banner__title {
+  margin: 0 0 5px;
+  color: #fff;
+  font-size: clamp(17px,1.7vw,25px);
+  line-height: 1.25;
+  font-weight: 550;
+  letter-spacing: -.045em;
+}
+.about-course-banner__title strong { font-weight: 650; color: #FF7835; }
+.about-course-banner__subtitle {
+  margin: 0;
+  font-size: clamp(11px,1vw,14px);
+  line-height: 1.5;
+  color: #dfdddd;
+}
+.about-course-banner__spark { display: block; width: 100%; height: auto; max-height: 64px; pointer-events: none; }
+.about-course-banner__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+  padding: 11px 23px;
+  border-radius: 999px;
+  background: #FF7835;
+  color: #101011;
+  font-size: 12px;
+  font-weight: 650;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background .18s ease;
+}
+.about-course-banner__button:hover { background: #FF9B65; }
+.about-course-banner__button:focus-visible { outline: 2px solid white; outline-offset: 4px; }
+@media (max-width: 760px) {
+  .about-course-banner { grid-template-columns: minmax(0,1fr) auto; }
+  .about-course-banner__spark { display: none; }
+}
+@media (max-width: 480px) {
+  .about-course-banner { grid-template-columns: minmax(0,1fr); gap: 16px; padding: 20px; border-radius: 14px; }
+  .about-course-banner__button { justify-self: start; }
+}
+@media (prefers-reduced-motion: reduce) { .about-course-banner__button { transition: none; } }
