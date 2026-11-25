@@ -1246,11 +1246,11 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   }
   .about-hero::before {
     inset: 2% auto 2% 1.5%;
-    width: calc(var(--layout-edge) + (100% - 2 * var(--layout-edge) - var(--layout-gap)) * .46 - 1.5%);
+    width: calc(var(--layout-edge) + (100% - 2 * var(--layout-edge) - var(--layout-gap)) * .46 - 1.5% + var(--layout-gap) - 8px);
     background-size: auto 100%;
     background-position: left center;
-    -webkit-mask-image: linear-gradient(90deg,transparent 0%,#000 5%,#000 82%,transparent 100%), linear-gradient(180deg,transparent 0%,#000 5%,#000 94%,transparent 100%);
-    mask-image: linear-gradient(90deg,transparent 0%,#000 5%,#000 82%,transparent 100%), linear-gradient(180deg,transparent 0%,#000 5%,#000 94%,transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg,transparent 0%,#000 4%,#000 95%,transparent 100%), linear-gradient(180deg,transparent 0%,#000 3%,#000 98%,transparent 100%);
+    mask-image: linear-gradient(90deg,transparent 0%,#000 4%,#000 95%,transparent 100%), linear-gradient(180deg,transparent 0%,#000 3%,#000 98%,transparent 100%);
     -webkit-mask-composite: source-in;
     mask-composite: intersect;
   }
