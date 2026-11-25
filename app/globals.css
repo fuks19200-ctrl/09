@@ -1137,3 +1137,8 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width:900px) {
   .about-details-copy { grid-template-columns: minmax(0,1fr); }
 }
+
+/* Pure white backdrop for the courses manifesto and philosophy only. */
+.courses-page > .creative-manifesto {
+  background: #fff;
+}
