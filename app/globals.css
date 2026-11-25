@@ -1174,3 +1174,16 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .about-details h2 { font-size: clamp(24px,6.4vw,32px); }
   .about-details .about-course-banner { padding-block: 12px; }
 }
+
+/* Further compact the approach chapter on desktop without changing its grid. */
+@media (min-width:901px) {
+  .about-details { padding-block: clamp(13px,1.9vh,24px); }
+  .about-details-inner { row-gap: clamp(9px,1.3vh,15px); }
+  .about-details .about-eyebrow { margin-bottom: 8px; font-size: 10px; }
+  .about-details h2 { font-size: clamp(23px,1.85vw,30px); }
+  .about-details-copy { column-gap: clamp(20px,2.5vw,36px); }
+  .about-details-copy p { padding-top: 9px; font-size: clamp(13px,.9vw,16px); line-height: 1.4; }
+  .about-details .about-course-banner { margin-top: clamp(10px,1.45vh,16px); padding-block: 5px; }
+  .about-details .about-course-banner__title { font-size: clamp(11px,.85vw,13px); }
+  .about-details .about-course-banner__button { min-height: 30px; padding-block: 5px; }
+}
