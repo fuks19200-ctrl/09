@@ -919,7 +919,6 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 
 /* Consistent editorial heading typography, matching the About hero. */
 :root { --heading-weight: 450; --heading-tracking: -.055em; }
-.home-page .brand-lockup__title,
 .about-hero :is(h1,h2),
 .about-hero :is(h1,h2) span,
 .about-hero :is(h1,h2) em,
