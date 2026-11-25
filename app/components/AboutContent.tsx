@@ -1,8 +1,15 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
+const foundersNames = ["founders-transparent.png", "Модный дуэт в стиле M.png", "Модный дуэт в стиле M.png"];
+const foundersPortrait = foundersNames.find((name) => existsSync(join(process.cwd(), "public", "images", name)));
+
 export default function AboutContent({ embedded = false }: { embedded?: boolean }) {
   const Heading = embedded ? "h2" : "h1";
   return (
     <>
-      <section className="about-hero" aria-labelledby="about-title">
+      <section className={"about-hero" + (foundersPortrait ? " about-hero--transparent" : "")} aria-labelledby="about-title">
+        {foundersPortrait && <img className="about-founders-portrait" src={"/images/" + encodeURIComponent(foundersPortrait)} alt="Основательницы MULTUM AI" width={1101} height={1429} /> }
         <div className="about-hero-copy">
           <p className="about-eyebrow">О нас</p>
           <Heading id="about-title">Будущее принадлежит <span>тем, кто умеет <em>думать</em></span></Heading>

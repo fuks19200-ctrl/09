@@ -1506,3 +1506,27 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width:650px) {
   .courses-page > .creative-manifesto--centered { --manifesto-spacing: 28px; }
 }
+
+/* New founders PNG: use its own transparency without any feathering or colour overlays. */
+.about-hero--transparent::before { display: none; }
+.about-hero--transparent { background: transparent; }
+.about-founders-portrait {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 92svh;
+  object-fit: contain;
+  object-position: center;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  justify-self: center;
+}
+@media (min-width:951px) and (min-aspect-ratio:3/2) {
+  .about-hero--transparent .about-hero-copy { grid-row: 1; }
+}
+@media (max-width:950px), (max-aspect-ratio:3/2) {
+  .about-hero--transparent { padding: clamp(64px,9vh,100px) var(--layout-edge) 42px; }
+  .about-founders-portrait { width: min(100%, 480px); max-height: 58svh; margin: 0 auto 24px; }
+}
