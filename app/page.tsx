@@ -10,6 +10,7 @@ export default function Home() {
             </svg>
           </button>
           <a className="button button--glass site-nav__item" href="/" aria-current="page">Главная</a>
+          <button className="button button--glass site-nav__item" type="button" disabled title="Раздел будет добавлен позже">О нас</button>
           <button className="button button--glass site-nav__item" type="button" disabled title="Раздел будет добавлен позже">Курсы</button>
           <button className="button button--glass site-nav__item" type="button" disabled title="Раздел будет добавлен позже">FAQ</button>
           <button className="button button--glass site-nav__item" type="button" disabled title="Раздел будет добавлен позже">Контакты</button>
