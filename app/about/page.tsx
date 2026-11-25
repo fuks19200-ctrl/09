@@ -3,8 +3,8 @@ import SiteNav from "../components/SiteNav";
 import AboutContent from "../components/AboutContent";
 
 export const metadata: Metadata = {
-  title: "О нас — MULTUM.AI",
-  description: "История и миссия школы нейросетей MULTUM.AI.",
+  title: "О школе | MULTUM AI",
+  description: "Школа нейросетей MULTUM AI: направления и формат обучения.",
 };
 
 export default function About() {
