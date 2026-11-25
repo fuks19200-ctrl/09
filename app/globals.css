@@ -498,7 +498,7 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   column-gap: 0;
   overflow: hidden;
   isolation: isolate;
-  padding: clamp(22px,4vh,48px) 4.5% 0 5.5%;
+  padding: clamp(26px,4vh,48px) max(5.5%, calc((100% - 1320px) / 2)) 0;
   background: transparent;
 }
 .creative-manifesto__copy { position: relative; z-index: 1; min-width: 0; padding-block: 12px; }
@@ -528,10 +528,10 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   flex-direction: column;
   align-items: flex-start;
   margin: 0;
-  font-size: clamp(32px,min(4.2vw,7.5svh),70px);
-  font-weight: 800;
-  line-height: .99;
-  letter-spacing: -.065em;
+  font-size: clamp(32px,min(4.1vw,7.5svh),68px);
+  font-weight: 750;
+  line-height: 1.04;
+  letter-spacing: -.045em;
   text-transform: uppercase;
   color: var(--color-black);
 }
@@ -597,64 +597,75 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .creative-manifesto__visual { width: 100%; justify-self: center; }
 }
 
-/* One cohesive editorial composition beneath the manifesto. */
+/* Shared desktop grid: aligned left edges and a consistent copy column. */
 .creative-philosophy {
   grid-column: 1 / -1;
-  justify-self: center;
-  width: min(100%, 1040px);
+  justify-self: stretch;
+  width: 100%;
   display: grid;
   grid-template-columns: minmax(0,.43fr) minmax(0,.57fr);
   align-items: center;
-  gap: clamp(24px,3.5vw,48px);
-  margin-top: clamp(26px,4vh,42px);
-  padding-bottom: clamp(30px,5vh,64px);
+  column-gap: 0;
+  margin-top: clamp(24px,3.6vh,40px);
+  padding-bottom: clamp(36px,5vh,64px);
 }
 .creative-philosophy-image {
-  width: 100%;
+  width: min(89%, 460px);
   aspect-ratio: 3 / 2;
-  border-radius: 16px;
+  justify-self: start;
+  border-radius: 14px;
   background: url("/images/Serenita%CC%88t%20im%20orangefarbenen%20Sonnenlicht.png") center / cover no-repeat;
 }
-.creative-philosophy-copy { min-width: 0; }
+.creative-philosophy-copy {
+  min-width: 0;
+  width: min(100%, 570px);
+  padding: 0 clamp(8px,1.8vw,28px) 0 0;
+}
 .creative-philosophy-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   font-size: 10px;
   font-weight: 650;
-  letter-spacing: .09em;
-  line-height: 1.4;
+  letter-spacing: .07em;
+  line-height: 1.3;
   text-transform: uppercase;
   color: var(--color-black);
   margin: 0 0 12px;
 }
-.creative-philosophy-label::before {
+.creative-philosophy-label::before, .creative-philosophy-label::after {
   content: "";
-  width: 28px;
   height: 1px;
-  flex: 0 0 28px;
+  width: 32px;
+  flex: 0 0 32px;
   background: var(--color-orange);
 }
+.creative-philosophy-label::after {
+  width: 46px;
+  flex-basis: 46px;
+  background: #17171c24;
+}
 .creative-philosophy-copy h3 {
-  max-width: 30ch;
-  margin: 0 0 14px;
+  max-width: 31ch;
+  margin: 0 0 15px;
   color: var(--color-black);
-  font-size: clamp(19px,1.8vw,28px);
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: clamp(19px,1.9vw,28px);
+  font-weight: 550;
+  line-height: 1.24;
   letter-spacing: -.035em;
 }
 .creative-philosophy-copy h3 span { color: var(--color-orange); }
 .creative-philosophy-paragraph {
-  max-width: 55ch;
-  font-size: clamp(12px,.95vw,14px);
-  line-height: 1.65;
+  max-width: 57ch;
+  font-size: clamp(12px,1vw,14px);
+  line-height: 1.62;
   color: #49434a;
-  margin: 0 0 10px;
+  margin: 0 0 11px;
 }
 .creative-philosophy-paragraph:last-child { margin-bottom: 0; }
 @media (max-width: 650px) {
   .creative-philosophy { grid-template-columns: minmax(0,1fr); gap: 20px; margin-top: 24px; }
   .creative-philosophy-image { width: min(100%,420px); }
+  .creative-philosophy-copy { padding: 0; }
   .creative-philosophy-copy h3 { font-size: clamp(19px,5vw,26px); }
 }
