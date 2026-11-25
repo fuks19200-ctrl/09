@@ -1,16 +1,86 @@
 import type { Metadata } from "next";
 import SiteNav from "../components/SiteNav";
 
-export const metadata: Metadata = { title: "Курсы | MULTUM AI" };
+export const metadata: Metadata = {
+  title: "Курсы | MULTUM AI",
+  description: "Основные программы и специализированные курсы школы нейросетей MULTUM AI.",
+};
+
+const programs = [
+  { name: "BASIS", label: "Базовая программа", description: "Знакомство с нейросетями, составление запросов и решение повседневных задач.", price: "7 900 ₽", theme: "basis" },
+  { name: "ULTRA", label: "Комплексная программа", description: "Работа с AI-инструментами в нескольких направлениях и создание собственных проектов.", price: "99 900 ₽", theme: "ultra" },
+];
+
+const courses = [
+  { name: "AI CREATOR", description: "Создание контента для социальных сетей", price: "14 900 ₽", code: "01", theme: "creator" },
+  { name: "AI DESIGN", description: "Графический дизайн и визуальные материалы", price: "14 900 ₽", code: "02", theme: "design" },
+  { name: "AI VIDEO", description: "Генерация видео и анимация", price: "20 900 ₽", code: "03", theme: "video" },
+  { name: "AI 3D", description: "Создание трёхмерной графики", price: "25 900 ₽", code: "04", theme: "three" },
+  { name: "AI WEBSITES", description: "Разработка сайтов с помощью AI", price: "49 900 ₽", code: "05", theme: "websites" },
+  { name: "AI GAMES", description: "Создание игр", price: "45 900 ₽", code: "06", theme: "games" },
+  { name: "AI AGENTS", description: "Разработка AI-агентов", price: "59 900 ₽", code: "07", theme: "agents" },
+  { name: "AI AUTOMATION", description: "Автоматизация рабочих процессов", price: "59 900 ₽", code: "08", theme: "automation" },
+  { name: "AI MARKETING", description: "Дополнительный курс по маркетингу", price: "5 900 ₽", code: "09", theme: "marketing" },
+  { name: "AI PRODUCT", description: "Дополнительный курс по созданию AI-продуктов", price: "10 900 ₽", code: "10", theme: "product" },
+];
+
+const contact = "https://t.me/multumai";
 
 export default function Courses() {
   return (
-    <main className="site-background">
-      <SiteNav active="courses" />
-      <div className="brand-lockup">
-        <h1 className="brand-lockup__title">Курсы</h1>
-        <p className="brand-lockup__subtitle">Программы курсов готовятся к публикации.</p>
-      </div>
+    <main className="site-background courses-page">
+      <section className="courses-screen courses-intro" aria-labelledby="courses-title">
+        <SiteNav active="courses" />
+        <div className="courses-container">
+          <header className="courses-heading">
+            <p className="courses-kicker">MULTUM AI / COURSES</p>
+            <h1 id="courses-title">Обучение <span>AI</span></h1>
+            <p>Выберите программу или отдельное направление.</p>
+          </header>
+          <div className="program-grid">
+            {programs.map((program) => (
+              <article className={"program-card program-card--" + program.theme} key={program.name}>
+                <div className="program-art" aria-hidden="true"><i /><i /><i /></div>
+                <p className="program-label">{program.label}</p>
+                <h2>{program.name}</h2>
+                <p className="program-description">{program.description}</p>
+                <div className="program-footer">
+                  <strong>{program.price}</strong>
+                  <a className="course-action" href={contact} aria-label={"Узнать о программе " + program.name}>Подробнее</a>
+                </div>
+              </article>
+            ))}
+          </div>
+          <a className="courses-next" href="#directions">Все направления <span aria-hidden="true">↓</span></a>
+        </div>
+      </section>
+      <section className="courses-screen courses-directions" id="directions" aria-labelledby="directions-title">
+        <div className="courses-container">
+          <header className="directions-heading">
+            <div>
+              <p className="courses-kicker">02 / COURSES</p>
+              <h2 id="directions-title">Направления <span>обучения</span></h2>
+            </div>
+            <p>Курсы по отдельным навыкам и задачам.</p>
+          </header>
+          <div className="specialty-grid">
+            {courses.map((course) => (
+              <article className={"specialty-card specialty-card--" + course.theme} key={course.name}>
+                <div className={"specialty-art specialty-art--" + course.theme} aria-hidden="true">
+                  {course.theme === "design" ? <img src="/images/ai-design.webp" alt="" width="280" height="158" loading="lazy" /> : <><i /><i /><i /></>}
+                  <span>{course.code}</span>
+                </div>
+                <div className="specialty-content">
+                  <h3>{course.name}</h3>
+                  <p>{course.description}</p>
+                  <div className="specialty-footer"><strong>{course.price}</strong><a href={contact} aria-label={"Узнать о курсе " + course.name}>Подробнее</a></div>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="courses-help"><p>Нужна помощь с выбором курса?</p><a className="course-action" href={contact}>Консультация</a></div>
+        </div>
+      </section>
     </main>
   );
 }
