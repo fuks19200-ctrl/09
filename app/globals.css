@@ -1277,11 +1277,11 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 /* Match the founders screen to the same continuous pastel backdrop.
    The portrait's light background blends with it rather than covering it. */
 .about-hero {
-  background: var(--section-background);
-  background-attachment: fixed;
+  background: transparent;
 }
 .about-hero::before {
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
+  filter: saturate(.78);
 }
 @media (min-width:951px) and (min-aspect-ratio:3/2) {
   .about-hero::before {
