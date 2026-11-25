@@ -1122,3 +1122,18 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width:650px) {
   .about-details h2 { font-size: clamp(26px,7vw,38px); }
 }
+
+/* Align the approach chapter to the same outer grid as adjacent sections. */
+.about-details-inner,
+.about-details .about-course-banner {
+  width: 100%;
+  max-width: var(--layout-max);
+  margin-inline: auto;
+}
+.about-details-copy {
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  column-gap: var(--layout-gap);
+}
+@media (max-width:900px) {
+  .about-details-copy { grid-template-columns: minmax(0,1fr); }
+}
