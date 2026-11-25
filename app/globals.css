@@ -624,3 +624,18 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   height: 1px;
   background: var(--color-orange);
 }
+
+/* Left-hand visual for the philosophy area. */
+.creative-philosophy-image {
+  grid-column: 1;
+  justify-self: start;
+  align-self: start;
+  width: min(90%, 560px);
+  aspect-ratio: 3 / 2;
+  margin-top: clamp(28px,4vh,44px);
+  border-radius: 18px;
+  background: url("/images/Serenit%C3%A4t%20im%20orangefarbenen%20Sonnenlicht.png") center / cover no-repeat;
+}
+@media (max-width: 650px) {
+  .creative-philosophy-image { width: 100%; margin-top: 32px; }
+}
