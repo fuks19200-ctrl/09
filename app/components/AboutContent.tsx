@@ -67,6 +67,7 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           </div>
         </div>
         <div className="creative-manifesto__visual" aria-hidden="true" />
+        <h2 className="creative-philosophy-label" id="philosophy">Философия MULTUM AI</h2>
       </section>
     </>
   );
