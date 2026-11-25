@@ -234,45 +234,42 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 
 
 
-/* Home only: understated, embossed glass manifesto at the left edge. */
+
+/* Home: centered manifesto and a small school signature beside the monogram. */
 .home-page { isolation: isolate; overflow: hidden; }
 .home-page .brand-lockup { position: relative; z-index: 2; }
 .home-page .glass-brand-mark { z-index: 3; }
-.home-glass-words {
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  left: clamp(12px, 2.1vw, 36px);
-  transform: translateY(-50%);
+.brand-lockup__tagline {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: .17em;
-  margin: 0;
-  pointer-events: none;
-  user-select: none;
-  font: 650 clamp(35px, 4.15vw, 80px)/1.12 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  letter-spacing: -.045em;
-  opacity: .82;
-}
-.home-glass-words span {
-  display: block;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(7px, 1.05vw, 16px);
+  margin: clamp(18px, 2.7vh, 28px) 0 0;
+  font-size: clamp(11px, 1.2vw, 16px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: .055em;
+  color: #484048;
   white-space: nowrap;
-  color: rgba(255,255,255,.19);
-  -webkit-text-stroke: .8px rgba(160,133,185,.19);
-  text-shadow:
-    0 -1px 0 rgba(255,255,255,.95),
-    1px 1px 0 rgba(190,165,207,.16),
-    2px 2px 0 rgba(190,165,207,.13),
-    3px 3px 0 rgba(190,165,207,.10),
-    4px 5px 9px rgba(114,87,142,.10);
 }
-@media (max-width: 1000px) {
-  .home-glass-words { font-size: clamp(30px, 3.8vw, 48px); }
+.brand-lockup__tagline span { color: #B94B0D; font-weight: 300; }
+.home-school-label {
+  position: absolute;
+  z-index: 3;
+  left: calc(max(24px, env(safe-area-inset-left)) + clamp(62px, 7vw, 98px) + 10px);
+  bottom: calc(max(22px, env(safe-area-inset-bottom)) + clamp(62px, 7vw, 98px) * .48);
+  transform: translateY(50%);
+  margin: 0;
+  font: 400 clamp(11px, .95vw, 15px)/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color: #625862;
+  letter-spacing: .015em;
 }
-@media (max-width: 650px) {
-  .home-glass-words { top: 26%; left: 12px; font-size: clamp(26px, 7vw, 39px); opacity: .67; }
+@media (max-width: 560px) {
+  .home-school-label {
+    left: calc(max(14px, env(safe-area-inset-left)) + 70px);
+    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 30px);
+  }
 }
-@media (max-height: 480px) and (min-width: 651px) {
-  .home-glass-words { font-size: min(3.5vw, 45px); }
+@media (max-width: 380px) {
+  .brand-lockup__tagline { gap: 6px; letter-spacing: .015em; }
 }

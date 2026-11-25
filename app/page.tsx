@@ -4,11 +4,6 @@ export default function Home() {
   return (
     <main className="site-background home-page">
       <SiteNav active="home" />
-      <p className="home-glass-words" aria-label="Мыслить. Создавать. Опережать.">
-        <span aria-hidden="true">Мыслить</span>
-        <span aria-hidden="true">Создавать</span>
-        <span aria-hidden="true">Опережать</span>
-      </p>
       <div className="glass-brand-mark" aria-hidden="true">
         <svg viewBox="0 0 104 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -39,9 +34,10 @@ export default function Home() {
           <rect width="104" height="100" fill="url(#mark-edge)" mask="url(#mark-rim)" />
         </svg>
       </div>
+      <p className="home-school-label">Школа нейросетей</p>
       <div className="brand-lockup">
         <h1 className="brand-lockup__title">MULTUM<span>.AI</span></h1>
-        <p className="brand-lockup__subtitle">Школа нейросетей</p>
+        <p className="brand-lockup__tagline">Мыслить <span aria-hidden="true">|</span> Создавать <span aria-hidden="true">|</span> Опережать</p>
       </div>
     </main>
   );
