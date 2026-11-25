@@ -1289,3 +1289,101 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     mask-image: linear-gradient(90deg,transparent 0%,#000 7%,#000 95%,transparent 100%), linear-gradient(180deg,transparent 0%,#000 5%,#000 97%,transparent 100%);
   }
 }
+
+
+/* Courses opening — centered Apple-style typography and one rounded image. */
+.courses-page > .creative-manifesto--centered {
+  grid-template-columns: minmax(0,1fr);
+  justify-items: center;
+  align-content: start;
+  row-gap: clamp(24px,3.5vh,42px);
+  min-height: 100svh;
+  padding-bottom: clamp(36px,5vh,60px);
+  background: transparent;
+}
+.creative-manifesto--centered .creative-manifesto__copy {
+  width: 100%;
+  padding-block: 0;
+  text-align: center;
+}
+.creative-manifesto--centered .creative-manifesto__eyebrow {
+  justify-content: center;
+  margin-bottom: clamp(16px,2.2vh,24px);
+}
+.creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .16em .32em;
+  font-size: clamp(32px,4.1vw,60px);
+  line-height: 1.12;
+  letter-spacing: var(--heading-tracking);
+  font-weight: var(--heading-weight);
+}
+.creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) > span {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) > span + span::before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: .72em;
+  margin-right: .32em;
+  background: rgba(23,23,28,.24);
+}
+.creative-manifesto--centered .creative-manifesto__description {
+  max-width: none;
+  margin: 14px auto 20px;
+}
+.creative-manifesto--centered .creative-manifesto__actions {
+  justify-content: center;
+}
+.creative-manifesto--centered .creative-manifesto__primary {
+  min-height: 44px;
+  padding: 10px 26px;
+  font-size: 14px;
+}
+.creative-manifesto--centered .creative-manifesto__portrait {
+  width: min(100%, 1040px);
+  aspect-ratio: 2.15;
+  justify-self: center;
+  border-radius: clamp(18px,2.3vw,32px);
+  background-position: center 43%;
+  overflow: hidden;
+}
+.creative-manifesto--centered .creative-philosophy {
+  display: block;
+  width: min(100%, 1040px);
+  margin: 0;
+  padding: clamp(22px,3vh,34px) 0 0;
+  text-align: center;
+}
+.creative-manifesto--centered .creative-philosophy-label {
+  justify-content: center;
+}
+.creative-manifesto--centered .creative-philosophy-copy :is(h2,h3) {
+  font-size: clamp(24px,2.4vw,36px);
+  max-width: none;
+  margin-bottom: 12px;
+}
+.creative-manifesto--centered .creative-philosophy-paragraph {
+  max-width: 76ch;
+  margin-inline: auto;
+}
+@media (max-width:650px) {
+  .creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) {
+    font-size: clamp(23px,5.4vw,34px);
+    gap: .18em .24em;
+  }
+  .creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) > span + span::before {
+    margin-right: .24em;
+  }
+  .creative-manifesto--centered .creative-manifesto__portrait {
+    aspect-ratio: 1.55;
+    border-radius: 18px;
+  }
+}

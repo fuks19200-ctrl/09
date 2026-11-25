@@ -22,7 +22,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
   const Heading = embedded ? "h2" : "h1";
   return (
     <>
-      <section className="creative-manifesto" id="manifesto" aria-labelledby="manifesto-title">
+      <section className="creative-manifesto creative-manifesto--centered" id="manifesto" aria-labelledby="manifesto-title">
         <div className="creative-manifesto__copy">
           <p className="creative-manifesto__eyebrow">Школа нейросетей</p>
           <Heading id="manifesto-title">
@@ -35,9 +35,8 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
             <a className="creative-manifesto__primary" href="#programs">Выбрать курс <span aria-hidden="true">→</span></a>
           </div>
         </div>
-        <div className="creative-manifesto__visual" aria-hidden="true" />
+        <div className="creative-philosophy-image creative-manifesto__portrait" aria-hidden="true" />
         <section className="creative-philosophy" id="philosophy" aria-labelledby="philosophy-heading">
-          <div className="creative-philosophy-image" aria-hidden="true" />
           <div className="creative-philosophy-copy">
             <p className="creative-philosophy-label">Философия MULTUM AI</p>
             <h2 id="philosophy-heading">Технологии меняют мир<br />Мы учим <span>менять его вместе с ними</span></h2>
