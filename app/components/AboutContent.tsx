@@ -4,11 +4,11 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
     <>
       <section className="about-hero" aria-labelledby="about-title">
         <div className="about-hero-copy">
-          <p className="about-eyebrow">О школе</p>
-          <Heading id="about-title">Нейросети для <span>работы и <em>творчества</em></span></Heading>
-          <p className="about-byline">Мы Алина и Дарья, основательницы MULTUM AI.</p>
-          <p className="about-lead">В MULTUM AI мы обучаем работе с нейросетями. Разбираем инструменты, показываем, как ими пользоваться, и применяем их на практических заданиях.</p>
-          <p className="about-lead">Можно начать с базовых навыков или выбрать отдельное направление: дизайн, видео, разработку сайтов, игр и AI-агентов.</p>
+          <p className="about-eyebrow">О нас</p>
+          <Heading id="about-title">Будущее принадлежит <span>тем, кто умеет <em>думать</em></span></Heading>
+          <p className="about-byline">Мы — Алина и Дарья, основательницы MULTUM AI.</p>
+          <p className="about-lead">Создавая школу, мы хотели изменить привычный подход к образованию и показать, что искусственный интеллект способен не только упрощать задачи, но и раскрывать потенциал человека.</p>
+          <p className="about-lead">Мир меняется быстрее, чем традиционные системы образования. Сегодня недостаточно просто обладать знаниями — важно уметь превращать их в возможности.</p>
           <div className="about-hero-actions">
             <a className="about-scroll" href="#approach">Как проходит обучение</a>
             <a className="button button--glass founders-cta" href="/courses/">Выбрать курс</a>
