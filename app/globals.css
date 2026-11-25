@@ -1446,3 +1446,15 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     font-size: clamp(20px,5vw,28px);
   }
 }
+
+/* Give the three manifesto words more breathing room. */
+.creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) {
+  gap: .18em .55em;
+}
+.creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) > span + span::before {
+  margin-right: .55em;
+}
+@media (max-width: 650px) {
+  .creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) { gap: .18em .3em; }
+  .creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) > span + span::before { margin-right: .3em; }
+}

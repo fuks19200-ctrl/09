@@ -24,7 +24,6 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
     <>
       <section className="creative-manifesto creative-manifesto--centered" id="manifesto" aria-labelledby="manifesto-title">
         <div className="creative-manifesto__copy">
-          <p className="creative-manifesto__eyebrow">Школа нейросетей</p>
           <Heading id="manifesto-title">
             <span>Мыслить</span>
             <span>Создавать</span>
