@@ -8,7 +8,6 @@ export default function Home() {
         <h1 className="brand-lockup__title">MULTUM{" "}<span>AI</span></h1>
         <p className="home-school-label">Школа нейросетей</p>
       </div>
-      <p className="brand-lockup__tagline">Мыслить <span aria-hidden="true">|</span> Создавать <span aria-hidden="true">|</span> Опережать</p>
     </main>
   );
 }
