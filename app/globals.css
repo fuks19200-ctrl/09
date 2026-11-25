@@ -1237,3 +1237,24 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .about-details { min-height: auto; padding-block: 36px; }
   .about-details .about-course-banner { margin-top: 28px; }
 }
+
+
+/* Restore the original founders portrait framing and heading proportions. */
+@media (min-width:951px) and (min-aspect-ratio:3/2) {
+  .about-hero {
+    grid-template-columns: minmax(0,.46fr) minmax(0,.54fr);
+  }
+  .about-hero::before {
+    width: calc(var(--layout-edge) + (100% - 2 * var(--layout-edge) - var(--layout-gap)) * .46);
+    background-size: auto 94%;
+    background-position: left clamp(24px,4.8vw,90px) center;
+    -webkit-mask-image: linear-gradient(90deg,#000 0%,#000 87%,transparent 100%);
+    mask-image: linear-gradient(90deg,#000 0%,#000 87%,transparent 100%);
+  }
+  .about-hero :is(h1,h2) {
+    font-size: clamp(34px,3.35vw,56px);
+    font-weight: 450;
+    letter-spacing: -.055em;
+    line-height: 1.08;
+  }
+}
