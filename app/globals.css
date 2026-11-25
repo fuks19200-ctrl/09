@@ -353,9 +353,9 @@ body::before {
   position: absolute;
   top: 0;
   left: 0;
-  width: 60%;
+  width: calc(var(--layout-edge) + (100% - 2 * var(--layout-edge) - var(--layout-gap)) * .44 + var(--layout-gap));
   height: 1px;
-  background: linear-gradient(90deg, var(--section-divider) 0%, var(--section-divider) 75%, transparent 100%);
+  background: var(--section-divider);
   pointer-events: none;
 }
 
@@ -910,4 +910,8 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .creative-philosophy { margin-top: 6px; }
   .creative-philosophy-image { width: 100%; }
   .creative-philosophy-copy h3 { font-size: clamp(23px,5.8vw,32px); }
+}
+
+@media (max-width: 950px), (max-aspect-ratio: 3/2) {
+  .about-details::before { width: 60%; }
 }
