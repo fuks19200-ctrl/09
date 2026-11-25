@@ -481,15 +481,3 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .about-course-banner__button { justify-self: start; }
 }
 @media (prefers-reduced-motion: reduce) { .about-course-banner__button { transition: none; } }
-
-
-/* Blank canvas, with no visible content or framing. */
-.blank-page {
-  position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
-  background: transparent;
-}
-.blank-page--standalone {
-  background: var(--section-background);
-}

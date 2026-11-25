@@ -14,7 +14,6 @@ export default function Home() {
       <div className="home-about" id="about" aria-labelledby="about-title">
         <AboutContent embedded />
       </div>
-      <div className="blank-page" id="next-section" aria-hidden="true" />
     </main>
   );
 }
