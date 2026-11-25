@@ -292,29 +292,20 @@ body:has(.home-page) { overflow-x: hidden; overflow-y: auto; }
 input, select, textarea { font-family: var(--font-montserrat), sans-serif; }
 
 
-/* Continuous pastel canvas shared by every route and section. */
-html { background: #fff9f7; }
-body { background: transparent; isolation: isolate; }
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(115deg, rgba(255,255,255,.12), rgba(255,250,248,.08)), url('/images/multum-background.webp') center / cover no-repeat;
+/* Full-bleed pastel background within each chapter, right up to the divider. */
+:root {
+  --section-background: #fff9f7 url('/images/multum-background.webp') center / cover no-repeat;
 }
-.site-background,
+html, body { background: #fff9f7; }
+.site-background { background: var(--section-background); }
 .site-background.home-page,
 .site-background.about-page,
+.home-about { background: transparent; }
 .home-hero,
-.home-about,
-.about-details {
-  background: transparent;
-}
-/* Fade the existing portrait artwork into the shared canvas, not into a solid strip. */
+.about-details { background: var(--section-background); }
 .about-hero {
   isolation: isolate;
-  background: none;
+  background: var(--section-background);
 }
 .about-hero::before {
   content: "";
@@ -323,20 +314,18 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background: url('/images/%D0%A1%D1%82%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B8%CC%86%20%D0%B4%D1%83%D1%8D%D1%82%20%D0%B2%20%D1%81%D0%BE%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D0%B8%CC%86%20%D1%83%D0%BB%D0%B8%D1%87%D0%BD%D0%BE%D0%B8%CC%86%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%B5.png') left center / cover no-repeat;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.16) 2%, rgba(0,0,0,.5) 4.5%, rgba(0,0,0,.9) 7.5%, #000 10%, #000 89%, rgba(0,0,0,.84) 92%, rgba(0,0,0,.38) 96%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.16) 2%, rgba(0,0,0,.5) 4.5%, rgba(0,0,0,.9) 7.5%, #000 10%, #000 89%, rgba(0,0,0,.84) 92%, rgba(0,0,0,.38) 96%, transparent 100%);
 }
 .about-hero-copy { position: relative; z-index: 1; }
 @media (max-width: 950px), (max-aspect-ratio: 3/2) {
-  .about-hero { background: none; }
   .about-hero::before {
     inset: 0 0 auto;
     height: clamp(300px,68vw,540px);
     background-size: auto 100%;
     background-position: left top;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
   }
 }
-
 
 /* A single fine, full-bleed divider between consecutive content sections. */
 :root { --section-divider: rgba(185,75,13,.22); }
