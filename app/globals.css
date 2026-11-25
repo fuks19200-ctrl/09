@@ -293,13 +293,13 @@ body:has(.home-page) { overflow-x: hidden; overflow-y: auto; }
 input, select, textarea { font-family: var(--font-montserrat), sans-serif; }
 
 
-/* Shared, left-weighted pastel background. The right 40% stays white. */
+/* One soft full-width gradient, continuous across all scrolling sections. */
 :root {
   --section-background:
-    linear-gradient(90deg, transparent 0%, transparent 34%, rgba(255,255,255,.18) 43%, rgba(255,255,255,.65) 53%, #fff 60%, #fff 100%),
-    radial-gradient(ellipse at 39% 12%, #fce6db 0%, rgba(252,230,219,.65) 14%, transparent 40%),
-    radial-gradient(ellipse at 39% 82%, #f7d5e4 0%, rgba(247,213,228,.70) 13%, transparent 43%),
-    radial-gradient(ellipse at 4% 49%, #f3edf8 0%, rgba(243,237,248,.70) 19%, transparent 48%),
+    linear-gradient(90deg, rgba(255,255,255,.08) 0%, transparent 22%, rgba(255,255,255,.10) 48%, rgba(255,255,255,.30) 74%, rgba(255,255,255,.58) 100%),
+    radial-gradient(ellipse at 40% 8%, rgba(252,230,219,.82) 0%, rgba(252,230,219,.42) 30%, transparent 70%),
+    radial-gradient(ellipse at 58% 94%, rgba(247,213,228,.72) 0%, rgba(247,213,228,.38) 32%, transparent 76%),
+    radial-gradient(ellipse at 0% 48%, rgba(243,237,248,.95) 0%, rgba(243,237,248,.48) 35%, transparent 80%),
     #fff;
 }
 html { background: #fff; }
