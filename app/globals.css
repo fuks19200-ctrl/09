@@ -219,30 +219,34 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 
 
 
-/* Home: centered brand, manifesto and discreet school descriptor. */
+
+/* Home: centered wordmark and school label, with a discreet footer manifesto. */
 .home-page { isolation: isolate; overflow: hidden; }
 .home-page .brand-lockup { position: relative; z-index: 2; }
 .brand-lockup__tagline {
+  position: absolute;
+  left: max(20px, env(safe-area-inset-left));
+  bottom: max(15px, env(safe-area-inset-bottom));
+  z-index: 2;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: clamp(7px, 1.05vw, 16px);
-  margin: clamp(18px, 2.7vh, 28px) 0 0;
-  font-size: clamp(11px, 1.2vw, 16px);
+  gap: 8px;
+  margin: 0;
+  font-size: clamp(10px, .8vw, 13px);
   font-weight: 500;
   line-height: 1.5;
-  letter-spacing: .055em;
+  letter-spacing: .035em;
   color: #484048;
   white-space: nowrap;
 }
 .brand-lockup__tagline span { color: #B94B0D; font-weight: 300; }
 .home-school-label {
-  margin: 12px 0 0;
+  margin: clamp(24px, 3.8vh, 40px) 0 0;
   font: 400 clamp(10px, .88vw, 13px)/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   color: #625862;
   letter-spacing: .025em;
   text-align: center;
 }
 @media (max-width: 380px) {
-  .brand-lockup__tagline { gap: 6px; letter-spacing: .015em; }
+  .brand-lockup__tagline { left: 12px; gap: 6px; letter-spacing: .015em; }
 }
