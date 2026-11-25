@@ -1138,7 +1138,17 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .about-details-copy { grid-template-columns: minmax(0,1fr); }
 }
 
-/* Pure white backdrop for the courses manifesto and philosophy only. */
-.courses-page > .creative-manifesto {
-  background: #fff;
+/* One fixed background behind the entire scrolling website. No section restarts. */
+.site-background.home-page,
+.site-background.about-page,
+.site-background.courses-page,
+.home-hero,
+.home-about,
+.about-hero,
+.about-details,
+.courses-embedded,
+.courses-page > .creative-manifesto,
+.courses-screen,
+.creative-philosophy {
+  background: transparent;
 }
