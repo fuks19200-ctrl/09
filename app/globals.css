@@ -487,6 +487,7 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 /* Full-screen manifesto in the previously reserved space. */
 .creative-manifesto {
   position: relative;
+  border-top: 1px solid var(--section-divider);
   min-height: 100vh;
   min-height: 100svh;
   display: grid;
