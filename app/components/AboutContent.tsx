@@ -15,7 +15,6 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           </div>
         </div>
       </section>
-      <div className="about-empty-screen" aria-hidden="true" style={{ minHeight: "100svh", background: "transparent" }} />
       <section className="about-details" id="approach" aria-labelledby="approach-title">
         <div className="about-details-inner">
           <div>

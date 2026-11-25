@@ -1187,3 +1187,53 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .about-details .about-course-banner__title { font-size: clamp(11px,.85vw,13px); }
   .about-details .about-course-banner__button { min-height: 30px; padding-block: 5px; }
 }
+
+
+/* Approach starts on its own full-height screen, with the left area reserved. */
+.about-details {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding-block: clamp(44px,7vh,88px) clamp(26px,4vh,48px);
+}
+.about-details-inner {
+  grid-template-columns: minmax(0,1fr);
+  row-gap: clamp(18px,2.5vh,28px);
+}
+.about-details .about-eyebrow {
+  font-size: 11px;
+  margin-bottom: 22px;
+}
+.about-details h2 {
+  font-size: clamp(30px,3.05vw,46px);
+  line-height: 1.1;
+}
+.about-details h2 br { display: initial; }
+.about-details-copy {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px,2vh,24px);
+}
+.about-details-copy p {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  font-size: var(--body-copy-size);
+  line-height: 1.65;
+}
+.about-details-copy p::before { display: none; }
+.about-details .about-course-banner {
+  margin-top: auto;
+}
+@media (min-width:951px) {
+  .about-details-inner {
+    grid-template-columns: var(--layout-columns);
+    column-gap: var(--layout-gap);
+  }
+  .about-details-inner > div { grid-column: 2; }
+  .about-details .about-course-banner { margin-top: max(28px,4vh); }
+}
+@media (max-width:950px) {
+  .about-details { min-height: auto; padding-block: 36px; }
+  .about-details .about-course-banner { margin-top: 28px; }
+}
