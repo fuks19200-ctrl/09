@@ -19,7 +19,6 @@ export default function About() {
         <p className="founders-story__signature">Мы верим: технологии открывают возможности. А то, кем вы станете, выбираете вы.</p>
         <a className="button button--glass founders-cta" href="/courses/">
           <span>Выбрать обучение</span>
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
         </a>
       </article>
     </main>

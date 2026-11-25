@@ -235,12 +235,12 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 .founders-story > p.founders-story__lead { font-size: clamp(16px, 1.4vw, 21px); font-weight: 600; color: var(--color-black); }
 .founders-story > p.founders-story__signature { font-weight: 600; color: var(--color-black); margin: 6px 0 22px; }
 .founders-cta {
+  align-self: flex-end;
   isolation: isolate;
   position: relative;
   overflow: hidden;
   min-height: 51px;
   padding: 14px 25px;
-  gap: 13px;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,.93);
   background: linear-gradient(145deg, rgba(255,255,255,.79), rgba(255,255,255,.28));
