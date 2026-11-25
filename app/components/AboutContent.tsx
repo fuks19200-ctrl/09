@@ -19,7 +19,7 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
         <div className="about-details-inner">
           <div>
             <p className="about-eyebrow">Наш подход</p>
-            <h2 id="approach-title">От знаний —<br />к реальным <span>возможностям</span></h2>
+            <h2 id="approach-title">От знаний — <br />к реальным <span>возможностям</span></h2>
           </div>
           <div className="about-details-copy">
             <p>Именно поэтому в основе <span style={{ color: "var(--color-orange)" }}>MULTUM.AI</span> — практика и развитие самостоятельного мышления. Мы учим видеть нестандартные решения, превращать идеи в продукты и использовать технологии для профессионального роста.</p>
