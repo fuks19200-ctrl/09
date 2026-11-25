@@ -483,14 +483,55 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .about-course-banner__button { transition: none; } }
 
-/* Continue scrolling for exactly one viewport of uninterrupted background after About. */
-.home-page .home-about::after,
-.site-background.about-page::after {
+
+/* Full-screen manifesto in the previously reserved space. */
+.creative-manifesto {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0,.43fr) minmax(0,.57fr);
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 5% 0 5% 7%;
+  background: transparent;
+}
+.creative-manifesto__copy { position: relative; z-index: 1; min-width: 0; }
+.creative-manifesto__copy h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
+  font-size: clamp(38px,5.1vw,84px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.06em;
+  color: var(--color-black);
+}
+.creative-manifesto__copy h2 span { display: block; }
+.creative-manifesto__copy h2 span + span::before {
   content: "";
   display: block;
+  width: clamp(30px,4vw,65px);
+  height: 2px;
+  margin: .25em 0 .25em .04em;
+  background: var(--color-orange);
+  border-radius: 2px;
+}
+.creative-manifesto__visual {
   width: 100%;
-  height: 100vh;
-  height: 100svh;
-  pointer-events: none;
-  background: transparent;
+  align-self: stretch;
+  min-height: 0;
+  background-image: url("/images/creative-manifesto.webp");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center right;
+  -webkit-mask-image: linear-gradient(90deg,transparent,black 12%,black 94%,transparent);
+  mask-image: linear-gradient(90deg,transparent,black 12%,black 94%,transparent);
+}
+@media (max-width: 760px) {
+  .creative-manifesto { grid-template-columns: minmax(0,1fr); grid-template-rows: auto minmax(240px,48svh); align-content: center; gap: 20px; padding: 9% 5%; }
+  .creative-manifesto__copy h2 { font-size: clamp(36px,9vw,64px); }
+  .creative-manifesto__visual { background-position: center; -webkit-mask-image: none; mask-image: none; }
 }

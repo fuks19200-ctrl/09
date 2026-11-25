@@ -52,6 +52,16 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           <a className="about-course-banner__button" href="/courses/">Выбрать курс</a>
         </div>
       </section>
+      <section className="creative-manifesto" id="manifesto" aria-label="Принципы MULTUM AI">
+        <div className="creative-manifesto__copy">
+          <h2>
+            <span>Мыслить</span>
+            <span>Создавать</span>
+            <span>Опережать</span>
+          </h2>
+        </div>
+        <div className="creative-manifesto__visual" aria-hidden="true" />
+      </section>
     </>
   );
 }
