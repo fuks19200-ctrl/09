@@ -292,16 +292,32 @@ body:has(.home-page) { overflow-x: hidden; overflow-y: auto; }
 input, select, textarea { font-family: var(--font-montserrat), sans-serif; }
 
 
-/* Neutral, uniform page backgrounds with the portrait kept as artwork. */
-:root { --section-background: #ffffff; }
-html, body,
+/* Shared, left-weighted pastel background. The right 40% stays white. */
+:root {
+  --section-background:
+    linear-gradient(90deg, transparent 0%, transparent 34%, rgba(255,255,255,.18) 43%, rgba(255,255,255,.65) 53%, #fff 60%, #fff 100%),
+    radial-gradient(ellipse at 39% 12%, #fce6db 0%, rgba(252,230,219,.65) 14%, transparent 40%),
+    radial-gradient(ellipse at 39% 82%, #f7d5e4 0%, rgba(247,213,228,.70) 13%, transparent 43%),
+    radial-gradient(ellipse at 4% 49%, #f3edf8 0%, rgba(243,237,248,.70) 19%, transparent 48%),
+    #fff;
+}
+html { background: #fff; }
+body { background: transparent; isolation: isolate; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--section-background);
+}
 .site-background,
 .site-background.home-page,
 .site-background.about-page,
 .home-hero,
 .home-about,
 .about-details,
-.about-hero { background: var(--section-background); }
+.about-hero { background: transparent; }
 .about-hero { isolation: isolate; }
 .about-hero::before {
   content: "";
