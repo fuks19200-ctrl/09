@@ -1230,7 +1230,7 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     grid-template-columns: var(--layout-columns);
     column-gap: var(--layout-gap);
   }
-  .about-details-inner > div { grid-column: 2; }
+  .about-details-inner > div { grid-column: 1; }
   .about-details .about-course-banner { margin-top: max(28px,4vh); }
 }
 @media (max-width:950px) {
