@@ -229,3 +229,23 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
   .about-mission .founders-cta { margin-left:auto; }
 }
 @media(max-width:450px) { .about-hero-actions { flex-wrap:wrap; } .about-hero-actions .founders-cta { margin-left:auto; } }
+
+
+/* Home manifesto, deliberately subordinate to the school name. */
+.brand-lockup__tagline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(7px, 1.05vw, 16px);
+  margin: clamp(18px, 2.7vh, 28px) 0 0;
+  font-size: clamp(11px, 1.2vw, 16px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: .055em;
+  color: #484048;
+  white-space: nowrap;
+}
+.brand-lockup__tagline span { color: #B94B0D; font-weight: 300; }
+@media (max-width: 380px) {
+  .brand-lockup__tagline { gap: 6px; letter-spacing: .015em; }
+}

@@ -37,6 +37,7 @@ export default function Home() {
       <div className="brand-lockup">
         <h1 className="brand-lockup__title">MULTUM<span>.AI</span></h1>
         <p className="brand-lockup__subtitle">Школа нейросетей</p>
+        <p className="brand-lockup__tagline">Мыслить <span aria-hidden="true">|</span> Создавать <span aria-hidden="true">|</span> Опережать</p>
       </div>
     </main>
   );
