@@ -346,8 +346,18 @@ body::before {
 
 /* A single fine, full-bleed divider between consecutive content sections. */
 :root { --section-divider: rgba(239,118,43,.22); }
-.home-page .home-about,
-.about-details { border-top: 1px solid var(--section-divider); }
+.home-page .home-about { border-top: 1px solid var(--section-divider); }
+.about-details { border-top: 0; position: relative; }
+.about-details::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--section-divider) 0%, var(--section-divider) 75%, transparent 100%);
+  pointer-events: none;
+}
 
 
 
