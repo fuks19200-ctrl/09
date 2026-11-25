@@ -241,10 +241,11 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 }
 .brand-lockup__tagline span { color: #B94B0D; font-weight: 300; }
 .home-school-label {
-  margin: clamp(24px, 3.8vh, 40px) 0 0;
-  font: 400 clamp(13px, 1.15vw, 17px)/1.4 var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  color: #625862;
-  letter-spacing: .025em;
+  margin: clamp(10px, 1.5vh, 16px) 0 0;
+  font: 600 clamp(13px, 1.15vw, 17px)/1.4 var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color: var(--color-black);
+  letter-spacing: -.035em;
+  text-transform: uppercase;
   text-align: center;
 }
 @media (max-width: 380px) {
@@ -258,5 +259,5 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
   line-height: 1.02;
   letter-spacing: -.055em;
 }
-.home-page .home-school-label { font-weight: 400; }
+
 @media (max-width: 380px) { .home-page .brand-lockup__title { font-size: clamp(30px, 10vw, 38px); } }
