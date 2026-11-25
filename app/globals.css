@@ -483,12 +483,13 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (prefers-reduced-motion: reduce) { .about-course-banner__button { transition: none; } }
 
 
-/* Next homepage chapter, reserved for the next approved composition. */
-.home-next-section {
+/* Blank canvas, with no visible content or framing. */
+.blank-page {
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
-  border-top: 1px solid var(--section-divider);
   background: transparent;
-  scroll-margin-top: 0;
+}
+.blank-page--standalone {
+  background: var(--section-background);
 }
