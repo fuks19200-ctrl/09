@@ -214,3 +214,20 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 @media (max-width: 560px) {
   .about-page { padding: 116px 16px 24px; }
 }
+
+
+/* Transparent decorative glass monogram, home only. */
+.glass-brand-mark {
+  position: absolute;
+  left: max(24px, env(safe-area-inset-left));
+  bottom: max(22px, env(safe-area-inset-bottom));
+  width: clamp(62px, 7vw, 98px);
+  aspect-ratio: 104 / 100;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 4px 6px rgba(75,45,92,.12));
+}
+.glass-brand-mark svg { display: block; width: 100%; height: 100%; }
+@media (max-width: 560px) {
+  .glass-brand-mark { left: max(14px, env(safe-area-inset-left)); bottom: max(14px, env(safe-area-inset-bottom)); }
+}
