@@ -424,3 +424,68 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 }
 @media (max-width: 350px) { .specialty-grid { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .course-action { transition: none; } }
+
+
+/* Editorial first screen: a three-line manifesto and two programs on the right. */
+.courses-intro {
+  display: flex;
+  align-items: center;
+}
+.courses-program-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(30px, 5vw, 90px);
+}
+.courses-manifesto { min-width: 0; }
+.courses-manifesto-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 24px 0 28px;
+  font-size: clamp(35px, 4.45vw, 69px);
+  font-weight: 650;
+  letter-spacing: -.06em;
+  line-height: 1.12;
+}
+.courses-manifesto-title span { display: block; }
+.courses-manifesto-title span + span::before {
+  content: "";
+  display: block;
+  width: clamp(32px, 4vw, 62px);
+  height: 1px;
+  background: #B94B0D;
+  margin: .24em 0 .24em .035em;
+}
+.courses-manifesto-description {
+  margin: 0;
+  max-width: 42ch;
+  font-size: clamp(13px, 1.18vw, 17px);
+  font-weight: 400;
+  line-height: 1.65;
+  color: #51464d;
+}
+.courses-program-layout .program-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.courses-program-layout .program-card {
+  min-height: 0;
+  padding: clamp(20px, 2.2vw, 32px);
+}
+.courses-program-layout .program-card h2 {
+  font-size: clamp(34px, 4vw, 58px);
+  margin-bottom: 12px;
+}
+.courses-program-layout .program-description { margin-bottom: 20px; max-width: 35ch; }
+.courses-program-layout .program-art { width: 55%; height: 100%; }
+.courses-program-layout .program-art i { width: 57%; }
+@media (max-width: 900px) {
+  .courses-program-layout { grid-template-columns: minmax(0,1fr); gap: 32px; }
+  .courses-manifesto-title { font-size: clamp(36px, 7.2vw, 62px); }
+  .courses-intro { display: block; }
+}
+@media (max-width: 480px) {
+  .courses-manifesto-title { font-size: clamp(32px, 8vw, 42px); }
+  .courses-program-layout .program-card { border-radius: 20px; }
+}

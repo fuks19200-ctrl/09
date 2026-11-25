@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const programs = [
-  { name: "BASIS", label: "Базовая программа", description: "Знакомство с нейросетями, составление запросов и решение повседневных задач.", price: "7 900 ₽", theme: "basis" },
+  { name: "BASIC", label: "Базовая программа", description: "Знакомство с нейросетями, составление запросов и решение повседневных задач.", price: "7 900 ₽", theme: "basis" },
   { name: "ULTRA", label: "Комплексная программа", description: "Работа с AI-инструментами в нескольких направлениях и создание собственных проектов.", price: "99 900 ₽", theme: "ultra" },
 ];
 
@@ -32,12 +32,17 @@ export default function Courses() {
       <section className="courses-screen courses-intro" aria-labelledby="courses-title">
         <SiteNav active="courses" />
         <div className="courses-container">
-          <header className="courses-heading">
-            <p className="courses-kicker">MULTUM AI / COURSES</p>
-            <h1 id="courses-title">Обучение <span>AI</span></h1>
-            <p>Выберите программу или отдельное направление.</p>
-          </header>
-          <div className="program-grid">
+          <div className="courses-program-layout">
+            <header className="courses-manifesto">
+              <p className="courses-kicker">MULTUM AI / COURSES</p>
+              <h1 id="courses-title" className="courses-manifesto-title">
+                <span>Мыслить</span>
+                <span>Создавать</span>
+                <span>Опережать</span>
+              </h1>
+              <p className="courses-manifesto-description">Комплексное обучение искусственному интеллекту: от базовых навыков работы с нейросетями до создания собственных цифровых продуктов и монетизации знаний.</p>
+            </header>
+            <div className="program-grid">
             {programs.map((program) => (
               <article className={"program-card program-card--" + program.theme} key={program.name}>
                 <div className="program-art" aria-hidden="true"><i /><i /><i /></div>
@@ -50,6 +55,7 @@ export default function Courses() {
                 </div>
               </article>
             ))}
+          </div>
           </div>
           <a className="courses-next" href="#directions">Все направления <span aria-hidden="true">↓</span></a>
         </div>
