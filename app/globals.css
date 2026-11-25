@@ -1,4 +1,17 @@
+:root {
+  --color-white: #FFFFFF;
+  --color-orange: #FF8A34;
+  --color-green: #BFFF00;
+  --color-black: #17171C;
+  --color-lavender: #CBB7F5;
+  --color-surface: var(--color-white);
+  --color-text: var(--color-black);
+  --color-primary: var(--color-orange);
+  --color-accent: var(--color-green);
+  --color-secondary: var(--color-lavender);
+}
+
 * { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; background: #fff9f7; }
+html, body { margin: 0; min-height: 100%; background: #fff9f7; color: var(--color-text); }
 body { overflow: hidden; }
 .site-background { position: fixed; inset: 0; background: #fff9f7 url('/images/multum-background.webp') center / cover no-repeat; }
