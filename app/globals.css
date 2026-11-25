@@ -566,11 +566,17 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .creative-manifesto__secondary:hover .creative-manifesto__circle { border-color: var(--color-orange); color: var(--color-orange-readable); }
 .creative-manifesto__actions a:focus-visible { outline: 2px solid var(--color-orange-readable); outline-offset: 4px; border-radius: 999px; }
 .creative-manifesto__visual {
+  position: relative;
   justify-self: end;
   align-self: center;
   width: min(100%, 94svh, 950px);
   max-width: 100%;
   aspect-ratio: 1671 / 941;
+}
+.creative-manifesto__visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-image: url("/images/%D0%A0%D1%8B%D0%B6%D0%B5%D0%B2%D0%BE%D0%BB%D0%BE%D1%81%D0%B0%D1%8F%20%D0%B2%20%D0%BE%D0%BB%D0%B8%D0%B2%D0%BA%D0%BE%D0%B2%D0%BE%D0%B8%CC%86%20%D0%BA%D1%83%D1%80%D1%82%D0%BA%D0%B5.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -579,6 +585,16 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   mask-image: linear-gradient(90deg,transparent,black 11%,black 92%,transparent),linear-gradient(180deg,transparent,black 6%,black 86%,transparent);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
+}
+.creative-manifesto__visual::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ef762b66 13%, #ef762b99 50%, #ef762b66 87%, transparent);
+  pointer-events: none;
 }
 @media (max-width: 1000px) {
   .creative-manifesto__copy h2 { font-size: clamp(28px,4.15vw,44px); }
