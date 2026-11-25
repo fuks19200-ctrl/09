@@ -427,44 +427,45 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   isolation: isolate;
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0,1fr) clamp(60px,12vw,180px) auto;
+  grid-template-columns: minmax(0,1fr) clamp(44px,8vw,110px) auto;
   align-items: center;
-  gap: clamp(12px,2vw,30px);
-  max-width: 1240px;
+  gap: clamp(10px,1.5vw,20px);
+  width: 86%;
+  max-width: 920px;
   margin: clamp(30px,4vw,58px) auto 0;
-  padding: clamp(18px,1.8vw,26px) clamp(20px,2.3vw,34px);
-  border-radius: 16px;
+  padding: 12px clamp(15px,1.8vw,24px);
+  border-radius: 11px;
   background: #101011;
   color: #fff;
 }
 .about-course-banner__copy { min-width: 0; }
 .about-course-banner__title {
-  margin: 0 0 5px;
+  margin: 0 0 3px;
   color: #fff;
-  font-size: clamp(17px,1.7vw,25px);
+  font-size: clamp(13px,1.2vw,17px);
   line-height: 1.25;
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: -.045em;
 }
-.about-course-banner__title strong { font-weight: 650; color: #FF7835; }
+.about-course-banner__title strong { font-weight: 600; color: #FF7835; }
 .about-course-banner__subtitle {
   margin: 0;
-  font-size: clamp(11px,1vw,14px);
+  font-size: clamp(10px,.85vw,12px);
   line-height: 1.5;
   color: #dfdddd;
 }
-.about-course-banner__spark { display: block; width: 100%; height: auto; max-height: 64px; pointer-events: none; }
+.about-course-banner__spark { display: block; width: 100%; height: auto; max-height: 38px; pointer-events: none; }
 .about-course-banner__button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  min-height: 42px;
-  padding: 11px 23px;
+  min-height: 34px;
+  padding: 7px 16px;
   border-radius: 999px;
   background: #FF7835;
   color: #101011;
-  font-size: 12px;
-  font-weight: 650;
+  font-size: 11px;
+  font-weight: 600;
   white-space: nowrap;
   text-decoration: none;
   transition: background .18s ease;
@@ -472,11 +473,11 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .about-course-banner__button:hover { background: #FF9B65; }
 .about-course-banner__button:focus-visible { outline: 2px solid white; outline-offset: 4px; }
 @media (max-width: 760px) {
-  .about-course-banner { grid-template-columns: minmax(0,1fr) auto; }
+  .about-course-banner { width: 100%; grid-template-columns: minmax(0,1fr) auto; }
   .about-course-banner__spark { display: none; }
 }
 @media (max-width: 480px) {
-  .about-course-banner { grid-template-columns: minmax(0,1fr); gap: 16px; padding: 20px; border-radius: 14px; }
+  .about-course-banner { grid-template-columns: minmax(0,1fr); gap: 9px; padding: 13px 15px; border-radius: 11px; }
   .about-course-banner__button { justify-self: start; }
 }
 @media (prefers-reduced-motion: reduce) { .about-course-banner__button { transition: none; } }
