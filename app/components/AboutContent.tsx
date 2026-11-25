@@ -1,7 +1,7 @@
 export default function AboutContent({ embedded = false }: { embedded?: boolean }) {
   const Heading = embedded ? "h2" : "h1";
   return (
-    <div className="about-unified" aria-labelledby="about-title">
+    <>
       <section className="about-hero" aria-labelledby="about-title">
         <div className="about-hero-copy">
           <p className="about-eyebrow">О нас</p>
@@ -35,6 +35,6 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
         </div>
       </section>
 
-    </div>
+    </>
   );
 }
