@@ -1272,3 +1272,20 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .about-details-inner > div { grid-column: 1; }
   .about-details-copy p { max-width: none; }
 }
+
+
+/* Match the founders screen to the same continuous pastel backdrop.
+   The portrait's light background blends with it rather than covering it. */
+.about-hero {
+  background: var(--section-background);
+  background-attachment: fixed;
+}
+.about-hero::before {
+  mix-blend-mode: multiply;
+}
+@media (min-width:951px) and (min-aspect-ratio:3/2) {
+  .about-hero::before {
+    -webkit-mask-image: linear-gradient(90deg,transparent 0%,#000 7%,#000 95%,transparent 100%), linear-gradient(180deg,transparent 0%,#000 5%,#000 97%,transparent 100%);
+    mask-image: linear-gradient(90deg,transparent 0%,#000 7%,#000 95%,transparent 100%), linear-gradient(180deg,transparent 0%,#000 5%,#000 97%,transparent 100%);
+  }
+}
