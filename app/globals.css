@@ -481,3 +481,14 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .about-course-banner__button { justify-self: start; }
 }
 @media (prefers-reduced-motion: reduce) { .about-course-banner__button { transition: none; } }
+
+
+/* Next homepage chapter, reserved for the next approved composition. */
+.home-next-section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  border-top: 1px solid var(--section-divider);
+  background: transparent;
+  scroll-margin-top: 0;
+}

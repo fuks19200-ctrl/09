@@ -14,6 +14,7 @@ export default function Home() {
       <div className="home-about" id="about" aria-labelledby="about-title">
         <AboutContent embedded />
       </div>
+      <section className="home-next-section" id="next-section" aria-hidden="true" />
     </main>
   );
 }
