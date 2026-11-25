@@ -9,7 +9,7 @@ export default function SiteNav({ active }: { active: "home" | "about" | "course
             </svg>
           </button>
           <a className="site-nav__item" href="/" aria-current={active === "home" ? "page" : undefined}>Home</a>
-          <a className="site-nav__item" href="/about/" aria-current={active === "about" ? "page" : undefined}>About us</a>
+          <a className="site-nav__item" href={active === "home" ? "#about" : "/#about"} aria-current={active === "about" ? "page" : undefined}>About us</a>
           <a className="site-nav__item" href="/courses/" aria-current={active === "courses" ? "page" : undefined}>Courses</a>
           <button className="site-nav__item" type="button" disabled title="Coming soon">FAQ</button>
           <button className="site-nav__item" type="button" disabled title="Coming soon">Contacts</button>

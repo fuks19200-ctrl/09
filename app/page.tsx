@@ -1,4 +1,5 @@
 import SiteNav from "./components/SiteNav";
+import AboutContent from "./components/AboutContent";
 
 export default function Home() {
   return (
@@ -10,7 +11,9 @@ export default function Home() {
           <p className="home-school-label">Школа нейросетей</p>
         </div>
       </section>
-      <div className="home-next-screen" aria-hidden="true" />
+      <div className="home-about" id="about" aria-labelledby="about-title">
+        <AboutContent embedded />
+      </div>
     </main>
   );
 }
