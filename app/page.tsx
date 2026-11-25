@@ -1,5 +1,6 @@
 import SiteNav from "./components/SiteNav";
 import AboutContent from "./components/AboutContent";
+import CoursesContent from "./components/CoursesContent";
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
       </section>
       <div className="home-about" id="about" aria-labelledby="about-title">
         <AboutContent embedded />
+      </div>
+      <div className="courses-page courses-embedded" id="courses" aria-label="Курсы MULTUM AI">
+        <CoursesContent embedded />
       </div>
     </main>
   );

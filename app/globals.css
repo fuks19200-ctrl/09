@@ -967,3 +967,8 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width: 650px) {
   .courses-page > .creative-manifesto { padding-top: 80px; }
 }
+
+/* Shared course chapters follow About on continuous-scroll pages. */
+.courses-embedded { position: relative; border-top: 1px solid var(--section-divider); }
+.courses-embedded > .creative-manifesto { padding-top: clamp(32px,5vh,62px); }
+@media (max-width:650px) { .courses-embedded > .creative-manifesto { padding-top: 26px; } }
