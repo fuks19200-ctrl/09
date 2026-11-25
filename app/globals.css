@@ -173,23 +173,6 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
   overflow-y: auto;
   padding: 104px 24px 40px;
 }
-/* Transparent decorative glass monogram, home only. */
-.glass-brand-mark {
-  position: absolute;
-  left: max(24px, env(safe-area-inset-left));
-  bottom: max(22px, env(safe-area-inset-bottom));
-  width: clamp(62px, 7vw, 98px);
-  aspect-ratio: 104 / 100;
-  pointer-events: none;
-  user-select: none;
-  filter: drop-shadow(0 4px 6px rgba(75,45,92,.12));
-}
-.glass-brand-mark svg { display: block; width: 100%; height: 100%; }
-@media (max-width: 560px) {
-  .glass-brand-mark { left: max(14px, env(safe-area-inset-left)); bottom: max(14px, env(safe-area-inset-bottom)); }
-}
-
-
 /* About: full-viewport portrait and a separate editorial chapter. */
 .about-page { position:fixed; inset:0; overflow:auto; background:#fff8f5; display:block; padding:0; overscroll-behavior-y:contain; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; color:#17171c; }
 .about-hero { position:relative; min-height:100svh; display:grid; grid-template-columns:52% 48%; align-items:center; background:#fff5f4 url('/images/%D0%A1%D1%82%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B8%CC%86%20%D0%B4%D1%83%D1%8D%D1%82%20%D0%B2%20%D1%81%D0%BE%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D0%B8%CC%86%20%D1%83%D0%BB%D0%B8%D1%87%D0%BD%D0%BE%D0%B8%CC%86%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%B5.png') left center/cover no-repeat; padding:100px 5.5% 64px 0; }
@@ -235,10 +218,10 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 
 
 
-/* Home: centered manifesto and a small school signature beside the monogram. */
+
+/* Home: centered brand, manifesto and discreet school descriptor. */
 .home-page { isolation: isolate; overflow: hidden; }
 .home-page .brand-lockup { position: relative; z-index: 2; }
-.home-page .glass-brand-mark { z-index: 3; }
 .brand-lockup__tagline {
   display: flex;
   justify-content: center;
@@ -254,21 +237,11 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 }
 .brand-lockup__tagline span { color: #B94B0D; font-weight: 300; }
 .home-school-label {
-  position: absolute;
-  z-index: 3;
-  left: calc(max(24px, env(safe-area-inset-left)) + clamp(62px, 7vw, 98px) + 10px);
-  bottom: calc(max(22px, env(safe-area-inset-bottom)) + clamp(62px, 7vw, 98px) * .48);
-  transform: translateY(50%);
-  margin: 0;
-  font: 400 clamp(11px, .95vw, 15px)/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  margin: 12px 0 0;
+  font: 400 clamp(10px, .88vw, 13px)/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   color: #625862;
-  letter-spacing: .015em;
-}
-@media (max-width: 560px) {
-  .home-school-label {
-    left: calc(max(14px, env(safe-area-inset-left)) + 70px);
-    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 30px);
-  }
+  letter-spacing: .025em;
+  text-align: center;
 }
 @media (max-width: 380px) {
   .brand-lockup__tagline { gap: 6px; letter-spacing: .015em; }
