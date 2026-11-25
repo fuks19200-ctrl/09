@@ -3,7 +3,7 @@ export default function Home() {
     <main className="site-background">
       <div className="brand-lockup">
         <h1 className="brand-lockup__title">MULTUM<span>.AI</span></h1>
-        <p className="brand-lockup__subtitle">Образовательная платформа</p>
+        <p className="brand-lockup__subtitle">Школа нейросетей</p>
       </div>
     </main>
   );
