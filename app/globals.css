@@ -972,3 +972,79 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .courses-embedded { position: relative; border-top: 1px solid var(--section-divider); }
 .courses-embedded > .creative-manifesto { padding-top: clamp(32px,5vh,62px); }
 @media (max-width:650px) { .courses-embedded > .creative-manifesto { padding-top: 26px; } }
+
+
+/* About / approach — balanced editorial composition and readable closing CTA. */
+.about-details {
+  padding-block: clamp(40px,5.6vh,72px);
+}
+.about-details-inner {
+  align-items: center;
+  row-gap: 28px;
+}
+.about-details-inner > div:first-child {
+  min-width: 0;
+  padding-block: 8px;
+}
+.about-details .about-eyebrow {
+  margin-bottom: clamp(16px,2vw,28px);
+  color: #493641;
+  letter-spacing: .15em;
+}
+.about-details h2 {
+  font-size: clamp(32px,3.5vw,54px);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.about-details-copy {
+  min-width: 0;
+}
+.about-details-copy p {
+  max-width: 65ch;
+  font-size: clamp(15px,1.18vw,18px);
+  line-height: 1.65;
+  margin-bottom: clamp(16px,1.6vw,22px);
+  color: #39333c;
+  letter-spacing: -.012em;
+}
+.about-details-copy p:last-child { margin-bottom: 0; }
+.about-details .about-course-banner {
+  width: 100%;
+  max-width: var(--layout-max);
+  margin-top: clamp(26px,3.5vh,44px);
+  padding: clamp(14px,1.7vw,22px) clamp(18px,2.5vw,34px);
+  gap: clamp(20px,4vw,54px);
+  border-radius: 16px;
+}
+.about-details .about-course-banner__title {
+  max-width: 66ch;
+  margin: 0;
+  font-size: clamp(14px,1.15vw,17px);
+  font-weight: 450;
+  line-height: 1.45;
+  letter-spacing: -.025em;
+}
+.about-details .about-course-banner__title strong {
+  font-weight: 650;
+}
+.about-details .about-course-banner__button {
+  min-height: 42px;
+  padding: 10px 22px;
+  font-size: 13px;
+  letter-spacing: -.015em;
+}
+@media (max-width: 950px), (max-aspect-ratio: 3/2) {
+  .about-details-inner { align-items: start; }
+  .about-details-inner > div:first-child { padding-block: 0; }
+}
+@media (max-width: 650px) {
+  .about-details { padding-block: 36px; }
+  .about-details h2 { font-size: clamp(30px,7.4vw,44px); text-wrap: initial; }
+  .about-details-copy p { font-size: 15px; }
+  .about-details .about-course-banner {
+    grid-template-columns: minmax(0,1fr);
+    gap: 16px;
+    padding: 20px;
+  }
+  .about-details .about-course-banner__button { justify-self: start; }
+}
