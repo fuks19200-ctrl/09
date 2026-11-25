@@ -484,18 +484,20 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (prefers-reduced-motion: reduce) { .about-course-banner__button { transition: none; } }
 
 
-/* Full-screen manifesto in the previously reserved space. */
+/* Compact manifesto at the top of the next full-height screen. */
 .creative-manifesto {
   position: relative;
   border-top: 1px solid var(--section-divider);
   min-height: 100vh;
   min-height: 100svh;
   display: grid;
-  grid-template-columns: minmax(0,.43fr) minmax(0,.57fr);
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  align-content: start;
   align-items: center;
+  column-gap: clamp(16px,3vw,48px);
   overflow: hidden;
   isolation: isolate;
-  padding: 5% 0 5% 7%;
+  padding: clamp(12px,1.8vh,24px) 4.5% 0;
   background: transparent;
 }
 .creative-manifesto__copy { position: relative; z-index: 1; min-width: 0; }
@@ -504,35 +506,38 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   flex-direction: column;
   align-items: flex-start;
   margin: 0;
-  font-size: clamp(38px,5.1vw,84px);
-  font-weight: 700;
+  font-size: clamp(22px,min(2.6vw,4.1svh),44px);
+  font-weight: 650;
   line-height: 1.08;
-  letter-spacing: -.06em;
+  letter-spacing: -.055em;
   color: var(--color-black);
 }
 .creative-manifesto__copy h2 span { display: block; }
 .creative-manifesto__copy h2 span + span::before {
   content: "";
   display: block;
-  width: clamp(30px,4vw,65px);
-  height: 2px;
-  margin: .25em 0 .25em .04em;
+  width: clamp(22px,2.8vw,44px);
+  height: 1px;
+  margin: .22em 0 .22em .04em;
   background: var(--color-orange);
-  border-radius: 2px;
 }
 .creative-manifesto__visual {
-  width: 100%;
-  align-self: stretch;
-  min-height: 0;
+  justify-self: end;
+  align-self: center;
+  width: clamp(200px,39svh,460px);
+  max-width: 100%;
+  aspect-ratio: 1671 / 941;
   background-image: url("/images/%D0%A0%D1%8B%D0%B6%D0%B5%D0%B2%D0%BE%D0%BB%D0%BE%D1%81%D0%B0%D1%8F%20%D0%B2%20%D0%BE%D0%BB%D0%B8%D0%B2%D0%BA%D0%BE%D0%B2%D0%BE%D0%B8%CC%86%20%D0%BA%D1%83%D1%80%D1%82%D0%BA%D0%B5.png");
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center right;
-  -webkit-mask-image: linear-gradient(90deg,transparent,black 12%,black 94%,transparent);
-  mask-image: linear-gradient(90deg,transparent,black 12%,black 94%,transparent);
+  background-size: cover;
+  background-position: center;
+  -webkit-mask-image: linear-gradient(90deg,transparent,black 13%,black 88%,transparent),linear-gradient(180deg,transparent,black 14%,black 82%,transparent);
+  mask-image: linear-gradient(90deg,transparent,black 13%,black 88%,transparent),linear-gradient(180deg,transparent,black 14%,black 82%,transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 @media (max-width: 760px) {
-  .creative-manifesto { grid-template-columns: minmax(0,1fr); grid-template-rows: auto minmax(240px,48svh); align-content: center; gap: 20px; padding: 9% 5%; }
-  .creative-manifesto__copy h2 { font-size: clamp(36px,9vw,64px); }
-  .creative-manifesto__visual { background-position: center; -webkit-mask-image: none; mask-image: none; }
+  .creative-manifesto { grid-template-columns: minmax(0,.48fr) minmax(0,.52fr); column-gap: 12px; padding: 16px 4% 0; }
+  .creative-manifesto__copy h2 { font-size: clamp(16px,4vw,30px); }
+  .creative-manifesto__visual { width: 100%; }
 }
