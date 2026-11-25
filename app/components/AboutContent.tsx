@@ -10,29 +10,28 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           <p className="about-lead">Создавая школу, мы хотели изменить привычный подход к образованию и показать, что искусственный интеллект способен не только упрощать задачи, но и раскрывать потенциал человека.</p>
           <p className="about-lead">Мир меняется быстрее, чем традиционные системы образования. Сегодня недостаточно просто обладать знаниями — важно уметь превращать их в возможности.</p>
           <div className="about-hero-actions">
-            <a className="about-scroll" href="#approach">Как проходит обучение</a>
-            <a className="button button--glass founders-cta" href="/courses/">Выбрать курс</a>
+            <a className="about-scroll" href="#approach">Наш подход к обучению</a>
+            <a className="button button--glass founders-cta" href="/courses/">Выбрать обучение</a>
           </div>
         </div>
       </section>
       <section className="about-details" id="approach" aria-labelledby="approach-title">
         <div className="about-details-inner">
           <div>
-            <p className="about-eyebrow">Обучение</p>
-            <h2 id="approach-title">Что делаем <br />на <span>занятиях</span></h2>
+            <p className="about-eyebrow">Наш подход</p>
+            <h2 id="approach-title">От знаний —<br />к реальным <span>возможностям</span></h2>
           </div>
           <div className="about-details-copy">
-            <p>Учимся подбирать нейросеть под задачу, составлять запросы и проверять результат. Разбираем ошибки и дорабатываем полученные материалы.</p>
-            <p>В зависимости от курса создаём изображения и видео, собираем сайты или настраиваем автоматизацию.</p>
-            <p>Практические задания помогают освоить инструменты на примерах рабочих задач и собственных проектов.</p>
+            <p>Именно поэтому в основе MULTUM AI — практика, реальные проекты и развитие самостоятельного мышления. Мы учим видеть нестандартные решения, превращать идеи в цифровые продукты и использовать технологии для профессионального роста.</p>
+            <p>Мы убеждены: чем доступнее становится искусственный интеллект, тем ценнее становится способность человека мыслить самостоятельно.</p>
+            <p>Для нас важно, чтобы после обучения вы не просто знали, как работают нейросети, а понимали, как использовать их для достижения собственных целей.</p>
           </div>
         </div>
         <div className="about-course-banner">
           <div className="about-course-banner__copy">
-            <p className="about-course-banner__title">Ваш следующий шаг — <strong>MULTUM AI</strong></p>
-            <p className="about-course-banner__subtitle">Выберите программу под свои цели.</p>
+            <p className="about-course-banner__title">Наша задача — не просто научить вас работать с технологиями, а научить <strong>мыслить на шаг вперёд.</strong></p>
           </div>
-          <a className="about-course-banner__button" href="/courses/">Выбрать курс</a>
+          <a className="about-course-banner__button" href="/courses/">Выбрать обучение</a>
         </div>
       </section>
 

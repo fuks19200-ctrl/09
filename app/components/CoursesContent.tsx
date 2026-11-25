@@ -41,7 +41,8 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
           <div className="creative-philosophy-copy">
             <p className="creative-philosophy-label">Философия MULTUM AI</p>
             <h2 id="philosophy-heading">Технологии меняют мир<br />Мы учим <span>менять его вместе с ними</span></h2>
-            <p className="creative-philosophy-paragraph">Развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
+            <p className="creative-philosophy-paragraph">Для нас искусственный интеллект — инструмент расширения человеческих возможностей. Мы развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
+            <p className="creative-philosophy-paragraph">Наша цель — научить человека не зависеть от технологий, а уверенно управлять ими.</p>
           </div>
         </section>
       </section>
