@@ -109,7 +109,7 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 }
 
 
-/* Floating, individually rounded Liquid Glass navigation. */
+/* Minimal brand navigation: unframed typography, shared across pages. */
 .site-header {
   position: absolute;
   z-index: 10;
@@ -122,48 +122,50 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 6px;
+  gap: clamp(14px, 1.65vw, 26px);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 }
 .site-nav .site-nav__item {
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 0 auto;
   min-height: 34px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.82);
-  background: linear-gradient(145deg, rgba(255,255,255,.74), rgba(255,255,255,.34));
+  padding: 4px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   color: var(--color-black);
-  box-shadow: inset 0 1px 1px rgba(255,255,255,.95), inset 0 -1px 2px rgba(255,255,255,.35), 0 5px 18px rgba(52,32,63,.07);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  backdrop-filter: blur(20px) saturate(160%);
-  font-size: 12px;
-  font-weight: 500;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+  text-decoration: none;
   white-space: nowrap;
+  transition: color 180ms ease;
 }
-.site-nav .site-nav__item[aria-current="page"] {
-  background: linear-gradient(145deg, rgba(255,255,255,.91), rgba(255,255,255,.58));
-}
-.site-nav .site-nav__search {
-  width: 34px;
-  height: 34px;
-  padding: 0;
-}
+.site-nav .site-nav__item[aria-current="page"] { color: #B94B0D; }
 .site-nav .site-nav__item:disabled { opacity: 1; cursor: default; }
+.site-nav .site-nav__search { width: 28px; height: 34px; padding: 0; }
+.site-nav__search svg { width: 17px; height: 17px; }
+@media (hover: hover) and (pointer: fine) {
+  .site-nav .site-nav__item:not(:disabled):hover { color: #B94B0D; background: transparent; box-shadow: none; transform: none; }
+}
+.site-nav .site-nav__item:active { transform: none; }
 @media (max-width: 560px) {
-  .site-header { top: max(12px, env(safe-area-inset-top)); right: max(10px, env(safe-area-inset-right)); max-width: calc(100% - 20px); }
-  .site-nav { gap: 5px; }
-  .site-nav .site-nav__item { min-height: 32px; padding: 6px 10px; font-size: 11px; }
-  .site-nav .site-nav__search { width: 32px; height: 32px; padding: 0; }
+  .site-header { top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); max-width: calc(100% - 24px); }
+  .site-nav { gap: 12px; }
+  .site-nav .site-nav__item { min-height: 30px; font-size: 11px; }
+  .site-nav .site-nav__search { width: 20px; height: 30px; }
 }
 @media (max-width: 350px) {
-  .site-header { right: 6px; max-width: calc(100% - 12px); }
-  .site-nav { gap: 4px; }
-  .site-nav .site-nav__item { padding-inline: 8px; font-size: 11px; }
-  .site-nav .site-nav__search { padding: 0; }
+  .site-nav { gap: 8px; }
+  .site-nav .site-nav__item { font-size: 10px; }
 }
-
-.site-nav__search svg { width: 16px; height: 16px; }
-
+@media (prefers-reduced-motion: reduce) { .site-nav .site-nav__item { transition: none; } }
 
 /* About page: keep the landing page minimal; share its navigation and background. */
 .site-nav { flex-wrap: wrap; }
