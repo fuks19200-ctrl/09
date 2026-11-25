@@ -602,8 +602,9 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   position: absolute;
   z-index: 1;
   right: 0;
-  bottom: 0;
-  transform: translateY(50%);
+  top: calc(100% + 7px);
+  bottom: auto;
+  transform: none;
   display: flex;
   align-items: center;
   gap: 12px;
