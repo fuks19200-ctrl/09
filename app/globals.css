@@ -1486,3 +1486,23 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   :root { --section-heading-size: clamp(26px,5.8vw,36px); }
   .creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) { gap: .16em .3em; }
 }
+
+
+/* Equal vertical rhythm between motto, CTA, portrait and philosophy. */
+.courses-page > .creative-manifesto--centered {
+  --manifesto-spacing: clamp(28px,4.2svh,44px);
+  row-gap: var(--manifesto-spacing);
+}
+.creative-manifesto--centered .creative-manifesto__actions {
+  margin-top: var(--manifesto-spacing);
+}
+.creative-manifesto--centered .creative-manifesto__portrait {
+  margin: 0;
+}
+.creative-manifesto--centered .creative-philosophy {
+  margin: 0;
+  padding: 0;
+}
+@media (max-width:650px) {
+  .courses-page > .creative-manifesto--centered { --manifesto-spacing: 28px; }
+}
