@@ -1,4 +1,4 @@
-export default function SiteNav({ active }: { active: "home" | "about" }) {
+export default function SiteNav({ active }: { active: "home" | "about" | "courses" }) {
   return (
       <header className="site-header">
         <nav className="site-nav" aria-label="Основная навигация">
@@ -10,7 +10,7 @@ export default function SiteNav({ active }: { active: "home" | "about" }) {
           </button>
           <a className="button button--glass site-nav__item" href="/" aria-current={active === "home" ? "page" : undefined}>Главная</a>
           <a className="button button--glass site-nav__item" href="/about/" aria-current={active === "about" ? "page" : undefined}>О нас</a>
-          <button className="button button--glass site-nav__item" type="button" disabled title="Раздел будет добавлен позже">Курсы</button>
+          <a className="button button--glass site-nav__item" href="/courses/" aria-current={active === "courses" ? "page" : undefined}>Курсы</a>
           <button className="button button--glass site-nav__item" type="button" disabled title="Раздел будет добавлен позже">FAQ</button>
           <button className="button button--glass site-nav__item" type="button" disabled title="Раздел будет добавлен позже">Контакты</button>
         </nav>
