@@ -63,7 +63,6 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           <p className="creative-manifesto__description">Осваивайте нейросети и воплощайте идеи в реальных проектах.</p>
           <div className="creative-manifesto__actions">
             <a className="creative-manifesto__primary" href="/courses/">Выбрать курс <span aria-hidden="true">→</span></a>
-            <a className="creative-manifesto__secondary" href="#approach"><span className="creative-manifesto__circle" aria-hidden="true">↗</span>Как проходит обучение</a>
           </div>
         </div>
         <div className="creative-manifesto__visual" aria-hidden="true" />
@@ -71,9 +70,8 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           <div className="creative-philosophy-image" aria-hidden="true" />
           <div className="creative-philosophy-copy">
             <p className="creative-philosophy-label">Философия MULTUM AI</p>
-            <h3 id="philosophy-heading">Технологии меняют мир. Мы учим <span>менять его вместе с ними.</span></h3>
-            <p className="creative-philosophy-paragraph">Для нас искусственный интеллект — инструмент расширения человеческих возможностей. Мы развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
-            <p className="creative-philosophy-paragraph">Наша цель — научить человека не зависеть от технологий, а уверенно управлять ими.</p>
+            <h3 id="philosophy-heading">Технологии меняют мир.<br />Мы учим <span>менять его вместе с ними.</span></h3>
+            <p className="creative-philosophy-paragraph">Развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
           </div>
         </section>
       </section>

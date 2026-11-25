@@ -795,3 +795,119 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .creative-philosophy-copy h3 { font-size: clamp(23px, 5.5vw, 28px); }
   .creative-philosophy-paragraph { font-size: 14px; }
 }
+
+
+/* Approved concept 02 — spacious, high-contrast editorial manifesto.
+   The same outer grid is retained; only this screen changes. */
+.creative-manifesto {
+  --manifesto-type: clamp(32px, 4.75vw, 73px);
+  --manifesto-gap: clamp(24px, 3.5vw, 48px);
+  --manifesto-columns: minmax(0,.43fr) minmax(0,.57fr);
+  grid-template-columns: var(--manifesto-columns);
+  column-gap: var(--manifesto-gap);
+  align-items: center;
+  align-content: start;
+  padding-top: clamp(32px,5vh,62px);
+  padding-bottom: 0;
+  background:
+    radial-gradient(ellipse at 66% 26%, rgba(255,189,153,.22), transparent 54%),
+    linear-gradient(120deg, rgba(255,248,243,.72), rgba(255,239,237,.48) 45%, rgba(255,255,255,.78) 80%);
+}
+.creative-manifesto__copy { padding-block: 16px; }
+.creative-manifesto__eyebrow {
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: clamp(10px,1.05vw,14px);
+  letter-spacing: .035em;
+  font-weight: 650;
+}
+.creative-manifesto__eyebrow::after { display: none; }
+.creative-manifesto__copy h2 {
+  font-size: var(--manifesto-type);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -.045em;
+}
+.creative-manifesto__description {
+  max-width: 35ch;
+  margin: 20px 0 24px;
+  font-size: clamp(15px,1.55vw,20px);
+  font-weight: 450;
+  line-height: 1.38;
+}
+.creative-manifesto__primary {
+  min-height: 48px;
+  padding: 13px clamp(24px,2.8vw,40px);
+  font-size: clamp(13px,1.2vw,17px);
+  gap: 16px;
+  background: #F47722;
+}
+.creative-manifesto__primary span { font-size: 20px; }
+.creative-manifesto__visual {
+  width: 100%;
+  aspect-ratio: 1671 / 941;
+  align-self: center;
+}
+.creative-manifesto__visual::before {
+  -webkit-mask-image: linear-gradient(90deg,transparent,black 9%,black 94%,transparent),linear-gradient(180deg,transparent,black 5%,black 89%,transparent);
+  mask-image: linear-gradient(90deg,transparent,black 9%,black 94%,transparent),linear-gradient(180deg,transparent,black 5%,black 89%,transparent);
+}
+.creative-philosophy {
+  grid-template-columns: var(--manifesto-columns);
+  gap: var(--manifesto-gap);
+  margin-top: clamp(18px,3vh,34px);
+  padding-top: clamp(20px,3vh,32px);
+  padding-bottom: clamp(36px,5vh,60px);
+  border-top: 0;
+  position: relative;
+  align-items: center;
+}
+.creative-philosophy::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-orange), #ef762b33 48%, transparent 100%);
+  pointer-events: none;
+}
+.creative-philosophy-image {
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1.9;
+  border-radius: 16px;
+  background-position: center 44%;
+}
+.creative-philosophy-label {
+  font-size: clamp(10px,1vw,13px);
+  letter-spacing: .035em;
+  margin-bottom: 12px;
+}
+.creative-philosophy-copy h3 {
+  max-width: none;
+  font-size: clamp(23px,2.55vw,36px);
+  font-weight: 700;
+  letter-spacing: -.038em;
+  line-height: 1.19;
+  margin-bottom: 16px;
+}
+.creative-philosophy-paragraph {
+  max-width: 64ch;
+  font-size: clamp(14px,1.3vw,18px);
+  line-height: 1.46;
+  font-weight: 450;
+}
+@media (max-width: 1000px) and (min-width: 651px) {
+  .creative-manifesto { --manifesto-type: clamp(29px,4.55vw,46px); --manifesto-gap: 24px; }
+  .creative-philosophy-copy h3 { font-size: clamp(20px,2.8vw,28px); }
+}
+@media (max-width: 650px) {
+  .creative-manifesto { --manifesto-type: clamp(32px,9vw,54px); --manifesto-columns: minmax(0,1fr); --manifesto-gap: 24px; padding-top: 26px; row-gap: 16px; }
+  .creative-manifesto__copy { padding-block: 0; }
+  .creative-manifesto__description { margin: 16px 0 20px; }
+  .creative-manifesto__visual { justify-self: center; }
+  .creative-philosophy { margin-top: 6px; }
+  .creative-philosophy-image { width: 100%; }
+  .creative-philosophy-copy h3 { font-size: clamp(23px,5.8vw,32px); }
+}
