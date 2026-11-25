@@ -290,3 +290,35 @@ body:has(.home-page) { overflow-x: hidden; overflow-y: auto; }
 
 /* Unified typography for all form controls. */
 input, select, textarea { font-family: var(--font-montserrat), sans-serif; }
+
+
+/* Seamless home-to-about transition: both sides share a softly feathered pastel edge. */
+.home-page {
+  --section-blend: linear-gradient(90deg, #fffdfc 0%, #fff6f2 47%, #fcebf6 100%);
+}
+.home-hero::after,
+.home-about .about-hero::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--section-blend);
+}
+.home-hero::after {
+  bottom: 0;
+  height: clamp(100px, 19vh, 210px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.12) 25%, rgba(0,0,0,.65) 70%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.12) 25%, rgba(0,0,0,.65) 70%, #000 100%);
+}
+.home-about .about-hero::before {
+  top: 0;
+  height: clamp(32px, 4.2vw, 84px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.72) 25%, rgba(0,0,0,.16) 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.72) 25%, rgba(0,0,0,.16) 70%, transparent 100%);
+}
+.home-about .about-hero-copy { position: relative; z-index: 1; }
+@media (max-width: 950px), (max-aspect-ratio: 3/2) {
+  .home-about .about-hero::before { height: clamp(20px, 4vw, 40px); }
+}
