@@ -70,6 +70,11 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           <h2 className="creative-philosophy-label" id="philosophy">Философия MULTUM AI</h2>
         </div>
         <div className="creative-philosophy-image" aria-hidden="true" />
+        <div className="creative-philosophy-copy">
+          <h3>Технологии меняют мир. Мы учим <span>менять его вместе с ними.</span></h3>
+          <p>Для нас искусственный интеллект — инструмент расширения человеческих возможностей. Мы развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
+          <p>Наша цель — научить человека не зависеть от технологий, а уверенно управлять ими.</p>
+        </div>
       </section>
     </>
   );
