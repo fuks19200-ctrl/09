@@ -915,3 +915,32 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width: 950px), (max-aspect-ratio: 3/2) {
   .about-details::before { width: 60%; }
 }
+
+
+/* Consistent editorial heading typography, matching the About hero. */
+:root { --heading-weight: 450; --heading-tracking: -.055em; }
+.home-page .brand-lockup__title,
+.about-hero :is(h1,h2),
+.about-hero :is(h1,h2) span,
+.about-hero :is(h1,h2) em,
+.about-details h2,
+.courses-manifesto-title,
+.program-card h2,
+.directions-heading h2,
+.specialty-content h3,
+.creative-manifesto__copy h2,
+.creative-philosophy-copy h3 {
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-tracking);
+}
+.creative-manifesto__copy h2 {
+  text-transform: none;
+  line-height: 1.08;
+}
+.creative-philosophy-copy h3 {
+  line-height: 1.2;
+}
+.program-card h2,
+.specialty-content h3 {
+  letter-spacing: -.035em;
+}

@@ -41,7 +41,7 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           <h2>
             <span>Мыслить</span>
             <span>Создавать</span>
-            <span>Опережать<span className="creative-manifesto__dot">.</span></span>
+            <span>Опережать</span>
           </h2>
           <p className="creative-manifesto__description">Осваивайте нейросети и воплощайте идеи в реальных проектах.</p>
           <div className="creative-manifesto__actions">
@@ -53,7 +53,7 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
           <div className="creative-philosophy-image" aria-hidden="true" />
           <div className="creative-philosophy-copy">
             <p className="creative-philosophy-label">Философия MULTUM AI</p>
-            <h3 id="philosophy-heading">Технологии меняют мир.<br />Мы учим <span>менять его вместе с ними.</span></h3>
+            <h3 id="philosophy-heading">Технологии меняют мир<br />Мы учим <span>менять его вместе с ними</span></h3>
             <p className="creative-philosophy-paragraph">Развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
           </div>
         </section>
