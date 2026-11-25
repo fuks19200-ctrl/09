@@ -66,15 +66,16 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
             <a className="creative-manifesto__secondary" href="#approach"><span className="creative-manifesto__circle" aria-hidden="true">↗</span>Как проходит обучение</a>
           </div>
         </div>
-        <div className="creative-manifesto__visual">
-          <h2 className="creative-philosophy-label" id="philosophy">Философия MULTUM AI</h2>
-        </div>
-        <div className="creative-philosophy-image" aria-hidden="true" />
-        <div className="creative-philosophy-copy">
-          <h3>Технологии меняют мир. Мы учим <span>менять его вместе с ними.</span></h3>
-          <p>Для нас искусственный интеллект — инструмент расширения человеческих возможностей. Мы развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
-          <p>Наша цель — научить человека не зависеть от технологий, а уверенно управлять ими.</p>
-        </div>
+        <div className="creative-manifesto__visual" aria-hidden="true" />
+        <section className="creative-philosophy" id="philosophy" aria-labelledby="philosophy-heading">
+          <div className="creative-philosophy-image" aria-hidden="true" />
+          <div className="creative-philosophy-copy">
+            <p className="creative-philosophy-label">Философия MULTUM AI</p>
+            <h3 id="philosophy-heading">Технологии меняют мир. Мы учим <span>менять его вместе с ними.</span></h3>
+            <p className="creative-philosophy-paragraph">Для нас искусственный интеллект — инструмент расширения человеческих возможностей. Мы развиваем самостоятельное мышление, творческую свободу и способность превращать идеи в реальные продукты.</p>
+            <p className="creative-philosophy-paragraph">Наша цель — научить человека не зависеть от технологий, а уверенно управлять ими.</p>
+          </div>
+        </section>
       </section>
     </>
   );
