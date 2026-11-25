@@ -221,7 +221,34 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 
 
 /* Home: centered wordmark and school label, with a discreet footer manifesto. */
-.home-page { isolation: isolate; overflow: hidden; }
+body:has(.home-page) { overflow-x: hidden; overflow-y: auto; }
+.site-background.home-page {
+  position: relative;
+  inset: auto;
+  display: block;
+  padding: 0;
+  min-height: 100vh;
+  background: #fff9f7;
+  isolation: isolate;
+  overflow: visible;
+}
+.home-hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 24px;
+  background: #fff9f7 url('/images/multum-background.webp') center / cover no-repeat;
+}
+.home-next-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: #fff9f7;
+}
+@media (max-width: 380px) {
+  .home-hero { padding: 16px; }
+}
 .home-page .brand-lockup { position: relative; z-index: 2; }
 .brand-lockup__tagline {
   position: absolute;
