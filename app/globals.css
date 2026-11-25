@@ -438,7 +438,7 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   isolation: isolate;
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0,1fr) clamp(44px,8vw,110px) auto;
+  grid-template-columns: minmax(0,1fr) auto;
   align-items: center;
   gap: clamp(10px,1.5vw,20px);
   width: 86%;

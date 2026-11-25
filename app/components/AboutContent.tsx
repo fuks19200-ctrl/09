@@ -32,23 +32,6 @@ export default function AboutContent({ embedded = false }: { embedded?: boolean 
             <p className="about-course-banner__title">Ваш следующий шаг — <strong>MULTUM AI</strong></p>
             <p className="about-course-banner__subtitle">Выберите программу под свои цели.</p>
           </div>
-          <svg className="about-course-banner__spark" viewBox="0 0 160 64" aria-hidden="true">
-            <defs>
-              <radialGradient id="about-cta-glow">
-                <stop stopColor="#FF6B21" stopOpacity=".44" />
-                <stop offset="1" stopColor="#FF6B21" stopOpacity="0" />
-              </radialGradient>
-              <linearGradient id="about-cta-ray">
-                <stop stopColor="#FF6B21" stopOpacity="0" />
-                <stop offset=".5" stopColor="#FF874A" stopOpacity=".9" />
-                <stop offset="1" stopColor="#FF6B21" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <ellipse cx="80" cy="32" rx="52" ry="25" fill="url(#about-cta-glow)" />
-            <path d="M0 32H160" stroke="url(#about-cta-ray)" />
-            <path d="M80 12Q81 30 96 32Q81 34 80 52Q79 34 64 32Q79 30 80 12Z" fill="#FF7935" />
-            <path d="M80 23L82 30L89 32L82 34L80 41L78 34L71 32L78 30Z" fill="#FFD6B5" />
-          </svg>
           <a className="about-course-banner__button" href="/courses/">Выбрать курс</a>
         </div>
       </section>
