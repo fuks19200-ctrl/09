@@ -45,8 +45,10 @@ export default function Courses() {
             <div className="program-grid">
             {programs.map((program) => (
               <article className={"program-card program-card--" + program.theme} key={program.name}>
-                <div className="program-art" aria-hidden="true"><i /><i /><i /></div>
-                <p className="program-label">{program.label}</p>
+                <div className="program-topline">
+                  <p className="program-label">{program.label}</p>
+                  <span className="program-index" aria-hidden="true">{program.theme === "basis" ? "01" : "02"}</span>
+                </div>
                 <h2>{program.name}</h2>
                 <p className="program-description">{program.description}</p>
                 <div className="program-footer">
@@ -57,14 +59,14 @@ export default function Courses() {
             ))}
           </div>
           </div>
-          <a className="courses-next" href="#directions">Все направления <span aria-hidden="true">↓</span></a>
+          <a className="courses-next" href="#directions">Все направления</a>
         </div>
       </section>
       <section className="courses-screen courses-directions" id="directions" aria-labelledby="directions-title">
         <div className="courses-container">
           <header className="directions-heading">
             <div>
-              <p className="courses-kicker">02 / COURSES</p>
+              <p className="courses-kicker">СПЕЦИАЛИЗАЦИИ</p>
               <h2 id="directions-title">Направления <span>обучения</span></h2>
             </div>
             <p>Курсы по отдельным навыкам и задачам.</p>
