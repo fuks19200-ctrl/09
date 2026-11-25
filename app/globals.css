@@ -336,3 +336,25 @@ body::before {
     background-position: left top;
   }
 }
+
+
+/* A single fine, full-bleed divider between consecutive content sections. */
+:root { --section-divider: rgba(185,75,13,.22); }
+.home-page .home-about,
+.about-details { border-top: 1px solid var(--section-divider); }
+.about-details .about-mission {
+  position: relative;
+  border-top: 0;
+}
+.about-details .about-mission::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--section-divider);
+  pointer-events: none;
+}
+.about-details { overflow-x: clip; }
