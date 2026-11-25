@@ -1258,3 +1258,14 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     line-height: 1.08;
   }
 }
+
+/* Center the approach copy in a wider reading column, with equal side margins. */
+@media (min-width:951px) {
+  .about-details-inner {
+    grid-template-columns: minmax(0,1fr);
+    width: min(100%, 880px);
+    margin-inline: auto;
+  }
+  .about-details-inner > div { grid-column: 1; }
+  .about-details-copy p { max-width: none; }
+}
