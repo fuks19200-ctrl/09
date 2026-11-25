@@ -242,7 +242,7 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] { o
 .brand-lockup__tagline span { color: #B94B0D; font-weight: 300; }
 .home-school-label {
   margin: clamp(24px, 3.8vh, 40px) 0 0;
-  font: 400 clamp(10px, .88vw, 13px)/1.4 var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font: 400 clamp(13px, 1.15vw, 17px)/1.4 var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   color: #625862;
   letter-spacing: .025em;
   text-align: center;
