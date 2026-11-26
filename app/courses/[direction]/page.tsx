@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { directionImages } from "../../data/direction-images";
 import { notFound } from "next/navigation";
 import SiteNav from "../../components/SiteNav";
 import { AddCourseButton, CoursePrice, RegularModeOnly } from "../../components/CourseCart";
@@ -28,14 +27,10 @@ export default async function DirectionPage({ params }: Props) {
   const isCreative = direction.slug === "creative";
   const modules = courses.filter((course) => direction.modules.includes(course.name));
   const otherDirections = directions.filter((item) => item.slug !== slug);
-  const galleryImages = Array.from({ length: 6 }, (_, index) => {
-    const stem = direction.slug + "-" + String(index + 1).padStart(2, "0");
-    const file = ["webp", "jpg", "jpeg", "png"].map(ext => stem + "." + ext).find(name => existsSync(join(process.cwd(), "public", "images", name)));
-    return file ? "/images/" + file : "";
-  });
+  const galleryImages = directionImages(direction.slug);
 
   return (
-    <main className={"site-background courses-page direction-page direction-page--gallery" + (isCreative ? " direction-page--red" : "")}>
+    <main className={"site-background courses-page direction-page direction-page--gallery" + " direction-theme--" + direction.slug + (isCreative ? " direction-page--red" : "")}>
       <SiteNav active="courses" directionBack />
       <section className="direction-page-screen" aria-labelledby="direction-title">
         <div className="courses-container">

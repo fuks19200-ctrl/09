@@ -1,4 +1,5 @@
 import { courses, directions, contact, programs } from "../data/courses";
+import { directionImages } from "../data/direction-images";
 import { AddCourseButton, StartCustomProgram } from "./CourseCart";
 
 export default function CoursesContent({ embedded = false }: { embedded?: boolean }) {
@@ -80,10 +81,11 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
           <div className="specialty-grid specialty-grid--directions">
             {directions.map((direction) => {
               const modules = courses.filter((course) => direction.modules.includes(course.name));
+              const cover = directionImages(direction.slug).find(Boolean);
               return (
-                <a className={"specialty-card specialty-card--direction specialty-card--" + direction.theme} key={direction.name} href={"/courses/" + direction.slug + "/"} aria-label={"Подробнее: " + direction.name}>
+                <a className={"specialty-card specialty-card--direction specialty-card--" + direction.theme + " direction-theme--" + direction.slug} key={direction.name} href={"/courses/" + direction.slug + "/"} aria-label={"Подробнее: " + direction.name}>
                   <div className={"specialty-art specialty-art--direction specialty-art--" + direction.theme} aria-hidden="true">
-                    {direction.theme === "creative" && <img src="/images/ai-design.webp" alt="" width="280" height="158" loading="lazy" />}
+                    {cover && <img src={cover} alt="" width="280" height="158" loading="lazy" />}
                     <span>{direction.code}</span>
                   </div>
                   <div className="specialty-content">

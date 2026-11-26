@@ -3060,3 +3060,137 @@ body:has(.direction-page--red) .course-cart-dialog :is(.custom-price strong,.cus
   transform: translate3d(-50%,-11%,-105px) rotateX(16deg) scale(.85);
   opacity: 1;
 }
+
+
+/* One editorial design system for the five directions; the palette travels with each direction. */
+:is(.direction-theme--creative, body:has(main.direction-theme--creative)) {
+  --direction-accent: #B20D25;
+  --direction-accent-hover: #8F0B1D;
+  --direction-rgb: 178,13,37;
+  --direction-pale: #f7e5e7;
+  --direction-tint: #e9c6ca;
+}
+:is(.direction-theme--development, body:has(main.direction-theme--development)) {
+  --direction-accent: #2356A5;
+  --direction-accent-hover: #17427F;
+  --direction-rgb: 35,86,165;
+  --direction-pale: #e8eef8;
+  --direction-tint: #cbdaf0;
+}
+:is(.direction-theme--3d, body:has(main.direction-theme--3d)) {
+  --direction-accent: #69449D;
+  --direction-accent-hover: #50317F;
+  --direction-rgb: 105,68,157;
+  --direction-pale: #efe9f7;
+  --direction-tint: #ded0ef;
+}
+:is(.direction-theme--systems, body:has(main.direction-theme--systems)) {
+  --direction-accent: #18776E;
+  --direction-accent-hover: #125D56;
+  --direction-rgb: 24,119,110;
+  --direction-pale: #e5f2ef;
+  --direction-tint: #c9e4dc;
+}
+:is(.direction-theme--business, body:has(main.direction-theme--business)) {
+  --direction-accent: #A24E13;
+  --direction-accent-hover: #79380C;
+  --direction-rgb: 162,78,19;
+  --direction-pale: #f8eee5;
+  --direction-tint: #f1d5bb;
+}
+
+.site-background .courses-directions .specialty-card--direction {
+  color:#171717;
+  background:linear-gradient(130deg,rgba(var(--direction-rgb),.085),rgba(255,255,255,.74) 70%,rgba(var(--direction-rgb),.025));
+  border:1px solid rgba(255,255,255,.94);
+  box-shadow:0 10px 30px rgba(23,23,23,.045),inset 0 1px 1px #fff;
+}
+.site-background .courses-directions .specialty-card--direction .specialty-art--direction {
+  background:radial-gradient(ellipse at 78% 12%,var(--direction-tint),transparent 75%),linear-gradient(135deg,var(--direction-pale),#fff);
+}
+.site-background .courses-directions .specialty-card--direction .specialty-art--direction img {
+  width:100%;height:100%;object-fit:cover;object-position:center 51%;
+}
+.site-background .courses-directions .specialty-card--direction .specialty-art--direction > span {
+  color:var(--direction-accent);
+}
+.site-background .courses-directions .specialty-card--direction .specialty-content h3,
+.site-background .courses-directions .specialty-card--direction .direction-details-label {
+  color:var(--direction-accent);
+}
+.site-background .courses-directions .specialty-card--direction .specialty-content > p {color:#242424;}
+.site-background .courses-directions .specialty-card--direction .direction-card-footer {
+  border-color:rgba(var(--direction-rgb),.13);
+}
+.site-background .courses-directions .specialty-card--direction:focus-visible {outline-color:var(--direction-accent);}
+
+body:has(main.direction-page--gallery) {
+  --color-orange:var(--direction-accent);
+  --color-orange-readable:var(--direction-accent);
+  --color-black:#171717;
+  --section-background:linear-gradient(90deg,var(--direction-pale),#fff 65%);
+  --slide-divider-from-left:linear-gradient(90deg,rgba(var(--direction-rgb),.3),transparent);
+  --slide-divider-from-right:linear-gradient(270deg,rgba(var(--direction-rgb),.3),transparent);
+}
+.site-background.direction-page--gallery[class*="direction-theme--"] {
+  --course-accent:var(--direction-accent);
+  --course-action-ink:var(--direction-accent);
+  --course-ink:#171717;
+  --course-muted:#333;
+  --direction-glass:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.34) 65%,rgba(255,255,255,.6));
+  --direction-glass-border:rgba(255,255,255,.95);
+  --direction-glass-shadow:0 10px 34px rgba(23,23,23,.05),inset 0 1px 1px #fff;
+  background:radial-gradient(ellipse at 12% 14%,rgba(var(--direction-rgb),.085),transparent 54%),radial-gradient(ellipse at 30% 78%,rgba(var(--direction-rgb),.075),transparent 58%),linear-gradient(90deg,var(--direction-pale),#fff 65%);
+  background-attachment:fixed;
+  color:#171717;
+}
+.site-background.direction-page--gallery[class*="direction-theme--"] :is(.direction-page-hero h1,.direction-modules-heading h2,.direction-related h2) > span,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-module-copy h3,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-editorial-kicker,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-module-index,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-related-grid a .direction-related-name,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-related-grid a small,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-related-grid a svg,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-support-label {
+  color:var(--direction-accent);
+}
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-editorial-kicker::before {background:var(--direction-accent);}
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-module-copy p,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-editorial-description,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-support-copy > p:not(.direction-support-label),
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-back {color:#171717;}
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-related-grid a {
+  background:var(--direction-glass);border-color:var(--direction-glass-border);
+  box-shadow:0 3px 12px rgba(23,23,23,.025);
+}
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-page-module-footer .direction-module-select,
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-page-module-footer .direction-module-select[data-selected="true"],
+.site-background.direction-page--gallery[class*="direction-theme--"] .direction-support-action,
+.site-background.direction-page--gallery[class*="direction-theme--"] .creative-bundle-offer .direction-primary {
+  background:var(--direction-accent);border-color:var(--direction-accent);color:#fff;
+}
+.site-background.direction-page--gallery[class*="direction-theme--"] .creative-carousel-stage {
+  -webkit-mask-image:none;mask-image:none;background:transparent;
+}
+.site-background.direction-page--gallery[class*="direction-theme--"] .creative-carousel-card {
+  background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(var(--direction-rgb),.19));
+  border:1px solid rgba(var(--direction-rgb),.22);
+  box-shadow:0 10px 28px rgba(var(--direction-rgb),.08);
+}
+.site-background.direction-page--gallery[class*="direction-theme--"] .creative-carousel-card:has(img) {
+  background:#111;border-color:rgba(23,23,23,.1);-webkit-backdrop-filter:none;backdrop-filter:none;
+}
+.site-background.direction-page--gallery[class*="direction-theme--"] .creative-carousel-card img {opacity:1;filter:none;mix-blend-mode:normal;}
+.site-background.direction-page--gallery[class*="direction-theme--"] .creative-carousel-card[data-position="-1"] {transform:translate3d(-50%,-89%,-105px) rotateX(-16deg) scale(.85);opacity:1;}
+.site-background.direction-page--gallery[class*="direction-theme--"] .creative-carousel-card[data-position="1"] {transform:translate3d(-50%,-11%,-105px) rotateX(16deg) scale(.85);opacity:1;}
+body:has(main.direction-page--gallery) :is(.course-cart-badge,.course-cart-continue,.custom-cart-progress span) {background:var(--direction-accent);color:#fff;}
+body:has(main.direction-page--gallery) .course-cart-dialog {background:rgba(255,255,255,.94);}
+body:has(main.direction-page--gallery) .course-cart-dialog :is(.custom-price strong,.custom-cart-more,.custom-cart-savings,.custom-cart-confirmed a) {color:var(--direction-accent);}
+body:has(main.direction-page--gallery) :is(.course-cart-trigger,.course-cart-dialog button,.course-cart-add,.creative-carousel-button,.creative-carousel-stage):focus-visible {outline-color:var(--direction-accent);}
+@media(hover:hover) and (pointer:fine) {
+  .site-background.direction-page--gallery[class*="direction-theme--"] .direction-page-module-footer .direction-module-select:not(:disabled):hover,
+  .site-background.direction-page--gallery[class*="direction-theme--"] .direction-support-action:hover,
+  .site-background.direction-page--gallery[class*="direction-theme--"] .creative-bundle-offer .direction-primary:hover {
+    background:var(--direction-accent-hover);border-color:var(--direction-accent-hover);color:#fff;
+  }
+}
