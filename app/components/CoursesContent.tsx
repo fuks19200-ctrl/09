@@ -30,7 +30,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
             <span>Опережать</span>
           </Heading>
           <div className="creative-manifesto__actions">
-            <a className="creative-manifesto__primary" href="#programs">Выбрать курс <span aria-hidden="true">→</span></a>
+            <a className="creative-manifesto__primary" href="#programs">Выбрать курс</a>
           </div>
         </div>
         <div className="creative-philosophy-image creative-manifesto__portrait" aria-hidden="true" />
