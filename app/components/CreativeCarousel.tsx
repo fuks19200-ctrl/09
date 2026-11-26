@@ -17,7 +17,7 @@ function Chevron({ up = false }: { up?: boolean }) {
   return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={up ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} /></svg>;
 }
 
-export default function CreativeCarousel({ direction = "AI CREATIVE" }: { direction?: string }) {
+export default function CreativeCarousel({ direction = "AI CREATIVE", images = [] }: { direction?: string; images?: string[] }) {
   const [active, setActive] = useState(0);
   const stage = useRef<HTMLDivElement>(null);
   const pointerStart = useRef<number | null>(null);
@@ -69,7 +69,7 @@ export default function CreativeCarousel({ direction = "AI CREATIVE" }: { direct
           const position = wrap(index - active + 2) - 2;
           return (
             <div key={card.title} className="creative-carousel-card" data-position={position} aria-hidden={position !== 0}>
-              {card.image && <img src={card.image} alt="" draggable={false} />}
+              {images[index] && <img src={images[index]} alt="" draggable={false} />}
               
             </div>
           );

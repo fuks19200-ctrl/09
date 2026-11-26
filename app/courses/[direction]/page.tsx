@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { notFound } from "next/navigation";
 import SiteNav from "../../components/SiteNav";
 import { AddCourseButton, CoursePrice, RegularModeOnly } from "../../components/CourseCart";
@@ -26,6 +28,11 @@ export default async function DirectionPage({ params }: Props) {
   const isCreative = direction.slug === "creative";
   const modules = courses.filter((course) => direction.modules.includes(course.name));
   const otherDirections = directions.filter((item) => item.slug !== slug);
+  const galleryImages = Array.from({ length: 6 }, (_, index) => {
+    const stem = direction.slug + "-" + String(index + 1).padStart(2, "0");
+    const file = ["webp", "jpg", "jpeg", "png"].map(ext => stem + "." + ext).find(name => existsSync(join(process.cwd(), "public", "images", name)));
+    return file ? "/images/" + file : "";
+  });
 
   return (
     <main className="site-background courses-page direction-page direction-page--gallery">
@@ -90,7 +97,7 @@ export default async function DirectionPage({ params }: Props) {
             ))}</div>
           </nav>
             </div>
-            <aside className="creative-direction-gallery" aria-label={"Галерея " + direction.name}><CreativeCarousel key={direction.slug} direction={direction.name} /></aside>
+            <aside className="creative-direction-gallery" aria-label={"Галерея " + direction.name}><CreativeCarousel key={direction.slug} direction={direction.name} images={galleryImages} /></aside>
           </div>
         </div>
       </section>
