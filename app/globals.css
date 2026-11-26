@@ -2037,3 +2037,32 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .courses-intro .program-card { background-color: rgba(255,255,255,.26); }
 }
+
+
+/* User-supplied photographs: retain widget art as a fallback until assets are uploaded.
+   Keep glass outside the photos and preserve the focal subjects when cropping. */
+.courses-intro .program-card--basis .program-card-media::before {
+  background-image: url("/images/5206392513818729507.jpg"), url("/images/programme-basic-widget.svg");
+  background-size: cover, cover;
+  background-position: center 44%, center;
+  opacity: 1;
+}
+.courses-intro .program-card--ultra .program-card-media::before {
+  background-image: url("/images/5206392513818729506%281%29.jpg"), url("/images/5206392513818729506.jpg"), url("/images/programme-ultra-widget.svg");
+  background-size: cover, cover, cover;
+  background-position: center 66%, center 66%, center;
+  opacity: 1;
+}
+.courses-intro .program-card--custom .program-card-media::before {
+  background-image: url("/images/programme-custom-cats-wide.png"), url("/images/5206392513818729505.jpg"), url("/images/programme-custom-widget.svg");
+  background-size: cover, cover, 100% 100%;
+  background-position: center, center 76%, center;
+  opacity: 1;
+}
+.courses-intro .program-progress {
+  color: #fff;
+  text-shadow: 0 1px 5px rgba(0,0,0,.35);
+}
+.courses-intro .program-card--custom .program-progress {
+  color: #fff;
+}
