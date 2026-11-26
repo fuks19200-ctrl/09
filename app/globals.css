@@ -1738,3 +1738,51 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   }
   .courses-intro .program-card-media { aspect-ratio: 1.45; }
 }
+
+
+/* Three programme choices: two vertical cards and a full-width horizontal card. */
+.courses-intro .program-card--custom {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0,1.55fr) minmax(0,1fr);
+  align-items: stretch;
+}
+.courses-intro .program-card--custom .program-card-media {
+  aspect-ratio: auto;
+  min-height: 124px;
+  height: 100%;
+}
+.courses-intro .program-card--custom .program-name {
+  color: var(--course-ink);
+}
+.courses-intro .program-card--custom .program-description {
+  margin-bottom: 10px;
+}
+.courses-intro .program-card--custom .course-action {
+  background: #FF7835;
+  border-color: #FF7835;
+  color: #101011;
+}
+@media (min-width:1051px) {
+  .courses-intro.courses-screen {
+    padding-block: clamp(28px,4svh,56px);
+  }
+  .courses-intro .program-card:not(.program-card--custom) .program-card-media {
+    aspect-ratio: auto;
+    height: clamp(130px,23svh,246px);
+  }
+  .courses-intro .program-card-copy {
+    padding: clamp(14px,1.4vw,20px);
+  }
+  .courses-intro .program-description { margin-bottom: 12px; }
+  .courses-intro .courses-next { margin-top: 18px; }
+}
+@media (max-width:600px) {
+  .courses-intro .program-card--custom {
+    grid-template-columns: minmax(0,1fr);
+  }
+  .courses-intro .program-card--custom .program-card-media {
+    height: auto;
+    aspect-ratio: 2.2;
+  }
+}

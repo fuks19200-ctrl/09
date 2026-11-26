@@ -66,7 +66,21 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                 <div className="program-card-media" aria-hidden="true" />
               </article>
             ))}
-          </div>
+              <article className="program-card program-card--custom">
+                <div className="program-card-copy">
+                  <div className="program-topline">
+                    <p className="program-label">Индивидуальная программа</p>
+                    <span className="program-index" aria-hidden="true">03</span>
+                  </div>
+                  <h3 className="program-name">Собери свою программу</h3>
+                  <p className="program-description">Выберите направления обучения под свои цели.</p>
+                  <div className="program-footer">
+                    <a className="course-action" href="#directions">Выбрать направления</a>
+                  </div>
+                </div>
+                <div className="program-card-media" aria-hidden="true" />
+              </article>
+            </div>
           </div>
           <a className="courses-next" href="#directions">Все направления</a>
         </div>
