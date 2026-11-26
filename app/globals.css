@@ -2914,3 +2914,21 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   }
   .site-background.direction-page--gallery .direction-page-screen { padding-top: 24px; }
 }
+
+
+/* Programme screen: use the lower breathing room without changing card dimensions or gaps. */
+@media (min-width:1051px) {
+  .site-background .courses-intro.courses-screen {
+    padding-block: clamp(64px, 10svh, 104px) clamp(16px, 2.2svh, 28px);
+  }
+  .site-background .courses-intro .courses-program-layout {
+    align-items: center;
+  }
+  .site-background .courses-intro .courses-manifesto {
+    align-self: center;
+    margin-block: 0;
+  }
+  .site-background .courses-intro .courses-next {
+    margin-top: clamp(32px, 5svh, 54px);
+  }
+}
