@@ -1,6 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" preserveAspectRatio="none">
-<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b19acb"/><stop offset=".48" stop-color="#efadad"/><stop offset="1" stop-color="#ffcc90"/></linearGradient><radialGradient id="light" cx=".68" cy=".29" r=".8"><stop stop-color="#ffe5bd" stop-opacity=".9"/><stop offset="1" stop-color="#ffe5bd" stop-opacity="0"/></radialGradient><linearGradient id="arc" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ffd091"/><stop offset=".5" stop-color="#fffdf5"/><stop offset="1" stop-color="#ffdfad"/></linearGradient><linearGradient id="veil" x1="0" y1="0" x2="0" y2="1"><stop offset=".3" stop-color="#fff8ef" stop-opacity="0"/><stop offset=".58" stop-color="#fffaf4" stop-opacity=".87"/><stop offset="1" stop-color="#fffaf6"/></linearGradient><radialGradient id="orb"><stop stop-color="white"/><stop offset="1" stop-color="#ffcb86"/></radialGradient><filter id="glow" x="-.2" y="-.5" width="1.4" height="2"><feGaussianBlur stdDeviation="13"/></filter></defs>
-<path fill="url(#bg)" d="M0 0H1200V420H0z"/><path fill="url(#light)" d="M0 0H1200V420H0z"/>
-<path d="M-40 245 C220 -8 980 -8 1240 245" fill="none" stroke="#fff1ca" stroke-width="42" stroke-opacity=".65" filter="url(#glow)"/><path d="M-40 245 C220 -8 980 -8 1240 245" fill="none" stroke="url(#arc)" stroke-width="24"/>
-<circle cx="222" cy="96" r="24" fill="url(#orb)"/><path fill="url(#veil)" d="M0 0H1200V420H0z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420" preserveAspectRatio="none">
+<defs>
+<linearGradient id="sky" x1="0%" y1="0%" x2="85%" y2="100%"><stop stop-color="#519b9c"/><stop offset=".52" stop-color="#8bc9b4"/><stop offset="1" stop-color="#e0eab6"/></linearGradient>
+<radialGradient id="light" cx="48%" cy="100%" r="85%"><stop stop-color="#fff6c5" stop-opacity=".95"/><stop offset="1" stop-color="#fff6c5" stop-opacity="0"/></radialGradient>
+<linearGradient id="ribbon" x1="0%" y1="0%" x2="100%" y2="0%"><stop stop-color="#e9ffda"/><stop offset=".48" stop-color="#fffdf5"/><stop offset="1" stop-color="#e9ffda"/></linearGradient>
+<radialGradient id="orb"><stop stop-color="#fff"/><stop offset=".35" stop-color="#fff9e9"/><stop offset="1" stop-color="#d1fbb7"/></radialGradient>
+<filter id="glow" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="13"/></filter>
+<linearGradient id="veil" x1="0" y1="0" x2="0" y2="1"><stop offset=".26" stop-color="#f5fffa" stop-opacity="0"/><stop offset=".55" stop-color="#f5fffa" stop-opacity=".86"/><stop offset="1" stop-color="#f9fffc"/></linearGradient>
+</defs>
+<rect width="1000" height="420" fill="url(#sky)"/><rect width="1000" height="420" fill="url(#light)"/>
+<path d="M-25 205 Q500 -125 1025 205" fill="none" stroke="#e9ffda" stroke-width="40" opacity=".64" filter="url(#glow)"/>
+<path d="M-25 205 Q500 -125 1025 205" fill="none" stroke="url(#ribbon)" stroke-width="24"/>
+<circle cx="500.00" cy="40.00" r="36" fill="#d1fbb7" opacity=".8" filter="url(#glow)"/>
+<circle cx="500.00" cy="40.00" r="23" fill="url(#orb)"/>
+<rect width="1000" height="420" fill="url(#veil)"/>
 </svg>

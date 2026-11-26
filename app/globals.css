@@ -1866,20 +1866,23 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 }
 
 
-/* Dawn-inspired programme art: complementary halves of one panoramic arc.
-   No labels or ornamental white rim are baked into the artwork. */
+/* Three full arcs with distinct palettes and progress markers. */
 .courses-intro .program-card--basis .program-card-media,
 .courses-intro .program-card--ultra .program-card-media {
-  background-image: url("/images/programmes-dawn.svg");
   background-repeat: no-repeat;
-  background-size: 200% 100%;
+  background-position: center;
+  background-size: 100% 100%;
 }
-.courses-intro .program-card--basis .program-card-media { background-position: left center; }
-.courses-intro .program-card--ultra .program-card-media { background-position: right center; }
+.courses-intro .program-card--basis .program-card-media {
+  background-image: url("/images/programme-basic-dawn.svg");
+}
+.courses-intro .program-card--ultra .program-card-media {
+  background-image: url("/images/programme-ultra-dawn.svg");
+}
 .courses-intro .program-card--custom {
-  background: #fffaf6 url("/images/programme-custom-dawn.svg") center / 100% 100% no-repeat;
+  background: #f9fffc url("/images/programme-custom-dawn.svg") center / 100% 100% no-repeat;
 }
 .courses-intro .program-card--custom .program-card-media { background: transparent; }
 .courses-intro .program-card--custom .program-card-copy { position: relative; }
 .courses-intro .program-card--custom .program-description,
-.courses-intro .program-card--custom .program-label { color: #55454b; }
+.courses-intro .program-card--custom .program-label { color: #405850; }

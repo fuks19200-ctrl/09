@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" preserveAspectRatio="none">
+<defs>
+<linearGradient id="sky" x1="0%" y1="0%" x2="85%" y2="100%"><stop stop-color="#8d86c8"/><stop offset=".52" stop-color="#bf9ddd"/><stop offset="1" stop-color="#f1b5ca"/></linearGradient>
+<radialGradient id="light" cx="48%" cy="100%" r="85%"><stop stop-color="#ffdfd0" stop-opacity=".95"/><stop offset="1" stop-color="#ffdfd0" stop-opacity="0"/></radialGradient>
+<linearGradient id="ribbon" x1="0%" y1="0%" x2="100%" y2="0%"><stop stop-color="#ffdfec"/><stop offset=".48" stop-color="#fffdf5"/><stop offset="1" stop-color="#ffdfec"/></linearGradient>
+<radialGradient id="orb"><stop stop-color="#fff"/><stop offset=".35" stop-color="#fff9e9"/><stop offset="1" stop-color="#f9c3e9"/></radialGradient>
+<filter id="glow" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="13"/></filter>
+
+</defs>
+<rect width="1000" height="300" fill="url(#sky)"/><rect width="1000" height="300" fill="url(#light)"/>
+<path d="M-25 315 Q500 -165 1025 315" fill="none" stroke="#ffdfec" stroke-width="40" opacity=".64" filter="url(#glow)"/>
+<path d="M-25 315 Q500 -165 1025 315" fill="none" stroke="url(#ribbon)" stroke-width="24"/>
+<circle cx="206.00" cy="150.26" r="36" fill="#f9c3e9" opacity=".8" filter="url(#glow)"/>
+<circle cx="206.00" cy="150.26" r="23" fill="url(#orb)"/>
+
+</svg>
