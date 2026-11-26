@@ -46,7 +46,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                   <AddCourseButton courseId={program.theme} className="course-action" />
                 </div>
                 </div>
-                <div className="program-card-media"><span className="program-progress">{program.theme === "basis" ? "30%" : "100%"}</span></div>
+                <div className="program-card-media"></div>
               </article>
             ))}
               <article className="program-card program-card--custom">
@@ -61,7 +61,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                     <StartCustomProgram />
                   </div>
                 </div>
-                <div className="program-card-media"><span className="program-progress">5–100%</span></div>
+                <div className="program-card-media"></div>
               </article>
             </div>
           </div>
