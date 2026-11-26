@@ -1947,3 +1947,41 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .courses-intro .program-card { background-color: rgba(255,255,255,.68); }
 }
+
+
+/* Programme widgets: blurred crescent, heart and sunset, matching the supplied references. */
+.courses-intro .program-card--basis .program-card-media {
+  background: #241b2d url("/images/programme-basic-widget.svg") center / cover no-repeat;
+}
+.courses-intro .program-card--ultra .program-card-media {
+  background: #2c191f url("/images/programme-ultra-widget.svg") center / cover no-repeat;
+}
+.courses-intro .program-card--custom::before {
+  background: linear-gradient(180deg, rgba(150,162,205,.12), rgba(255,185,132,.13) 45%, rgba(255,255,255,.05));
+  opacity: 1;
+}
+.courses-intro .program-card--custom .program-card-media {
+  background: #b6b9d3 url("/images/programme-custom-widget.svg") center / 100% 100% no-repeat;
+}
+.courses-intro .program-card--custom .program-label {
+  color: var(--course-muted);
+}
+.courses-intro .program-progress {
+  top: auto;
+  bottom: clamp(10px,1.2vw,18px);
+  left: clamp(14px,1.5vw,22px);
+  font-size: clamp(28px,3.2vw,44px);
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: -.06em;
+  color: #fff;
+  text-shadow: none;
+  font-variant-numeric: tabular-nums;
+}
+.courses-intro .program-card--custom .program-progress {
+  top: clamp(10px,1.4vw,20px);
+  bottom: auto;
+}
+@media (max-width:600px) {
+  .courses-intro .program-progress { font-size: clamp(28px,8vw,42px); }
+}

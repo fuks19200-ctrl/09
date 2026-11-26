@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid slice">
+<defs>
+<radialGradient id="bg" cx="76%" cy="24%" r="90%"><stop stop-color="#352444"/><stop offset=".62" stop-color="#241b2d"/><stop offset="1" stop-color="#17151e"/></radialGradient>
+<linearGradient id="moon" x1="12%" y1="10%" x2="90%" y2="90%"><stop stop-color="#8274ff"/><stop offset=".34" stop-color="#ed8cfc"/><stop offset=".72" stop-color="#9e37ef"/><stop offset="1" stop-color="#b052ff"/></linearGradient>
+<filter id="halo" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="47"/></filter>
+<filter id="soft" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="21"/></filter>
+</defs><rect width="1000" height="380" fill="url(#bg)"/>
+<path d="M652 34C568 80 551 176 594 247C644 329 745 343 831 289C751 303 681 256 655 195C633 143 637 83 652 34Z" fill="#a639f9" opacity=".83" filter="url(#halo)"/>
+<path d="M652 34C568 80 551 176 594 247C644 329 745 343 831 289C751 303 681 256 655 195C633 143 637 83 652 34Z" fill="url(#moon)" filter="url(#soft)"/>
+<ellipse cx="621" cy="132" rx="29" ry="66" fill="#ffd2ff" opacity=".7" filter="url(#soft)"/>
+</svg>
