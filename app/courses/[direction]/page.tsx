@@ -35,7 +35,7 @@ export default async function DirectionPage({ params }: Props) {
   });
 
   return (
-    <main className="site-background courses-page direction-page direction-page--gallery">
+    <main className={"site-background courses-page direction-page direction-page--gallery" + (isCreative ? " direction-page--red" : "")}>
       <SiteNav active="courses" directionBack />
       <section className="direction-page-screen" aria-labelledby="direction-title">
         <div className="courses-container">

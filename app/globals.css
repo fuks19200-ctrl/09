@@ -2969,3 +2969,66 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     box-shadow: none;
   }
 }
+
+
+/* AI CREATIVE — monochrome editorial palette with deep red accents, matched to the perfume gallery. */
+body:has(.direction-page--red) {
+  --color-orange: #B20D25;
+  --color-orange-readable: #A20C21;
+  --color-black: #171717;
+  --section-background: radial-gradient(ellipse at 12% 42%, rgba(178,13,37,.055), transparent 57%), #fff;
+  --slide-divider-from-left: linear-gradient(90deg,rgba(178,13,37,.28),transparent);
+  --slide-divider-from-right: linear-gradient(270deg,rgba(178,13,37,.28),transparent);
+}
+.site-background.direction-page--gallery.direction-page--red {
+  --course-accent: #B20D25;
+  --course-action-ink: #A20C21;
+  --course-muted: #333;
+  --course-ink: #171717;
+  --direction-glass: linear-gradient(135deg,rgba(255,255,255,.86),rgba(255,255,255,.56));
+  --direction-glass-border: rgba(255,255,255,.98);
+  --direction-glass-shadow: 0 10px 34px rgba(20,10,13,.055),inset 0 1px 1px #fff;
+  background: radial-gradient(ellipse at 18% 48%, rgba(178,13,37,.065), transparent 55%), #fff;
+  background-attachment: fixed;
+  color: #171717;
+}
+.direction-page--red :is(.direction-page-hero h1,.direction-modules-heading h2,.direction-related h2) span,
+.site-background.direction-page--gallery.direction-page--red .direction-module-copy h3,
+.site-background.direction-page--gallery.direction-page--red .direction-module-index,
+.site-background.direction-page--gallery.direction-page--red .direction-editorial-kicker,
+.direction-page--red .direction-related-grid svg,
+.direction-page--red .direction-related-name small { color: var(--course-action-ink); }
+.direction-page--red .direction-editorial-kicker::before { background: var(--course-accent); }
+.site-background.direction-page--gallery.direction-page--red .direction-module-copy p,
+.site-background.direction-page--gallery.direction-page--red .direction-editorial-description,
+.site-background.direction-page--gallery.direction-page--red .direction-support-copy > p,
+.site-background.direction-page--gallery.direction-page--red .creative-bundle-caption,
+.site-background.direction-page--gallery.direction-page--red .direction-back { color:#171717; }
+.site-background.direction-page--gallery.direction-page--red .direction-page-module-footer .custom-price strong { color:#171717; }
+.site-background.direction-page--gallery.direction-page--red .direction-page-module-footer .custom-price del { color:#737373; }
+.site-background.direction-page--gallery.direction-page--red .direction-page-module-footer .direction-module-select,
+.site-background.direction-page--gallery.direction-page--red .direction-page-module-footer .direction-module-select[data-selected="true"],
+.site-background.direction-page--gallery.direction-page--red .direction-support-action,
+.site-background.direction-page--gallery.direction-page--red .creative-bundle-offer .direction-primary {
+  background:var(--course-accent); border-color:var(--course-accent); color:#fff;
+}
+.site-background.direction-page--gallery.direction-page--red .creative-carousel-card {
+  background:#fff;
+  border-color:rgba(178,13,37,.2);
+  box-shadow:0 12px 34px rgba(25,0,7,.12),inset 0 1px 2px #fff;
+}
+.direction-page--red .creative-carousel-button { color:#171717; }
+.direction-page--red .creative-carousel-button:focus-visible,
+.direction-page--red .creative-carousel-stage:focus-visible,
+body:has(.direction-page--red) .course-cart-trigger:focus-visible,
+body:has(.direction-page--red) .course-cart-dialog button:focus-visible { outline-color:#B20D25; }
+body:has(.direction-page--red) .course-cart-badge,
+body:has(.direction-page--red) .course-cart-continue,
+body:has(.direction-page--red) .custom-cart-progress span { background:#B20D25; color:#fff; }
+body:has(.direction-page--red) .course-cart-dialog { background:rgba(255,255,255,.94); }
+body:has(.direction-page--red) .course-cart-dialog :is(.custom-price strong,.custom-cart-more,.custom-cart-savings,.custom-cart-confirmed a) { color:#A20C21; }
+@media(hover:hover) and (pointer:fine) {
+  .site-background.direction-page--gallery.direction-page--red .direction-page-module-footer .direction-module-select:not(:disabled):hover,
+  .site-background.direction-page--gallery.direction-page--red .direction-support-action:hover,
+  .site-background.direction-page--gallery.direction-page--red .creative-bundle-offer .direction-primary:hover { background:#8F0B1D; border-color:#8F0B1D; color:#fff; }
+}
