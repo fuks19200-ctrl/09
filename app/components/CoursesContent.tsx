@@ -1,30 +1,9 @@
+import { courses, directions, contact } from "../data/courses";
+
 const programs = [
   { name: "BASIC", label: "Базовая программа", description: "Знакомство с нейросетями, составление запросов и решение повседневных задач.", price: "7 900", theme: "basis" },
   { name: "ULTRA", label: "Комплексная программа", description: "Работа с AI-инструментами в нескольких направлениях и создание собственных проектов.", price: "99 900", theme: "ultra" },
 ];
-
-const courses = [
-  { name: "AI CREATOR", description: "Создание контента для социальных сетей", price: "14 900 ₽", code: "01", theme: "creator" },
-  { name: "AI DESIGN", description: "Графический дизайн и визуальные материалы", price: "14 900 ₽", code: "02", theme: "design" },
-  { name: "AI VIDEO", description: "Генерация видео и анимация", price: "20 900 ₽", code: "03", theme: "video" },
-  { name: "AI 3D", description: "Создание трёхмерной графики", price: "25 900 ₽", code: "04", theme: "three" },
-  { name: "AI WEBSITES", description: "Разработка сайтов с помощью AI", price: "49 900 ₽", code: "05", theme: "websites" },
-  { name: "AI GAMES", description: "Создание игр", price: "45 900 ₽", code: "06", theme: "games" },
-  { name: "AI AGENTS", description: "Разработка AI-агентов", price: "59 900 ₽", code: "07", theme: "agents" },
-  { name: "AI AUTOMATION", description: "Автоматизация рабочих процессов", price: "59 900 ₽", code: "08", theme: "automation" },
-  { name: "AI MARKETING", description: "Дополнительный курс по маркетингу", price: "5 900 ₽", code: "09", theme: "marketing" },
-  { name: "AI PRODUCT", description: "Дополнительный курс по созданию AI-продуктов", price: "10 900 ₽", code: "10", theme: "product" },
-];
-
-const directions = [
-  { name: "AI CREATIVE", code: "01", theme: "creative", description: "Контент, графический дизайн, видео и анимация.", modules: ["AI CREATOR", "AI DESIGN", "AI VIDEO"] },
-  { name: "AI DEVELOPMENT", code: "02", theme: "development", description: "Разработка сайтов, игр и интерактивных проектов.", modules: ["AI WEBSITES", "AI GAMES"] },
-  { name: "AI 3D", code: "03", theme: "three", description: "Создание трёхмерной графики, моделей и объектов.", modules: ["AI 3D"] },
-  { name: "AI SYSTEMS", code: "04", theme: "systems", description: "AI-агенты и автоматизация рабочих процессов.", modules: ["AI AGENTS", "AI AUTOMATION"] },
-  { name: "AI BUSINESS", code: "05", theme: "business", description: "Создание, продвижение и монетизация AI-продуктов.", modules: ["AI MARKETING", "AI PRODUCT"] },
-];
-
-const contact = "https://t.me/multumai";
 
 export default function CoursesContent({ embedded = false }: { embedded?: boolean }) {
   const Heading = embedded ? "h2" : "h1";
@@ -106,7 +85,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
             {directions.map((direction) => {
               const modules = courses.filter((course) => direction.modules.includes(course.name));
               return (
-                <article className={"specialty-card specialty-card--direction specialty-card--" + direction.theme} key={direction.name}>
+                <a className={"specialty-card specialty-card--direction specialty-card--" + direction.theme} key={direction.name} href={"/courses/" + direction.slug + "/"} aria-label={"Подробнее: " + direction.name}>
                   <div className={"specialty-art specialty-art--direction specialty-art--" + direction.theme} aria-hidden="true">
                     {direction.theme === "creative" && <img src="/images/ai-design.webp" alt="" width="280" height="158" loading="lazy" />}
                     <span>{direction.code}</span>
@@ -114,25 +93,12 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                   <div className="specialty-content">
                     <h3>{direction.name}</h3>
                     <p>{direction.description}</p>
-                    <details className="direction-modules">
-                      <summary><span>{modules.length === 1 ? "Программа" : modules.length + " курса"}</span><span className="direction-details-label">Подробнее <span aria-hidden="true">+</span></span></summary>
-                      <div className="direction-module-list">
-                        {modules.map((course) => (
-                          <div className="direction-module" key={course.name}>
-                            <div>
-                              <h4>{course.name}</h4>
-                              <p>{course.description}</p>
-                            </div>
-                            <div className="direction-module-action">
-                              <span aria-label={course.price.replace(" ₽", " рублей")}>{course.price.replace(" ₽", "")}</span>
-                              <a href={contact} aria-label={"Узнать о курсе " + course.name}>Выбрать</a>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </details>
+                    <div className="direction-card-footer">
+                      <span>{modules.length === 1 ? "Программа" : modules.length + " курса"}</span>
+                      <span className="direction-details-label">Подробнее <span aria-hidden="true">→</span></span>
+                    </div>
                   </div>
-                </article>
+                </a>
               );
             })}
           </div>

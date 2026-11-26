@@ -2262,3 +2262,61 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .courses-directions .specialty-grid--directions { grid-template-columns: minmax(0,1fr); }
   .courses-directions .specialty-card--direction .specialty-content > p { min-height: 0; }
 }
+
+
+/* Direction cards are real links to exported, independently addressable pages. */
+.courses-directions .specialty-card--direction {
+  text-decoration: none;
+  color: #17171c;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+@media (hover:hover) {
+  .courses-directions .specialty-card--direction:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(36,25,42,.09);
+  }
+}
+.courses-directions .specialty-card--direction:focus-visible,
+.direction-page a:focus-visible { outline: 2px solid #ef762b; outline-offset: 4px; }
+.direction-card-footer {
+  margin-top: auto;
+  border-top: 1px solid rgba(90,65,58,.13);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  color: #645b60;
+  font-size: 12px;
+}
+.direction-page-screen { position: relative; min-height: 100svh; padding: clamp(90px,12vh,130px) var(--layout-edge) 56px; }
+.direction-back { display: inline-block; color: #cf4a08; font-size: 13px; text-decoration: none; margin-bottom: 32px; }
+.direction-page-hero { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: var(--layout-gap); align-items: center; padding-bottom: clamp(32px,6vh,64px); }
+.direction-page h1, .direction-page h2 { font-family: var(--font-montserrat),sans-serif; font-weight: var(--heading-weight); letter-spacing: var(--heading-tracking); line-height: var(--section-heading-leading); margin: 0 0 20px; color: #17171c; }
+.direction-page h1 { font-size: var(--section-heading-size); margin-top: 16px; }
+.direction-page h2 { font-size: clamp(23px,2.45vw,36px); }
+.direction-page h1 > span, .direction-page h2 > span { color: #ef762b; }
+.direction-page-hero > div > p:not(.courses-kicker) { color: #504851; line-height: 1.6; font-size: clamp(14px,1.2vw,18px); margin-bottom: 24px; max-width: 48ch; }
+.direction-page .direction-primary { display: inline-flex; align-items: center; justify-content: center; color: #17171c; background: #ff7835; border-color: #ff7835; white-space: nowrap; }
+.direction-page-art { height: auto; aspect-ratio: 2.15; border-radius: 18px; border: 1px solid #fff9; }
+.direction-page .specialty-art--development { background: #eae6e1; }
+.direction-page .specialty-art--three { background: #e9e5ee; }
+.direction-page .specialty-art--systems { background: #e4eae7; }
+.direction-page .specialty-art--business { background: #f3e5dc; }
+.direction-page-modules { scroll-margin-top: 90px; position: relative; padding-top: clamp(24px,4vh,40px); }
+.direction-page-modules::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: var(--slide-divider-from-left); }
+.direction-page-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,260px),1fr)); gap: clamp(14px,1.6vw,24px); }
+.direction-page-module { display: flex; flex-direction: column; min-width: 0; padding: clamp(18px,2vw,30px); border-radius: 18px; border: 1px solid rgba(255,255,255,.82); background: rgba(255,255,255,.16); -webkit-backdrop-filter: blur(12px) saturate(110%); backdrop-filter: blur(12px) saturate(110%); box-shadow: 0 8px 24px rgba(36,25,42,.055); }
+.direction-module-top { display: flex; align-items: center; justify-content: space-between; color: #cf4a08; font-size: 12px; margin-bottom: 18px; }
+.direction-module-top .courses-kicker { margin: 0; }
+.direction-page-module h3 { color: #17171c; font-size: clamp(19px,1.85vw,28px); font-weight: 450; letter-spacing: -.04em; line-height: 1.2; margin: 0 0 12px; }
+.direction-page-module > p { color: #504851; font-size: 14px; line-height: 1.5; margin: 0 0 28px; }
+.direction-page-module-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 15px; border-top: 1px solid rgba(90,65,58,.13); font-size: 16px; font-weight: 400; }
+.direction-page-module-footer .course-action { min-height: 36px; padding: 8px 14px; font-size: 12px; }
+.direction-related { margin-top: 40px; }
+.direction-related > div { display: flex; flex-wrap: wrap; gap: 12px; }
+.direction-related a { color: #17171c; font-size: 13px; text-decoration: none; padding: 10px 16px; border: 1px solid #fff; border-radius: 30px; background: rgba(255,255,255,.25); }
+.direction-related a span { color: #cf4a08; margin-left: 5px; }
+@media (max-width:680px) { .direction-page-hero { grid-template-columns: 1fr; } .direction-page-screen { padding-inline: 5%; } }
+@media (prefers-reduced-motion: reduce) { .courses-directions .specialty-card--direction { transition: none; } }
