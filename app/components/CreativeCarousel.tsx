@@ -2,30 +2,25 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const cards = [
-  { title: "AI CONTENT", image: "" },
-  { title: "AI DESIGN", image: "" },
-  { title: "AI PHOTO", image: "" },
-  { title: "AI VIDEO", image: "" },
-  { title: "AI ANIMATION", image: "" },
-  { title: "AI BRANDING", image: "" },
-];
-const count = cards.length;
-const wrap = (n: number) => ((n % count) + count) % count;
+const wrap = (n: number, count: number) => ((n % count) + count) % count;
 
 function Chevron({ up = false }: { up?: boolean }) {
   return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={up ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} /></svg>;
 }
 
 export default function CreativeCarousel({ direction = "AI CREATIVE", images = [] }: { direction?: string; images?: string[] }) {
+  const uploaded = images.filter(Boolean);
+  const cards = uploaded.length ? uploaded : Array<string>(6).fill("");
+  const count = cards.length;
+  const offset = Math.floor((count - 1) / 2);
   const [active, setActive] = useState(0);
   const stage = useRef<HTMLDivElement>(null);
   const pointerStart = useRef<number | null>(null);
-  const move = useCallback((step: number) => setActive((prev) => wrap(prev + step)), []);
+  const move = useCallback((step: number) => setActive((prev) => wrap(prev + step, count)), [count]);
 
   useEffect(() => {
     const node = stage.current;
-    if (!node) return;
+    if (!node || count < 2) return;
     let accumulated = 0;
     let lastMove = 0;
     let lastWheel = 0;
@@ -45,17 +40,17 @@ export default function CreativeCarousel({ direction = "AI CREATIVE", images = [
     };
     node.addEventListener("wheel", handleWheel, { passive: false });
     return () => node.removeEventListener("wheel", handleWheel);
-  }, [move]);
+  }, [move, count]);
 
   return (
-    <div className="creative-carousel" role="region" aria-roledescription="карусель" aria-label={"Шесть карточек " + direction}
+    <div className="creative-carousel" role="region" aria-roledescription="карусель" aria-label={"Галерея " + direction}
       onKeyDown={(event) => {
         if (event.key === "ArrowUp" || event.key === "ArrowDown") {
           event.preventDefault();
           move(event.key === "ArrowUp" ? -1 : 1);
         }
       }}>
-      <button type="button" className="creative-carousel-button" aria-label="Предыдущая карточка" onClick={() => move(-1)}><Chevron up /></button>
+      <button type="button" className="creative-carousel-button" aria-label="Предыдущая карточка" disabled={count < 2} onClick={() => move(-1)}><Chevron up /></button>
       <div className="creative-carousel-stage" ref={stage} tabIndex={0} aria-label="Прокручивайте колесом или стрелками"
         onPointerDown={(event) => { pointerStart.current = event.clientY; }}
         onPointerUp={(event) => {
@@ -66,16 +61,16 @@ export default function CreativeCarousel({ direction = "AI CREATIVE", images = [
         onPointerCancel={() => { pointerStart.current = null; }}
         onPointerLeave={() => { pointerStart.current = null; }}>
         {cards.map((card, index) => {
-          const position = wrap(index - active + 2) - 2;
+          const position = wrap(index - active + offset, count) - offset;
           return (
-            <div key={card.title} className="creative-carousel-card" data-position={position} aria-hidden={position !== 0}>
-              {images[index] && <img src={images[index]} alt="" draggable={false} />}
+            <div key={card || index} className="creative-carousel-card" data-position={position} aria-hidden={position !== 0}>
+              {card && <img src={card} alt="" draggable={false} />}
               
             </div>
           );
         })}
       </div>
-      <button type="button" className="creative-carousel-button" aria-label="Следующая карточка" onClick={() => move(1)}><Chevron /></button>
+      <button type="button" className="creative-carousel-button" aria-label="Следующая карточка" disabled={count < 2} onClick={() => move(1)}><Chevron /></button>
       <span className="creative-carousel-announcement" aria-live="polite" aria-atomic="true">{"Карточка " + (active + 1) + " из " + count}</span>
     </div>
   );
