@@ -2424,3 +2424,28 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (prefers-reduced-motion: reduce) {
   .creative-carousel-card, .creative-carousel-button { transition: none; }
 }
+
+
+/* Softly fading Apple-style glass carousel, with no captions on the tiles. */
+.creative-carousel-stage {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 8%, #000 25%, #000 75%, rgba(0,0,0,.35) 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 8%, #000 25%, #000 75%, rgba(0,0,0,.35) 92%, transparent 100%);
+  border-radius: 0;
+}
+.creative-carousel-card {
+  border-radius: 26px;
+  background-image: linear-gradient(145deg, rgba(255,255,255,.52), rgba(255,255,255,.12) 45%, rgba(255,255,255,.25));
+  border: 1px solid rgba(255,255,255,.86);
+  -webkit-backdrop-filter: blur(16px) saturate(115%);
+  backdrop-filter: blur(16px) saturate(115%);
+  box-shadow: 0 10px 30px rgba(28,24,32,.075), inset 0 1px 2px rgba(255,255,255,.95), inset 0 -1px 1px rgba(255,255,255,.4);
+}
+.creative-carousel-card[data-position="-1"], .creative-carousel-card[data-position="1"] { opacity: .72; }
+.creative-carousel-card[data-position="-2"], .creative-carousel-card[data-position="2"] { opacity: .24; }
+.creative-carousel-button {
+  background: rgba(255,255,255,.38);
+  border: 1px solid rgba(255,255,255,.88);
+  box-shadow: 0 5px 18px rgba(30,24,34,.055), inset 0 1px 1px rgba(255,255,255,.9);
+}
+.creative-carousel-button:hover { background: rgba(255,255,255,.65); }
+.creative-carousel-card-number { font-weight: 450; }

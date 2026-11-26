@@ -69,10 +69,10 @@ export default function CreativeCarousel() {
           const position = wrap(index - active + 2) - 2;
           return (
             <div key={card.title} className="creative-carousel-card" data-position={position} aria-hidden={position !== 0}
-              style={{ backgroundColor: card.color }}>
+              style={{ backgroundColor: card.color + "40" }}>
               {card.image && <img src={card.image} alt="" draggable={false} />}
               <span className="creative-carousel-card-number">{String(index + 1).padStart(2, "0")}</span>
-              <span className="creative-carousel-card-title">{card.title}</span>
+              
             </div>
           );
         })}
