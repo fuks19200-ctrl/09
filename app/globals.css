@@ -2102,40 +2102,23 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   z-index: 2;
   font-size: clamp(24px,2.5vw,36px);
 }
-/* The cats sit on the upper rim of the glass panel, with tails hanging down. */
+/* Keep the original cat photograph intact; use a wider field of view. */
 .courses-intro .program-card--custom {
-  --cats-width: min(51%, 340px);
-  margin-top: clamp(64px,7vw,108px);
-  overflow: visible;
-}
-.courses-intro .program-card-cats {
-  position: absolute;
-  top: 0;
-  left: 56%;
-  width: var(--cats-width);
-  height: auto;
-  transform: translate(-50%, -58%);
-  z-index: 3;
-  pointer-events: none;
-  filter: drop-shadow(0 3px 3px rgba(25,40,48,.11));
+  margin-top: 0;
+  overflow: hidden;
 }
 .courses-intro .program-card--custom .program-card-media {
-  height: clamp(42px,5vw,72px);
-  aspect-ratio: auto;
-  border: 0;
-  overflow: visible;
+  height: auto;
+  aspect-ratio: 2.25;
+  overflow: hidden;
 }
 .courses-intro .program-card--custom .program-card-media::before {
-  display: none;
+  display: block;
+  background: url("/images/5206392513818729505.jpg") center 82% / cover no-repeat;
+  opacity: 1;
 }
 .courses-intro .program-card--custom .program-progress {
-  color: #17171c;
-  text-shadow: none;
-  top: 12px;
-  bottom: auto;
-}
-@media(max-width:600px) {
-  .courses-intro .program-card--custom { --cats-width: min(58%,240px); margin-top: 66px; }
-  .courses-intro .program-card--custom .program-card-media { height: 58px; }
-  .courses-intro .program-card-cats { left: 65%; }
+  color: #fff;
+  font-size: clamp(20px,2.1vw,30px);
+  text-shadow: 0 1px 4px rgba(0,0,0,.35);
 }
