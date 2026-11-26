@@ -1599,3 +1599,48 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .site-background .program-card .program-name {
   overflow-wrap: anywhere;
 }
+
+
+/* Shared slide-divider system: alternating orange-to-white lines, full bleed.
+   Use slide-divider--from-right / slide-divider--from-left on future chapters. */
+:root {
+  --slide-divider-from-right: linear-gradient(to left, rgba(239,118,43,.42) 0%, rgba(239,118,43,.23) 35%, rgba(239,118,43,.08) 72%, #fff 100%);
+  --slide-divider-from-left: linear-gradient(to right, rgba(239,118,43,.42) 0%, rgba(239,118,43,.23) 35%, rgba(239,118,43,.08) 72%, #fff 100%);
+}
+.home-page .home-about,
+.about-details,
+.courses-embedded,
+.courses-page > .courses-intro,
+.courses-page > .courses-directions,
+.slide-divider--from-right,
+.slide-divider--from-left {
+  position: relative;
+  border-top: 0;
+}
+.home-page .home-about,
+.courses-embedded,
+.courses-page > .courses-directions,
+.slide-divider--from-right {
+  --slide-divider-gradient: var(--slide-divider-from-right);
+}
+.about-details,
+.courses-page > .courses-intro,
+.slide-divider--from-left {
+  --slide-divider-gradient: var(--slide-divider-from-left);
+}
+.home-page .home-about::before,
+.about-details::before,
+.courses-embedded::before,
+.courses-page > .courses-intro::before,
+.courses-page > .courses-directions::before,
+.slide-divider--from-right::before,
+.slide-divider--from-left::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  height: 1px;
+  background: var(--slide-divider-gradient);
+  pointer-events: none;
+  z-index: 2;
+}
