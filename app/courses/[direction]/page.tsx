@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SiteNav from "../../components/SiteNav";
-import { AddCourseButton, CoursePrice, CustomProgramBanner, RegularModeOnly } from "../../components/CourseCart";
+import { AddCourseButton, CoursePrice, RegularModeOnly } from "../../components/CourseCart";
 import CreativeCarousel from "../../components/CreativeCarousel";
 import { courses, directions, contact, creativeBundle } from "../../data/courses";
 
@@ -32,14 +32,13 @@ export default async function DirectionPage({ params }: Props) {
       <section className="direction-page-screen" aria-labelledby="direction-title">
         <div className="courses-container">
           <a className="direction-back" href="/courses/#directions">← Все направления</a>
-          <CustomProgramBanner />
           <div className={isCreative ? "creative-direction-layout" : undefined}>
             <div className={isCreative ? "creative-direction-copy" : undefined}>
           <header className="direction-page-hero">
             <div>
-              <p className="courses-kicker">НАПРАВЛЕНИЕ {direction.code}</p>
+              <p className="courses-kicker direction-editorial-kicker">Направление {direction.code}</p>
               <h1 id="direction-title">AI <span>{direction.name.slice(3)}</span></h1>
-              <p>{direction.description}</p>
+              <p className="direction-editorial-description">{direction.description}</p>
               {isCreative ? (
                 <RegularModeOnly><div className="creative-bundle-offer">
                   <p className="creative-bundle-caption">Полный курс · 3 программы</p>
@@ -58,17 +57,21 @@ export default async function DirectionPage({ params }: Props) {
             </div>}
           </header>
           <section id="modules" className="direction-page-modules" aria-labelledby="modules-title">
-            <h2 id="modules-title">{isCreative ? "В курс " : "Курсы "}<span>{isCreative ? "входит" : "направления"}</span></h2>
-            {isCreative && <p className="creative-modules-note">Все три программы входят в AI CREATIVE. Можно приобрести каждую отдельно.</p>}
+            <div className="direction-modules-heading">
+              <h2 id="modules-title">{isCreative ? "В курс " : "Курсы "}<span>{isCreative ? "входит" : "направления"}</span></h2>
+              <span className="direction-module-count">{String(modules.length).padStart(2,"0")}</span>
+            </div>
             <div className="direction-page-grid">
               {modules.map((course) => (
                 <article className="direction-page-module" key={course.name}>
-                  <div className="direction-module-top"><p className="courses-kicker">КУРС</p><span>{course.code}</span></div>
-                  <h3>{course.name}</h3>
-                  <p>{course.description}</p>
+                  <span className="direction-module-index" aria-hidden="true">{String(modules.indexOf(course) + 1).padStart(2,"0")}</span>
+                  <div className="direction-module-copy">
+                    <h3>{course.name}</h3>
+                    <p>{course.description}</p>
+                  </div>
                   <div className="direction-page-module-footer">
                     <CoursePrice courseId={course.theme} />
-                    <AddCourseButton courseId={course.theme} className="course-action direction-primary" />
+                    <AddCourseButton courseId={course.theme} className="course-action direction-primary" label="Выбрать" />
                   </div>
                 </article>
               ))}

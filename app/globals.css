@@ -2559,18 +2559,10 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 
 
 /* Individual programme: restrained pricing, separate selection and three-course minimum. */
-.custom-program-banner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:16px 20px; margin:0 0 22px; border:1px solid rgba(255,255,255,.9); border-radius:18px; background:rgba(255,255,255,.28); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
-.custom-program-banner strong { font-size:15px; font-weight:550; color:#17171c; }
-.custom-program-banner p { margin:5px 0 0; font-size:12px; line-height:1.5; color:#504851; }
-.custom-banner-actions { display:flex; flex-wrap:wrap; gap:8px; }
-.custom-banner-actions button { min-height:32px; padding:7px 12px; font-size:11px; background:rgba(255,255,255,.5); color:#17171c; border:1px solid rgba(255,255,255,.9); box-shadow:none; }
-.custom-banner-actions button:first-child { background:#ff7835; border-color:#ff7835; }
 .custom-price { display:inline-flex; flex-wrap:wrap; align-items:baseline; justify-content:flex-end; gap:8px; white-space:nowrap; font-variant-numeric:tabular-nums; }
 .custom-price del { color:#736971; font-size:12px; font-weight:400; }
 .custom-price strong { font-size:16px; font-weight:500; color:#b7470c; letter-spacing:-.025em; }
 .direction-page-module-footer .custom-price strong { font-size:20px; }
-.custom-direction-prices { display:grid; gap:9px; margin:0 0 15px; }
-.custom-direction-price-row { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:5px 10px; font-size:12px; color:#17171c; }
 .course-cart-tabs { display:flex; gap:5px; padding:4px; border-radius:14px; background:rgba(23,23,28,.045); margin-bottom:14px; }
 .course-cart-tabs button { flex:1; min-height:34px; padding:6px 8px; background:transparent; color:#645b60; font-size:10px; box-shadow:none; border:0; border-radius:10px; }
 .course-cart-tabs button[aria-pressed="true"] { background:rgba(255,255,255,.9); color:#17171c; }
@@ -2584,3 +2576,56 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .custom-cart-more { display:block; text-align:center; margin-top:14px; font-size:12px; color:#b7470c; text-decoration:none; }
 .custom-cart-confirmed { padding:12px 0 0; font-size:12px; line-height:1.5; }
 .custom-cart-confirmed a { display:block; margin-top:7px; color:#b7470c; }
+
+
+/* Editorial direction pages — clean typography, translucent material, compact course rows. */
+.courses-directions .specialty-grid--directions { align-items: stretch; }
+.courses-directions .specialty-card--direction { display:flex; flex-direction:column; height:100%; }
+.courses-directions .specialty-card--direction .specialty-content { flex:1; }
+.courses-directions .specialty-card--direction .direction-card-footer { margin-top:auto; }
+.direction-page .direction-back { font-size:12px; margin-bottom:clamp(22px,4vh,40px); }
+.direction-page .direction-page-hero { padding-bottom:clamp(24px,4.5vh,48px); }
+.direction-page .direction-editorial-kicker { display:flex; align-items:center; gap:10px; text-transform:uppercase; font-size:10px; font-weight:550; letter-spacing:.13em; color:#645b60; margin:0 0 18px; }
+.direction-page .direction-editorial-kicker::before { content:""; width:24px; height:1px; background:#ef762b; }
+.direction-page .direction-page-hero h1 { margin:0 0 16px; font-size:var(--section-heading-size); line-height:1.1; }
+.direction-page .direction-editorial-description { font-size:clamp(14px,1.1vw,17px); line-height:1.55; margin:0 0 20px; }
+.direction-page .creative-bundle-offer { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:18px; row-gap:7px; border-top:1px solid rgba(23,23,28,.10); padding-top:18px; margin-top:20px; }
+.direction-page .creative-bundle-caption { grid-column:1 / -1; font-size:11px; }
+.direction-page .creative-bundle-price { gap:12px; }
+.direction-page .creative-bundle-price strong { font-size:clamp(26px,2.6vw,38px); }
+.direction-page .creative-bundle-price del { font-size:clamp(13px,1.15vw,17px); }
+.direction-page .creative-bundle-saving { grid-column:1; grid-row:3; font-size:11px; margin:0; }
+.direction-page .creative-bundle-offer .course-action { grid-column:2; grid-row:2 / 4; min-height:40px; padding:10px 16px; font-size:11px; }
+.direction-page .direction-page-modules { padding-top:clamp(20px,3vh,32px); }
+.direction-page .direction-modules-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:0 0 16px; }
+.direction-page .direction-modules-heading h2 { margin:0; font-size:clamp(22px,2.2vw,32px); }
+.direction-module-count { color:#736971; font-size:12px; font-variant-numeric:tabular-nums; }
+.direction-page .direction-page-grid { grid-template-columns:minmax(0,1fr); gap:10px; }
+.direction-page .direction-page-module {
+  display:grid; grid-template-columns:22px minmax(0,1fr) auto; align-items:center; gap:14px;
+  padding:clamp(15px,1.5vw,23px); border-radius:20px; background:rgba(255,255,255,.24);
+  border:1px solid rgba(255,255,255,.88); box-shadow:0 5px 22px rgba(23,23,28,.045),inset 0 1px 0 rgba(255,255,255,.85);
+}
+.direction-module-index { color:#cf4a08; font-size:10px; align-self:start; padding-top:4px; font-variant-numeric:tabular-nums; }
+.direction-page .direction-module-copy h3 { font-family:var(--font-montserrat),sans-serif; font-weight:450; font-size:clamp(17px,1.5vw,23px); line-height:1.16; letter-spacing:-.035em; margin:0 0 6px; overflow-wrap:normal; word-break:normal; }
+.direction-module-copy p { margin:0; color:#504851; font-size:12px; line-height:1.5; }
+.direction-page .direction-page-module-footer { margin:0; padding:0; border:0; gap:7px; align-items:flex-end; justify-content:center; flex-direction:column; font-size:16px; font-variant-numeric:tabular-nums; }
+.direction-page .direction-page-module-footer .course-action { min-height:32px; padding:6px 13px; font-size:11px; max-width:145px; white-space:normal; text-align:center; }
+.direction-page .direction-page-module-footer .custom-price { gap:6px; }
+.direction-page .direction-page-module-footer .custom-price del { font-size:11px; }
+.direction-page .direction-page-module-footer .custom-price strong { font-size:17px; font-weight:500; }
+.direction-page .courses-help { margin-top:24px; padding-top:18px; }
+.direction-page .direction-related { margin-top:28px; }
+.direction-page .direction-related h2 { font-size:18px; margin-bottom:12px; }
+.direction-page .direction-related > div { gap:8px; }
+.direction-page .direction-related a { padding:8px 12px; font-size:11px; }
+.direction-page--creative .creative-direction-layout { grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:clamp(28px,5vw,76px); }
+@media(max-width:800px) {
+  .direction-page--creative .creative-direction-layout { grid-template-columns:minmax(0,1fr); gap:28px; }
+}
+@media(max-width:480px) {
+  .direction-page .creative-bundle-offer { grid-template-columns:minmax(0,1fr); }
+  .direction-page .creative-bundle-offer .course-action { grid-column:1; grid-row:auto; justify-self:start; }
+  .direction-page .direction-page-module { grid-template-columns:18px minmax(0,1fr); gap:10px; }
+  .direction-page .direction-page-module-footer { grid-column:2; flex-direction:row; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid rgba(23,23,28,.08); }
+}

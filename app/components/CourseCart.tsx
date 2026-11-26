@@ -157,25 +157,9 @@ export function StartCustomProgram() {
 export function RegularModeOnly({ children }: { children: ReactNode }) {
   return useCart().mode === "regular" ? <>{children}</> : null;
 }
-export function CustomProgramBanner() {
-  const cart = useCart();
-  if (cart.mode !== "custom") return null;
-  return <div className="custom-program-banner">
-    <div><strong>Собери свою программу · −{customProgramDiscount}%</strong><p>Выберите минимум {customProgramMin} отдельных курса. Выбрано: {cart.customIds.length}.</p></div>
-    <div className="custom-banner-actions"><button type="button" onClick={cart.open}>Корзина</button><button type="button" onClick={() => cart.setMode("regular")}>Выйти из режима</button></div>
-  </div>;
-}
 export function CoursePrice({ courseId }: { courseId: string }) {
   const cart = useCart();
   const item = catalogue.find((entry) => entry.id === courseId);
   if (!item) return null;
   return cart.mode === "custom" && eligible.has(courseId) ? <span className="custom-price"><del>{number(item.price)}</del><strong>{number(customCoursePrice(item.price))}</strong></span> : <span aria-label={money(item.price)}>{number(item.price)}</span>;
-}
-export function DirectionCustomPrices({ courseIds }: { courseIds: string[] }) {
-  const cart = useCart();
-  if (cart.mode !== "custom") return null;
-  return <div className="custom-direction-prices">{courseIds.map((id) => {
-    const item = catalogue.find((entry) => entry.id === id);
-    return item ? <div className="custom-direction-price-row" key={id}><span>{item.name}</span><CoursePrice courseId={id} /></div> : null;
-  })}</div>;
 }
