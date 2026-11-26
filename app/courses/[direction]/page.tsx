@@ -29,10 +29,9 @@ export default async function DirectionPage({ params }: Props) {
 
   return (
     <main className="site-background courses-page direction-page direction-page--gallery">
-      <SiteNav active="courses" />
+      <SiteNav active="courses" directionBack />
       <section className="direction-page-screen" aria-labelledby="direction-title">
         <div className="courses-container">
-          <a className="direction-back" href="/courses/#directions"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 10H4m5-5-5 5 5 5"/></svg>Все направления</a>
           <div className="creative-direction-layout">
             <div className="creative-direction-copy">
           <header className="direction-page-hero">

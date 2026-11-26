@@ -1,6 +1,7 @@
-export default function SiteNav({ active }: { active: "home" | "about" | "courses" }) {
+export default function SiteNav({ active, directionBack = false }: { active: "home" | "about" | "courses"; directionBack?: boolean }) {
   return (
-      <header className="site-header">
+      <header className={"site-header" + (directionBack ? " site-header--direction" : "")}>
+        {directionBack && <a className="direction-back" href="/courses/#directions"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 10H4m5-5-5 5 5 5"/></svg>Все направления</a>}
         <nav className="site-nav" aria-label="Main navigation">
           <button className="site-nav__item site-nav__search" type="button" aria-label="Search" disabled title="Search coming soon">
             <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
