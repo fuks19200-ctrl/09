@@ -1786,3 +1786,54 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     aspect-ratio: 2.2;
   }
 }
+
+
+/* Compact programme cards: reduce vertical bulk while keeping text readable,
+   and make the horizontal programme 30% narrower than the paired grid. */
+.courses-intro .program-grid {
+  gap: clamp(12px,1.3vw,18px);
+}
+.courses-intro .program-card {
+  padding: 5px;
+  border-radius: 18px;
+}
+.courses-intro .program-card-copy {
+  padding: clamp(12px,1.1vw,16px);
+}
+.courses-intro .program-card-media {
+  border-radius: 14px;
+}
+.courses-intro .program-card .program-name {
+  font-size: clamp(23px,2.25vw,32px);
+  margin-bottom: 8px;
+}
+.courses-intro .program-description {
+  font-size: clamp(12px,.95vw,14px);
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.courses-intro .program-topline { margin-bottom: 8px; }
+.courses-intro .program-footer { padding-top: 6px; gap: 8px; }
+.courses-intro .program-footer strong { font-size: clamp(16px,1.45vw,22px); }
+.courses-intro .program-footer .course-action { min-height: 32px; padding: 6px 12px; font-size: 11px; }
+.courses-intro .program-card--custom {
+  width: 70%;
+  justify-self: center;
+  grid-template-columns: minmax(0,1.65fr) minmax(0,1fr);
+}
+.courses-intro .program-card--custom .program-card-media { min-height: 76px; }
+@media (min-width:1051px) {
+  .courses-intro .courses-program-layout { grid-template-columns: minmax(0,.36fr) minmax(0,.64fr); }
+  .courses-intro .program-grid { width: min(100%, 720px); justify-self: center; }
+  .courses-intro .program-card:not(.program-card--custom) .program-card-media {
+    height: clamp(78px,13.8svh,148px);
+  }
+}
+@media (max-width:1050px) {
+  .courses-intro .program-grid { width: min(100%, 720px); justify-self: center; }
+  .courses-intro .program-card:not(.program-card--custom) .program-card-media { aspect-ratio: 2; }
+}
+@media (max-width:600px) {
+  .courses-intro .program-card--custom { width: 100%; grid-template-columns: minmax(0,1fr); }
+  .courses-intro .program-card--custom .program-card-media { aspect-ratio: 2.2; }
+}
