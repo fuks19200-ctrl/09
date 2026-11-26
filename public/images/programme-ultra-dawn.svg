@@ -1,16 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" preserveAspectRatio="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" preserveAspectRatio="none">
 <defs>
-<linearGradient id="sky" x1="0%" y1="0%" x2="85%" y2="100%"><stop stop-color="#c65d35"/><stop offset=".52" stop-color="#f38b4e"/><stop offset="1" stop-color="#ffca78"/></linearGradient>
-<radialGradient id="light" cx="48%" cy="100%" r="85%"><stop stop-color="#ffe8ac" stop-opacity=".95"/><stop offset="1" stop-color="#ffe8ac" stop-opacity="0"/></radialGradient>
-<linearGradient id="ribbon" x1="0%" y1="0%" x2="100%" y2="0%"><stop stop-color="#ffd296"/><stop offset=".48" stop-color="#fffdf5"/><stop offset="1" stop-color="#ffd296"/></linearGradient>
-<radialGradient id="orb"><stop stop-color="#fff"/><stop offset=".35" stop-color="#fff9e9"/><stop offset="1" stop-color="#ffca70"/></radialGradient>
-<filter id="glow" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="13"/></filter>
-
+ <linearGradient id="sky" x1="0" y1="0" x2=".82" y2="1"><stop stop-color="#a45362"/><stop offset=".47" stop-color="#df7954"/><stop offset="1" stop-color="#f9ae70"/></linearGradient>
+ <radialGradient id="sunset" cx=".28" cy=".96" r=".72"><stop stop-color="#ffe3a0" stop-opacity=".95"/><stop offset=".48" stop-color="#f9ae70" stop-opacity=".6"/><stop offset="1" stop-color="#f9ae70" stop-opacity="0"/></radialGradient>
+ <radialGradient id="sunright" cx=".98" cy="1" r=".59"><stop stop-color="#ffe3a0" stop-opacity=".94"/><stop offset="1" stop-color="#ffe3a0" stop-opacity="0"/></radialGradient>
+ <radialGradient id="topshadow" cx=".08" cy="0" r=".75"><stop stop-color="#a45362" stop-opacity=".65"/><stop offset="1" stop-color="#a45362" stop-opacity="0"/></radialGradient>
+ <linearGradient id="band" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ffc77a"/><stop offset=".22" stop-color="#ffc77a"/><stop offset=".55" stop-color="#fffefb"/><stop offset=".82" stop-color="#fffdfa"/><stop offset="1" stop-color="#ffedcd"/></linearGradient>
+ <radialGradient id="sphere" cx=".46" cy=".45" r=".63"><stop stop-color="#fffefa"/><stop offset=".22" stop-color="#fff7dc"/><stop offset=".65" stop-color="#ffd07e"/><stop offset="1" stop-color="#ffd07e" stop-opacity=".86"/></radialGradient>
+ <filter id="soft" x="-.4" y="-.6" width="1.8" height="2.2"><feGaussianBlur stdDeviation="15"/></filter>
+ 
 </defs>
-<rect width="1000" height="300" fill="url(#sky)"/><rect width="1000" height="300" fill="url(#light)"/>
-<path d="M-25 290 Q500 50 1025 290" fill="none" stroke="#ffd296" stroke-width="40" opacity=".64" filter="url(#glow)"/>
-<path d="M-25 290 Q500 50 1025 290" fill="none" stroke="url(#ribbon)" stroke-width="24"/>
-<circle cx="878.00" cy="232.21" r="36" fill="#ffca70" opacity=".8" filter="url(#glow)"/>
-<circle cx="878.00" cy="232.21" r="23" fill="url(#orb)"/>
-
+ <rect width="1000" height="360" fill="url(#sky)"/><rect width="1000" height="360" fill="url(#sunset)"/><rect width="1000" height="360" fill="url(#sunright)"/><rect width="1000" height="360" fill="url(#topshadow)"/>
+ <path d="M55 381 Q500 15 945 381" fill="none" stroke="#ffe3a0" stroke-opacity=".24" stroke-width="60" filter="url(#soft)"/>
+ <path d="M55 381 Q500 15 945 381" fill="none" stroke="url(#band)" stroke-width="37" stroke-linecap="round"/>
+ <circle cx="811.50" cy="287.67" r="45" fill="#ffd07e" opacity=".58" filter="url(#soft)"/>
+ <circle cx="811.50" cy="287.67" r="32" fill="url(#sphere)"/>
+ 
 </svg>
