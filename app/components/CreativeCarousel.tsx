@@ -17,7 +17,7 @@ function Chevron({ up = false }: { up?: boolean }) {
   return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={up ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} /></svg>;
 }
 
-export default function CreativeCarousel() {
+export default function CreativeCarousel({ direction = "AI CREATIVE" }: { direction?: string }) {
   const [active, setActive] = useState(0);
   const stage = useRef<HTMLDivElement>(null);
   const pointerStart = useRef<number | null>(null);
@@ -48,7 +48,7 @@ export default function CreativeCarousel() {
   }, [move]);
 
   return (
-    <div className="creative-carousel" role="region" aria-roledescription="карусель" aria-label="Шесть карточек AI CREATIVE"
+    <div className="creative-carousel" role="region" aria-roledescription="карусель" aria-label={"Шесть карточек " + direction}
       onKeyDown={(event) => {
         if (event.key === "ArrowUp" || event.key === "ArrowDown") {
           event.preventDefault();
@@ -77,7 +77,7 @@ export default function CreativeCarousel() {
         })}
       </div>
       <button type="button" className="creative-carousel-button" aria-label="Следующая карточка" onClick={() => move(1)}><Chevron /></button>
-      <span className="creative-carousel-announcement" aria-live="polite" aria-atomic="true">{cards[active].title}</span>
+      <span className="creative-carousel-announcement" aria-live="polite" aria-atomic="true">{"Карточка " + (active + 1) + " из " + count}</span>
     </div>
   );
 }
