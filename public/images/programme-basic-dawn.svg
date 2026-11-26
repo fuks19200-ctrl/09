@@ -8,9 +8,9 @@
 
 </defs>
 <rect width="1000" height="300" fill="url(#sky)"/><rect width="1000" height="300" fill="url(#light)"/>
-<path d="M-25 315 Q500 -165 1025 315" fill="none" stroke="#ffdfec" stroke-width="40" opacity=".64" filter="url(#glow)"/>
-<path d="M-25 315 Q500 -165 1025 315" fill="none" stroke="url(#ribbon)" stroke-width="24"/>
-<circle cx="206.00" cy="150.26" r="36" fill="#f9c3e9" opacity=".8" filter="url(#glow)"/>
-<circle cx="206.00" cy="150.26" r="23" fill="url(#orb)"/>
+<path d="M-25 290 Q500 50 1025 290" fill="none" stroke="#ffdfec" stroke-width="40" opacity=".64" filter="url(#glow)"/>
+<path d="M-25 290 Q500 50 1025 290" fill="none" stroke="url(#ribbon)" stroke-width="24"/>
+<circle cx="206.00" cy="207.63" r="36" fill="#f9c3e9" opacity=".8" filter="url(#glow)"/>
+<circle cx="206.00" cy="207.63" r="23" fill="url(#orb)"/>
 
 </svg>

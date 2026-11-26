@@ -8,9 +8,9 @@
 <linearGradient id="veil" x1="0" y1="0" x2="0" y2="1"><stop offset=".26" stop-color="#f5fffa" stop-opacity="0"/><stop offset=".55" stop-color="#f5fffa" stop-opacity=".86"/><stop offset="1" stop-color="#f9fffc"/></linearGradient>
 </defs>
 <rect width="1000" height="420" fill="url(#sky)"/><rect width="1000" height="420" fill="url(#light)"/>
-<path d="M-25 205 Q500 -125 1025 205" fill="none" stroke="#e9ffda" stroke-width="40" opacity=".64" filter="url(#glow)"/>
-<path d="M-25 205 Q500 -125 1025 205" fill="none" stroke="url(#ribbon)" stroke-width="24"/>
-<circle cx="500.00" cy="40.00" r="36" fill="#d1fbb7" opacity=".8" filter="url(#glow)"/>
-<circle cx="500.00" cy="40.00" r="23" fill="url(#orb)"/>
+<path d="M-25 150 Q500 -10 1025 150" fill="none" stroke="#e9ffda" stroke-width="40" opacity=".64" filter="url(#glow)"/>
+<path d="M-25 150 Q500 -10 1025 150" fill="none" stroke="url(#ribbon)" stroke-width="24"/>
+<circle cx="500.00" cy="70.00" r="36" fill="#d1fbb7" opacity=".8" filter="url(#glow)"/>
+<circle cx="500.00" cy="70.00" r="23" fill="url(#orb)"/>
 <rect width="1000" height="420" fill="url(#veil)"/>
 </svg>
