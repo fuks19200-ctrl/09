@@ -2763,3 +2763,79 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .site-background .courses-directions .specialty-card--direction:nth-child(n+4),
   .site-background .courses-directions .specialty-card--direction:last-child { grid-column: 1; }
 }
+
+
+/* Direction editorial refinement — shared grid, quiet glass, one primary action. */
+.site-background.direction-page--gallery {
+  --direction-space: clamp(20px, 2.6vw, 36px);
+  --direction-glass: linear-gradient(135deg, rgba(255,255,255,.56), rgba(255,255,255,.17) 65%, rgba(255,255,255,.32));
+  --direction-glass-border: rgba(255,255,255,.86);
+  --direction-glass-shadow: 0 10px 34px rgba(48,34,57,.045), inset 0 1px 1px rgba(255,255,255,.92);
+}
+.site-background.direction-page--gallery .direction-back { display:inline-flex; align-items:center; gap:8px; color:#645b60; font-size:12px; margin-bottom:var(--direction-space); }
+.direction-back svg,.direction-support-action svg,.direction-related-grid svg { width:16px; height:16px; flex:none; stroke:currentColor; stroke-width:1.35; stroke-linecap:round; stroke-linejoin:round; }
+.direction-back:hover { color:#17171c; }
+.site-background.direction-page--gallery .direction-page-hero { padding-bottom:var(--direction-space); }
+.site-background.direction-page--gallery .direction-editorial-kicker { margin-bottom:16px; }
+.site-background.direction-page--gallery .direction-page-hero h1 { font-size:var(--section-heading-size); margin-bottom:14px; line-height:1.08; }
+.site-background.direction-page--gallery .direction-editorial-description { margin:0; max-width:48ch; color:#504851; font-size:clamp(14px,1.15vw,17px); line-height:1.65; }
+.site-background.direction-page--gallery .creative-bundle-offer { margin-top:22px; padding:18px 20px; border:1px solid var(--direction-glass-border); border-radius:22px; background:var(--direction-glass); box-shadow:var(--direction-glass-shadow); -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px); }
+.site-background.direction-page--gallery .creative-bundle-caption { font-size:11px; color:#645b60; }
+.site-background.direction-page--gallery .creative-bundle-price strong { color:#17171c; font-size:clamp(25px,2.6vw,36px); font-weight:450; }
+.site-background.direction-page--gallery .creative-bundle-saving { color:#8e4a2e; }
+.site-background.direction-page--gallery .creative-bundle-offer .course-action { min-height:42px; font-size:12px; font-weight:550; }
+.site-background.direction-page--gallery .direction-page-modules { padding-top:var(--direction-space); }
+.site-background.direction-page--gallery .direction-modules-heading { align-items:center; gap:12px; margin-bottom:18px; }
+.site-background.direction-page--gallery .direction-modules-heading h2 { font-size:clamp(24px,2.35vw,32px); letter-spacing:-.045em; }
+.direction-module-summary { display:flex; flex-direction:column; align-items:flex-end; gap:4px; font-size:11px; line-height:1.4; color:#645b60; text-align:right; }
+.direction-module-condition { color:#8e4a2e; font-size:10px; }
+.site-background.direction-page--gallery .direction-page-grid { gap:16px; }
+.site-background.direction-page--gallery .direction-page-module {
+  grid-template-columns: minmax(25px, .12fr) minmax(0,1fr) minmax(112px,auto);
+  align-items:center; column-gap:clamp(12px,1.6vw,22px);
+  padding:clamp(20px,2.3vw,30px);
+  border-radius:26px; border:1px solid var(--direction-glass-border);
+  background:var(--direction-glass); box-shadow:var(--direction-glass-shadow);
+  -webkit-backdrop-filter:blur(24px) saturate(115%); backdrop-filter:blur(24px) saturate(115%);
+}
+.site-background.direction-page--gallery .direction-module-index { color:#897a78; font-size:12px; padding-top:3px; font-weight:400; letter-spacing:.03em; }
+.site-background.direction-page--gallery .direction-module-copy h3 { color:#17171c; font-size:clamp(19px,1.85vw,26px); font-weight:450; letter-spacing:-.045em; line-height:1.2; margin-bottom:8px; }
+.site-background.direction-page--gallery .direction-module-copy p { color:#504851; font-size:clamp(12px,1.02vw,15px); line-height:1.55; }
+.site-background.direction-page--gallery .direction-page-module-footer { align-items:flex-end; gap:10px; padding:0 0 0 13px; border-left:1px solid rgba(77,61,74,.09); font-size:21px; letter-spacing:-.035em; }
+.site-background.direction-page--gallery .direction-page-module-footer .custom-price { gap:7px; align-items:baseline; }
+.site-background.direction-page--gallery .direction-page-module-footer .custom-price del { font-size:11px; color:#776c74; letter-spacing:0; }
+.site-background.direction-page--gallery .direction-page-module-footer .custom-price strong { color:#17171c; font-size:clamp(20px,1.85vw,26px); font-weight:500; letter-spacing:-.035em; }
+.site-background.direction-page--gallery .direction-module-select {
+  min-height:36px; padding:8px 17px; border:1px solid rgba(255,255,255,.92);
+  background:rgba(255,255,255,.58); color:#17171c; font-size:12px; font-weight:500; letter-spacing:0;
+  border-radius:999px; box-shadow:0 3px 10px rgba(48,34,57,.045),inset 0 1px 1px #fff;
+}
+.site-background.direction-page--gallery .direction-module-select[data-selected="true"] { background:rgba(255,255,255,.25); border-color:rgba(23,23,28,.13); }
+.direction-support { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:20px 22px; margin-top:var(--direction-space); border-radius:24px; border:1px solid var(--direction-glass-border); background:var(--direction-glass); box-shadow:var(--direction-glass-shadow); }
+.direction-support-copy { min-width:0; }
+.direction-support .direction-support-label { color:#8e4a2e; text-transform:uppercase; letter-spacing:.1em; font-size:9px; font-weight:550; margin:0 0 9px; }
+.site-background.direction-page--gallery .direction-support h2 { font-size:clamp(17px,1.55vw,22px); line-height:1.2; letter-spacing:-.035em; margin:0 0 7px; }
+.direction-support p { margin:0; color:#504851; font-size:12px; line-height:1.5; }
+.site-background.direction-page--gallery .direction-support-action { flex:none; gap:8px; min-height:40px; padding:9px 16px; border:1px solid rgba(255,255,255,.94); background:rgba(255,255,255,.55); color:#17171c; font-weight:500; font-size:12px; }
+.site-background.direction-page--gallery .direction-related { margin-top:var(--direction-space); }
+.site-background.direction-page--gallery .direction-related h2 { font-size:clamp(18px,1.65vw,23px); margin-bottom:14px; }
+.site-background.direction-page--gallery .direction-related-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.site-background.direction-page--gallery .direction-related-grid a { display:flex; align-items:center; justify-content:space-between; gap:8px; border-radius:16px; padding:12px 14px; background:rgba(255,255,255,.28); border:1px solid rgba(255,255,255,.9); color:#17171c; font-size:11px; text-decoration:none; }
+.direction-related-name { display:flex; align-items:center; gap:9px; min-width:0; }
+.direction-related-name small { font-size:9px; color:#897a78; }
+.direction-related-grid svg { color:#b7470c; }
+@media(hover:hover) and (pointer:fine) {
+  .site-background.direction-page--gallery .direction-module-select:not(:disabled):hover,
+  .site-background.direction-page--gallery .direction-support-action:hover,
+  .site-background.direction-page--gallery .direction-related-grid a:hover { background:rgba(255,255,255,.84); border-color:#fff; box-shadow:0 5px 16px rgba(48,34,57,.07); }
+}
+@media(min-width:801px) and (max-width:1100px) {
+  .site-background.direction-page--gallery .direction-page-module { padding:18px; column-gap:12px; grid-template-columns:20px minmax(0,1fr) auto; }
+  .site-background.direction-page--gallery .direction-page-module-footer .custom-price { flex-direction:column; align-items:flex-end; gap:3px; }
+}
+@media(max-width:520px) {
+  .site-background.direction-page--gallery .direction-page-module { grid-template-columns:20px minmax(0,1fr); gap:12px; padding:18px; border-radius:22px; }
+  .site-background.direction-page--gallery .direction-page-module-footer { grid-column:2; flex-direction:row; align-items:center; justify-content:space-between; border-left:0; border-top:1px solid rgba(77,61,74,.09); padding:12px 0 0; }
+  .direction-support { flex-direction:column; align-items:flex-start; padding:18px; }
+  .site-background.direction-page--gallery .direction-related-grid { grid-template-columns:minmax(0,1fr); }
+}
