@@ -1644,3 +1644,23 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   pointer-events: none;
   z-index: 2;
 }
+
+
+/* Exact shared typography for the Approach heading and both courses opening titles. */
+.site-background .about-details h2#approach-title,
+.site-background .creative-manifesto--centered .creative-manifesto__copy #manifesto-title,
+.site-background .creative-manifesto--centered .creative-philosophy-copy #philosophy-heading {
+  font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: var(--section-heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--section-heading-leading);
+  letter-spacing: var(--heading-tracking);
+  font-style: normal;
+  text-transform: none;
+}
+#approach-title span,
+#manifesto-title > span,
+#philosophy-heading span {
+  font: inherit;
+  letter-spacing: inherit;
+}
