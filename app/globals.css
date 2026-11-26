@@ -3032,3 +3032,31 @@ body:has(.direction-page--red) .course-cart-dialog :is(.custom-price strong,.cus
   .site-background.direction-page--gallery.direction-page--red .direction-support-action:hover,
   .site-background.direction-page--gallery.direction-page--red .creative-bundle-offer .direction-primary:hover { background:#8F0B1D; border-color:#8F0B1D; color:#fff; }
 }
+
+
+/* Creative photography: preserve full color and contrast without a white fade or orange tint. */
+.site-background.direction-page--gallery.direction-page--red .creative-carousel-stage {
+  -webkit-mask-image: none;
+  mask-image: none;
+  background: transparent;
+}
+.site-background.direction-page--gallery.direction-page--red .creative-carousel-card {
+  background: #100b0c;
+  border: 1px solid rgba(23,23,23,.12);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.09);
+}
+.site-background.direction-page--gallery.direction-page--red .creative-carousel-card img {
+  opacity: 1;
+  filter: none;
+  mix-blend-mode: normal;
+}
+.site-background.direction-page--gallery.direction-page--red .creative-carousel-card[data-position="-1"] {
+  transform: translate3d(-50%,-89%,-105px) rotateX(-16deg) scale(.85);
+  opacity: 1;
+}
+.site-background.direction-page--gallery.direction-page--red .creative-carousel-card[data-position="1"] {
+  transform: translate3d(-50%,-11%,-105px) rotateX(16deg) scale(.85);
+  opacity: 1;
+}
