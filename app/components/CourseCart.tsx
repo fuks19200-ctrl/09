@@ -167,10 +167,9 @@ export function CoursePrice({ courseId }: { courseId: string }) {
 
 // The compact heading reflects the active cart mode, without a promotional banner.
 export function DirectionModuleSummary({ count }: { count: number }) {
-  const cart = useCart();
   const noun = count === 1 ? "модуль" : count >= 2 && count <= 4 ? "модуля" : "модулей";
   return <div className="direction-module-summary">
     <span>{count} {noun}</span>
-    {cart.mode === "custom" && <span className="direction-module-condition">−{customProgramDiscount}% от {customProgramMin} курсов</span>}
+    
   </div>;
 }
