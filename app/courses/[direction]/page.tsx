@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import SiteNav from "../../components/SiteNav";
 import { AddCourseButton, CoursePrice, RegularModeOnly } from "../../components/CourseCart";
 import CreativeCarousel from "../../components/CreativeCarousel";
+import DevelopmentPreview from "../../components/DevelopmentPreview";
 import { courses, directions, contact, creativeBundle } from "../../data/courses";
 
 type Props = { params: Promise<{ direction: string }> };
@@ -26,6 +27,39 @@ export default async function DirectionPage({ params }: Props) {
   const isCreative = direction.slug === "creative";
   const modules = courses.filter((course) => direction.modules.includes(course.name));
   const otherDirections = directions.filter((item) => item.slug !== slug);
+  if (slug === "development") return (
+    <main className="site-background courses-page direction-page direction-page--development">
+      <SiteNav active="courses" />
+      <section className="direction-page-screen" aria-labelledby="development-title">
+        <div className="courses-container development-container">
+          <a className="direction-back" href="/courses/#directions">← Все направления</a>
+          <div className="development-layout">
+            <div className="development-copy">
+              <header className="development-hero">
+                <p className="courses-kicker direction-editorial-kicker">Направление 02</p>
+                <h1 id="development-title">AI <span>DEVELOPMENT</span></h1>
+                <p className="development-tagline">От идеи до цифрового продукта.</p>
+                <p className="development-description">{direction.description}</p>
+              </header>
+              <section className="development-modules" id="modules" aria-labelledby="development-modules-title">
+                <div className="development-modules-heading"><h2 id="development-modules-title">Выберите <span>курс</span></h2><span>02</span></div>
+                {modules.map((course, index) => (
+                  <article className="development-module" key={course.theme}>
+                    <div className="development-module-symbol" aria-hidden="true">{course.theme === "websites" ? <svg viewBox="0 0 40 40" fill="none"><rect x="5" y="8" width="30" height="24" rx="4"/><path d="M5 15h30M15 20l-4 4 4 4m10-8 4 4-4 4"/></svg> : <svg viewBox="0 0 40 40" fill="none"><path d="M13 12h14c4 0 6 3 7 7l2 7c1 5-4 7-7 4l-5-5h-8l-5 5c-3 3-8 1-7-4l2-7c1-4 3-7 7-7Z"/><path d="M13 17v8m-4-4h8M27 19h.1m4 4h.1"/></svg>}</div>
+                    <div className="development-module-text"><span className="development-module-no">0{index+1}</span><h3>{course.name}</h3><p>{course.description}</p></div>
+                    <div className="development-module-action"><CoursePrice courseId={course.theme}/><AddCourseButton courseId={course.theme} className="course-action direction-primary" label="Выбрать курс"/></div>
+                  </article>
+                ))}
+              </section>
+              <div className="development-support"><span>Нужна помощь с выбором?</span><a href={contact}>Консультация <span aria-hidden="true">↗</span></a></div>
+            </div>
+            <DevelopmentPreview />
+          </div>
+          <nav className="development-related" aria-label="Другие направления обучения"><span>Другие направления</span><div>{otherDirections.map(item => <a key={item.slug} href={"/courses/" + item.slug + "/"}>{item.name}</a>)}</div></nav>
+        </div>
+      </section>
+    </main>
+  );
   return (
     <main className={"site-background courses-page direction-page" + (isCreative ? " direction-page--creative" : "")}>
       <SiteNav active="courses" />
