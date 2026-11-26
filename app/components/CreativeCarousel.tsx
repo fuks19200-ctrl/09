@@ -3,12 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const cards = [
-  { title: "AI CONTENT", color: "#e8dbe9", image: "" },
-  { title: "AI DESIGN", color: "#f1dfd1", image: "" },
-  { title: "AI PHOTO", color: "#d9e3e4", image: "" },
-  { title: "AI VIDEO", color: "#e8d9d8", image: "" },
-  { title: "AI ANIMATION", color: "#e0dced", image: "" },
-  { title: "AI BRANDING", color: "#e8e2d6", image: "" },
+  { title: "AI CONTENT", image: "" },
+  { title: "AI DESIGN", image: "" },
+  { title: "AI PHOTO", image: "" },
+  { title: "AI VIDEO", image: "" },
+  { title: "AI ANIMATION", image: "" },
+  { title: "AI BRANDING", image: "" },
 ];
 const count = cards.length;
 const wrap = (n: number) => ((n % count) + count) % count;
@@ -68,8 +68,7 @@ export default function CreativeCarousel({ direction = "AI CREATIVE" }: { direct
         {cards.map((card, index) => {
           const position = wrap(index - active + 2) - 2;
           return (
-            <div key={card.title} className="creative-carousel-card" data-position={position} aria-hidden={position !== 0}
-              style={{ backgroundColor: card.color + "40" }}>
+            <div key={card.title} className="creative-carousel-card" data-position={position} aria-hidden={position !== 0}>
               {card.image && <img src={card.image} alt="" draggable={false} />}
               
             </div>
