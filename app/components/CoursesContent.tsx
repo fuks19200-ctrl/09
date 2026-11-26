@@ -16,6 +16,14 @@ const courses = [
   { name: "AI PRODUCT", description: "Дополнительный курс по созданию AI-продуктов", price: "10 900 ₽", code: "10", theme: "product" },
 ];
 
+const directions = [
+  { name: "AI CREATIVE", code: "01", theme: "creative", description: "Контент, графический дизайн, видео и анимация.", modules: ["AI CREATOR", "AI DESIGN", "AI VIDEO"] },
+  { name: "AI DEVELOPMENT", code: "02", theme: "development", description: "Разработка сайтов, игр и интерактивных проектов.", modules: ["AI WEBSITES", "AI GAMES"] },
+  { name: "AI 3D", code: "03", theme: "three", description: "Создание трёхмерной графики, моделей и объектов.", modules: ["AI 3D"] },
+  { name: "AI SYSTEMS", code: "04", theme: "systems", description: "AI-агенты и автоматизация рабочих процессов.", modules: ["AI AGENTS", "AI AUTOMATION"] },
+  { name: "AI BUSINESS", code: "05", theme: "business", description: "Создание, продвижение и монетизация AI-продуктов.", modules: ["AI MARKETING", "AI PRODUCT"] },
+];
+
 const contact = "https://t.me/multumai";
 
 export default function CoursesContent({ embedded = false }: { embedded?: boolean }) {
@@ -92,22 +100,41 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
               <p className="courses-kicker">СПЕЦИАЛИЗАЦИИ</p>
               <h2 id="directions-title">Направления <span>обучения</span></h2>
             </div>
-            <p>Курсы по отдельным навыкам и задачам.</p>
+            <p>Пять направлений. Выберите отдельный курс под свои цели.</p>
           </header>
-          <div className="specialty-grid">
-            {courses.map((course) => (
-              <article className={"specialty-card specialty-card--" + course.theme} key={course.name}>
-                <div className={"specialty-art specialty-art--" + course.theme} aria-hidden="true">
-                  {course.theme === "design" ? <img src="/images/ai-design.webp" alt="" width="280" height="158" loading="lazy" /> : <><i /><i /><i /></>}
-                  <span>{course.code}</span>
-                </div>
-                <div className="specialty-content">
-                  <h3>{course.name}</h3>
-                  <p>{course.description}</p>
-                  <div className="specialty-footer"><strong>{course.price}</strong><a href={contact} aria-label={"Узнать о курсе " + course.name}>Подробнее</a></div>
-                </div>
-              </article>
-            ))}
+          <div className="specialty-grid specialty-grid--directions">
+            {directions.map((direction) => {
+              const modules = courses.filter((course) => direction.modules.includes(course.name));
+              return (
+                <article className={"specialty-card specialty-card--direction specialty-card--" + direction.theme} key={direction.name}>
+                  <div className={"specialty-art specialty-art--direction specialty-art--" + direction.theme} aria-hidden="true">
+                    {direction.theme === "creative" && <img src="/images/ai-design.webp" alt="" width="280" height="158" loading="lazy" />}
+                    <span>{direction.code}</span>
+                  </div>
+                  <div className="specialty-content">
+                    <h3>{direction.name}</h3>
+                    <p>{direction.description}</p>
+                    <details className="direction-modules">
+                      <summary><span>{modules.length === 1 ? "Программа" : modules.length + " курса"}</span><span className="direction-details-label">Подробнее <span aria-hidden="true">+</span></span></summary>
+                      <div className="direction-module-list">
+                        {modules.map((course) => (
+                          <div className="direction-module" key={course.name}>
+                            <div>
+                              <h4>{course.name}</h4>
+                              <p>{course.description}</p>
+                            </div>
+                            <div className="direction-module-action">
+                              <span aria-label={course.price.replace(" ₽", " рублей")}>{course.price.replace(" ₽", "")}</span>
+                              <a href={contact} aria-label={"Узнать о курсе " + course.name}>Выбрать</a>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              );
+            })}
           </div>
           <div className="courses-help"><p>Нужна помощь с выбором курса?</p><a className="course-action" href={contact}>Консультация</a></div>
         </div>

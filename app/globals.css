@@ -2180,3 +2180,85 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .courses-intro .program-card--custom .program-progress {
   font-size: clamp(10px,1.05vw,15px);
 }
+
+
+/* Five learning directions: three upper tiles, two wide lower tiles.
+   Original courses remain available inside accessible, native disclosure panels. */
+.courses-directions .specialty-grid--directions {
+  grid-template-columns: repeat(6,minmax(0,1fr));
+  gap: clamp(14px,1.6vw,24px);
+  align-items: start;
+}
+.courses-directions .specialty-card--direction {
+  grid-column: span 2;
+  min-width: 0;
+  padding: 6px;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 18px;
+  -webkit-backdrop-filter: blur(12px) saturate(110%);
+  backdrop-filter: blur(12px) saturate(110%);
+  box-shadow: 0 8px 24px rgba(36,25,42,.055), inset 0 1px 0 rgba(255,255,255,.85);
+}
+.courses-directions .specialty-card--direction:nth-child(n+4) { grid-column: span 3; }
+.courses-directions .specialty-art--direction {
+  height: clamp(86px,12vh,132px);
+  border-radius: 12px;
+  background: #f0ebe9;
+}
+.courses-directions .specialty-art--development { background: #eae6e1; }
+.courses-directions .specialty-art--three { background: #e9e5ee; }
+.courses-directions .specialty-art--systems { background: #e4eae7; }
+.courses-directions .specialty-art--business { background: #f3e5dc; }
+.courses-directions .specialty-card--direction .specialty-content {
+  padding: clamp(12px,1.4vw,20px);
+}
+.site-background .courses-directions .specialty-card--direction .specialty-content h3 {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: clamp(17px,1.95vw,28px);
+  font-weight: 450;
+  line-height: 1.2;
+  letter-spacing: -.045em;
+  overflow-wrap: normal;
+  word-break: normal;
+  margin: 0 0 10px;
+}
+.courses-directions .specialty-card--direction .specialty-content > p {
+  color: #504851;
+  font-size: clamp(13px,1.05vw,16px);
+  line-height: 1.5;
+  min-height: 3em;
+  margin: 0 0 16px;
+}
+.direction-modules { margin-top: auto; border-top: 1px solid rgba(90,65,58,.13); }
+.direction-modules summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0 0;
+  cursor: pointer;
+  list-style: none;
+  color: #645b60;
+  font-size: 12px;
+}
+.direction-modules summary::-webkit-details-marker { display: none; }
+.direction-details-label { color: var(--course-action-ink); font-weight: 600; white-space: nowrap; }
+.direction-details-label > span { display: inline-block; margin-left: 4px; font-size: 15px; transition: transform .18s ease; }
+.direction-modules[open] .direction-details-label > span { transform: rotate(45deg); }
+.direction-modules summary:focus-visible, .direction-module a:focus-visible { outline: 2px solid var(--course-accent); outline-offset: 3px; }
+.direction-module-list { margin-top: 12px; }
+.direction-module { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid rgba(90,65,58,.12); }
+.direction-module h4 { font-size: 13px; font-weight: 550; line-height: 1.4; margin: 0 0 4px; overflow-wrap: normal; }
+.courses-directions .direction-module p { font-size: 12px; line-height: 1.4; margin: 0; }
+.direction-module-action { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; font-size: 12px; white-space: nowrap; }
+.direction-module-action a { color: var(--course-action-ink); text-underline-offset: 3px; }
+@media (max-width: 800px) {
+  .courses-directions .specialty-grid--directions { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .courses-directions .specialty-card--direction, .courses-directions .specialty-card--direction:nth-child(n+4) { grid-column: span 1; }
+  .courses-directions .specialty-card--direction:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) {
+  .courses-directions .specialty-grid--directions { grid-template-columns: minmax(0,1fr); }
+  .courses-directions .specialty-card--direction .specialty-content > p { min-height: 0; }
+}
