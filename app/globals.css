@@ -1985,3 +1985,55 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width:600px) {
   .courses-intro .program-progress { font-size: clamp(28px,8vw,42px); }
 }
+
+
+/* Clear glass rather than opaque white: the common site gradient remains visible. */
+.courses-intro .program-card {
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.82);
+  -webkit-backdrop-filter: blur(12px) saturate(110%);
+  backdrop-filter: blur(12px) saturate(110%);
+  box-shadow: 0 8px 24px rgba(36,25,42,.055),
+              inset 0 1px 0 rgba(255,255,255,.85),
+              inset 0 -1px 0 rgba(255,255,255,.24);
+}
+.courses-intro .program-card--custom::before {
+  display: none;
+}
+.courses-intro .program-card-media {
+  background: transparent;
+  isolation: isolate;
+  border: 1px solid rgba(255,255,255,.35);
+}
+.courses-intro .program-card--basis .program-card-media,
+.courses-intro .program-card--ultra .program-card-media,
+.courses-intro .program-card--custom .program-card-media {
+  background: transparent;
+}
+.courses-intro .program-card-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: .84;
+  pointer-events: none;
+}
+.courses-intro .program-card--basis .program-card-media::before {
+  background-image: url("/images/programme-basic-widget.svg");
+}
+.courses-intro .program-card--ultra .program-card-media::before {
+  background-image: url("/images/programme-ultra-widget.svg");
+}
+.courses-intro .program-card--custom .program-card-media::before {
+  background-image: url("/images/programme-custom-widget.svg");
+  background-size: 100% 100%;
+  opacity: .76;
+}
+.courses-intro .program-progress { z-index: 1; }
+.courses-intro .program-card--custom .program-progress { color: #202237; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .courses-intro .program-card { background-color: rgba(255,255,255,.26); }
+}
