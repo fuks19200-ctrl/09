@@ -51,6 +51,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
             <div className="program-grid">
             {programs.map((program) => (
               <article className={"program-card program-card--" + program.theme} key={program.name}>
+                <div className="program-card-copy">
                 <div className="program-topline">
                   <p className="program-label">{program.label}</p>
                   <span className="program-index" aria-hidden="true">{program.theme === "basis" ? "01" : "02"}</span>
@@ -61,6 +62,8 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                   <strong>{program.price}</strong>
                   <a className="course-action" href={contact} aria-label={"Узнать о программе " + program.name}>Подробнее</a>
                 </div>
+                </div>
+                <div className="program-card-media" aria-hidden="true" />
               </article>
             ))}
           </div>
