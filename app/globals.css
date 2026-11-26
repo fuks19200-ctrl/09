@@ -1580,3 +1580,22 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media (max-width:650px) {
   .courses-page > .creative-manifesto--centered { --manifesto-spacing: 28px; }
 }
+
+/* Final shared heading size: use the Approach heading as the single reference.
+   The original home wordmark is intentionally excluded. */
+.site-background :is(h1,h2,h3,h4,h5,h6):not(.brand-lockup__title),
+.site-background .program-card .program-name {
+  font-size: var(--section-heading-size);
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-tracking);
+  line-height: var(--section-heading-leading);
+}
+.site-background .creative-manifesto--centered .creative-philosophy-copy :is(h2,h3),
+.site-background .creative-manifesto--centered .creative-manifesto__copy :is(h1,h2) {
+  font-size: var(--section-heading-size);
+  line-height: var(--section-heading-leading);
+}
+.site-background .specialty-content h3,
+.site-background .program-card .program-name {
+  overflow-wrap: anywhere;
+}
