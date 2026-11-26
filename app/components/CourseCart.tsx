@@ -1,13 +1,15 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
-import { courses, programs } from "../data/courses";
+import { courses, programs, creativeBundle } from "../data/courses";
 
-const catalogue = [...programs, ...courses].map((item) => ({
+const catalogue = [...programs, ...courses, creativeBundle].map((item) => ({
   id: item.theme,
   name: item.name,
   price: Number(item.price.replace(/[^0-9]/g, "")),
 }));
+const coveredByCreative = (id: string) => creativeBundle.includes.includes(id);
+const normalizeIds = (ids: string[]) => ids.includes(creativeBundle.theme) ? ids.filter((id) => !coveredByCreative(id)) : ids;
 const storageKey = "multum-course-cart-v1";
 const money = (value: number) => new Intl.NumberFormat("ru-RU").format(value) + " ₽";
 
@@ -34,7 +36,7 @@ export function CourseCartProvider({ children }: { children: ReactNode }) {
     try {
       const saved: unknown = JSON.parse(localStorage.getItem(storageKey) || "[]");
       if (Array.isArray(saved)) {
-        setIds(Array.from(new Set(saved.filter((id): id is string => typeof id === "string" && catalogue.some((item) => item.id === id)))));
+        setIds(normalizeIds(Array.from(new Set(saved.filter((id): id is string => typeof id === "string" && catalogue.some((item) => item.id === id))))));
       }
     } catch { /* The cart still works in memory when storage is unavailable. */ }
     setReady(true);
@@ -52,7 +54,7 @@ export function CourseCartProvider({ children }: { children: ReactNode }) {
   function add(id: string) {
     const item = catalogue.find((entry) => entry.id === id);
     if (!ready || !item) return;
-    setIds((previous) => previous.includes(id) ? previous : [...previous, id]);
+    setIds((previous) => normalizeIds(previous.includes(id) ? previous : [...previous, id]));
     setAnnouncement(item.name + " — добавлено в корзину");
   }
 
@@ -82,7 +84,7 @@ export function CourseCartProvider({ children }: { children: ReactNode }) {
             <ul className="course-cart-list">
               {items.map((item) => (
                 <li className="course-cart-item" key={item.id}>
-                  <div><h3>{item.name}</h3><p>{money(item.price)}</p></div>
+                  <div><h3>{item.name}</h3>{item.id === creativeBundle.theme && <p className="course-cart-bundle-note">AI CREATOR · AI DESIGN · AI VIDEO</p>}<p>{money(item.price)}</p></div>
                   <button className="course-cart-remove" type="button" aria-label={"Удалить " + item.name} onClick={() => remove(item.id)}><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
                 </li>
               ))}
@@ -96,10 +98,11 @@ export function CourseCartProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function AddCourseButton({ courseId, className }: { courseId: string; className?: string }) {
+export function AddCourseButton({ courseId, className, label = "Выбрать курс" }: { courseId: string; className?: string; label?: string }) {
   const cart = useContext(CartContext);
   if (!cart) throw new Error("CourseCartProvider is required");
-  const selected = cart.ids.includes(courseId);
+  const included = cart.ids.includes(creativeBundle.theme) && coveredByCreative(courseId);
+  const selected = cart.ids.includes(courseId) || included;
   const name = catalogue.find((item) => item.id === courseId)?.name || "курс";
-  return <button type="button" className={(className || "") + " course-cart-add"} disabled={!cart.ready} aria-label={(selected ? "Открыть корзину: " : "Добавить в корзину: ") + name} data-selected={selected} onClick={() => selected ? cart.open() : cart.add(courseId)}>{selected ? "В корзине ✓" : "Выбрать курс"}</button>;
+  return <button type="button" className={(className || "") + " course-cart-add"} disabled={!cart.ready} aria-label={(selected ? "Открыть корзину: " : "Добавить в корзину: ") + name} data-selected={selected} onClick={() => selected ? cart.open() : cart.add(courseId)}>{included ? "В составе AI CREATIVE" : selected ? "В корзине ✓" : label}</button>;
 }

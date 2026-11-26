@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import SiteNav from "../../components/SiteNav";
 import { AddCourseButton } from "../../components/CourseCart";
 import CreativeCarousel from "../../components/CreativeCarousel";
-import { courses, directions, contact } from "../../data/courses";
+import { courses, directions, contact, creativeBundle } from "../../data/courses";
 
 type Props = { params: Promise<{ direction: string }> };
 
@@ -39,7 +39,17 @@ export default async function DirectionPage({ params }: Props) {
               <p className="courses-kicker">НАПРАВЛЕНИЕ {direction.code}</p>
               <h1 id="direction-title">AI <span>{direction.name.slice(3)}</span></h1>
               <p>{direction.description}</p>
-              <a className="course-action direction-primary" href="#modules">Выбрать курс</a>
+              {isCreative ? (
+                <div className="creative-bundle-offer">
+                  <p className="creative-bundle-caption">Полный курс · 3 программы</p>
+                  <div className="creative-bundle-price">
+                    <strong>{creativeBundle.price.replace(" ₽", "")}</strong>
+                    <del aria-label="Стоимость курсов по отдельности: 50 700 рублей">50 700</del>
+                  </div>
+                  <p className="creative-bundle-saving">Экономия 11 800 ₽</p>
+                  <AddCourseButton courseId={creativeBundle.theme} className="course-action direction-primary" label="Выбрать полный курс" />
+                </div>
+              ) : <a className="course-action direction-primary" href="#modules">Выбрать курс</a>}
             </div>
             {!isCreative && <div className={"specialty-art specialty-art--direction direction-page-art specialty-art--" + direction.theme} aria-hidden="true">
               {direction.theme === "creative" && <img src="/images/ai-design.webp" alt="" width="280" height="158" />}
@@ -47,7 +57,8 @@ export default async function DirectionPage({ params }: Props) {
             </div>}
           </header>
           <section id="modules" className="direction-page-modules" aria-labelledby="modules-title">
-            <h2 id="modules-title">Курсы <span>направления</span></h2>
+            <h2 id="modules-title">{isCreative ? "В курс " : "Курсы "}<span>{isCreative ? "входит" : "направления"}</span></h2>
+            {isCreative && <p className="creative-modules-note">Все три программы входят в AI CREATIVE. Можно приобрести каждую отдельно.</p>}
             <div className="direction-page-grid">
               {modules.map((course) => (
                 <article className="direction-page-module" key={course.name}>

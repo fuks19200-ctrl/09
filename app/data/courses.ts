@@ -24,5 +24,12 @@ export const directions = [
   { name: "AI BUSINESS", code: "05", theme: "business", slug: "business", description: "Создание, продвижение и монетизация AI-продуктов.", modules: ["AI MARKETING", "AI PRODUCT"] },
 ];
 
+export const creativeBundle = {
+  name: "AI CREATIVE",
+  theme: "creative-bundle",
+  price: "38 900 ₽",
+  includes: ["creator", "design", "video"],
+};
+
 export const contact = "https://t.me/multumai";
 
