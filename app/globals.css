@@ -2171,3 +2171,12 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     grid-row: 2;
   }
 }
+
+
+/* Reduce the photo percentage labels by exactly half; preserve their positions. */
+.courses-intro .program-progress {
+  font-size: clamp(12px,1.25vw,18px);
+}
+.courses-intro .program-card--custom .program-progress {
+  font-size: clamp(10px,1.05vw,15px);
+}
