@@ -1837,3 +1837,30 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .courses-intro .program-card--custom { width: 100%; grid-template-columns: minmax(0,1fr); }
   .courses-intro .program-card--custom .program-card-media { aspect-ratio: 2.2; }
 }
+
+
+/* Custom programme: align with both upper cards, with a wide media slot above the copy. */
+.courses-intro .program-card--custom {
+  grid-column: 1 / -1;
+  width: 100%;
+  justify-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+.courses-intro .program-card--custom .program-card-media {
+  order: -1;
+  width: 100%;
+  height: clamp(84px,12svh,140px);
+  min-height: 0;
+  aspect-ratio: auto;
+}
+.courses-intro .program-card--custom .program-card-copy {
+  width: 100%;
+  flex: 1 0 auto;
+}
+@media (max-width:600px) {
+  .courses-intro .program-card--custom .program-card-media {
+    height: auto;
+    aspect-ratio: 3.2;
+  }
+}
