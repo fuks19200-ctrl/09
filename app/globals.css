@@ -2066,3 +2066,76 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .courses-intro .program-card--custom .program-progress {
   color: #fff;
 }
+
+
+/* Preserve the subjects in portrait photographs inside horizontal windows. */
+.courses-intro .program-card:not(.program-card--custom) .program-card-media {
+  height: auto;
+  aspect-ratio: 2.1;
+}
+.courses-intro .program-card--basis .program-card-media::before {
+  background: #087e85 url("/images/5206392513818729507.jpg") center top / cover no-repeat;
+}
+.courses-intro .program-card--ultra .program-card-media::before {
+  background: #a2402b url("/images/5206392513818729506.jpg") left 76% / 390% auto no-repeat;
+}
+.courses-intro .program-card:not(.program-card--custom) .program-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent 10%, #000 32%, #000 68%, transparent 90%);
+  mask-image: linear-gradient(90deg, transparent 10%, #000 32%, #000 68%, transparent 90%);
+}
+.courses-intro .program-card--basis .program-card-media::after {
+  background-image: url("/images/5206392513818729507.jpg");
+  background-size: auto 235%;
+  background-position: center 50%;
+}
+.courses-intro .program-card--ultra .program-card-media::after {
+  background-image: url("/images/5206392513818729506.jpg");
+  background-size: auto 185%;
+  background-position: center 74%;
+}
+.courses-intro .program-progress {
+  z-index: 2;
+  font-size: clamp(24px,2.5vw,36px);
+}
+/* The cats sit on the upper rim of the glass panel, with tails hanging down. */
+.courses-intro .program-card--custom {
+  --cats-width: min(51%, 340px);
+  margin-top: clamp(64px,7vw,108px);
+  overflow: visible;
+}
+.courses-intro .program-card-cats {
+  position: absolute;
+  top: 0;
+  left: 56%;
+  width: var(--cats-width);
+  height: auto;
+  transform: translate(-50%, -58%);
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 3px rgba(25,40,48,.11));
+}
+.courses-intro .program-card--custom .program-card-media {
+  height: clamp(42px,5vw,72px);
+  aspect-ratio: auto;
+  border: 0;
+  overflow: visible;
+}
+.courses-intro .program-card--custom .program-card-media::before {
+  display: none;
+}
+.courses-intro .program-card--custom .program-progress {
+  color: #17171c;
+  text-shadow: none;
+  top: 12px;
+  bottom: auto;
+}
+@media(max-width:600px) {
+  .courses-intro .program-card--custom { --cats-width: min(58%,240px); margin-top: 66px; }
+  .courses-intro .program-card--custom .program-card-media { height: 58px; }
+  .courses-intro .program-card-cats { left: 65%; }
+}
