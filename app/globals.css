@@ -1559,3 +1559,7 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .creative-manifesto--centered .creative-manifesto__portrait { width: 100%; }
   .creative-manifesto--centered .creative-philosophy-copy :is(h2,h3) { font-size: clamp(22px,5vw,30px); }
 }
+
+/* Match the courses CTA to the second orange CTA in the About chapter. */
+.creative-manifesto--centered .creative-manifesto__primary { background: #FF7835; color: #101011; }
+.creative-manifesto--centered .creative-manifesto__primary:hover { background: #FF9B65; }
