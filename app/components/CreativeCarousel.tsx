@@ -71,14 +71,13 @@ export default function CreativeCarousel() {
             <div key={card.title} className="creative-carousel-card" data-position={position} aria-hidden={position !== 0}
               style={{ backgroundColor: card.color + "40" }}>
               {card.image && <img src={card.image} alt="" draggable={false} />}
-              <span className="creative-carousel-card-number">{String(index + 1).padStart(2, "0")}</span>
               
             </div>
           );
         })}
       </div>
       <button type="button" className="creative-carousel-button" aria-label="Следующая карточка" onClick={() => move(1)}><Chevron /></button>
-      <span className="creative-carousel-counter" aria-live="polite" aria-atomic="true">{String(active + 1).padStart(2, "0")} / 06</span>
+      <span className="creative-carousel-announcement" aria-live="polite" aria-atomic="true">{cards[active].title}</span>
     </div>
   );
 }

@@ -2426,26 +2426,44 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 }
 
 
-/* Softly fading Apple-style glass carousel, with no captions on the tiles. */
+/* Six blank, translucent glass tiles. The perspective stack fades into the page. */
 .creative-carousel-stage {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 8%, #000 25%, #000 75%, rgba(0,0,0,.35) 92%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 8%, #000 25%, #000 75%, rgba(0,0,0,.35) 92%, transparent 100%);
+  height: clamp(340px,64svh,600px);
+  -webkit-mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.28) 5%,#000 17%,#000 83%,rgba(0,0,0,.28) 95%,transparent 100%);
+  mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.28) 5%,#000 17%,#000 83%,rgba(0,0,0,.28) 95%,transparent 100%);
   border-radius: 0;
 }
 .creative-carousel-card {
-  border-radius: 26px;
-  background-image: linear-gradient(145deg, rgba(255,255,255,.52), rgba(255,255,255,.12) 45%, rgba(255,255,255,.25));
-  border: 1px solid rgba(255,255,255,.86);
-  -webkit-backdrop-filter: blur(16px) saturate(115%);
-  backdrop-filter: blur(16px) saturate(115%);
-  box-shadow: 0 10px 30px rgba(28,24,32,.075), inset 0 1px 2px rgba(255,255,255,.95), inset 0 -1px 1px rgba(255,255,255,.4);
+  width: min(78%,330px,38svh);
+  padding: 0;
+  border-radius: clamp(20px,2.3vw,32px);
+  background-image: radial-gradient(ellipse at 12% 8%,rgba(255,255,255,.68),transparent 58%),linear-gradient(145deg,rgba(255,255,255,.32),rgba(255,255,255,.06) 54%,rgba(255,255,255,.24));
+  border: 1px solid rgba(255,255,255,.94);
+  -webkit-backdrop-filter: blur(18px) saturate(115%);
+  backdrop-filter: blur(18px) saturate(115%);
+  box-shadow: 0 12px 32px rgba(48,34,57,.08),inset 0 1px 3px rgba(255,255,255,.95),inset 1px 0 2px rgba(255,255,255,.64),inset 0 -1px 3px rgba(255,255,255,.62);
 }
-.creative-carousel-card[data-position="-1"], .creative-carousel-card[data-position="1"] { opacity: .72; }
-.creative-carousel-card[data-position="-2"], .creative-carousel-card[data-position="2"] { opacity: .24; }
+.creative-carousel-card[data-position="0"] { transform: translate3d(-50%,-50%,0); opacity: 1; }
+.creative-carousel-card[data-position="-1"] { transform: translate3d(-50%,-99%,-105px) rotateX(-16deg) scale(.88); opacity: .76; }
+.creative-carousel-card[data-position="1"] { transform: translate3d(-50%,-1%,-105px) rotateX(16deg) scale(.88); opacity: .76; }
+.creative-carousel-card[data-position="-2"] { transform: translate3d(-50%,-143%,-230px) rotateX(-32deg) scale(.71); opacity: .16; }
+.creative-carousel-card[data-position="2"] { transform: translate3d(-50%,43%,-230px) rotateX(32deg) scale(.71); opacity: .16; }
+.creative-carousel-card[data-position="3"] { opacity: 0; }
 .creative-carousel-button {
-  background: rgba(255,255,255,.38);
-  border: 1px solid rgba(255,255,255,.88);
-  box-shadow: 0 5px 18px rgba(30,24,34,.055), inset 0 1px 1px rgba(255,255,255,.9);
+  background: rgba(255,255,255,.32);
+  border: 1px solid rgba(255,255,255,.92);
+  box-shadow: 0 5px 18px rgba(30,24,34,.065),inset 0 1px 3px rgba(255,255,255,.94);
 }
 .creative-carousel-button:hover { background: rgba(255,255,255,.65); }
-.creative-carousel-card-number { font-weight: 450; }
+.creative-carousel-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media(max-width:800px) {
+  .creative-carousel-stage { height: clamp(320px,64svh,460px); }
+  .creative-carousel-card { width: min(72%,280px,36svh); }
+}
