@@ -2839,3 +2839,40 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
   .direction-support { flex-direction:column; align-items:flex-start; padding:18px; }
   .site-background.direction-page--gallery .direction-related-grid { grid-template-columns:minmax(0,1fr); }
 }
+
+
+/* Lift direction content and tint every gallery tile with the shared brand orange. */
+.site-background.direction-page--gallery .direction-page-screen {
+  padding-top: max(66px, calc(env(safe-area-inset-top) + 54px));
+}
+.site-background.direction-page--gallery .direction-back {
+  margin-bottom: 18px;
+}
+.site-background.direction-page--gallery .direction-page-hero {
+  padding-bottom: clamp(18px,2vw,26px);
+}
+.site-background.direction-page--gallery .direction-page-modules {
+  padding-top: clamp(18px,2vw,26px);
+}
+.site-background.direction-page--gallery .creative-direction-gallery {
+  top: 66px;
+}
+.site-background.direction-page--gallery .creative-carousel-card {
+  /* Fallback also covers browsers without color-mix support. */
+  background-color: rgba(239,118,43,.23);
+  background-image:
+    radial-gradient(ellipse at 9% 4%, rgba(255,255,255,.58), transparent 56%),
+    linear-gradient(145deg, rgba(239,118,43,.26), rgba(239,118,43,.11) 60%, rgba(255,255,255,.24));
+  background-image:
+    radial-gradient(ellipse at 9% 4%, rgba(255,255,255,.58), transparent 56%),
+    linear-gradient(145deg, color-mix(in srgb,var(--color-orange) 26%,transparent), color-mix(in srgb,var(--color-orange) 11%,transparent) 60%,rgba(255,255,255,.24));
+  border: 1px solid rgba(239,118,43,.58);
+  border-color: color-mix(in srgb,var(--color-orange) 58%,transparent);
+  box-shadow: 0 12px 32px rgba(239,118,43,.11),inset 0 1px 3px rgba(255,255,255,.96),inset 0 -1px 3px rgba(255,255,255,.6);
+}
+.site-background.direction-page--gallery .creative-carousel-card[data-position="-1"],
+.site-background.direction-page--gallery .creative-carousel-card[data-position="1"] { opacity:.84; }
+@media(max-width:800px) {
+  .site-background.direction-page--gallery .creative-direction-gallery { top:auto; }
+  .site-background.direction-page--gallery .direction-page-screen { padding-top: max(76px,calc(env(safe-area-inset-top) + 64px)); }
+}
