@@ -1563,3 +1563,20 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 /* Match the courses CTA to the second orange CTA in the About chapter. */
 .creative-manifesto--centered .creative-manifesto__primary { background: #FF7835; color: #101011; }
 .creative-manifesto--centered .creative-manifesto__primary:hover { background: #FF9B65; }
+
+/* Center the entire opening composition vertically, with comfortable equal gaps. */
+.courses-page > .creative-manifesto--centered {
+  --manifesto-spacing: clamp(28px,4.2svh,42px);
+  align-content: center;
+  row-gap: var(--manifesto-spacing);
+  padding-block: clamp(32px,5svh,56px);
+}
+.site-background.courses-page > .creative-manifesto--centered {
+  padding-top: clamp(76px,9svh,96px);
+  padding-bottom: clamp(32px,5svh,56px);
+}
+.creative-manifesto--centered .creative-manifesto__actions { margin-top: var(--manifesto-spacing); }
+.creative-manifesto--centered .creative-philosophy { margin-top: 0; }
+@media (max-width:650px) {
+  .courses-page > .creative-manifesto--centered { --manifesto-spacing: 28px; }
+}
