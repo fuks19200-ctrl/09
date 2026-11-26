@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SiteNav from "../../components/SiteNav";
-import { AddCourseButton } from "../../components/CourseCart";
+import { AddCourseButton, CoursePrice, CustomProgramBanner, RegularModeOnly } from "../../components/CourseCart";
 import CreativeCarousel from "../../components/CreativeCarousel";
 import { courses, directions, contact, creativeBundle } from "../../data/courses";
 
@@ -32,6 +32,7 @@ export default async function DirectionPage({ params }: Props) {
       <section className="direction-page-screen" aria-labelledby="direction-title">
         <div className="courses-container">
           <a className="direction-back" href="/courses/#directions">← Все направления</a>
+          <CustomProgramBanner />
           <div className={isCreative ? "creative-direction-layout" : undefined}>
             <div className={isCreative ? "creative-direction-copy" : undefined}>
           <header className="direction-page-hero">
@@ -40,7 +41,7 @@ export default async function DirectionPage({ params }: Props) {
               <h1 id="direction-title">AI <span>{direction.name.slice(3)}</span></h1>
               <p>{direction.description}</p>
               {isCreative ? (
-                <div className="creative-bundle-offer">
+                <RegularModeOnly><div className="creative-bundle-offer">
                   <p className="creative-bundle-caption">Полный курс · 3 программы</p>
                   <div className="creative-bundle-price">
                     <strong>{creativeBundle.price.replace(" ₽", "")}</strong>
@@ -48,7 +49,7 @@ export default async function DirectionPage({ params }: Props) {
                   </div>
                   <p className="creative-bundle-saving">Экономия 11 800 ₽</p>
                   <AddCourseButton courseId={creativeBundle.theme} className="course-action direction-primary" label="Выбрать полный курс" />
-                </div>
+                </div></RegularModeOnly>
               ) : <a className="course-action direction-primary" href="#modules">Выбрать курс</a>}
             </div>
             {!isCreative && <div className={"specialty-art specialty-art--direction direction-page-art specialty-art--" + direction.theme} aria-hidden="true">
@@ -66,7 +67,7 @@ export default async function DirectionPage({ params }: Props) {
                   <h3>{course.name}</h3>
                   <p>{course.description}</p>
                   <div className="direction-page-module-footer">
-                    <span aria-label={course.price.replace(" ₽", " рублей")}>{course.price.replace(" ₽", "")}</span>
+                    <CoursePrice courseId={course.theme} />
                     <AddCourseButton courseId={course.theme} className="course-action direction-primary" />
                   </div>
                 </article>

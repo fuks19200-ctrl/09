@@ -33,3 +33,9 @@ export const creativeBundle = {
 
 export const contact = "https://t.me/multumai";
 
+
+
+export const customProgramMin = 3;
+export const customProgramDiscount = 40;
+export const parseCoursePrice = (price: string) => Number(price.replace(/[^0-9]/g, ""));
+export const customCoursePrice = (price: number) => Math.round(price * (100 - customProgramDiscount) / 100);

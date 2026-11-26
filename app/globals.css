@@ -2556,3 +2556,31 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 .creative-modules-note { color: #504851; font-size: 14px; line-height: 1.55; margin: -6px 0 20px; }
 .course-cart-item .course-cart-bundle-note { font-size: 10px; line-height: 1.5; margin-bottom: 6px; }
 .direction-page--creative .direction-page-module-footer .course-cart-add { white-space: normal; text-align: center; }
+
+
+/* Individual programme: restrained pricing, separate selection and three-course minimum. */
+.custom-program-banner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:16px 20px; margin:0 0 22px; border:1px solid rgba(255,255,255,.9); border-radius:18px; background:rgba(255,255,255,.28); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
+.custom-program-banner strong { font-size:15px; font-weight:550; color:#17171c; }
+.custom-program-banner p { margin:5px 0 0; font-size:12px; line-height:1.5; color:#504851; }
+.custom-banner-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.custom-banner-actions button { min-height:32px; padding:7px 12px; font-size:11px; background:rgba(255,255,255,.5); color:#17171c; border:1px solid rgba(255,255,255,.9); box-shadow:none; }
+.custom-banner-actions button:first-child { background:#ff7835; border-color:#ff7835; }
+.custom-price { display:inline-flex; flex-wrap:wrap; align-items:baseline; justify-content:flex-end; gap:8px; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.custom-price del { color:#736971; font-size:12px; font-weight:400; }
+.custom-price strong { font-size:16px; font-weight:500; color:#b7470c; letter-spacing:-.025em; }
+.direction-page-module-footer .custom-price strong { font-size:20px; }
+.custom-direction-prices { display:grid; gap:9px; margin:0 0 15px; }
+.custom-direction-price-row { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:5px 10px; font-size:12px; color:#17171c; }
+.course-cart-tabs { display:flex; gap:5px; padding:4px; border-radius:14px; background:rgba(23,23,28,.045); margin-bottom:14px; }
+.course-cart-tabs button { flex:1; min-height:34px; padding:6px 8px; background:transparent; color:#645b60; font-size:10px; box-shadow:none; border:0; border-radius:10px; }
+.course-cart-tabs button[aria-pressed="true"] { background:rgba(255,255,255,.9); color:#17171c; }
+.custom-cart-status { padding:12px 0; }
+.custom-cart-status strong { font-size:13px; font-weight:550; }
+.custom-cart-status p { font-size:11px; line-height:1.5; color:#645b60; margin:6px 0 9px; }
+.custom-cart-progress { height:4px; background:rgba(23,23,28,.09); border-radius:10px; overflow:hidden; }
+.custom-cart-progress span { display:block; height:100%; background:#ef762b; border-radius:10px; }
+.custom-cart-savings { display:flex; justify-content:space-between; gap:12px; font-size:11px; color:#b7470c; margin-top:16px; }
+.course-cart-continue:disabled { opacity:.4; cursor:not-allowed; box-shadow:none; }
+.custom-cart-more { display:block; text-align:center; margin-top:14px; font-size:12px; color:#b7470c; text-decoration:none; }
+.custom-cart-confirmed { padding:12px 0 0; font-size:12px; line-height:1.5; }
+.custom-cart-confirmed a { display:block; margin-top:7px; color:#b7470c; }

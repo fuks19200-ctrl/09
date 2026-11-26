@@ -1,5 +1,5 @@
 import { courses, directions, contact, programs } from "../data/courses";
-import { AddCourseButton } from "./CourseCart";
+import { AddCourseButton, StartCustomProgram, CustomProgramBanner, DirectionCustomPrices } from "./CourseCart";
 
 export default function CoursesContent({ embedded = false }: { embedded?: boolean }) {
   const Heading = embedded ? "h2" : "h1";
@@ -56,9 +56,9 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                     <span className="program-index" aria-hidden="true">03</span>
                   </div>
                   <h3 className="program-name">Собери свою программу</h3>
-                  <p className="program-description">Выберите направления обучения под свои цели.</p>
+                  <p className="program-description">Выберите минимум 3 курса со скидкой 40%.</p>
                   <div className="program-footer">
-                    <a className="course-action" href="#directions">Выбрать направления</a>
+                    <StartCustomProgram />
                   </div>
                 </div>
                 <div className="program-card-media"><span className="program-progress">5–100%</span></div>
@@ -77,6 +77,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
             </div>
             <p>Пять направлений. Выберите отдельный курс под свои цели.</p>
           </header>
+          <CustomProgramBanner />
           <div className="specialty-grid specialty-grid--directions">
             {directions.map((direction) => {
               const modules = courses.filter((course) => direction.modules.includes(course.name));
@@ -89,6 +90,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                   <div className="specialty-content">
                     <h3>{direction.name}</h3>
                     <p>{direction.description}</p>
+                    <DirectionCustomPrices courseIds={modules.map((course) => course.theme)} />
                     <div className="direction-card-footer">
                       <span>{modules.length === 1 ? "Программа" : modules.length + " курса"}</span>
                       <span className="direction-details-label">Подробнее <span aria-hidden="true">→</span></span>
