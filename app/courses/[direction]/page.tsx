@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SiteNav from "../../components/SiteNav";
+import { AddCourseButton } from "../../components/CourseCart";
 import CreativeCarousel from "../../components/CreativeCarousel";
 import { courses, directions, contact } from "../../data/courses";
 
@@ -55,7 +56,7 @@ export default async function DirectionPage({ params }: Props) {
                   <p>{course.description}</p>
                   <div className="direction-page-module-footer">
                     <span aria-label={course.price.replace(" ₽", " рублей")}>{course.price.replace(" ₽", "")}</span>
-                    <a className="course-action direction-primary" href={contact} aria-label={"Узнать о курсе " + course.name}>Выбрать курс</a>
+                    <AddCourseButton courseId={course.theme} className="course-action direction-primary" />
                   </div>
                 </article>
               ))}

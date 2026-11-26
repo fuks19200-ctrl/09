@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
+import { CourseCartProvider } from './components/CourseCart';
 
 const montserrat = Montserrat({ subsets: ['latin', 'cyrillic'], variable: '--font-montserrat', display: 'swap' });
 
@@ -8,5 +9,5 @@ export const metadata: Metadata = { title: 'MULTUM AI', description: 'Школа
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', colorScheme: 'light' };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ru"><body className={`${montserrat.variable} ${montserrat.className}`}>{children}</body></html>;
+  return <html lang="ru"><body className={`${montserrat.variable} ${montserrat.className}`}><CourseCartProvider>{children}</CourseCartProvider></body></html>;
 }

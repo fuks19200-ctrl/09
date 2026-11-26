@@ -1,3 +1,8 @@
+export const programs = [
+  { name: "BASIC", label: "Базовая программа", description: "Знакомство с нейросетями, составление запросов и решение повседневных задач.", price: "7 900", theme: "basis" },
+  { name: "ULTRA", label: "Комплексная программа", description: "Работа с AI-инструментами в нескольких направлениях и создание собственных проектов.", price: "99 900", theme: "ultra" },
+];
+
 export const courses = [
   { name: "AI CREATOR", description: "Создание контента для социальных сетей", price: "14 900 ₽", code: "01", theme: "creator" },
   { name: "AI DESIGN", description: "Графический дизайн и визуальные материалы", price: "14 900 ₽", code: "02", theme: "design" },

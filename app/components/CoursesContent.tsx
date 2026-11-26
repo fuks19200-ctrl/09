@@ -1,9 +1,5 @@
-import { courses, directions, contact } from "../data/courses";
-
-const programs = [
-  { name: "BASIC", label: "Базовая программа", description: "Знакомство с нейросетями, составление запросов и решение повседневных задач.", price: "7 900", theme: "basis" },
-  { name: "ULTRA", label: "Комплексная программа", description: "Работа с AI-инструментами в нескольких направлениях и создание собственных проектов.", price: "99 900", theme: "ultra" },
-];
+import { courses, directions, contact, programs } from "../data/courses";
+import { AddCourseButton } from "./CourseCart";
 
 export default function CoursesContent({ embedded = false }: { embedded?: boolean }) {
   const Heading = embedded ? "h2" : "h1";
@@ -47,7 +43,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                 <p className="program-description">{program.description}</p>
                 <div className="program-footer">
                   <strong aria-label={program.price + " рублей"}>{program.price}</strong>
-                  <a className="course-action" href={contact} aria-label={"Узнать о программе " + program.name}>Подробнее</a>
+                  <AddCourseButton courseId={program.theme} className="course-action" />
                 </div>
                 </div>
                 <div className="program-card-media"><span className="program-progress">{program.theme === "basis" ? "30%" : "100%"}</span></div>
