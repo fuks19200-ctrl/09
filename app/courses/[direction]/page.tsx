@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SiteNav from "../../components/SiteNav";
-import { AddCourseButton, CoursePrice, RegularModeOnly, DirectionModuleSummary } from "../../components/CourseCart";
+import { AddCourseButton, CoursePrice, RegularModeOnly } from "../../components/CourseCart";
 import CreativeCarousel from "../../components/CreativeCarousel";
 import { courses, directions, contact, creativeBundle } from "../../data/courses";
 
@@ -41,7 +41,7 @@ export default async function DirectionPage({ params }: Props) {
               <p className="direction-editorial-description">{direction.description}</p>
               {isCreative ? (
                 <RegularModeOnly><div className="creative-bundle-offer">
-                  <p className="creative-bundle-caption">Полный курс · 3 модуля</p>
+                  <p className="creative-bundle-caption">Полный курс</p>
                   <div className="creative-bundle-price">
                     <strong>{creativeBundle.price}</strong>
                     <del aria-label="Стоимость курсов по отдельности: 50 700 рублей">50 700 ₽</del>
@@ -55,7 +55,6 @@ export default async function DirectionPage({ params }: Props) {
           <section id="modules" className="direction-page-modules" aria-labelledby="modules-title">
             <div className="direction-modules-heading">
               <h2 id="modules-title">{isCreative ? "В курс " : "Курсы "}<span>{isCreative ? "входит" : "направления"}</span></h2>
-              <DirectionModuleSummary count={modules.length} />
             </div>
             <div className="direction-page-grid">
               {modules.map((course) => (

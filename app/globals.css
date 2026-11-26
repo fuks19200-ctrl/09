@@ -2932,3 +2932,40 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
     margin-top: clamp(32px, 5svh, 54px);
   }
 }
+
+
+/* Restore the shared orange action palette and remove redundant module counts. */
+.site-background.direction-page--gallery .direction-page-module-footer .direction-module-select,
+.site-background.direction-page--gallery .direction-support-action {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  color: var(--course-ink);
+  box-shadow: none;
+  font-weight: 600;
+}
+.site-background.direction-page--gallery .direction-page-module-footer .direction-module-select[data-selected="true"] {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  color: var(--course-ink);
+}
+.site-background.direction-page--gallery .direction-editorial-kicker,
+.site-background.direction-page--gallery .direction-editorial-description,
+.site-background.direction-page--gallery .direction-module-index,
+.site-background.direction-page--gallery .direction-module-copy p,
+.site-background.direction-page--gallery .direction-support-label,
+.site-background.direction-page--gallery .direction-support-copy > p,
+.site-background.direction-page--gallery .direction-related-name small,
+.site-background.direction-page--gallery .creative-bundle-caption,
+.site-background.direction-page--gallery .creative-bundle-saving,
+.site-background.direction-page--gallery .direction-back {
+  color: var(--course-action-ink);
+}
+@media (hover:hover) and (pointer:fine) {
+  .site-background.direction-page--gallery .direction-page-module-footer .direction-module-select:not(:disabled):hover,
+  .site-background.direction-page--gallery .direction-support-action:hover {
+    background: #ff7835;
+    border-color: #ff7835;
+    color: var(--course-ink);
+    box-shadow: none;
+  }
+}
