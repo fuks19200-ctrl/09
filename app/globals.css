@@ -2643,3 +2643,123 @@ body:has(.courses-page) { overflow-x: hidden; overflow-y: auto; }
 @media(max-width:800px) {
   .direction-page--gallery .creative-direction-layout { grid-template-columns:minmax(0,1fr); gap:28px; }
 }
+
+
+/* MULTUM master alignment grid. All public pages share the same 12 column rails.
+   Full-bleed gradients and alternating slide separators intentionally remain full width. */
+:root {
+  --layout-max: 1240px;
+  --layout-edge: max(5.5%, calc((100% - var(--layout-max)) / 2));
+  --layout-gap: clamp(16px, 2vw, 24px);
+  --layout-section-space: clamp(36px, 6svh, 72px);
+  --layout-card-inset: clamp(14px, 1.5vw, 20px);
+  --layout-twelve: repeat(12, minmax(0, 1fr));
+  --layout-top: clamp(88px, 11svh, 120px);
+}
+.site-background .site-header {
+  right: max(var(--layout-edge), env(safe-area-inset-right));
+  max-width: calc(100% - 2 * var(--layout-edge));
+}
+.site-background .home-hero,
+.site-background .about-hero,
+.site-background .about-details,
+.site-background .courses-page > .creative-manifesto--centered,
+.site-background.courses-page > .creative-manifesto--centered,
+.site-background .courses-screen,
+.site-background .direction-page-screen {
+  padding-inline: var(--layout-edge);
+}
+.site-background .courses-container,
+.site-background .about-details-inner,
+.site-background .about-details .about-course-banner {
+  width: 100%;
+  max-width: var(--layout-max);
+  margin-inline: auto;
+  min-width: 0;
+}
+.site-background .brand-lockup { max-width: 100%; justify-self: center; }
+.site-background .about-details-inner {
+  grid-template-columns: var(--layout-twelve);
+  column-gap: var(--layout-gap);
+}
+.site-background .about-details-inner > div { grid-column: 3 / 11; min-width: 0; }
+.site-background .about-details-copy p { max-width: none; }
+.site-background .courses-intro .courses-program-layout,
+.site-background.direction-page--gallery .creative-direction-layout {
+  grid-template-columns: var(--layout-twelve);
+  column-gap: var(--layout-gap);
+}
+.site-background .courses-intro .courses-manifesto { grid-column: 1 / 5; }
+.site-background .courses-intro .program-grid {
+  grid-column: 5 / -1;
+  width: 100%;
+  max-width: none;
+  justify-self: stretch;
+  gap: var(--layout-gap);
+}
+.site-background.direction-page--gallery .creative-direction-copy { grid-column: 1 / 8; }
+.site-background.direction-page--gallery .creative-direction-gallery { grid-column: 8 / -1; }
+.site-background .courses-directions .specialty-grid--directions {
+  grid-template-columns: var(--layout-twelve);
+  gap: var(--layout-gap);
+}
+.site-background .courses-directions .specialty-card--direction { grid-column: span 4; }
+.site-background .courses-directions .specialty-card--direction:nth-child(n+4) { grid-column: span 6; }
+.site-background .courses-directions .specialty-card--direction .specialty-content { padding: var(--layout-card-inset); }
+.site-background.direction-page .direction-page-module { padding: var(--layout-card-inset); }
+.site-background.direction-page .direction-page-screen { padding-top: var(--layout-top); }
+.site-background.direction-page .direction-page-grid { gap: 12px; }
+.site-background .creative-manifesto--centered .creative-manifesto__copy,
+.site-background .creative-manifesto--centered .creative-philosophy {
+  width: 100%;
+  max-width: var(--layout-max);
+  justify-self: center;
+  margin-inline: auto;
+}
+.site-background .creative-manifesto--centered .creative-philosophy-copy { width: 100%; max-width: none; }
+.site-background .creative-manifesto--centered .creative-philosophy-copy #philosophy-heading { margin-inline: auto; }
+.site-background .directions-heading { column-gap: var(--layout-gap); }
+.site-background .directions-heading > * { min-width: 0; }
+.site-background .program-grid > *, .site-background .specialty-grid--directions > * { min-width: 0; }
+.site-background .courses-intro .program-card--custom { width: 100%; grid-column: 1 / -1; }
+@media (min-width:951px) and (min-aspect-ratio:3/2) {
+  .site-background .about-hero {
+    grid-template-columns: var(--layout-twelve);
+    column-gap: var(--layout-gap);
+  }
+  .site-background .about-founders-portrait { grid-column: 1 / 6; grid-row: 1; width:100%; }
+  .site-background .about-hero .about-hero-copy { grid-column: 6 / -1; grid-row: 1; width: 100%; max-width: none; margin-inline: 0; padding-left: 0; min-width: 0; }
+  .site-background .about-hero:not(.about-hero--transparent)::before {
+    left: var(--layout-edge);
+    width: calc((100% - 2 * var(--layout-edge) - 7 * var(--layout-gap)) * 5 / 12 + 2 * var(--layout-gap));
+    background-position: center;
+  }
+}
+@media(max-width:1050px) {
+  .site-background .courses-intro .courses-program-layout { grid-template-columns: minmax(0,1fr); row-gap: var(--layout-gap); }
+  .site-background .courses-intro .courses-manifesto,
+  .site-background .courses-intro .program-grid { grid-column: 1 / -1; }
+}
+@media(max-width:950px), (max-aspect-ratio:3/2) {
+  .site-background .about-hero-copy { width:100%; max-width:none; margin-inline:0; padding-left:0; }
+}
+@media(max-width:800px) {
+  .site-background.direction-page--gallery .creative-direction-layout { grid-template-columns: minmax(0,1fr); row-gap:28px; }
+  .site-background.direction-page--gallery .creative-direction-copy,
+  .site-background.direction-page--gallery .creative-direction-gallery { grid-column:1 / -1; }
+  .site-background .about-details-inner > div { grid-column: 1 / -1; }
+  .site-background .courses-directions .specialty-card--direction,
+  .site-background .courses-directions .specialty-card--direction:nth-child(n+4) { grid-column: span 6; }
+  .site-background .courses-directions .specialty-card--direction:last-child { grid-column: 1 / -1; }
+}
+@media(max-width:650px) {
+  :root { --layout-edge: 5%; --layout-gap: 16px; --layout-card-inset: 14px; --layout-top: 100px; }
+  .site-background .about-details-inner { grid-template-columns: minmax(0,1fr); }
+  .site-background .about-details-inner > div { grid-column: 1; }
+}
+@media(max-width:480px) {
+  .site-background .courses-directions .specialty-grid--directions { grid-template-columns: minmax(0,1fr); }
+  .site-background .courses-directions .specialty-card--direction,
+  .site-background .courses-directions .specialty-card--direction:nth-child(n+4),
+  .site-background .courses-directions .specialty-card--direction:last-child { grid-column: 1; }
+}
