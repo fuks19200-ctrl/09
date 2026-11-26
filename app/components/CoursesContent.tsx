@@ -1,6 +1,6 @@
 const programs = [
-  { name: "BASIC", label: "Базовая программа", description: "Знакомство с нейросетями, составление запросов и решение повседневных задач.", price: "7 900 ₽", theme: "basis" },
-  { name: "ULTRA", label: "Комплексная программа", description: "Работа с AI-инструментами в нескольких направлениях и создание собственных проектов.", price: "99 900 ₽", theme: "ultra" },
+  { name: "BASIC", label: "Базовая программа", description: "Знакомство с нейросетями, составление запросов и решение повседневных задач.", price: "7 900", theme: "basis" },
+  { name: "ULTRA", label: "Комплексная программа", description: "Работа с AI-инструментами в нескольких направлениях и создание собственных проектов.", price: "99 900", theme: "ultra" },
 ];
 
 const courses = [
@@ -59,11 +59,11 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                 <h3 className="program-name">{program.name}</h3>
                 <p className="program-description">{program.description}</p>
                 <div className="program-footer">
-                  <strong>{program.price}</strong>
+                  <strong aria-label={program.price + " рублей"}>{program.price}</strong>
                   <a className="course-action" href={contact} aria-label={"Узнать о программе " + program.name}>Подробнее</a>
                 </div>
                 </div>
-                <div className="program-card-media" aria-hidden="true" />
+                <div className="program-card-media"><span className="program-progress">{program.theme === "basis" ? "30%" : "100%"}</span></div>
               </article>
             ))}
               <article className="program-card program-card--custom">
@@ -78,7 +78,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                     <a className="course-action" href="#directions">Выбрать направления</a>
                   </div>
                 </div>
-                <div className="program-card-media" aria-hidden="true" />
+                <div className="program-card-media"><span className="program-progress">5–100%</span></div>
               </article>
             </div>
           </div>
