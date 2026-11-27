@@ -31,7 +31,8 @@ export default function PortfolioCarousel({cards}:{cards:Card[]}) {
       if(!horizontal && ((dir<0&&activeRef.current===0)||(dir>0&&activeRef.current===count-1))) {
         accumulated=0;return;
       }
-      if(event.cancelable)event.preventDefault();
+      if(!event.cancelable)return;
+      event.preventDefault();
       const now=performance.now();
       if(now-lastEvent>180)accumulated=0;
       lastEvent=now;
@@ -50,14 +51,14 @@ export default function PortfolioCarousel({cards}:{cards:Card[]}) {
       if(event.key==="Home"||event.key==="End"){event.preventDefault();select(event.key==="Home"?0:count-1);}
     }}>
     <div ref={stage} className="portfolio-arc" tabIndex={0} aria-label="Листайте карточки колёсиком, свайпом или стрелками"
-      onPointerDown={event=>{gesture.current={x:event.clientX,y:event.clientY};}}
+      onPointerDown={event=>{if(!event.isPrimary||event.button!==0)return;gesture.current={x:event.clientX,y:event.clientY};}}
       onPointerUp={event=>{
         const start=gesture.current;gesture.current=null;
-        if(!start)return;
+        if(!start||!event.isPrimary)return;
         const dx=event.clientX-start.x,dy=event.clientY-start.y;
         if(Math.abs(dx)>32&&Math.abs(dx)>Math.abs(dy)){suppressClickUntil.current=performance.now()+400;move(dx<0?1:-1);}
       }}
-      onPointerCancel={()=>{gesture.current=null;}} onPointerLeave={()=>{gesture.current=null;}}>
+      onPointerCancel={()=>{gesture.current=null;}} onPointerLeave={event=>{if(event.pointerType==="mouse")gesture.current=null;}}>
       {cards.map((card,index)=>{
         const offset=wrap(index-active+half,count)-half;
         return <button key={card.title} type="button" className="portfolio-arc-card" data-position={offset}
