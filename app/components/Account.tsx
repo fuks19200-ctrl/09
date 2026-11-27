@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode, type FormEvent } from "react";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { createAccountClient, canSignUpWithoutConfirmation } from "../data/account-client";
-import { questions, sanitizeAnswers, recommendations, answerText, type Answers } from "../data/account-questions";
+import { questions, sanitizeAnswers, recommendations, answerText, optionLabel, type Answers } from "../data/account-questions";
 import { useCart } from "./CourseCart";
 import { courses, programs, creativeBundle, customCoursePrice, parseCoursePrice, customProgramMin } from "../data/courses";
 
@@ -11,7 +11,7 @@ type Purchase={id:string; product_id:string; product_name:string; description:st
 const AccountContext=createContext<{open:()=>void;user:User|null}>({open:()=>{},user:null});
 const draftKey="multum-onboarding-draft-v1";
 const money=(v:number)=>new Intl.NumberFormat("ru-RU").format(v)+" ₽";
-const catalogue=[...programs,...courses,{...creativeBundle,description:"AI CREATOR, AI DESIGN и AI VIDEO"}];
+const catalogue=[...programs,...courses,{...creativeBundle,description:"Создание контента, Дизайн и брендинг и Видео и анимация"}];
 function CartSummary({close}:{close:()=>void}) {
   const cart=useCart();
   return <div className="account-basket">
@@ -82,12 +82,14 @@ export function AccountProvider({children}:{children:ReactNode}) {
   function open(){change(user?"account":"login");show();}
   function begin(edit=false){setEditing(edit);if(edit){setAnswers(profile);setStep(0);}change("questions");}
   function update(v:string|string[]){setAnswers(prev=>({...prev,[current.key]:v}));}
-  async function advance(skip=false){
+  async function advance(){
     const next={...answers};
-    if(skip)delete next[current.key];
-    else if(current.kind==="number"&&typeof value==="string"&&value!==""&&(!/^\d{1,3}$/.test(value)||Number(value)<1||Number(value)>120)){setNotice("Укажите возраст от 1 до 120 или пропустите вопрос.");return;}
+    if(!(Array.isArray(value)?value.length:typeof value==="string"&&value.trim())){setNotice("Ответьте на вопрос, чтобы продолжить.");return;}
+    if(current.kind==="number"&&typeof value==="string"&&value!==""&&(!/^\d{1,3}$/.test(value)||Number(value)<1||Number(value)>120)){setNotice("Укажите возраст от 1 до 120.");return;}
     setAnswers(next);setNotice("");
     if(step<questions.length-1){setStep(step+1);return;}
+    const incomplete=questions.findIndex(q=>{const v=sanitizeAnswers(next)[q.key];return !(Array.isArray(v)?v.length:typeof v==="string"&&v.trim());});
+    if(incomplete>=0){setStep(incomplete);setNotice("Заполните все вопросы анкеты.");return;}
     if(editing&&client&&user){
       setBusy(true);
       try{const {data,error}=await client.auth.updateUser({data:{multum_profile:sanitizeAnswers(next)}});if(error)throw error;setUser(data.user);change("account");}catch{setNotice("Не удалось сохранить профиль. Повторите попытку.");}finally{setBusy(false);}
@@ -109,6 +111,9 @@ export function AccountProvider({children}:{children:ReactNode}) {
         const {data,error}=await client.auth.updateUser({password});if(error)throw error;
         setUser(data.user);change("account");
       }else if(screen==="signup"){
+        const clean=sanitizeAnswers(answers);
+        const incomplete=questions.findIndex(q=>{const v=clean[q.key];return !(Array.isArray(v)?v.length:typeof v==="string"&&v.trim());});
+        if(incomplete>=0){setStep(incomplete);change("questions");setNotice("Заполните все вопросы анкеты.");return;}
         if (!(await canSignUpWithoutConfirmation())) {
           setNotice("Регистрация без подтверждения почты пока не включена. Попробуйте позднее.");
           return;
@@ -135,9 +140,9 @@ export function AccountProvider({children}:{children:ReactNode}) {
           {current.hint&&<p className="account-muted">{current.hint}</p>}
           {current.kind==="choice"||current.kind==="multiple"?<div className="account-choices">{current.options?.map(option=>{
             const selected=Array.isArray(value)?value.includes(option):value===option;
-            return <button key={option} type="button" aria-pressed={selected} onClick={()=>update(current.kind==="multiple"?(Array.isArray(value)?selected?value.filter(x=>x!==option):[...value,option]:[option]):option)}>{option}<span aria-hidden="true">{selected?"✓":""}</span></button>;
+            return <button key={option} type="button" aria-pressed={selected} onClick={()=>update(current.kind==="multiple"?(Array.isArray(value)?selected?value.filter(x=>x!==option):[...value,option]:[option]):option)}>{optionLabel(option)}<span aria-hidden="true">{selected?"✓":""}</span></button>;
           })}</div>:<label className="account-field"><span>{current.kind==="number"?"Возраст":"Ваш ответ"}</span><input key={current.key} type={current.kind==="number"?"number":"text"} min={current.kind==="number"?1:undefined} max={current.kind==="number"?120:undefined} maxLength={current.key==="firstName"||current.key==="lastName"?80:500} value={typeof value==="string"?value:""} onChange={e=>update(e.target.value)} placeholder={current.hint||"Введите ответ"}/></label>}
-          <div className="account-controls"><button type="button" className="account-secondary" disabled={busy} onClick={()=>step>0?(setStep(step-1),setNotice("")):change(editing?"account":"login")}>Назад</button><button type="button" className="account-link" disabled={busy} onClick={()=>void advance(true)}>Пропустить</button><button type="button" className="account-primary" disabled={busy||!(Array.isArray(value)?value.length:typeof value==="string"&&value.trim())} onClick={()=>void advance()}>{step===questions.length-1?"Готово":"Далее"}</button></div>
+          <div className="account-controls"><button type="button" className="account-secondary" disabled={busy} onClick={()=>step>0?(setStep(step-1),setNotice("")):change(editing?"account":"login")}>Назад</button><button type="button" className="account-primary" disabled={busy||!(Array.isArray(value)?value.length:typeof value==="string"&&value.trim())} onClick={()=>void advance()}>{step===questions.length-1?"Готово":"Далее"}</button></div>
         </>:isProfile?<><p className="account-eyebrow">{screen==="preview"?"Предпросмотр анкеты":"Личный кабинет"}</p><h2 id="account-title">{name||"Ваш профиль"}</h2>{screen==="preview"?<p className="account-muted">Это предварительный профиль, аккаунт ещё не создан.</p>:<p className="account-muted">{user?.email}</p>}
           <div className="account-profile-grid">{[["Уровень","level"],["Сфера","work"],["Цель","goal"],["Желаемый доход","income"],["Интересы","interests"],["Что мешает","barrier"]].map(([label,key])=>answerText(displayProfile,key)?<div key={key}><small>{label}</small><p>{answerText(displayProfile,key)}</p></div>:null)}</div>
           <button type="button" className="account-secondary" onClick={()=>{if(screen==="preview"){setStep(0);change("questions");}else begin(true);}}>Изменить ответы</button>

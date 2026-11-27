@@ -81,11 +81,11 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
           <div className="specialty-grid specialty-grid--directions">
             {directions.map((direction) => {
               const modules = courses.filter((course) => direction.modules.includes(course.name));
-              const cover = directionImages(direction.slug).find(Boolean);
+              const cover = embedded && direction.slug === "creative" ? undefined : directionImages(direction.slug).find(Boolean);
               return (
                 <a className={"specialty-card specialty-card--direction specialty-card--" + direction.theme + " direction-theme--" + direction.slug} key={direction.name} href={"/courses/" + direction.slug + "/"} aria-label={"Подробнее: " + direction.name}>
                   <div className={"specialty-art specialty-art--direction specialty-art--" + direction.theme} aria-hidden="true">
-                    {cover && <img src={cover} alt="" width="280" height="158" loading="lazy" />}
+                    {cover ? <img src={cover} alt="" width="280" height="158" loading="lazy" /> : <div className="folder-art" aria-hidden="true"><i/><i/><i/></div>}
                     <span>{direction.code}</span>
                   </div>
                   <div className="specialty-content">

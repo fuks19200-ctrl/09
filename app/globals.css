@@ -3240,3 +3240,76 @@ body:has(main.direction-page--gallery) .account-dialog .account-primary {color:#
 .account-basket,.account-basket-group {display:grid;gap:8px;}
 .account-basket>.account-link {text-align:center;}
 @media(max-width:650px) {.site-nav .site-nav__login {padding:5px 8px;font-size:10px;}.site-nav {flex-wrap:wrap;}.account-profile-grid {grid-template-columns:1fr;}}
+
+
+/* MULTUM — aligned, dimensional liquid-glass catalogue folders. */
+.site-background .courses-directions .specialty-grid--directions {
+  align-items:stretch; row-gap:calc(var(--layout-gap) + 14px); padding-top:14px;
+}
+.site-background .courses-directions .specialty-card--direction {
+  position:relative; isolation:isolate; overflow:visible; height:100%; min-width:0;
+  padding:8px; border-radius:10px 24px 24px 24px;
+  border:1px solid rgba(255,255,255,.92);
+  background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(var(--direction-rgb),.09) 56%,rgba(255,255,255,.6));
+  -webkit-backdrop-filter:blur(20px) saturate(145%); backdrop-filter:blur(20px) saturate(145%);
+  box-shadow:0 2px 2px rgba(var(--direction-rgb),.08),0 8px 0 -3px rgba(var(--direction-rgb),.13),0 16px 28px rgba(var(--direction-rgb),.13),inset 0 1px 1px #fff,inset 0 -2px 4px rgba(var(--direction-rgb),.09);
+  transition:transform .3s cubic-bezier(.2,.75,.25,1),box-shadow .3s ease;
+  transform:none;
+}
+.site-background .courses-directions .specialty-card--direction::before {
+  content:"";position:absolute;top:-15px;left:-1px;width:40%;height:23px;z-index:-1;
+  border-radius:12px 18px 0 0;border:1px solid rgba(255,255,255,.94);border-bottom:0;
+  background:linear-gradient(150deg,#fff,var(--direction-tint));
+  box-shadow:inset 0 1px 1px #fff;
+}
+.site-background .courses-directions .specialty-card--direction::after {
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(125deg,rgba(255,255,255,.48),transparent 35%,transparent 75%,rgba(255,255,255,.35));
+  z-index:-1;
+}
+.site-background .courses-directions .specialty-card--direction .specialty-art--direction {
+  position:relative;overflow:hidden;border-radius:8px 17px 17px 17px;
+  height:clamp(100px,14vw,164px);border:1px solid rgba(255,255,255,.8);
+  box-shadow:inset 0 1px 2px rgba(var(--direction-rgb),.12);
+}
+.folder-art {position:absolute;inset:0;display:grid;place-items:center;perspective:500px;}
+.folder-art i {position:absolute;width:43%;height:64%;border-radius:12px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(145deg,rgba(255,255,255,.86),rgba(var(--direction-rgb),.22));box-shadow:0 8px 18px rgba(var(--direction-rgb),.15),inset 0 1px 1px #fff;}
+.folder-art i:nth-child(1){transform:translate(-20%,-5%) rotate(-14deg) rotateY(14deg);}
+.folder-art i:nth-child(2){transform:translate(20%,-5%) rotate(14deg) rotateY(-14deg);}
+.folder-art i:nth-child(3){transform:translateY(14%) rotateX(-16deg);width:56%;height:46%;background:linear-gradient(150deg,rgba(255,255,255,.83),rgba(var(--direction-rgb),.3));}
+.site-background .courses-directions .specialty-card--direction .specialty-content {min-width:0;overflow-wrap:anywhere;}
+.site-background .courses-directions .specialty-card--direction .specialty-content h3 {font-size:clamp(18px,1.8vw,26px);overflow-wrap:anywhere;}
+.site-background .courses-directions .specialty-card--direction .direction-card-footer {gap:8px;flex-wrap:wrap;}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .site-background .courses-directions .specialty-card--direction:hover {
+    transform:perspective(900px) translateY(-5px) rotateX(3deg);
+    box-shadow:0 8px 0 -3px rgba(var(--direction-rgb),.16),0 24px 36px rgba(var(--direction-rgb),.19),inset 0 1px 1px #fff;
+  }
+}
+.site-background .courses-intro .program-card {
+  border:1px solid rgba(255,255,255,.9);
+  background:linear-gradient(145deg,rgba(255,255,255,.66),rgba(255,255,255,.22));
+  box-shadow:0 6px 0 -3px rgba(70,50,65,.10),0 14px 28px rgba(70,50,65,.10),inset 0 1px 2px #fff;
+}
+.account-controls {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+@media(max-width:650px) {
+  :root {--layout-edge:max(16px,env(safe-area-inset-left),env(safe-area-inset-right));--layout-gap:16px;--layout-card-inset:16px;}
+  .site-background .site-header {left:var(--layout-edge);right:var(--layout-edge);max-width:none;width:auto;}
+  .site-background .site-nav {max-width:100%;gap:8px;justify-content:center;flex-wrap:wrap;}
+  .site-background .courses-screen,.site-background .about-details,.site-background .direction-page-screen {min-width:0;}
+  .site-background .courses-container,.site-background .courses-intro .program-grid {width:100%;max-width:100%;min-width:0;}
+  .site-background .courses-intro .program-grid {grid-template-columns:minmax(0,1fr);}
+  .site-background .courses-intro :is(.program-card--basis,.program-card--ultra) {display:flex;flex-direction:column;align-items:stretch;}
+  .site-background .courses-intro :is(.program-card--basis,.program-card--ultra) .program-card-copy {order:0;width:100%;padding:16px;}
+  .site-background .courses-intro :is(.program-card--basis,.program-card--ultra) .program-card-media {order:1;width:100%;height:auto;aspect-ratio:2.1;}
+  .site-background .courses-intro .program-footer {flex-wrap:wrap;}
+  .site-background .courses-intro .program-footer .course-action {min-height:44px;}
+  .site-background .courses-directions .specialty-grid--directions {grid-template-columns:minmax(0,1fr);}
+  .site-background .courses-directions .specialty-card--direction:nth-child(n) {grid-column:1/-1;}
+  .site-background .courses-directions .specialty-card--direction .specialty-art--direction {height:clamp(120px,36vw,210px);}
+  .site-background .directions-heading {display:grid;grid-template-columns:minmax(0,1fr);gap:12px;}
+  .site-background.direction-page--gallery .creative-direction-layout {min-width:0;}
+  .site-background.direction-page--gallery :is(.creative-direction-copy,.creative-direction-gallery,.direction-page-module,.direction-module-copy) {min-width:0;overflow-wrap:anywhere;}
+  .account-dialog .account-choices button {min-height:44px;}
+}
+@media(prefers-reduced-motion:reduce){.site-background .courses-directions .specialty-card--direction {transition:none;transform:none;}}

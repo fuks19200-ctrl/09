@@ -123,7 +123,7 @@ export function CourseCartProvider({ children }: { children: ReactNode }) {
             <ul className="course-cart-list">
               {items.map((item) => (
                 <li className="course-cart-item" key={item.id}>
-                  <div><h3>{item.name}</h3>{item.id === creativeBundle.theme && <p className="course-cart-bundle-note">AI CREATOR · AI DESIGN · AI VIDEO</p>}
+                  <div><h3>{item.name}</h3>{item.id === creativeBundle.theme && <p className="course-cart-bundle-note">Создание контента · Дизайн и брендинг · Видео и анимация</p>}
                     {custom ? <div className="custom-price"><del>{money(item.price)}</del><strong>{money(customCoursePrice(item.price))}</strong></div> : <p>{money(item.price)}</p>}
                   </div>
                   <button className="course-cart-remove" type="button" aria-label={"Удалить " + item.name} onClick={() => remove(item.id)}><CloseIcon /></button>
@@ -148,7 +148,7 @@ export function AddCourseButton({ courseId, className, label = "Выбрать �
   const included = cart.mode === "regular" && cart.ids.includes(creativeBundle.theme) && coveredByCreative(courseId);
   const selected = cart.ids.includes(courseId) || included;
   const name = catalogue.find((item) => item.id === courseId)?.name || "курс";
-  return <button type="button" className={(className || "") + " course-cart-add"} disabled={!cart.ready} aria-label={(selected ? "Открыть корзину: " : "Добавить в корзину: ") + name} data-selected={selected} onClick={() => { if (!allowed) { cart.setMode("regular"); return; } if (selected) cart.open(); else cart.add(courseId); }}>{!allowed ? "Обычная покупка" : included ? "В составе AI CREATIVE" : selected ? "В корзине ✓" : label}</button>;
+  return <button type="button" className={(className || "") + " course-cart-add"} disabled={!cart.ready} aria-label={(selected ? "Открыть корзину: " : "Добавить в корзину: ") + name} data-selected={selected} onClick={() => { if (!allowed) { cart.setMode("regular"); return; } if (selected) cart.open(); else cart.add(courseId); }}>{!allowed ? "Обычная покупка" : included ? "В составе Творчество и дизайн" : selected ? "В корзине ✓" : label}</button>;
 }
 export function StartCustomProgram() {
   const cart = useCart();

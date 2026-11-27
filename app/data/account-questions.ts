@@ -9,6 +9,9 @@ export const interests = [
   "AI AGENTS — ИИ-агенты", "AI AUTOMATION — автоматизация",
   "AI MARKETING — продвижение", "AI PRODUCT — создание продуктов",
 ] as const;
+const legacyInterests = interests;
+export const interestLabels: Record<string,string> = Object.fromEntries(legacyInterests.map((v,i)=>[v, ["Генерация изображений","Дизайн и брендинг","Видео и анимация","Трёхмерная графика","Создание сайтов","Разработка игр","ИИ-агенты","Автоматизация","Маркетинг и продвижение","Создание ИИ-продуктов"][i]]));
+export const optionLabel = (value:string) => interestLabels[value] || value;
 export const questions: Question[] = [
   {key:"firstName",title:"Как вас зовут?",kind:"text",hint:"Имя"},
   {key:"lastName",title:"Ваша фамилия?",kind:"text",hint:"Фамилия"},
@@ -37,14 +40,14 @@ export function sanitizeAnswers(raw: unknown): Answers {
   }
   return result;
 }
-export function answerText(a: Answers,key:string) {const v=a[key];return Array.isArray(v)?v.join(", "):v||"";}
+export function answerText(a: Answers,key:string) {const v=a[key];return Array.isArray(v)?v.map(optionLabel).join(", "):v||"";}
 export function recommendations(a: Answers) {
   const picked=Array.isArray(a.interests)?a.interests:[];
   const context=[answerText(a,"work"),answerText(a,"goal"),answerText(a,"use")].join(" ").toLowerCase();
   const terms: Record<string,RegExp>={creator:/контент|соцсет|творчеств|изображ/,design:/дизайн|бренд|визуал|портфолио/,video:/видео|анимац|мультфильм/,three:/3d|3д|трёхмер|трехмер/,websites:/сайт|веб|web/,games:/игр|game/,agents:/агент|бот|помощник/,automation:/автомат|процесс|рутин/,marketing:/маркет|продвиж|клиент|реклам/,product:/бизнес|продукт|предприним/};
   const beginner=a.level==="Начинающий"||a.usedAI==="Нет, ни разу"||a.level==="Базовый";
-  const ranked=courses.map(course=>{
-    const explicit=picked.some(x=>x.startsWith(course.name+" —"));
+  const ranked=courses.map((course,index)=>{
+    const explicit=picked.includes(legacyInterests[index]);
     const match=terms[course.theme]?.test(context)||false;
     return {id:course.theme,name:course.name,description:course.description,price:course.price,href:"/courses/"+(directions.find(d=>d.modules.includes(course.name))?.slug||"")+"/",score:(explicit?10:0)+(match?4:0),reason:explicit?"Вы отметили это направление в анкете.":"Соответствует вашим задачам и сфере работы."};
   }).filter(x=>x.score>0).sort((x,y)=>y.score-x.score);

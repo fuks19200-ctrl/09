@@ -39,7 +39,7 @@ export default async function DirectionPage({ params }: Props) {
           <header className="direction-page-hero">
             <div>
               <p className="courses-kicker direction-editorial-kicker">Направление {direction.code}</p>
-              <h1 id="direction-title">AI <span>{direction.name.slice(3)}</span></h1>
+              <h1 id="direction-title"><span>{direction.name}</span></h1>
               <p className="direction-editorial-description">{direction.description}</p>
               {isCreative ? (
                 <RegularModeOnly><div className="creative-bundle-offer">

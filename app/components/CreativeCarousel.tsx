@@ -8,7 +8,7 @@ function Chevron({ up = false }: { up?: boolean }) {
   return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={up ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} /></svg>;
 }
 
-export default function CreativeCarousel({ direction = "AI CREATIVE", images = [] }: { direction?: string; images?: string[] }) {
+export default function CreativeCarousel({ direction = "Творчество и дизайн", images = [] }: { direction?: string; images?: string[] }) {
   const uploaded = images.filter(Boolean);
   const cards = uploaded.length ? uploaded : Array<string>(6).fill("");
   const count = cards.length;
