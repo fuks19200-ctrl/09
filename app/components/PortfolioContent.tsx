@@ -3,7 +3,7 @@ import { join } from "node:path";
 import PortfolioCarousel from "./PortfolioCarousel";
 
 const portfolioAssets = [
-  ["5206392513818729507.jpg","Лодка на воде"],
+  ["Ноутбук с лендингом MULTUM.AI.png","Лендинг MULTUM.AI"],
   ["5206392513818729506.jpg","Архитектура"],
   ["5206392513818729505.jpg","Коты у моря"],
   ["Serenität im orangefarbenen Sonnenlicht.png","Солнечный свет"],
