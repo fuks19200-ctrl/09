@@ -2,6 +2,10 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 
 export function directionImages(slug: string): string[] {
+  if (slug === "3d") {
+    const files = ["3d-dog.gif", "3d-wall.gif", "3d-tv.gif"];
+    return files.map(file => existsSync(join(process.cwd(), "public", "images", file)) ? "/images/" + file : "");
+  }
   if (slug === "development") {
     const files = [
       "Ноутбук с лендингом MULTUM.AI.png",
