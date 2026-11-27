@@ -15,11 +15,11 @@ const money = (value: number) => new Intl.NumberFormat("ru-RU").format(value) + 
 const number = (value: number) => new Intl.NumberFormat("ru-RU").format(value);
 type Mode = "regular" | "custom";
 type CartContextValue = {
-  ids: string[]; customIds: string[]; mode: Mode; ready: boolean;
+  ids: string[]; regularIds: string[]; customIds: string[]; mode: Mode; ready: boolean;
   add: (id: string) => void; open: () => void; setMode: (mode: Mode) => void;
 };
 const CartContext = createContext<CartContextValue | null>(null);
-function useCart() {
+export function useCart() {
   const value = useContext(CartContext);
   if (!value) throw new Error("CourseCartProvider is required");
   return value;
@@ -100,7 +100,7 @@ export function CourseCartProvider({ children }: { children: ReactNode }) {
   const canConfirm = custom && remaining === 0;
 
   return (
-    <CartContext.Provider value={{ ids, customIds, mode, ready, add, open, setMode: switchMode }}>
+    <CartContext.Provider value={{ ids, regularIds, customIds, mode, ready, add, open, setMode: switchMode }}>
       {children}
       <button type="button" className="course-cart-trigger" aria-label={"Корзина, курсов: " + items.length} aria-haspopup="dialog" onClick={open}>
         <CartIcon />

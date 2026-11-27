@@ -1,3 +1,5 @@
+import { AccountNavButton } from "./Account";
+
 export default function SiteNav({ active, directionBack = false }: { active: "home" | "about" | "courses"; directionBack?: boolean }) {
   return (
       <header className={"site-header" + (directionBack ? " site-header--direction" : "")}>
@@ -14,6 +16,7 @@ export default function SiteNav({ active, directionBack = false }: { active: "ho
           <a className="site-nav__item" href="/courses/" aria-current={active === "courses" ? "page" : undefined}>Courses</a>
           <button className="site-nav__item" type="button" disabled title="Coming soon">FAQ</button>
           <button className="site-nav__item" type="button" disabled title="Coming soon">Contacts</button>
+          <AccountNavButton />
         </nav>
       </header>
   );
