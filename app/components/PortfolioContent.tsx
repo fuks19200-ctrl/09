@@ -9,7 +9,7 @@ const portfolioAssets = [
   ["Serenität im orangefarbenen Sonnenlicht.png","Солнечный свет"],
   ["Рыжеволосая в оливковой куртке.png","Портрет"],
   ["Модный дуэт в стиле M.png","Модный дуэт"],
-  ["Стильный дуэт в современной уличной одежде.png","Уличный стиль"],
+  ["creative-01.png","Парфюмерия"],
 ];
 
 export default function PortfolioContent({ standalone = false }: { standalone?: boolean }) {
