@@ -14,7 +14,7 @@ export default function SiteNav({ active, directionBack = false }: { active: "ho
           <a className="site-nav__item" href="/" aria-current={active === "home" ? "page" : undefined}>Home</a>
           <a className="site-nav__item" href={active === "home" ? "#about" : "/#about"} aria-current={active === "about" ? "page" : undefined}>About us</a>
           <a className="site-nav__item" href="/courses/" aria-current={active === "courses" ? "page" : undefined}>Courses</a>
-          <a className="site-nav__item" href="/portfolio/" aria-current={active === "portfolio" ? "page" : undefined}>Portfolio</a>
+          <a className="site-nav__item" href={active === "home" ? "#portfolio" : active === "courses" && !directionBack ? "/courses/#portfolio" : "/#portfolio"}>Portfolio</a>
           <button className="site-nav__item" type="button" disabled title="Coming soon">FAQ</button>
           <button className="site-nav__item" type="button" disabled title="Coming soon">Contacts</button>
           <AccountNavButton />

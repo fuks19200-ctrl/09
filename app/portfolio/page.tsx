@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function PortfolioPage() {
-  return <main className="site-background portfolio-page"><SiteNav active="portfolio"/><PortfolioContent standalone /></main>;
+  return <main className="site-background courses-page portfolio-page"><SiteNav active="portfolio"/><PortfolioContent standalone /></main>;
 }

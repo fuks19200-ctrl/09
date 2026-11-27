@@ -3476,3 +3476,14 @@ body:has(.portfolio-page) {overflow-x:hidden;overflow-y:auto;}
   .site-background.portfolio-page .portfolio-section--standalone {padding-top:132px;}
   .portfolio-arc {touch-action:pan-y;}
 }
+
+
+/* Portfolio navigation points to the same gallery on the public site.
+   The dedicated route retains the desktop layout as well. */
+.site-background .portfolio-section {scroll-margin-top:24px;}
+.site-background.courses-page.portfolio-page {position:relative;display:block;inset:auto;padding:0;width:100%;min-height:100svh;}
+@media(min-width:651px){
+  .site-background.portfolio-page .portfolio-inner {width:100%;max-width:var(--layout-max);}
+  .site-background.portfolio-page .portfolio-heading {flex-direction:row;align-items:flex-end;}
+  .site-background .portfolio-arc-card:is([data-position="-3"],[data-position="-2"],[data-position="2"],[data-position="3"]){opacity:1;pointer-events:auto;}
+}
