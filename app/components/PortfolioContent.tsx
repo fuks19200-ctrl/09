@@ -1,35 +1,31 @@
-import { directions } from "../data/courses";
-import { directionImages } from "../data/direction-images";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import PortfolioCarousel from "./PortfolioCarousel";
+
+const portfolioAssets = [
+  ["5206392513818729507.jpg","Лодка на воде"],
+  ["5206392513818729506.jpg","Архитектура"],
+  ["5206392513818729505.jpg","Коты у моря"],
+  ["Serenität im orangefarbenen Sonnenlicht.png","Солнечный свет"],
+  ["Рыжеволосая в оливковой куртке.png","Портрет"],
+  ["Модный дуэт в стиле M.png","Модный дуэт"],
+  ["Стильный дуэт в современной уличной одежде.png","Уличный стиль"],
+];
 
 export default function PortfolioContent({ standalone = false }: { standalone?: boolean }) {
   const Heading = standalone ? "h1" : "h2";
-  const groups = directions.map(direction => ({
-    ...direction,
-    images: directionImages(direction.slug).filter(Boolean)
-  })).filter(group => group.images.length > 0);
+  const cards = portfolioAssets.map(([file,title]) => ({
+    src: existsSync(join(process.cwd(),"public","images",file)) ? "/images/" + encodeURIComponent(file) : "",
+    title
+  }));
   return (
     <section id="portfolio" className={"portfolio-section" + (standalone ? " portfolio-section--standalone" : "")} aria-labelledby="portfolio-title">
       <div className="portfolio-inner">
         <header className="portfolio-heading">
-          <div>
-            <Heading id="portfolio-title">Портфолио</Heading>
-            <p>Примеры визуалов, созданных с помощью нейросетей.</p>
-          </div>
+          <div><Heading id="portfolio-title">Портфолио</Heading></div>
           {!standalone && <a className="portfolio-link" href="/portfolio/">Все работы <span aria-hidden="true">↗</span></a>}
         </header>
-        {groups.map(group => (
-          <section className="portfolio-group" key={group.slug} aria-label={group.name}>
-            <h3>{group.name}</h3>
-            <div className="portfolio-grid">
-              {(standalone ? group.images : group.images.slice(0,3)).map((src,index) => (
-                <a key={src} className="portfolio-work" href={src} target="_blank" rel="noopener noreferrer" aria-label={group.name + ", пример " + (index+1) + " (открыть изображение)"}>
-                  <img src={src} alt={group.name + " — пример " + (index+1)} loading="lazy" decoding="async"/>
-                  <span className="portfolio-open" aria-hidden="true">↗</span>
-                </a>
-              ))}
-            </div>
-          </section>
-        ))}
+        <PortfolioCarousel cards={cards}/>
         {standalone && <a href="/courses/#directions" className="portfolio-link">Выбрать направление обучения <span aria-hidden="true">→</span></a>}
       </div>
     </section>
