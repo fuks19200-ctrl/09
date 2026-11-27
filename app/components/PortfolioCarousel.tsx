@@ -61,12 +61,13 @@ export default function PortfolioCarousel({cards}:{cards:Card[]}) {
       onPointerCancel={()=>{gesture.current=null;}} onPointerLeave={event=>{if(event.pointerType==="mouse")gesture.current=null;}}>
       {cards.map((card,index)=>{
         const offset=wrap(index-active+half,count)-half;
-        return <button key={card.title} type="button" className="portfolio-arc-card" data-position={offset}
-          aria-label={card.title+", "+(index+1)+" из "+count} aria-current={index===active?"true":undefined}
+        return <div key={card.title} className="portfolio-arc-card" data-position={offset}>
+          <button type="button" className="portfolio-arc-hit" aria-label={card.title+", "+(index+1)+" из "+count} aria-current={index===active?"true":undefined}
           tabIndex={index===active?0:-1}
           onClick={()=>{if(performance.now()>=suppressClickUntil.current)select(index);}}>
           {card.src?<img src={card.src} alt="" draggable={false} loading={index===0?"eager":"lazy"} decoding="async"/>:<span className="portfolio-empty-card">{card.title}</span>}
-        </button>;
+          </button>
+        </div>;
       })}
     </div>
     <div className="portfolio-arc-controls">
