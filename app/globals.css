@@ -3487,3 +3487,47 @@ body:has(.portfolio-page) {overflow-x:hidden;overflow-y:auto;}
   .site-background.portfolio-page .portfolio-heading {flex-direction:row;align-items:flex-end;}
   .site-background .portfolio-arc-card:is([data-position="-3"],[data-position="-2"],[data-position="2"],[data-position="3"]){opacity:1;pointer-events:auto;}
 }
+
+
+/* Typography reference: the existing "Программы обучения" section heading.
+   All section titles share its responsive scale and font characteristics.
+   Card and dialog titles retain their compact sizes to preserve hierarchy. */
+.site-background :is(h1,h2,h3,h4,h5,h6):not(.brand-lockup__title),
+.account-dialog :is(h2,h3,h4),
+.course-cart-dialog :is(h2,h3) {
+  font-family:var(--font-montserrat),-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font-weight:var(--heading-weight);
+  font-style:normal;
+  letter-spacing:var(--heading-tracking);
+  line-height:var(--section-heading-leading);
+  text-transform:none;
+}
+.site-background :is(#about-title,#approach-title,#manifesto-title,#philosophy-heading,#courses-title,#portfolio-title,#directions-title,#direction-title,#modules-title,#direction-support-title),
+.site-background.direction-page--gallery .direction-related h2 {
+  font-family:var(--font-montserrat),-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font-size:var(--section-heading-size);
+  font-weight:var(--heading-weight);
+  letter-spacing:var(--heading-tracking);
+  line-height:var(--section-heading-leading);
+  font-style:normal;
+  text-transform:none;
+  overflow-wrap:break-word;
+}
+.site-background :is(#about-title,#approach-title,#manifesto-title,#philosophy-heading,#courses-title,#portfolio-title,#directions-title,#direction-title,#modules-title,#direction-support-title) :is(span,em),
+.site-background.direction-page--gallery .direction-related h2 span {
+  font:inherit;letter-spacing:inherit;
+}
+.site-background .courses-intro .program-card .program-name,
+.site-background .courses-directions .specialty-card--direction .specialty-content h3,
+.site-background.direction-page--gallery .direction-module-copy h3,
+.account-panel h2,.account-panel h3,.account-panel h4,
+.course-cart-heading h2,.course-cart-item h3 {
+  font-family:var(--font-montserrat),-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font-weight:var(--heading-weight);
+  font-style:normal;
+  letter-spacing:var(--heading-tracking);
+  line-height:var(--section-heading-leading);
+  text-transform:none;
+}
+.site-background.direction-page--gallery .direction-support {flex-wrap:wrap;}
+.site-background.direction-page--gallery .direction-support-copy {flex:1 1 260px;}
