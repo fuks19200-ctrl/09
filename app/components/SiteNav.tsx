@@ -1,6 +1,6 @@
 import { AccountNavButton } from "./Account";
 
-export default function SiteNav({ active, directionBack = false }: { active: "home" | "about" | "courses"; directionBack?: boolean }) {
+export default function SiteNav({ active, directionBack = false }: { active: "home" | "about" | "courses" | "portfolio"; directionBack?: boolean }) {
   return (
       <header className={"site-header" + (directionBack ? " site-header--direction" : "")}>
         {directionBack && <a className="direction-back" href="/courses/#directions"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 10H4m5-5-5 5 5 5"/></svg>Все направления</a>}
@@ -14,6 +14,7 @@ export default function SiteNav({ active, directionBack = false }: { active: "ho
           <a className="site-nav__item" href="/" aria-current={active === "home" ? "page" : undefined}>Home</a>
           <a className="site-nav__item" href={active === "home" ? "#about" : "/#about"} aria-current={active === "about" ? "page" : undefined}>About us</a>
           <a className="site-nav__item" href="/courses/" aria-current={active === "courses" ? "page" : undefined}>Courses</a>
+          <a className="site-nav__item" href="/portfolio/" aria-current={active === "portfolio" ? "page" : undefined}>Portfolio</a>
           <button className="site-nav__item" type="button" disabled title="Coming soon">FAQ</button>
           <button className="site-nav__item" type="button" disabled title="Coming soon">Contacts</button>
           <AccountNavButton />

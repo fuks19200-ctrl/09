@@ -1,5 +1,6 @@
 import { courses, directions, contact, programs } from "../data/courses";
 import { AddCourseButton, StartCustomProgram } from "./CourseCart";
+import PortfolioContent from "./PortfolioContent";
 
 export default function CoursesContent({ embedded = false }: { embedded?: boolean }) {
   const Heading = embedded ? "h2" : "h1";
@@ -61,6 +62,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
           <a className="courses-next" href="#directions">Все направления</a>
         </div>
       </section>
+      <PortfolioContent />
       <section className="courses-screen courses-directions" id="directions" aria-labelledby="directions-title">
         <div className="courses-container">
           <header className="directions-heading">
