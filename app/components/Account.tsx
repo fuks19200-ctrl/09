@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode, type FormEvent } from "react";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
-import { createAccountClient } from "../data/account-client";
+import { createAccountClient, canSignUpWithoutConfirmation } from "../data/account-client";
 import { questions, sanitizeAnswers, recommendations, answerText, type Answers } from "../data/account-questions";
 import { useCart } from "./CourseCart";
 import { courses, programs, creativeBundle, customCoursePrice, parseCoursePrice, customProgramMin } from "../data/courses";
@@ -109,10 +109,14 @@ export function AccountProvider({children}:{children:ReactNode}) {
         const {data,error}=await client.auth.updateUser({password});if(error)throw error;
         setUser(data.user);change("account");
       }else if(screen==="signup"){
+        if (!(await canSignUpWithoutConfirmation())) {
+          setNotice("Регистрация без подтверждения почты пока не включена. Попробуйте позднее.");
+          return;
+        }
         const {data,error}=await client.auth.signUp({email:email.trim(),password,options:{emailRedirectTo:redirect,data:{multum_profile:sanitizeAnswers(answers)}}});
         if(error)throw error;
         if(data.session){setUser(data.user);setAnswers({});setStep(0);change("account");try{sessionStorage.removeItem(draftKey);}catch{}}
-        else change("confirm");
+        else {setNotice("Не удалось автоматически войти. Обратитесь в поддержку.");}
       }
     }catch{setNotice(screen==="login"?"Не удалось войти. Проверьте почту и пароль.": "Не удалось выполнить действие. Проверьте данные или повторите позже.");}
     finally{setBusy(false);}
