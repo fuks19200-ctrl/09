@@ -1,5 +1,4 @@
 import { courses, directions, contact, programs } from "../data/courses";
-import { directionImages } from "../data/direction-images";
 import { AddCourseButton, StartCustomProgram } from "./CourseCart";
 
 export default function CoursesContent({ embedded = false }: { embedded?: boolean }) {
@@ -9,20 +8,13 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
       <section className="creative-manifesto creative-manifesto--centered" id="manifesto" aria-labelledby="manifesto-title">
         <div className="creative-manifesto__copy">
           <Heading id="manifesto-title">
-            <span>Мыслить</span>
-            <span>Создавать</span>
-            <span>Опережать</span>
+            Курсы по нейросетям
           </Heading>
           <div className="creative-manifesto__actions">
             <a className="creative-manifesto__primary" href="#programs">Выбрать курс</a>
           </div>
         </div>
         <div className="creative-philosophy-image creative-manifesto__portrait" aria-hidden="true" />
-        <section className="creative-philosophy" id="philosophy" aria-labelledby="philosophy-heading">
-          <div className="creative-philosophy-copy">
-            <h2 id="philosophy-heading">Технологии меняют мир<br />Мы учим <span>менять его вместе с ними</span></h2>
-          </div>
-        </section>
       </section>
       <section className="courses-screen courses-intro" id="programs" aria-labelledby="courses-title">
         <div className="courses-container">
@@ -30,7 +22,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
             <header className="courses-manifesto">
               <p className="courses-kicker">ОСНОВНЫЕ КУРСЫ</p>
               <h2 id="courses-title" className="courses-programs-title">Программы <span>обучения</span></h2>
-              <p className="courses-manifesto-description">Комплексное обучение искусственному интеллекту: от базовых навыков работы с нейросетями до создания собственных цифровых продуктов и монетизации знаний.</p>
+              <p className="courses-manifesto-description">Две готовые программы или набор курсов на выбор.</p>
             </header>
             <div className="program-grid">
             {programs.map((program) => (
@@ -56,7 +48,7 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
                     <p className="program-label">Индивидуальная программа</p>
                     <span className="program-index" aria-hidden="true">03</span>
                   </div>
-                  <h3 className="program-name">Собери свою программу</h3>
+                  <h3 className="program-name">Своя программа</h3>
                   <p className="program-description">Выберите минимум 3 курса со скидкой 40%.</p>
                   <div className="program-footer">
                     <StartCustomProgram />
@@ -76,24 +68,19 @@ export default function CoursesContent({ embedded = false }: { embedded?: boolea
               <p className="courses-kicker">СПЕЦИАЛИЗАЦИИ</p>
               <h2 id="directions-title">Направления <span>обучения</span></h2>
             </div>
-            <p>Пять направлений. Выберите отдельный курс под свои цели.</p>
+            <p>Пять направлений, десять курсов.</p>
           </header>
           <div className="specialty-grid specialty-grid--directions">
             {directions.map((direction) => {
               const modules = courses.filter((course) => direction.modules.includes(course.name));
-              const cover = embedded && direction.slug === "creative" ? undefined : directionImages(direction.slug).find(Boolean);
               return (
                 <a className={"specialty-card specialty-card--direction specialty-card--" + direction.theme + " direction-theme--" + direction.slug} key={direction.name} href={"/courses/" + direction.slug + "/"} aria-label={"Подробнее: " + direction.name}>
-                  <div className={"specialty-art specialty-art--direction specialty-art--" + direction.theme} aria-hidden="true">
-                    {cover ? <img src={cover} alt="" width="280" height="158" loading="lazy" /> : <div className="folder-art" aria-hidden="true"><i/><i/><i/></div>}
-                    <span>{direction.code}</span>
-                  </div>
                   <div className="specialty-content">
+                    <div className="folder-meta"><span>{direction.code}</span><span aria-hidden="true">↗</span></div>
                     <h3>{direction.name}</h3>
                     <p>{direction.description}</p>
                     <div className="direction-card-footer">
-                      <span>{modules.length === 1 ? "Программа" : modules.length + " курса"}</span>
-                      <span className="direction-details-label">Подробнее <span aria-hidden="true">→</span></span>
+                      <span>{modules.length === 1 ? "1 курс" : modules.length + " курса"}</span>
                     </div>
                   </div>
                 </a>

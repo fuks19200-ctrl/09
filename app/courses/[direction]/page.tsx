@@ -76,9 +76,9 @@ export default async function DirectionPage({ params }: Props) {
           </section>
           <section className="direction-support" aria-labelledby="direction-support-title">
             <div className="direction-support-copy">
-              <p className="direction-support-label">Персональная консультация</p>
+              <p className="direction-support-label">Консультация</p>
               <h2 id="direction-support-title">Нужна помощь с выбором?</h2>
-              <p>Подберём обучение под ваши цели, уровень и бюджет.</p>
+              <p>Ответим на вопросы о курсах и стоимости.</p>
             </div>
             <a className="course-action direction-support-action" href={contact}>Консультация <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 15 15 5M6 5h9v9"/></svg></a>
           </section>

@@ -3313,3 +3313,67 @@ body:has(main.direction-page--gallery) .account-dialog .account-primary {color:#
   .account-dialog .account-choices button {min-height:44px;}
 }
 @media(prefers-reduced-motion:reduce){.site-background .courses-directions .specialty-card--direction {transition:none;transform:none;}}
+
+
+/* Compact catalogue: five equal folder tiles, no thumbnail frames or decorative noise. */
+.site-background .courses-directions.courses-screen {
+  min-height:0; padding-block:clamp(38px,6vw,72px);
+}
+.site-background .courses-directions .specialty-grid--directions {
+  grid-template-columns:repeat(5,minmax(0,1fr)); gap:20px 14px; padding-top:10px;
+  align-items:stretch;
+}
+.site-background .courses-directions .specialty-grid--directions .specialty-card--direction:nth-child(n) {
+  grid-column:auto; height:auto; min-height:148px; padding:0; margin:0; border-radius:8px 15px 15px 15px;
+  border:1px solid rgba(var(--direction-rgb),.15);
+  background:linear-gradient(150deg,rgba(255,255,255,.82) 0%,var(--direction-pale) 36%,var(--direction-tint) 100%);
+  box-shadow:0 4px 0 -2px rgba(var(--direction-rgb),.12),0 7px 16px rgba(var(--direction-rgb),.09),inset 0 1px 0 rgba(255,255,255,.95);
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+}
+.site-background .courses-directions .specialty-card--direction::before {
+  top:-10px;left:-1px;width:39%;height:13px;border-radius:7px 12px 0 0;
+  border-color:rgba(var(--direction-rgb),.15);
+  background:linear-gradient(145deg,#fff,var(--direction-tint));
+}
+.site-background .courses-directions .specialty-card--direction::after {display:none;}
+.site-background .courses-directions .specialty-card--direction .specialty-content {
+  padding:13px;display:flex;flex-direction:column;gap:7px;min-width:0;
+}
+.folder-meta {display:flex;align-items:center;justify-content:space-between;color:var(--direction-accent);font-size:11px;font-weight:550;font-variant-numeric:tabular-nums;line-height:1;}
+.folder-meta span:last-child {font-size:15px;line-height:1;}
+.site-background .courses-directions .specialty-card--direction .specialty-content h3 {
+  margin:0;font-size:clamp(15px,1.35vw,19px);line-height:1.22;letter-spacing:-.03em;
+  color:#242127;font-weight:550;overflow-wrap:normal;
+}
+.site-background .courses-directions .specialty-card--direction .specialty-content > p {
+  margin:0;min-height:0;font-size:11px;line-height:1.45;color:#48434b;
+}
+.site-background .courses-directions .specialty-card--direction .direction-card-footer {
+  margin-top:auto;padding-top:8px;border-top:1px solid rgba(var(--direction-rgb),.12);font-size:11px;color:var(--direction-accent);
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+  .site-background .courses-directions .specialty-grid--directions .specialty-card--direction:hover {
+    transform:translateY(-3px);box-shadow:0 5px 0 -2px rgba(var(--direction-rgb),.15),0 10px 20px rgba(var(--direction-rgb),.13);
+  }
+}
+.site-background .courses-page > .creative-manifesto--centered,
+.site-background.courses-page > .creative-manifesto--centered {
+  min-height:0;row-gap:24px;padding-bottom:clamp(24px,4vw,48px);
+}
+.site-background .creative-manifesto--centered .creative-manifesto__portrait {max-width:920px;}
+.site-background .creative-manifesto--centered .creative-manifesto__copy #manifesto-title {
+  display:block;white-space:normal;line-height:1.1;
+}
+@media(max-width:1050px) {
+  .site-background .courses-directions .specialty-grid--directions {grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:650px) {
+  .site-background .courses-directions .specialty-grid--directions {grid-template-columns:repeat(2,minmax(0,1fr));gap:19px 12px;}
+  .site-background .courses-directions .specialty-grid--directions .specialty-card--direction:nth-child(n) {min-height:136px;}
+  .site-background .courses-directions .specialty-card--direction .specialty-content {padding:12px;}
+  .site-background .courses-directions .specialty-card--direction .specialty-content h3 {font-size:15px;overflow-wrap:anywhere;}
+  .site-background .courses-directions .specialty-card--direction .specialty-content > p {font-size:11px;}
+}
+@media(max-width:350px) {
+  .site-background .courses-directions .specialty-grid--directions {grid-template-columns:minmax(0,1fr);}
+}
